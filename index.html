@@ -3,476 +3,451 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Islamic Studies Quiz</title>
+    <title>Constitution of 1973 Quiz</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Tailwind's gray-50 */
         }
-        .container-view {
+        .correct {
+            background-color: #dcfce7 !important; /* Tailwind's green-100 */
+            border-color: #22c55e !important; /* Tailwind's green-500 */
+            color: #166534; /* Tailwind's green-800 */
+        }
+        .incorrect {
+            background-color: #fee2e2 !important; /* Tailwind's red-100 */
+            border-color: #ef4444 !important; /* Tailwind's red-500 */
+            color: #991b1b; /* Tailwind's red-800 */
+        }
+        .disabled-option {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        #admin-panel {
             display: none;
-        }
-        .active-view {
-            display: block;
-        }
-        .glassmorphism {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-         .btn-primary {
-            @apply w-full px-6 py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition-transform transform hover:scale-105;
-        }
-        .input-field {
-            @apply w-full px-4 py-3 bg-gray-100 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors;
         }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4 bg-cover" style="background-image: url('https://placehold.co/1920x1080/e0e7ff/ffffff?text=Islamic+Quiz');">
+<body class="bg-slate-50 text-slate-800 flex items-center justify-center min-h-screen p-4">
 
-    <div id="main-container" class="w-full max-w-2xl mx-auto">
+    <div class="w-full max-w-2xl mx-auto">
+        
+        <div id="login-container" class="bg-white p-8 rounded-xl shadow-lg text-center">
+            <h1 class="text-3xl font-bold mb-2 text-cyan-700">Quiz Login</h1>
+            <p class="text-slate-500 mb-6">Please enter your credentials to proceed.</p>
+            <div class="space-y-4">
+                <input type="text" id="user-id" placeholder="Enter User ID" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                <input type="password" id="password" placeholder="Enter Password" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500">
+            </div>
+            <p id="login-error" class="text-red-500 mt-4 h-4"></p>
+            <button id="login-btn" class="mt-4 w-full bg-cyan-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-cyan-700 transition duration-300">Login</button>
+        </div>
 
-        <!-- Login View -->
-        <div id="login-view" class="container-view active-view p-8 rounded-2xl shadow-2xl glassmorphism">
-            <h1 class="text-3xl font-bold text-center text-gray-800 mb-2">Quiz Portal Login</h1>
-            <p class="text-center text-gray-600 mb-8">Please enter your credentials to proceed.</p>
-            <form id="login-form">
-                <div class="mb-4">
-                    <label for="user-id" class="block text-gray-700 font-medium mb-2">ID</label>
-                    <input type="text" id="user-id" class="input-field" placeholder="Enter ID" required>
+        <div id="user-details-container" class="bg-white p-8 rounded-xl shadow-lg text-center hidden">
+            <h1 class="text-3xl font-bold mb-2 text-indigo-700">Welcome!</h1>
+            <p class="text-slate-500 mb-6">Please enter your full name to start the quiz.</p>
+            <input type="text" id="candidate-name" placeholder="Enter Your Name" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <p id="name-error" class="text-red-500 mt-4 h-4"></p>
+            <button id="start-btn" class="mt-4 w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition duration-300">Start Quiz</button>
+        </div>
+
+        <div id="quiz-container" class="hidden">
+            <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Pakistan Constitution Quiz</h2>
+                    <div id="timer" class="text-lg font-bold bg-rose-500 text-white px-4 py-2 rounded-lg shadow-md">25:00</div>
                 </div>
-                <div class="mb-6">
-                    <label for="password" class="block text-gray-700 font-medium mb-2">Password</label>
-                    <input type="password" id="password" class="input-field" placeholder="Enter Password" required>
+                
+                <div id="question-area">
+                    <p class="text-lg font-semibold text-gray-700 mb-2" id="question-number"></p>
+                    <p class="text-xl leading-relaxed text-gray-800 mb-6" id="question-text"></p>
+                    <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Options will be injected here -->
+                    </div>
                 </div>
-                <p id="login-error" class="text-red-500 text-center mb-4"></p>
-                <button type="submit" class="btn-primary">Login</button>
-            </form>
-             <div class="text-center mt-6">
-                <button id="admin-view-btn" class="text-sm text-blue-600 hover:underline">Admin View</button>
             </div>
         </div>
 
-        <!-- Candidate Info View -->
-        <div id="info-view" class="container-view p-8 rounded-2xl shadow-2xl glassmorphism">
-            <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Welcome, Candidate!</h1>
-            <p id="retake-message" class="text-center text-red-500 mb-4 hidden"></p>
-            <div class="mb-6">
-                <label for="candidate-name" class="block text-gray-700 font-medium mb-2">Enter Your Full Name</label>
-                <input type="text" id="candidate-name" class="input-field" placeholder="e.g., John Doe" required>
-            </div>
-            <button id="start-quiz-btn" class="btn-primary">Start Quiz</button>
-        </div>
-
-        <!-- Quiz View -->
-        <div id="quiz-view" class="container-view p-6 md:p-8 rounded-2xl shadow-2xl glassmorphism">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold text-gray-800">Islamic Studies Quiz</h2>
-                <div id="timer" class="text-xl font-bold text-red-600 bg-white px-4 py-2 rounded-lg shadow">20:00</div>
-            </div>
-            <div id="question-container">
-                <!-- Question will be injected here -->
-            </div>
-            <div class="flex justify-end mt-8">
-                <button id="next-btn" class="px-8 py-3 text-lg font-semibold text-white bg-green-600 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition-transform transform hover:scale-105">Next</button>
+        <div id="result-container" class="hidden">
+            <div class="bg-white p-8 rounded-xl shadow-lg text-center">
+                <h1 class="text-4xl font-bold text-green-600 mb-4">Quiz Completed!</h1>
+                <p class="text-xl text-slate-600 mb-2">Thank you, <span id="result-name" class="font-bold"></span>.</p>
+                <p class="text-2xl text-slate-800 mb-6">Here is your result:</p>
+                <div class="bg-slate-100 p-6 rounded-lg">
+                    <p class="text-5xl font-extrabold text-blue-600" id="score"></p>
+                    <p class="text-lg text-slate-500 mt-2" id="percentage"></p>
+                </div>
+                 <p class="mt-8 text-slate-500">You cannot restart the quiz. Please close this window.</p>
             </div>
         </div>
 
-        <!-- Result View -->
-        <div id="result-view" class="container-view text-center p-8 rounded-2xl shadow-2xl glassmorphism">
-            <h1 class="text-4xl font-bold text-gray-800 mb-4">Quiz Completed!</h1>
-            <p id="result-text" class="text-2xl text-gray-700 mb-8"></p>
-            <p class="text-gray-600">Thank you for participating. Your result has been recorded.</p>
-            <p class="text-gray-500 mt-2 text-sm">You cannot restart the quiz.</p>
+        <div class="text-center mt-8">
+            <button id="admin-toggle-btn" class="text-sm text-slate-400 hover:text-slate-600">View Admin Panel</button>
         </div>
 
-        <!-- Admin Panel View -->
-        <div id="admin-panel-view" class="container-view p-8 rounded-2xl shadow-2xl glassmorphism">
-            <div class="flex justify-between items-center mb-6">
-                 <h1 class="text-3xl font-bold text-gray-800">Admin Panel: All Results</h1>
-                 <button id="back-to-login-btn" class="px-4 py-2 text-sm font-semibold text-white bg-gray-500 rounded-lg hover:bg-gray-600">Back to Login</button>
+        <div id="admin-panel" class="bg-white p-8 rounded-xl shadow-lg mt-4 hidden">
+            <h2 class="text-2xl font-bold text-center mb-6">Admin Panel - Quiz Results</h2>
+            <div class="overflow-x-auto">
+                <table id="admin-results-table" class="min-w-full bg-white border border-gray-200">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="py-3 px-4 border-b text-left text-sm font-semibold text-gray-600">Candidate Name</th>
+                            <th class="py-3 px-4 border-b text-left text-sm font-semibold text-gray-600">Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Admin results will be injected here -->
+                    </tbody>
+                </table>
             </div>
-            <div id="admin-results-container" class="overflow-x-auto bg-white rounded-lg p-4">
-                <!-- Admin results table will be injected here -->
-            </div>
+             <p id="no-results" class="text-center text-slate-500 py-4">No results yet.</p>
         </div>
 
     </div>
 
     <script>
-        const quizData = [
+        const quizQuestions = [
             {
-                question: "How much camels were sacrificed on the occasion of Hajj by Hazrat Muhammad (P.B.U.H)?",
-                options: ["60 camels", "63 camels", "65 camels", "67 camels"],
-                answer: "63 camels"
+                question: "When did the National Assembly of Pakistan approve the 1973 Constitution?",
+                options: ["August 14, 1973", "April 10, 1973", "July 5, 1979", "April 1, 1997"],
+                answer: "April 10, 1973"
             },
             {
-                question: "Who performed first Hajj Bait-Ullah?",
-                options: ["Hazrat Ibrahim and Hazrat Ismail (A.S)", "Hazrat Adam (A.S) and Hazrat Hawa (A.S)", "Hazrat Ibrahim (A.S) and Hazrat Hajira (A.S)", "None of them"],
-                answer: "Hazrat Adam (A.S) and Hazrat Hawa (A.S)"
+                question: "Who became the Prime Minister of Pakistan when the 1973 Constitution came into effect?",
+                options: ["Fazal Ilahi Chaudhry", "General Muhammad Zia-ul-Haq", "Shaheed Zulfikar Ali Bhutto", "Nawaz Sharif"],
+                answer: "Shaheed Zulfikar Ali Bhutto"
             },
             {
-                question: "What is verbal meaning of divine revelation (Wahi)?",
-                options: ["To point out or to give message", "To Talk", "To order", "None of these"],
-                answer: "To point out or to give message"
+                question: "What is the official name of Pakistan according to the first Article of the 1973 Constitution?",
+                options: ["Republic of Pakistan", "Islamic Republic of Pakistan", "Federal Republic of Pakistan", "Democratic Republic of Pakistan"],
+                answer: "Islamic Republic of Pakistan"
             },
             {
-                question: "How many kinds of Wahi are there?",
-                options: ["Two", "Three", "Four", "Seven"],
-                answer: "Two"
+                question: "What form of government did the 1973 Constitution establish?",
+                options: ["Presidential", "Monarchy", "Parliamentary", "Dictatorship"],
+                answer: "Parliamentary"
             },
             {
-                question: "Which angel came to Hazrat Muhammad (P.B.U.H) with Wahi?",
-                options: ["Hazrat Mekail (A.S)", "Hazrat Esrafeel (A.S)", "Hazrat Jibbrail (A.S)", "Hazrat Ezrail (A.S)"],
-                answer: "Hazrat Jibbrail (A.S)"
+                question: "According to Article 41 of the 1973 Constitution, what is the minimum age for the President of Pakistan?",
+                options: ["35 years", "40 years", "45 years", "50 years"],
+                answer: "45 years"
             },
             {
-                question: "In which Islamic month, first Wahi was decended?",
-                options: ["Rajab-ul-Murajab", "Safr", "Rabi-ul-Sani", "Ramzan-ul-Mubarik"],
-                answer: "Ramzan-ul-Mubarik"
+                question: "The 1973 Constitution established a bicameral legislature at the Center. What are the two Houses called?",
+                options: ["House of Lords and House of Commons", "Congress and Senate", "National Assembly and Senate", "Majlis-e-Shoora and Provincial Assembly"],
+                answer: "National Assembly and Senate"
             },
             {
-                question: "What was the age of Rasool Ullah (P.B.U.H) at the time of First Wahi?",
-                options: ["40 Years 6 months", "40 Years 8 months", "40 Years 10 months", "40 Years 11 months"],
-                answer: "40 Years 6 months"
+                question: "How many general seats were in the National Assembly as per the original 1973 Constitution?",
+                options: ["100", "200", "240", "300"],
+                answer: "200"
             },
             {
-                question: "On which place, first Wahi was decended?",
-                options: ["Sore Cave", "Hira Cave", "Khana-Kaaba", "None of them"],
-                answer: "Hira Cave"
+                question: "Which of these rights was NOT explicitly mentioned as a fundamental right guaranteed by the 1973 Constitution in the provided text?",
+                options: ["Right to life", "Right to liberty", "Right to own property abroad", "Freedom of speech"],
+                answer: "Right to own property abroad"
             },
             {
-                question: "How many verses (Ayats) were in first Wahi?",
-                options: ["2", "3", "4", "5"],
-                answer: "5"
+                question: "Who suspended the 1973 Constitution and imposed Martial Law on July 5, 1979?",
+                options: ["Shaheed Zulfikar Ali Bhutto", "Nawaz Sharif", "Fazal Ilahi Chaudhry", "General Muhammad Zia-ul-Haq"],
+                answer: "General Muhammad Zia-ul-Haq"
             },
             {
-                question: "To which Suhabi responsibility was given for collection of the Holy Quran by Hazrat Abu Bakr Siddique (R.A)?",
-                options: ["Hazrat Umar bin Wahab (R.A)", "Hzrat Saeed bin Alaas (R.A)", "Hazrat Zaid bin Sabit (R.A)", "Hazrat Ali (R.A)"],
-                answer: "Hazrat Zaid bin Sabit (R.A)"
+                question: "Which amendment to the constitution gave the President the power to dissolve the National Assembly under Article 58(2)b?",
+                options: ["First Amendment", "Eighth Amendment", "Thirteenth Amendment", "Seventeenth Amendment"],
+                answer: "Eighth Amendment"
             },
             {
-                question: "How many Rakus are in the Holy Quran?",
-                options: ["460", "490", "558", "570"],
-                answer: "558"
+                question: "The Thirteenth Amendment, which repealed Article 58(2)b, was passed during whose era?",
+                options: ["Benazir Bhutto", "Pervez Musharraf", "Nawaz Sharif", "Zulfikar Ali Bhutto"],
+                answer: "Nawaz Sharif"
             },
             {
-                question: "How many verses are in Holy Quran?",
-                options: ["5555", "6666", "6667", "6688"],
-                answer: "6666"
+                question: "According to the Islamic Provisions, sovereignty over the entire universe belongs to whom?",
+                options: ["The People of Pakistan", "The Parliament", "Almighty Allah", "The President"],
+                answer: "Almighty Allah"
             },
             {
-                question: "How many Ayat e Mutfarqa are present in the Holy Quran?",
-                options: ["55", "66", "77", "88"],
-                answer: "66"
+                question: "The Second Amendment (1974) of the constitution deals with what specific issue?",
+                options: ["Redefining territories of Pakistan", "Definition of a Muslim", "Fundamental rights", "Powers of the Prime Minister"],
+                answer: "Definition of a Muslim"
             },
             {
-                question: "Which Ayat of the Holy Quran is called Sardar ul Ayat?",
-                options: ["Surah Yaseen", "Ayat-ul-Kursi", "Surah Fateh", "Surah Baqra"],
-                answer: "Ayat-ul-Kursi"
+                question: "What body was established to recommend ways to bring existing laws into conformity with Islamic principles?",
+                options: ["Supreme Court", "Federal Shariat Court", "Council of Islamic Ideology", "Ministry of Religious Affairs"],
+                answer: "Council of Islamic Ideology"
             },
             {
-                question: "Which Alphabet is mostly used in the Holy Quran?",
-                options: ["Alif", "Te", "Jeem", "Dal"],
-                answer: "Alif"
+                question: "The Fourth Amendment (1975) added seats in the National Assembly for whom?",
+                options: ["Technocrats", "Ulema", "Women", "Minority communities"],
+                answer: "Minority communities"
             },
             {
-                question: "How much Madni Surahs of the Holy Quran are there?",
-                options: ["26", "28", "29", "30"],
-                answer: "28"
+                question: "What was the term of office for a Chief Justice of the Supreme Court as per the Fifth Amendment (1976)?",
+                options: ["Three years", "Four years", "Five years", "Until retirement at 65"],
+                answer: "Five years"
             },
             {
-                question: "The Touheed (Kalmah) is pillar of Islam?",
-                options: ["First Pillar of Islam", "Second Pillar of Islam", "Third Pillar of Islam", "Fourth Pillar of Islam"],
-                answer: "First Pillar of Islam"
+                question: "The Twelfth Amendment (1991) led to the establishment of what type of courts for a temporary period?",
+                options: ["Family Courts", "Military Courts", "Special Courts for heinous offences", "Anti-Terrorism Courts"],
+                answer: "Special Courts for heinous offences"
             },
             {
-                question: "The Second Pillar of Islam is?",
-                options: ["Namaz", "Fast", "Touheed", "Zakat"],
-                answer: "Namaz"
+                question: "The Thirteenth Amendment (1997) is famous for removing which article?",
+                options: ["Article 6", "Article 58(2)b", "Article 63A", "Article 245"],
+                answer: "Article 58(2)b"
             },
             {
-                question: "The third pillar of Islam is?",
-                options: ["Zakat", "Fast", "Touheed", "Namaz"],
-                answer: "Zakat"
+                question: "What is the subject of the Fourteenth Amendment (1997), introducing Article 63A?",
+                options: ["Powers of the President", "Disqualification on ground of defection (floor-crossing)", "Economic reforms", "Provincial autonomy"],
+                answer: "Disqualification on ground of defection (floor-crossing)"
             },
             {
-                question: "The 4th pillar of Islam is?",
-                options: ["Namaz", "Fast", "Tauheed", "Zakat"],
-                answer: "Fast"
+                question: "The Sixteenth Amendment (1999) extended the reservation of posts for persons belonging to any class or area from twenty years to how many years?",
+                options: ["25 years", "30 years", "40 years", "50 years"],
+                answer: "40 years"
             },
             {
-                question: "The 5th pillar of Islam is?",
-                options: ["Hajj", "Tauheed", "Namaz", "Zakat"],
-                answer: "Hajj"
+                question: "Who was appointed as the President of Pakistan when the 1973 Constitution was enacted?",
+                options: ["Zulfikar Ali Bhutto", "Yahya Khan", "Fazal Ilahi Chaudhry", "Iskander Mirza"],
+                answer: "Fazal Ilahi Chaudhry"
             },
             {
-                question: "The Soam is a pillar of Islam. It is declared as an?",
-                options: ["Armour", "Love", "Welfare", "None of These"],
-                answer: "Armour"
+                question: "What is the duration of the National Assembly according to the 1973 Constitution?",
+                options: ["4 years", "5 years", "6 years", "At the President's pleasure"],
+                answer: "5 years"
+            },
+             {
+                question: "The Senate, under the 1973 constitution, was to consist of how many members initially?",
+                options: ["60", "63", "80", "100"],
+                answer: "63"
             },
             {
-                question: "The color of the first Islamic flag was?",
-                options: ["Black", "White", "White and Black", "Green"],
-                answer: "White"
+                question: "Which of the following was NOT one of the four federating units of Pakistan mentioned in the constitution?",
+                options: ["Punjab", "Sindh", "Gilgit-Baltistan", "Baluchistan"],
+                answer: "Gilgit-Baltistan"
+            },
+             {
+                question: "Under the 1973 Constitution, who is authorized to appoint the Chief Election Commissioner?",
+                options: ["Prime Minister", "Chief Justice of Supreme Court", "National Assembly", "President"],
+                answer: "President"
             },
             {
-                question: "According to the holy Quran what is the chosen religion of Allah?",
-                options: ["Jewish", "Confucianism", "Islam", "Christian"],
-                answer: "Islam"
+                question: "The Constitution declares any law inconsistent with or in derogatory to fundamental rights as what?",
+                options: ["Subject to review", "Temporarily suspended", "Null and void", "Amendable by Parliament"],
+                answer: "Null and void"
             },
             {
-                question: "The backbone of Islamic system is?",
-                options: ["fitrana", "Sadqa", "Zakat", "None of These"],
-                answer: "Zakat"
+                question: "What does the constitution describe as 'high treason'?",
+                options: ["Speaking against the government", "Abrogating or attempting to subvert the Constitution", "Leaking state secrets", "Refusing to pay taxes"],
+                answer: "Abrogating or attempting to subvert the Constitution"
             },
             {
-                question: "What is the first manifestation of faith in Islam?",
-                options: ["Zakat", "Prayer", "Kalmah", "Hajj"],
-                answer: "Prayer"
+                question: "The Third Amendment (1975) extended the period of preventive detention without review board approval from one month to how long?",
+                options: ["Two months", "Three months", "Six months", "One year"],
+                answer: "Three months"
             },
             {
-                question: "Gathering on Arafat during Hajj is made on?",
-                options: ["9th Zil Hajjah", "3rd Ramazan", "2nd Safar", "18 Shawal"],
-                answer: "9th Zil Hajjah"
+                question: "Which amendment restored the discretionary powers of the President that were enacted by the Eighth Amendment?",
+                options: ["Thirteenth Amendment", "Legal Framework Order of 2002", "Fourteenth Amendment", "Seventeenth Amendment"],
+                answer: "Legal Framework Order of 2002"
             },
             {
-                question: "Qurbani (Holy Slaughtering) is made during Hajj at?",
-                options: ["Arafat", "Mina", "Muzdalifa", "Safa"],
-                answer: "Mina"
-            },
-            {
-                question: "The pillars of Islam in proper order are?",
-                options: ["Salat, Zakat, Soam, Hajj and Shahadatain", "Shahadatain, Salat, Zakat, Soam and Hajj", "Soam, Salat, Zakat, Hajj and Shahadetain", "Shahadatain, Salat,, Hajj, Soam and Zakat"],
-                answer: "Shahadatain, Salat, Zakat, Soam and Hajj"
-            },
-            {
-                question: "Hazrat Muhammad. (SAW) went to Syria with Abu-Talib at the age of?",
-                options: ["12 years", "15 years", "24 years", "35 years"],
-                answer: "12 years"
+                question: "Under the original 1973 constitution, the President was to act on the advice of whom?",
+                options: ["The Chief Justice", "The Cabinet", "The Prime Minister", "The Speaker of the National Assembly"],
+                answer: "The Prime Minister"
             }
         ];
 
         // DOM Elements
-        const loginView = document.getElementById('login-view');
-        const infoView = document.getElementById('info-view');
-        const quizView = document.getElementById('quiz-view');
-        const resultView = document.getElementById('result-view');
-        const adminPanelView = document.getElementById('admin-panel-view');
-
-        const loginForm = document.getElementById('login-form');
+        const loginContainer = document.getElementById('login-container');
         const userIdInput = document.getElementById('user-id');
         const passwordInput = document.getElementById('password');
+        const loginBtn = document.getElementById('login-btn');
         const loginError = document.getElementById('login-error');
 
+        const userDetailsContainer = document.getElementById('user-details-container');
         const candidateNameInput = document.getElementById('candidate-name');
-        const startQuizBtn = document.getElementById('start-quiz-btn');
-        const retakeMessage = document.getElementById('retake-message');
-
-        const timerEl = document.getElementById('timer');
-        const questionContainer = document.getElementById('question-container');
-        const nextBtn = document.getElementById('next-btn');
+        const nameError = document.getElementById('name-error');
+        const startBtn = document.getElementById('start-btn');
         
-        const resultText = document.getElementById('result-text');
+        const quizContainer = document.getElementById('quiz-container');
+        const questionNumberEl = document.getElementById('question-number');
+        const questionTextEl = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const timerEl = document.getElementById('timer');
 
-        const adminViewBtn = document.getElementById('admin-view-btn');
-        const adminResultsContainer = document.getElementById('admin-results-container');
-        const backToLoginBtn = document.getElementById('back-to-login-btn');
+        const resultContainer = document.getElementById('result-container');
+        const resultNameEl = document.getElementById('result-name');
+        const scoreEl = document.getElementById('score');
+        const percentageEl = document.getElementById('percentage');
 
+        const adminToggleBtn = document.getElementById('admin-toggle-btn');
+        const adminPanel = document.getElementById('admin-panel');
+        const adminResultsTableBody = document.querySelector('#admin-results-table tbody');
+        const noResultsEl = document.getElementById('no-results');
 
         // Quiz State
         let currentQuestionIndex = 0;
         let score = 0;
         let timer;
-        let userAnswers = [];
+        let candidateName = '';
+        let quizFinished = false;
+        let allResults = [];
 
-        // --- Functions ---
 
-        function switchView(viewId) {
-            document.querySelectorAll('.container-view').forEach(view => {
-                view.classList.remove('active-view');
-            });
-            document.getElementById(viewId).classList.add('active-view');
-        }
+        // Event Listeners
+        loginBtn.addEventListener('click', handleLogin);
+        startBtn.addEventListener('click', startQuiz);
+        adminToggleBtn.addEventListener('click', toggleAdminPanel);
 
-        function handleLogin(e) {
-            e.preventDefault();
-            const id = userIdInput.value.trim();
+        function handleLogin() {
+            const userId = userIdInput.value.trim();
             const password = passwordInput.value.trim();
+            loginError.textContent = '';
 
-            if (id === '1111' && password === '2222') {
-                switchView('info-view');
-                loginError.textContent = '';
-                loginForm.reset();
+            if (userId === '1111' && password === '2222') {
+                loginContainer.classList.add('hidden');
+                userDetailsContainer.classList.remove('hidden');
             } else {
                 loginError.textContent = 'Invalid ID or Password. Please try again.';
             }
         }
-
-        function handleStartQuiz() {
-            const candidateName = candidateNameInput.value.trim();
-            if (!candidateName) {
-                alert('Please enter your name.');
-                return;
-            }
-
-            const results = JSON.parse(localStorage.getItem('quizResults')) || [];
-            const hasAttempted = results.some(result => result.name.toLowerCase() === candidateName.toLowerCase());
-
-            if (hasAttempted) {
-                retakeMessage.textContent = 'You have already attempted this quiz. You cannot retake it.';
-                retakeMessage.classList.remove('hidden');
-                candidateNameInput.disabled = true;
-                startQuizBtn.disabled = true;
-                startQuizBtn.classList.add('opacity-50', 'cursor-not-allowed');
-            } else {
-                startQuiz();
-            }
-        }
-
-        function startQuiz() {
-            switchView('quiz-view');
-            currentQuestionIndex = 0;
-            score = 0;
-            userAnswers = [];
-            showQuestion();
-            startTimer();
-        }
-
-        function showQuestion() {
-            const currentQuestion = quizData[currentQuestionIndex];
-            questionContainer.innerHTML = `
-                <div class="bg-white p-6 rounded-lg shadow-inner">
-                    <p class="text-xl md:text-2xl font-semibold mb-6 text-gray-800">${currentQuestionIndex + 1}. ${currentQuestion.question}</p>
-                    <div class="space-y-4">
-                        ${currentQuestion.options.map((option, index) => `
-                            <label class="flex items-center p-4 bg-gray-50 rounded-lg border-2 border-gray-200 hover:bg-blue-100 hover:border-blue-300 cursor-pointer transition-colors">
-                                <input type="radio" name="option" value="${option}" class="form-radio h-5 w-5 text-blue-600">
-                                <span class="ml-4 text-lg text-gray-700">${option}</span>
-                            </label>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-            if (currentQuestionIndex === quizData.length - 1) {
-                nextBtn.textContent = 'Submit';
-            } else {
-                nextBtn.textContent = 'Next';
-            }
-        }
-
-        function handleNextQuestion() {
-            const selectedOption = document.querySelector('input[name="option"]:checked');
-            if (!selectedOption) {
-                alert('Please select an answer.');
-                return;
-            }
-            userAnswers[currentQuestionIndex] = selectedOption.value;
-
-            currentQuestionIndex++;
-            if (currentQuestionIndex < quizData.length) {
-                showQuestion();
-            } else {
-                submitQuiz();
-            }
-        }
         
-        function submitQuiz() {
-            clearInterval(timer);
-            // Calculate score
-            quizData.forEach((question, index) => {
-                if (userAnswers[index] === question.answer) {
-                    score++;
-                }
+        function startQuiz() {
+            candidateName = candidateNameInput.value.trim();
+            if (candidateName === '') {
+                nameError.textContent = 'Please enter your name.';
+                return;
+            }
+            nameError.textContent = '';
+            
+            userDetailsContainer.classList.add('hidden');
+            quizContainer.classList.remove('hidden');
+            
+            startTimer(25 * 60);
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            if (currentQuestionIndex >= quizQuestions.length || quizFinished) {
+                endQuiz();
+                return;
+            }
+
+            const currentQuestion = quizQuestions[currentQuestionIndex];
+            questionNumberEl.textContent = `Question ${currentQuestionIndex + 1} of ${quizQuestions.length}`;
+            questionTextEl.textContent = currentQuestion.question;
+            optionsContainer.innerHTML = '';
+
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('w-full', 'p-4', 'border', 'border-slate-300', 'rounded-lg', 'text-left', 'hover:bg-slate-100', 'transition', 'duration-200');
+                button.onclick = () => selectAnswer(button, option, currentQuestion.answer);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function selectAnswer(button, selectedOption, correctAnswer) {
+            // Disable all options
+            Array.from(optionsContainer.children).forEach(btn => {
+                btn.classList.add('disabled-option');
             });
 
-            saveResult();
-            showResult();
+            if (selectedOption === correctAnswer) {
+                score++;
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+                // Find and highlight the correct answer
+                Array.from(optionsContainer.children).forEach(btn => {
+                    if (btn.textContent === correctAnswer) {
+                        btn.classList.add('correct');
+                    }
+                });
+            }
+
+            currentQuestionIndex++;
+            setTimeout(displayQuestion, 1500); // Wait 1.5 seconds before next question
         }
 
-        function saveResult() {
-            const candidateName = candidateNameInput.value.trim();
-            const results = JSON.parse(localStorage.getItem('quizResults')) || [];
-            const newResult = {
-                name: candidateName,
-                score: score,
-                total: quizData.length,
-                date: new Date().toLocaleString()
-            };
-            results.push(newResult);
-            localStorage.setItem('quizResults', JSON.stringify(results));
-        }
-
-        function showResult() {
-            resultText.textContent = `You scored ${score} out of ${quizData.length}!`;
-            switchView('result-view');
-        }
-
-        function startTimer() {
-            let time = 20 * 60; // 20 minutes in seconds
+        function startTimer(duration) {
+            let remaining = duration;
             timer = setInterval(() => {
-                let minutes = Math.floor(time / 60);
-                let seconds = time % 60;
-                minutes = minutes < 10 ? '0' + minutes : minutes;
-                seconds = seconds < 10 ? '0' + seconds : seconds;
-                timerEl.textContent = `${minutes}:${seconds}`;
-                time--;
+                let minutes = parseInt(remaining / 60, 10);
+                let seconds = parseInt(remaining % 60, 10);
 
-                if (time < 0) {
-                    clearInterval(timer);
-                    alert("Time's up!");
-                    submitQuiz();
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                timerEl.textContent = `${minutes}:${seconds}`;
+
+                if (--remaining < 0) {
+                    endQuiz();
                 }
             }, 1000);
         }
 
-        function showAdminPanel() {
-            const password = prompt("Enter admin password:");
-            if (password === "admin2222") { // A simple admin password
-                 const results = JSON.parse(localStorage.getItem('quizResults')) || [];
-                if (results.length === 0) {
-                    adminResultsContainer.innerHTML = `<p class="text-center text-gray-600">No results found yet.</p>`;
-                } else {
-                    const tableHeader = `
-                        <thead class="bg-gray-200">
-                            <tr>
-                                <th class="p-3 text-left text-sm font-semibold text-gray-700">#</th>
-                                <th class="p-3 text-left text-sm font-semibold text-gray-700">Candidate Name</th>
-                                <th class="p-3 text-left text-sm font-semibold text-gray-700">Score</th>
-                                <th class="p-3 text-left text-sm font-semibold text-gray-700">Date</th>
-                            </tr>
-                        </thead>
-                    `;
-                    const tableBody = results.map((result, index) => `
-                        <tr class="border-b hover:bg-gray-50">
-                            <td class="p-3 text-gray-700">${index + 1}</td>
-                            <td class="p-3 text-gray-700 font-medium">${result.name}</td>
-                            <td class="p-3 text-gray-700">${result.score} / ${result.total}</td>
-                            <td class="p-3 text-gray-700">${result.date}</td>
-                        </tr>
-                    `).join('');
-                    adminResultsContainer.innerHTML = `
-                        <table class="w-full">
-                            ${tableHeader}
-                            <tbody>${tableBody}</tbody>
-                        </table>
-                    `;
-                }
-                switchView('admin-panel-view');
-            } else {
-                alert("Incorrect admin password.");
-            }
+        function endQuiz() {
+            if (quizFinished) return;
+            quizFinished = true;
+            
+            clearInterval(timer);
+            quizContainer.classList.add('hidden');
+            resultContainer.classList.remove('hidden');
+            
+            const percentage = ((score / quizQuestions.length) * 100).toFixed(1);
+            resultNameEl.textContent = candidateName;
+            scoreEl.textContent = `${score} / ${quizQuestions.length}`;
+            percentageEl.textContent = `Percentage: ${percentage}%`;
+
+            // Save result for admin panel
+            allResults.push({ name: candidateName, score: `${score} / ${quizQuestions.length}` });
+            updateAdminPanel();
         }
 
+        function toggleAdminPanel() {
+            const panel = document.getElementById('admin-panel');
+            if (panel.style.display === 'none' || panel.style.display === '') {
+                panel.style.display = 'block';
+                adminToggleBtn.textContent = 'Hide Admin Panel';
+            } else {
+                panel.style.display = 'none';
+                adminToggleBtn.textContent = 'View Admin Panel';
+            }
+        }
+        
+        function updateAdminPanel() {
+            adminResultsTableBody.innerHTML = ''; // Clear previous results
+            if (allResults.length > 0) {
+                noResultsEl.style.display = 'none';
+                adminResultsTableBody.parentElement.style.display = 'table';
+                allResults.forEach(result => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="py-3 px-4 border-b">${result.name}</td>
+                        <td class="py-3 px-4 border-b">${result.score}</td>
+                    `;
+                    adminResultsTableBody.appendChild(row);
+                });
+            } else {
+                noResultsEl.style.display = 'block';
+                adminResultsTableBody.parentElement.style.display = 'none';
+            }
+        }
+        
+        // Initial call to set up admin panel view
+        updateAdminPanel();
 
-        // Event Listeners
-        loginForm.addEventListener('submit', handleLogin);
-        startQuizBtn.addEventListener('click', handleStartQuiz);
-        nextBtn.addEventListener('click', handleNextQuestion);
-        adminViewBtn.addEventListener('click', showAdminPanel);
-        backToLoginBtn.addEventListener('click', () => switchView('login-view'));
     </script>
 </body>
 </html>
+
+       
+        
+
+               
+      
