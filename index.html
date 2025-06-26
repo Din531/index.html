@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamic Studies Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .container-view {
+            display: none;
+        }
+        .active-view {
+            display: block;
+        }
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+         .btn-primary {
+            @apply w-full px-6 py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition-transform transform hover:scale-105;
+        }
+        .input-field {
+            @apply w-full px-4 py-3 bg-gray-100 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4 bg-cover" style="background-image: url('https://placehold.co/1920x1080/e0e7ff/ffffff?text=Islamic+Quiz');">
+
+    <div id="main-container" class="w-full max-w-2xl mx-auto">
+
+        <!-- Login View -->
+        <div id="login-view" class="container-view active-view p-8 rounded-2xl shadow-2xl glassmorphism">
+            <h1 class="text-3xl font-bold text-center text-gray-800 mb-2">Quiz Portal Login</h1>
+            <p class="text-center text-gray-600 mb-8">Please enter your credentials to proceed.</p>
+            <form id="login-form">
+                <div class="mb-4">
+                    <label for="user-id" class="block text-gray-700 font-medium mb-2">ID</label>
+                    <input type="text" id="user-id" class="input-field" placeholder="Enter ID" required>
+                </div>
+                <div class="mb-6">
+                    <label for="password" class="block text-gray-700 font-medium mb-2">Password</label>
+                    <input type="password" id="password" class="input-field" placeholder="Enter Password" required>
+                </div>
+                <p id="login-error" class="text-red-500 text-center mb-4"></p>
+                <button type="submit" class="btn-primary">Login</button>
+            </form>
+             <div class="text-center mt-6">
+                <button id="admin-view-btn" class="text-sm text-blue-600 hover:underline">Admin View</button>
+            </div>
+        </div>
+
+        <!-- Candidate Info View -->
+        <div id="info-view" class="container-view p-8 rounded-2xl shadow-2xl glassmorphism">
+            <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Welcome, Candidate!</h1>
+            <p id="retake-message" class="text-center text-red-500 mb-4 hidden"></p>
+            <div class="mb-6">
+                <label for="candidate-name" class="block text-gray-700 font-medium mb-2">Enter Your Full Name</label>
+                <input type="text" id="candidate-name" class="input-field" placeholder="e.g., John Doe" required>
+            </div>
+            <button id="start-quiz-btn" class="btn-primary">Start Quiz</button>
+        </div>
+
+        <!-- Quiz View -->
+        <div id="quiz-view" class="container-view p-6 md:p-8 rounded-2xl shadow-2xl glassmorphism">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Islamic Studies Quiz</h2>
+                <div id="timer" class="text-xl font-bold text-red-600 bg-white px-4 py-2 rounded-lg shadow">20:00</div>
+            </div>
+            <div id="question-container">
+                <!-- Question will be injected here -->
+            </div>
+            <div class="flex justify-end mt-8">
+                <button id="next-btn" class="px-8 py-3 text-lg font-semibold text-white bg-green-600 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition-transform transform hover:scale-105">Next</button>
+            </div>
+        </div>
+
+        <!-- Result View -->
+        <div id="result-view" class="container-view text-center p-8 rounded-2xl shadow-2xl glassmorphism">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Quiz Completed!</h1>
+            <p id="result-text" class="text-2xl text-gray-700 mb-8"></p>
+            <p class="text-gray-600">Thank you for participating. Your result has been recorded.</p>
+            <p class="text-gray-500 mt-2 text-sm">You cannot restart the quiz.</p>
+        </div>
+
+        <!-- Admin Panel View -->
+        <div id="admin-panel-view" class="container-view p-8 rounded-2xl shadow-2xl glassmorphism">
+            <div class="flex justify-between items-center mb-6">
+                 <h1 class="text-3xl font-bold text-gray-800">Admin Panel: All Results</h1>
+                 <button id="back-to-login-btn" class="px-4 py-2 text-sm font-semibold text-white bg-gray-500 rounded-lg hover:bg-gray-600">Back to Login</button>
+            </div>
+            <div id="admin-results-container" class="overflow-x-auto bg-white rounded-lg p-4">
+                <!-- Admin results table will be injected here -->
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "How much camels were sacrificed on the occasion of Hajj by Hazrat Muhammad (P.B.U.H)?",
+                options: ["60 camels", "63 camels", "65 camels", "67 camels"],
+                answer: "63 camels"
+            },
+            {
+                question: "Who performed first Hajj Bait-Ullah?",
+                options: ["Hazrat Ibrahim and Hazrat Ismail (A.S)", "Hazrat Adam (A.S) and Hazrat Hawa (A.S)", "Hazrat Ibrahim (A.S) and Hazrat Hajira (A.S)", "None of them"],
+                answer: "Hazrat Adam (A.S) and Hazrat Hawa (A.S)"
+            },
+            {
+                question: "What is verbal meaning of divine revelation (Wahi)?",
+                options: ["To point out or to give message", "To Talk", "To order", "None of these"],
+                answer: "To point out or to give message"
+            },
+            {
+                question: "How many kinds of Wahi are there?",
+                options: ["Two", "Three", "Four", "Seven"],
+                answer: "Two"
+            },
+            {
+                question: "Which angel came to Hazrat Muhammad (P.B.U.H) with Wahi?",
+                options: ["Hazrat Mekail (A.S)", "Hazrat Esrafeel (A.S)", "Hazrat Jibbrail (A.S)", "Hazrat Ezrail (A.S)"],
+                answer: "Hazrat Jibbrail (A.S)"
+            },
+            {
+                question: "In which Islamic month, first Wahi was decended?",
+                options: ["Rajab-ul-Murajab", "Safr", "Rabi-ul-Sani", "Ramzan-ul-Mubarik"],
+                answer: "Ramzan-ul-Mubarik"
+            },
+            {
+                question: "What was the age of Rasool Ullah (P.B.U.H) at the time of First Wahi?",
+                options: ["40 Years 6 months", "40 Years 8 months", "40 Years 10 months", "40 Years 11 months"],
+                answer: "40 Years 6 months"
+            },
+            {
+                question: "On which place, first Wahi was decended?",
+                options: ["Sore Cave", "Hira Cave", "Khana-Kaaba", "None of them"],
+                answer: "Hira Cave"
+            },
+            {
+                question: "How many verses (Ayats) were in first Wahi?",
+                options: ["2", "3", "4", "5"],
+                answer: "5"
+            },
+            {
+                question: "To which Suhabi responsibility was given for collection of the Holy Quran by Hazrat Abu Bakr Siddique (R.A)?",
+                options: ["Hazrat Umar bin Wahab (R.A)", "Hzrat Saeed bin Alaas (R.A)", "Hazrat Zaid bin Sabit (R.A)", "Hazrat Ali (R.A)"],
+                answer: "Hazrat Zaid bin Sabit (R.A)"
+            },
+            {
+                question: "How many Rakus are in the Holy Quran?",
+                options: ["460", "490", "558", "570"],
+                answer: "558"
+            },
+            {
+                question: "How many verses are in Holy Quran?",
+                options: ["5555", "6666", "6667", "6688"],
+                answer: "6666"
+            },
+            {
+                question: "How many Ayat e Mutfarqa are present in the Holy Quran?",
+                options: ["55", "66", "77", "88"],
+                answer: "66"
+            },
+            {
+                question: "Which Ayat of the Holy Quran is called Sardar ul Ayat?",
+                options: ["Surah Yaseen", "Ayat-ul-Kursi", "Surah Fateh", "Surah Baqra"],
+                answer: "Ayat-ul-Kursi"
+            },
+            {
+                question: "Which Alphabet is mostly used in the Holy Quran?",
+                options: ["Alif", "Te", "Jeem", "Dal"],
+                answer: "Alif"
+            },
+            {
+                question: "How much Madni Surahs of the Holy Quran are there?",
+                options: ["26", "28", "29", "30"],
+                answer: "28"
+            },
+            {
+                question: "The Touheed (Kalmah) is pillar of Islam?",
+                options: ["First Pillar of Islam", "Second Pillar of Islam", "Third Pillar of Islam", "Fourth Pillar of Islam"],
+                answer: "First Pillar of Islam"
+            },
+            {
+                question: "The Second Pillar of Islam is?",
+                options: ["Namaz", "Fast", "Touheed", "Zakat"],
+                answer: "Namaz"
+            },
+            {
+                question: "The third pillar of Islam is?",
+                options: ["Zakat", "Fast", "Touheed", "Namaz"],
+                answer: "Zakat"
+            },
+            {
+                question: "The 4th pillar of Islam is?",
+                options: ["Namaz", "Fast", "Tauheed", "Zakat"],
+                answer: "Fast"
+            },
+            {
+                question: "The 5th pillar of Islam is?",
+                options: ["Hajj", "Tauheed", "Namaz", "Zakat"],
+                answer: "Hajj"
+            },
+            {
+                question: "The Soam is a pillar of Islam. It is declared as an?",
+                options: ["Armour", "Love", "Welfare", "None of These"],
+                answer: "Armour"
+            },
+            {
+                question: "The color of the first Islamic flag was?",
+                options: ["Black", "White", "White and Black", "Green"],
+                answer: "White"
+            },
+            {
+                question: "According to the holy Quran what is the chosen religion of Allah?",
+                options: ["Jewish", "Confucianism", "Islam", "Christian"],
+                answer: "Islam"
+            },
+            {
+                question: "The backbone of Islamic system is?",
+                options: ["fitrana", "Sadqa", "Zakat", "None of These"],
+                answer: "Zakat"
+            },
+            {
+                question: "What is the first manifestation of faith in Islam?",
+                options: ["Zakat", "Prayer", "Kalmah", "Hajj"],
+                answer: "Prayer"
+            },
+            {
+                question: "Gathering on Arafat during Hajj is made on?",
+                options: ["9th Zil Hajjah", "3rd Ramazan", "2nd Safar", "18 Shawal"],
+                answer: "9th Zil Hajjah"
+            },
+            {
+                question: "Qurbani (Holy Slaughtering) is made during Hajj at?",
+                options: ["Arafat", "Mina", "Muzdalifa", "Safa"],
+                answer: "Mina"
+            },
+            {
+                question: "The pillars of Islam in proper order are?",
+                options: ["Salat, Zakat, Soam, Hajj and Shahadatain", "Shahadatain, Salat, Zakat, Soam and Hajj", "Soam, Salat, Zakat, Hajj and Shahadetain", "Shahadatain, Salat,, Hajj, Soam and Zakat"],
+                answer: "Shahadatain, Salat, Zakat, Soam and Hajj"
+            },
+            {
+                question: "Hazrat Muhammad. (SAW) went to Syria with Abu-Talib at the age of?",
+                options: ["12 years", "15 years", "24 years", "35 years"],
+                answer: "12 years"
+            }
+        ];
+
+        // DOM Elements
+        const loginView = document.getElementById('login-view');
+        const infoView = document.getElementById('info-view');
+        const quizView = document.getElementById('quiz-view');
+        const resultView = document.getElementById('result-view');
+        const adminPanelView = document.getElementById('admin-panel-view');
+
+        const loginForm = document.getElementById('login-form');
+        const userIdInput = document.getElementById('user-id');
+        const passwordInput = document.getElementById('password');
+        const loginError = document.getElementById('login-error');
+
+        const candidateNameInput = document.getElementById('candidate-name');
+        const startQuizBtn = document.getElementById('start-quiz-btn');
+        const retakeMessage = document.getElementById('retake-message');
+
+        const timerEl = document.getElementById('timer');
+        const questionContainer = document.getElementById('question-container');
+        const nextBtn = document.getElementById('next-btn');
+        
+        const resultText = document.getElementById('result-text');
+
+        const adminViewBtn = document.getElementById('admin-view-btn');
+        const adminResultsContainer = document.getElementById('admin-results-container');
+        const backToLoginBtn = document.getElementById('back-to-login-btn');
+
+
+        // Quiz State
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timer;
+        let userAnswers = [];
+
+        // --- Functions ---
+
+        function switchView(viewId) {
+            document.querySelectorAll('.container-view').forEach(view => {
+                view.classList.remove('active-view');
+            });
+            document.getElementById(viewId).classList.add('active-view');
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const id = userIdInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            if (id === '1111' && password === '2222') {
+                switchView('info-view');
+                loginError.textContent = '';
+                loginForm.reset();
+            } else {
+                loginError.textContent = 'Invalid ID or Password. Please try again.';
+            }
+        }
+
+        function handleStartQuiz() {
+            const candidateName = candidateNameInput.value.trim();
+            if (!candidateName) {
+                alert('Please enter your name.');
+                return;
+            }
+
+            const results = JSON.parse(localStorage.getItem('quizResults')) || [];
+            const hasAttempted = results.some(result => result.name.toLowerCase() === candidateName.toLowerCase());
+
+            if (hasAttempted) {
+                retakeMessage.textContent = 'You have already attempted this quiz. You cannot retake it.';
+                retakeMessage.classList.remove('hidden');
+                candidateNameInput.disabled = true;
+                startQuizBtn.disabled = true;
+                startQuizBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                startQuiz();
+            }
+        }
+
+        function startQuiz() {
+            switchView('quiz-view');
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            showQuestion();
+            startTimer();
+        }
+
+        function showQuestion() {
+            const currentQuestion = quizData[currentQuestionIndex];
+            questionContainer.innerHTML = `
+                <div class="bg-white p-6 rounded-lg shadow-inner">
+                    <p class="text-xl md:text-2xl font-semibold mb-6 text-gray-800">${currentQuestionIndex + 1}. ${currentQuestion.question}</p>
+                    <div class="space-y-4">
+                        ${currentQuestion.options.map((option, index) => `
+                            <label class="flex items-center p-4 bg-gray-50 rounded-lg border-2 border-gray-200 hover:bg-blue-100 hover:border-blue-300 cursor-pointer transition-colors">
+                                <input type="radio" name="option" value="${option}" class="form-radio h-5 w-5 text-blue-600">
+                                <span class="ml-4 text-lg text-gray-700">${option}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            if (currentQuestionIndex === quizData.length - 1) {
+                nextBtn.textContent = 'Submit';
+            } else {
+                nextBtn.textContent = 'Next';
+            }
+        }
+
+        function handleNextQuestion() {
+            const selectedOption = document.querySelector('input[name="option"]:checked');
+            if (!selectedOption) {
+                alert('Please select an answer.');
+                return;
+            }
+            userAnswers[currentQuestionIndex] = selectedOption.value;
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                showQuestion();
+            } else {
+                submitQuiz();
+            }
+        }
+        
+        function submitQuiz() {
+            clearInterval(timer);
+            // Calculate score
+            quizData.forEach((question, index) => {
+                if (userAnswers[index] === question.answer) {
+                    score++;
+                }
+            });
+
+            saveResult();
+            showResult();
+        }
+
+        function saveResult() {
+            const candidateName = candidateNameInput.value.trim();
+            const results = JSON.parse(localStorage.getItem('quizResults')) || [];
+            const newResult = {
+                name: candidateName,
+                score: score,
+                total: quizData.length,
+                date: new Date().toLocaleString()
+            };
+            results.push(newResult);
+            localStorage.setItem('quizResults', JSON.stringify(results));
+        }
+
+        function showResult() {
+            resultText.textContent = `You scored ${score} out of ${quizData.length}!`;
+            switchView('result-view');
+        }
+
+        function startTimer() {
+            let time = 20 * 60; // 20 minutes in seconds
+            timer = setInterval(() => {
+                let minutes = Math.floor(time / 60);
+                let seconds = time % 60;
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+                timerEl.textContent = `${minutes}:${seconds}`;
+                time--;
+
+                if (time < 0) {
+                    clearInterval(timer);
+                    alert("Time's up!");
+                    submitQuiz();
+                }
+            }, 1000);
+        }
+
+        function showAdminPanel() {
+            const password = prompt("Enter admin password:");
+            if (password === "admin2222") { // A simple admin password
+                 const results = JSON.parse(localStorage.getItem('quizResults')) || [];
+                if (results.length === 0) {
+                    adminResultsContainer.innerHTML = `<p class="text-center text-gray-600">No results found yet.</p>`;
+                } else {
+                    const tableHeader = `
+                        <thead class="bg-gray-200">
+                            <tr>
+                                <th class="p-3 text-left text-sm font-semibold text-gray-700">#</th>
+                                <th class="p-3 text-left text-sm font-semibold text-gray-700">Candidate Name</th>
+                                <th class="p-3 text-left text-sm font-semibold text-gray-700">Score</th>
+                                <th class="p-3 text-left text-sm font-semibold text-gray-700">Date</th>
+                            </tr>
+                        </thead>
+                    `;
+                    const tableBody = results.map((result, index) => `
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-3 text-gray-700">${index + 1}</td>
+                            <td class="p-3 text-gray-700 font-medium">${result.name}</td>
+                            <td class="p-3 text-gray-700">${result.score} / ${result.total}</td>
+                            <td class="p-3 text-gray-700">${result.date}</td>
+                        </tr>
+                    `).join('');
+                    adminResultsContainer.innerHTML = `
+                        <table class="w-full">
+                            ${tableHeader}
+                            <tbody>${tableBody}</tbody>
+                        </table>
+                    `;
+                }
+                switchView('admin-panel-view');
+            } else {
+                alert("Incorrect admin password.");
+            }
+        }
+
+
+        // Event Listeners
+        loginForm.addEventListener('submit', handleLogin);
+        startQuizBtn.addEventListener('click', handleStartQuiz);
+        nextBtn.addEventListener('click', handleNextQuestion);
+        adminViewBtn.addEventListener('click', showAdminPanel);
+        backToLoginBtn.addEventListener('click', () => switchView('login-view'));
+    </script>
+</body>
+</html>
