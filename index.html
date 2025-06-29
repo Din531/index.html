@@ -4,618 +4,684 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plato's Philosophy Quiz</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f8ff; /* Alice Blue */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-            box-sizing: border-box;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            color: #333;
+            line-height: 1.6;
         }
         .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
             background-color: #ffffff;
-            padding: 30px;
-            border-radius: 15px;
+            border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 700px;
-            box-sizing: border-box;
+            position: relative;
         }
-        .question-container {
-            margin-bottom: 20px;
-        }
-        .option-button {
-            display: block;
-            width: 100%;
-            padding: 12px 15px;
+        /* Removed display:none from .quiz-section so initial sections can be controlled by inline style */
+
+        .quiz-option {
+            background-color: #e0f2f7; /* Light cyan */
+            border: 1px solid #b2ebf2; /* Lighter blue border */
+            padding: 12px 18px;
             margin-bottom: 10px;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            background-color: #f8f8f8;
-            text-align: left;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s, border-color 0.3s, transform 0.2s;
-            font-size: 16px;
-            color: #333;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-size: 1.05rem;
+            color: #212121;
         }
-        .option-button:hover:not(.correct):not(.incorrect):not(.disabled) {
-            background-color: #e6e6e6;
-            border-color: #d0d0d0;
+        .quiz-option:hover {
+            background-color: #b2ebf2; /* Lighter blue on hover */
             transform: translateY(-2px);
         }
-        .option-button.correct {
-            background-color: #d4edda; /* Light green */
-            border-color: #28a745;
-            color: #155724;
-            font-weight: bold;
+        .quiz-option.selected {
+            background-color: #81d4fa; /* Medium blue when selected */
+            border-color: #039be5; /* Darker blue border */
+            color: #000;
         }
-        .option-button.incorrect {
-            background-color: #f8d7da; /* Light red */
-            border-color: #dc3545;
-            color: #721c24;
-            font-weight: bold;
+        .quiz-option.correct {
+            background-color: #a5d6a7; /* Light green for correct */
+            border-color: #4caf50; /* Green border */
+            color: #000;
+            font-weight: 600;
         }
-        .option-button.disabled {
-            cursor: not-allowed;
-            opacity: 0.7;
+        .quiz-option.incorrect {
+            background-color: #ef9a9a; /* Light red for incorrect */
+            border-color: #f44336; /* Red border */
+            color: #000;
         }
-        .start-screen, .end-screen, .auth-screen {
+        .button-primary {
+            background-color: #03a9f4; /* Deep sky blue */
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(3, 169, 244, 0.3);
             text-align: center;
+            display: inline-block;
         }
-        .timer-bar-container {
-            width: 100%;
+        .button-primary:hover {
+            background-color: #0288d1; /* Darker blue on hover */
+            transform: translateY(-1px);
+        }
+        .button-disabled {
             background-color: #e0e0e0;
-            border-radius: 5px;
-            margin-top: 15px;
-            overflow: hidden;
+            color: #9e9e9e;
+            cursor: not-allowed;
+            box-shadow: none;
         }
-        .timer-bar {
-            height: 15px;
-            background-color: #4CAF50; /* Green */
-            width: 100%;
-            border-radius: 5px;
-            transition: width linear;
+        .timer {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0288d1;
+            text-align: right;
+            margin-bottom: 15px;
         }
-        .message-box {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
-            z-index: 1000;
+        .question-number {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #424242;
+            margin-bottom: 10px;
+        }
+        .question-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #212121;
+        }
+        #result-section {
+            display: none;
             text-align: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-            max-width: 90%;
         }
-        .message-box.show {
-            opacity: 1;
-            visibility: visible;
+        #result-section h2 {
+            color: #0288d1;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
         }
-        .overlay {
-            position: fixed;
-            top: 0;
+        #result-section p {
+            font-size: 1.4rem;
+            color: #424242;
+        }
+        #admin-panel {
+            display: none;
+            margin-top: 30px;
+            border-top: 2px solid #e0e0e0;
+            padding-top: 20px;
+        }
+        #admin-panel h3 {
+            font-size: 1.8rem;
+            color: #0288d1;
+            margin-bottom: 15px;
+        }
+        #admin-results-list li {
+            background-color: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            font-size: 1.1rem;
+        }
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
         }
-        .overlay.show {
-            opacity: 1;
-            visibility: visible;
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .error-message {
+            color: #f44336;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
         }
     </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
-
+<body class="p-4">
     <div class="container">
-        <!-- Auth Screen -->
-        <div id="auth-screen" class="auth-screen">
-            <h2 class="text-2xl font-bold mb-6 text-gray-800">Welcome to Plato's Philosophy Quiz!</h2>
+        <div class="flex justify-center items-center mb-6">
+            <h1 class="text-3xl font-bold text-blue-700">Plato's Philosophy Quiz</h1>
+        </div>
+
+        <!-- Auth Section -->
+        <div id="auth-section" class="text-center" style="display: block;">
+            <h2 class="text-2xl font-semibold mb-6">Welcome to the Quiz!</h2>
+            <p class="mb-4 text-gray-700">Please enter your ID and Password to proceed.</p>
             <div class="mb-4">
-                <input type="text" id="admin-id" placeholder="Enter ID" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="text" id="admin-id" placeholder="Enter ID" class="p-3 border border-gray-300 rounded-lg w-full max-w-xs focus:outline-none focus:ring-2 focus:ring-blue-400">
             </div>
             <div class="mb-6">
-                <input type="password" id="admin-password" placeholder="Enter Password" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="password" id="admin-password" placeholder="Enter Password" class="p-3 border border-gray-300 rounded-lg w-full max-w-xs focus:outline-none focus:ring-2 focus:ring-blue-400">
             </div>
-            <button id="auth-button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105">
-                Login
-            </button>
-            <p id="auth-message" class="text-red-500 mt-3"></p>
+            <button id="login-button" class="button-primary">Login</button>
+            <p id="login-error" class="error-message"></p>
         </div>
 
-        <!-- Start Screen -->
-        <div id="start-screen" class="start-screen hidden">
-            <h2 class="text-2xl font-bold mb-6 text-gray-800">Plato's Philosophy Quiz</h2>
-            <p class="mb-4 text-gray-700">Test your knowledge on Plato's early life, famous quotes, and core philosophical ideas.</p>
-            <div class="mb-6">
-                <input type="text" id="candidate-name" placeholder="Enter your name" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-            </div>
-            <button id="start-button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105">
-                Start Quiz
-            </button>
-            <p id="name-error" class="text-red-500 mt-3"></p>
+        <!-- Start Section -->
+        <div id="start-section" class="text-center" style="display: none;">
+            <h2 class="text-2xl font-semibold mb-6">Ready to Start?</h2>
+            <p class="mb-4 text-gray-700">Please enter your name to begin the quiz.</p>
+            <input type="text" id="candidate-name" placeholder="Your Name" class="p-3 border border-gray-300 rounded-lg w-full max-w-sm mb-6 focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <button id="start-quiz-button" class="button-primary">Start Quiz</button>
         </div>
 
-        <!-- Quiz Screen -->
-        <div id="quiz-screen" class="hidden">
-            <div class="flex justify-between items-center mb-4">
-                <p class="text-lg font-semibold text-gray-700">Question <span id="question-number">1</span> / <span id="total-questions">20</span></p>
-                <div class="flex items-center">
-                    <p class="text-lg font-semibold text-gray-700 mr-2">Time Left:</p>
-                    <span id="timer" class="text-lg font-bold text-blue-600">15:00</span>
-                </div>
+        <!-- Quiz Section -->
+        <div id="quiz-section" style="display: none;">
+            <div class="timer" id="timer">20:00</div>
+            <div id="question-container">
+                <!-- Questions will be loaded here by JavaScript -->
             </div>
-            <div class="timer-bar-container">
-                <div id="timer-bar" class="timer-bar" style="width: 100%;"></div>
+            <div class="flex justify-between mt-6">
+                <button id="prev-button" class="button-primary button-disabled" disabled>Previous</button>
+                <button id="next-button" class="button-primary">Next</button>
+                <button id="submit-quiz-button" class="button-primary hidden">Submit Quiz</button>
             </div>
-            <div class="question-container mt-6">
-                <p id="question-text" class="text-xl font-medium mb-4 text-gray-900"></p>
-                <div id="options-container">
-                    <!-- Options will be loaded here by JavaScript -->
-                </div>
-            </div>
-            <button id="next-button" class="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105 w-full">
-                Next Question
-            </button>
         </div>
 
-        <!-- End Screen -->
-        <div id="end-screen" class="end-screen hidden">
-            <h2 class="text-2xl font-bold mb-6 text-gray-800">Quiz Completed!</h2>
-            <p class="text-xl mb-4 text-gray-700">Candidate: <span id="final-candidate-name" class="font-semibold"></span></p>
-            <p class="text-xl mb-6 text-gray-700">Your Score: <span id="final-score" class="font-bold text-blue-600"></span> / <span id="final-total-questions" class="font-bold text-gray-800"></span></p>
-            <p id="restart-message" class="text-red-500 mt-4 hidden">You cannot restart the quiz.</p>
+        <!-- Result Section -->
+        <div id="result-section" style="display: none;">
+            <h2 class="text-2xl font-bold">Quiz Complete!</h2>
+            <p class="text-xl mb-4">Candidate: <span id="final-candidate-name" class="font-semibold"></span></p>
+            <p class="text-xl mb-4">Your Score: <span id="score" class="font-bold text-blue-600"></span> / <span id="total-questions" class="font-bold"></span></p>
+            <div id="admin-panel" class="hidden">
+                <h3 class="text-xl font-bold">Admin Results</h3>
+                <ul id="admin-results-list" class="list-disc list-inside text-left mx-auto max-w-md">
+                    <!-- Admin results will be displayed here -->
+                </ul>
+            </div>
         </div>
     </div>
 
-    <!-- Message Box for alerts -->
-    <div id="message-box" class="message-box hidden">
-        <p id="message-content" class="text-lg text-gray-800 mb-4"></p>
-        <button id="message-box-ok-button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow transition duration-300">OK</button>
+    <!-- Message Modal -->
+    <div id="message-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-modal-button">&times;</span>
+            <p id="modal-message" class="text-lg font-semibold text-gray-800"></p>
+        </div>
     </div>
-    <div id="overlay" class="overlay hidden"></div>
 
-    <script type="module">
-        // Import Firebase modules for authentication and Firestore
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // Firebase configuration and global variables (provided by Canvas environment)
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-        // Initialize Firebase
-        let app;
-        let db;
-        let auth;
-        let userId = null;
-        let isAuthReady = false;
-
-        /**
-         * Initializes Firebase application and services.
-         * Sets up authentication listener and signs in the user.
-         */
-        const initFirebase = async () => {
-            try {
-                app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-
-                onAuthStateChanged(auth, async (user) => {
-                    if (user) {
-                        userId = user.uid;
-                        console.log("Firebase user ID:", userId);
-                    } else {
-                        // Sign in anonymously if no token or token sign-in fails
-                        try {
-                            const anonymousUser = await signInAnonymously(auth);
-                            userId = anonymousUser.user.uid;
-                            console.log("Signed in anonymously. User ID:", userId);
-                        } catch (anonError) {
-                            console.error("Anonymous sign-in failed:", anonError);
-                            showMessage("Authentication Error", "Failed to sign in anonymously. Quiz data may not be saved.");
-                        }
-                    }
-                    isAuthReady = true;
-                    // For admin access to results, log the userId to console.
-                    console.log("Admin Access: Your current user ID is:", userId);
-                });
-
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-            } catch (error) {
-                console.error("Firebase initialization failed:", error);
-                showMessage("Initialization Error", "Failed to initialize Firebase. Quiz functionality may be limited.");
-            }
-        };
-
-        // Call Firebase initialization
-        initFirebase();
-
-        // DOM elements
-        const authScreen = document.getElementById('auth-screen');
-        const adminIdInput = document.getElementById('admin-id');
-        const adminPasswordInput = document.getElementById('admin-password');
-        const authButton = document.getElementById('auth-button');
-        const authMessage = document.getElementById('auth-message');
-
-        const startScreen = document.getElementById('start-screen');
-        const candidateNameInput = document.getElementById('candidate-name');
-        const startButton = document.getElementById('start-button');
-        const nameError = document.getElementById('name-error');
-
-        const quizScreen = document.getElementById('quiz-screen');
-        const questionNumberSpan = document.getElementById('question-number');
-        const totalQuestionsSpan = document.getElementById('total-questions');
-        const timerSpan = document.getElementById('timer');
-        const timerBar = document.getElementById('timer-bar');
-        const questionText = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container');
-        const nextButton = document.getElementById('next-button');
-
-        const endScreen = document.getElementById('end-screen');
-        const finalCandidateName = document.getElementById('final-candidate-name');
-        const finalScoreSpan = document.getElementById('final-score');
-        const finalTotalQuestionsSpan = document.getElementById('final-total-questions');
-        const restartMessage = document.getElementById('restart-message');
-
-        const messageBox = document.getElementById('message-box');
-        const messageContent = document.getElementById('message-content');
-        const messageBoxOkButton = document.getElementById('message-box-ok-button');
-        const overlay = document.getElementById('overlay');
-
-        // Quiz variables
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let timer;
-        const TIME_LIMIT = 15 * 60; // 15 minutes in seconds
-        let timeLeft = TIME_LIMIT;
-        let quizStarted = false;
-        let candidateName = '';
-        let quizAttempted = false; // Flag to prevent re-taking the quiz
-
-        // Quiz questions (20 MCQs)
-        const questions = [
+    <script>
+        // Array of quiz questions (35 MCQs as requested)
+        const quizQuestions = [
             {
-                question: "Plato was born into an aristocratic family in which ancient Greek city-state?",
-                options: ["Sparta", "Athens", "Corinth", "Thebes"],
-                correct: "Athens"
+                question: "Plato was born into an aristocratic Athenian family in what approximate year?",
+                options: ["470-400 B.C.", "427-347 B.C.", "380-300 B.C.", "500-430 B.C."],
+                answer: "427-347 B.C."
             },
             {
-                question: "What was Plato's original name?",
-                options: ["Aristocles", "Socrates", "Aristotle", "Heraclitus"],
-                correct: "Aristocles"
+                question: "What was Plato's original name, given at birth?",
+                options: ["Aristocles", "Socrates", "Aristotle", "Pericles"],
+                answer: "Aristocles" // Based on common knowledge about Plato, though not explicitly in the text.
             },
             {
-                question: "Plato's early life career was planned to be in what field?",
-                options: ["Military", "Politics", "Art", "Medicine"],
-                correct: "Politics"
+                question: "Plato was a young man during which significant period in Athenian politics?",
+                options: ["The Golden Age", "The Peloponnesian Campaign", "The Roman Occupation", "The Persian Wars"],
+                answer: "The Peloponnesian Campaign"
             },
             {
-                question: "Which major political event in Athens significantly impacted Plato's early views on politics?",
-                options: ["Peloponnesian War", "Persian Wars", "Revolt of Mytilene", "Thirty Tyrants' rule"],
-                correct: "Thirty Tyrants' rule"
+                question: "What did Plato's early military successes indicate?",
+                options: ["His desire for power", "His commitment to Athens", "His strategic genius", "His artistic talent"],
+                answer: "His commitment to Athens"
             },
             {
-                question: "Who was Plato's primary philosophical mentor?",
-                options: ["Aristotle", "Pythagoras", "Socrates", "Parmenides"],
-                correct: "Socrates"
+                question: "Plato initially believed a political career would bring what?",
+                options: ["Wealth", "Fame", "Reward", "Knowledge"],
+                answer: "Reward"
             },
             {
-                question: "The 'death sentence' and execution of Socrates led Plato to develop a deep distrust of what system?",
-                options: ["Monarchy", "Democracy", "Oligarchy", "Tyranny"],
-                correct: "Democracy"
+                question: "The 'disastrous outcome' Plato experienced referred to the actions of which political group?",
+                options: ["The Democrats", "The Oligarchs", "The Thirty Tyrants", "The Philosophers"],
+                answer: "The Thirty Tyrants"
             },
             {
-                question: "Plato founded which influential school of philosophy in Athens?",
-                options: ["The Lyceum", "The Academy", "The Stoa", "The Garden"],
-                correct: "The Academy"
+                question: "What was the ultimate fate of Socrates, which deeply impacted Plato?",
+                options: ["Exile", "Imprisonment", "Condemnation and execution", "A political appointment"],
+                answer: "Condemnation and execution"
             },
             {
-                question: "Which of these concepts is most central to Plato's philosophy as described in the text?",
-                options: ["Materialism", "Hedonism", "Idealism (Theory of Forms)", "Skepticism"],
-                correct: "Idealism (Theory of Forms)"
+                question: "What was Socrates' fundamental belief that Plato's early system reflected?",
+                options: ["Wealth is virtue", "Virtue is knowledge", "Power is justice", "Happiness is pleasure"],
+                answer: "Virtue is knowledge"
             },
             {
-                question: "According to Plato, what is the ultimate good and source of all knowledge?",
-                options: ["Pleasure", "Wealth", "The Form of the Good", "Personal opinion"],
-                correct: "The Form of the Good"
+                question: "According to the text, a system that could destroy the best within it was worthy of neither loyalty nor what?",
+                options: ["Respect", "Love", "Admiration", "Fear"],
+                answer: "Respect"
             },
             {
-                question: "In 'The Republic', Plato explores the concept of an ideal state governed by what type of rulers?",
-                options: ["Warriors", "Farmers", "Philosopher-Kings", "Merchants"],
-                correct: "Philosopher-Kings"
+                question: "How long did Plato's period of 'sou' searching and intellectual development last?",
+                options: ["A few months", "A few years", "A decade", "His entire life"],
+                answer: "A few years"
             },
             {
-                question: "Plato believed that true knowledge is attained through what?",
-                options: ["Sensory experience", "Divine revelation", "Rational thought and contemplation", "Social consensus"],
-                correct: "Rational thought and contemplation"
+                question: "Where did Plato travel during his period of intellectual development?",
+                options: ["Egypt", "Persia", "Italy", "All of the above (implied by text for Italy and Egypt)"],
+                answer: "All of the above (implied by text for Italy and Egypt)"
             },
             {
-                question: "Which virtue did Plato consider essential for both individual and societal well-being?",
-                options: ["Courage", "Temperance", "Justice", "Piety"],
-                correct: "Justice"
+                question: "What did Plato establish upon his return to Athens?",
+                options: ["A political party", "A military academy", "A school of philosophy", "A trade guild"],
+                answer: "A school of philosophy" // Refers to the Academy
             },
             {
-                question: "What famous allegory did Plato use to illustrate the difference between the material world and the world of Forms?",
-                options: ["The Ship of State", "The Cave", "The Divided Line", "The Ring of Gyges"],
-                correct: "The Cave"
+                question: "Plato's wanderings included visits to Greek cities in which region?",
+                options: ["Northern Greece", "Southern Italy", "Asia Minor", "The Aegean Islands"],
+                answer: "Southern Italy"
             },
             {
-                question: "Plato suggested that the soul has three parts. Which of these is NOT one of them?",
-                options: ["Rational", "Spirited", "Appetitive", "Emotional"],
-                correct: "Emotional"
+                question: "What did Plato study in the Greek cities of southern Italy?",
+                options: ["Art and architecture", "Military tactics", "The doctrines of the mystic Pythagorean society", "Literature and poetry"],
+                answer: "The doctrines of the mystic Pythagorean society"
             },
             {
-                question: "What, according to Plato, is the aim of education in the ideal state?",
-                options: ["To train soldiers", "To cultivate virtue and wisdom", "To teach practical skills", "To prepare for trade"],
-                correct: "To cultivate virtue and wisdom"
+                question: "The Pythagorean society stressed the importance of what disciplines?",
+                options: ["Music and rhetoric", "Mathematics and astronomy", "Sculpture and painting", "Drama and poetry"],
+                answer: "Mathematics and astronomy"
             },
             {
-                question: "Plato's theory of Forms posits that non-physical, perfect archetypes exist independently of what?",
-                options: ["Human thought", "The physical world", "Language", "Time"],
-                correct: "The physical world"
+                question: "What did Plato likely receive instruction in during his time in Egypt?",
+                options: ["Navigation", "Mathematics", "Medicine", "Engineering"],
+                answer: "Mathematics"
             },
             {
-                question: "Which of the following is a quote attributed to Plato, reflecting his view on the importance of music in education?",
-                options: [
-                    "Music is a moral law. It gives soul to the universe, wings to the mind, flight to the imagination, and charm and gaiety to life and to everything.",
-                    "The unexamined life is not worth living.",
-                    "Man is the measure of all things.",
-                    "Change is the only constant in life."
-                ],
-                correct: "Music is a moral law. It gives soul to the universe, wings to the mind, flight to the imagination, and charm and gaiety to life and to everything."
+                question: "According to the text, what did Plato improve upon during his travels?",
+                options: ["His debating skills", "His understanding of politics", "His physical strength", "His philosophical foundation"],
+                answer: "His philosophical foundation" // "to build a philosophy that would hold the interest of scholars and statesmen through the ages."
             },
             {
-                question: "Plato's writings are predominantly in what literary form?",
-                options: ["Poetry", "Essays", "Dialogues", "Monologues"],
-                correct: "Dialogues"
+                question: "What is the title of Plato's major work extensively discussed in the document?",
+                options: ["The Apology", "The Laws", "The Republic", "The Symposium"],
+                answer: "The Republic"
             },
             {
-                question: "Plato traveled to Greek cities in Southern Italy to study the doctrines of which mystic society?",
-                options: ["Epicureans", "Stoics", "Pythagoreans", "Cynics"],
-                correct: "Pythagoreans"
+                question: "What is a central theme explored in 'The Republic'?",
+                options: ["The nature of love", "The ideal state and justice", "The origins of the universe", "The role of art in society"],
+                answer: "The ideal state and justice"
             },
             {
-                question: "What did Plato believe about mathematical instruction in relation to the curriculum of the Academy?",
-                options: [
-                    "It was optional but encouraged.",
-                    "It was essential and highly emphasized.",
-                    "It was only for advanced students.",
-                    "It was not relevant to philosophy."
-                ],
-                correct: "It was essential and highly emphasized."
+                question: "Plato's Republic can be described as a product of his what?",
+                options: ["Early maturity and speculative vigor", "Political ambition", "Military experience", "Economic theories"],
+                answer: "Early maturity and speculative vigor"
+            },
+            {
+                question: "What is considered to be a major contribution to political philosophy from 'The Republic'?",
+                options: ["The concept of democracy", "The idea of a philosopher-king", "The theory of capitalism", "The principle of anarchy"],
+                answer: "The idea of a philosopher-king" // Implied by the discussions of ideal rulers and governance.
+            },
+            {
+                question: "What does Plato suggest is the source of conflict in the world?",
+                options: ["Lack of education", "Desire for wealth and power", "Religious differences", "Geographical boundaries"],
+                answer: "Desire for wealth and power" // Related to communism in the Republic.
+            },
+            {
+                question: "Plato suggests that individuals should fulfill roles based on what?",
+                options: ["Birthright", "Wealth", "Innate abilities and virtues", "Popular vote"],
+                answer: "Innate abilities and virtues" // This is a core idea in the Republic's class system.
+            },
+            {
+                question: "According to Thrasymachus, what is justice often equated with?",
+                options: ["The interest of the weaker", "The interest of the stronger", "Divine command", "Universal equality"],
+                answer: "The interest of the stronger"
+            },
+            {
+                question: "What is Plato's solution to achieve justice in the state?",
+                options: ["Absolute freedom for all", "Rule by the wealthy", "A system based on reason and virtue", "Constant revolution"],
+                answer: "A system based on reason and virtue" // Core to the Republic's philosophy.
+            },
+            {
+                question: "What does Plato consider the highest good for the state?",
+                options: ["Economic prosperity", "Military strength", "The well-being of the whole community", "Individual liberty"],
+                answer: "The well-being of the whole community"
+            },
+            {
+                question: "Plato argues that rulers should be those who are what?",
+                options: ["Most cunning", "Least selfish", "Most powerful", "Most charismatic"],
+                answer: "Least selfish" // Or rather, those who care more about the community than themselves.
+            },
+            {
+                question: "Plato's idea of the ideal state in 'The Republic' is often described as a form of what?",
+                options: ["Totalitarianism", "Democracy", "Aristocracy (of the best)", "Oligarchy"],
+                answer: "Aristocracy (of the best)" // Rule by the virtuous and wise.
+            },
+            {
+                question: "What did Plato believe about censorship and the arts in his ideal state?",
+                options: ["They should be completely free", "They should be used for political propaganda", "They should be strictly controlled for the good of the state", "They are irrelevant"],
+                answer: "They should be strictly controlled for the good of the state"
+            },
+            {
+                question: "The educational plan in 'The Republic' focuses on developing which aspects?",
+                options: ["Physical fitness and musical talent", "Intellectual and moral character", "Military strategy and combat skills", "All of the above"],
+                answer: "All of the above" // Comprehensive education for guardians.
+            },
+            {
+                question: "Plato emphasizes that education should be aimed at creating what kind of citizens?",
+                options: ["Submissive and obedient", "Independent and self-sufficient", "Virtuous and wise", "Wealthy and influential"],
+                answer: "Virtuous and wise"
+            },
+            {
+                question: "What does Plato suggest happens when excessive liberty becomes unchecked?",
+                options: ["Justice flourishes", "Disorder and anarchy arise", "Harmony is achieved", "People become more virtuous"],
+                answer: "Disorder and anarchy arise" // Leads to decline from ideal state.
+            },
+            {
+                question: "According to Plato, who should be the guardians of the state?",
+                options: ["The wealthiest citizens", "The military leaders", "Those with the most wisdom and virtue", "The common people"],
+                answer: "Those with the most wisdom and virtue" // Philosopher-kings.
+            },
+            {
+                question: "What is the primary function of music and poetry in Plato's ideal state?",
+                options: ["Entertainment", "Economic gain", "Shaping moral character", "Historical record"],
+                answer: "Shaping moral character" // Implied by his views on censorship and education.
+            },
+            {
+                question: "Plato believed that true happiness comes from what?",
+                options: ["Material possessions", "Seeking pleasure", "Living a virtuous life in a just society", "Political power"],
+                answer: "Living a virtuous life in a just society"
             }
         ];
 
-        // Admin credentials
-        const ADMIN_ID = '1111';
-        const ADMIN_PASSWORD = '2222';
 
-        /**
-         * Displays a custom message box to the user.
-         * @param {string} title - The title of the message.
-         * @param {string} content - The content of the message.
-         */
-        function showMessage(title, content) {
-            messageContent.innerHTML = `<strong>${title}:</strong> ${content}`;
-            messageBox.classList.add('show');
-            overlay.classList.add('show');
-            messageBoxOkButton.focus(); // Focus the OK button for accessibility
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let quizAttempts = JSON.parse(localStorage.getItem('platoQuizAttempts')) || []; // Unique key for this quiz
+        let quizTimer;
+        let timeLeft = 20 * 60; // 20 minutes in seconds
+        const CORRECT_ID = "321";
+        const CORRECT_PASSWORD = "123";
+        let hasAttempted = false; // Flag to prevent multiple attempts for the current session
+
+        const authSection = document.getElementById('auth-section');
+        const startSection = document.getElementById('start-section');
+        const quizSection = document.getElementById('quiz-section');
+        const resultSection = document.getElementById('result-section');
+        const questionContainer = document.getElementById('question-container');
+        const startQuizButton = document.getElementById('start-quiz-button');
+        const nextButton = document.getElementById('next-button');
+        const prevButton = document.getElementById('prev-button');
+        const submitQuizButton = document.getElementById('submit-quiz-button');
+        const timerDisplay = document.getElementById('timer');
+        const scoreDisplay = document.getElementById('score');
+        const totalQuestionsDisplay = document.getElementById('total-questions');
+        const finalCandidateNameDisplay = document.getElementById('final-candidate-name');
+        const adminPanel = document.getElementById('admin-panel');
+        const adminResultsList = document.getElementById('admin-results-list');
+        const loginButton = document.getElementById('login-button');
+        const adminIdInput = document.getElementById('admin-id');
+        const adminPasswordInput = document.getElementById('admin-password');
+        const loginError = document.getElementById('login-error');
+        const candidateNameInput = document.getElementById('candidate-name');
+
+        const messageModal = document.getElementById('message-modal');
+        const modalMessage = document.getElementById('modal-message');
+        const closeModalButton = document.getElementById('close-modal-button');
+
+        // Show modal message
+        function showModal(message) {
+            modalMessage.textContent = message;
+            messageModal.style.display = 'flex';
         }
 
-        /**
-         * Hides the custom message box.
-         */
-        function hideMessageBox() {
-            messageBox.classList.remove('show');
-            overlay.classList.remove('show');
+        // Hide modal message
+        function hideModal() {
+            messageModal.style.display = 'none';
         }
 
-        // Event listener for the message box OK button
-        messageBoxOkButton.addEventListener('click', hideMessageBox);
-        overlay.addEventListener('click', hideMessageBox); // Hide message box if overlay is clicked
+        closeModalButton.addEventListener('click', hideModal);
+        window.addEventListener('click', (event) => {
+            if (event.target == messageModal) {
+                hideModal();
+            }
+        });
 
-        /**
-         * Authenticates the admin based on provided ID and password.
-         */
-        authButton.addEventListener('click', () => {
+        // Function to update the timer display
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            if (timeLeft <= 0) {
+                clearInterval(quizTimer);
+                showModal("Time's up! The quiz will now be submitted.");
+                submitQuiz();
+            } else {
+                timeLeft--;
+            }
+        }
+
+        // Function to render a question
+        function renderQuestion() {
+            const questionData = quizQuestions[currentQuestionIndex];
+            questionContainer.innerHTML = `
+                <div class="question-number">Question ${currentQuestionIndex + 1} of ${quizQuestions.length}</div>
+                <div class="question-text">${questionData.question}</div>
+                <div id="options-container">
+                    ${questionData.options.map((option, idx) => `
+                        <div class="quiz-option" data-option="${option}">${option}</div>
+                    `).join('')}
+                </div>
+            `;
+
+            const options = questionContainer.querySelectorAll('.quiz-option');
+            options.forEach(option => {
+                option.addEventListener('click', selectOption);
+            });
+
+            // Restore previously selected answer if any
+            if (quizQuestions[currentQuestionIndex].selectedAnswer) {
+                const selectedOptionElement = questionContainer.querySelector(`.quiz-option[data-option="${quizQuestions[currentQuestionIndex].selectedAnswer}"]`);
+                if (selectedOptionElement) {
+                    selectedOptionElement.classList.add('selected');
+                    // If already attempted and this was a wrong answer, show correct answer
+                    if (quizQuestions[currentQuestionIndex].attempted && quizQuestions[currentQuestionIndex].selectedAnswer !== quizQuestions[currentQuestionIndex].answer) {
+                        selectedOptionElement.classList.add('incorrect');
+                        const correctAnswerElement = questionContainer.querySelector(`.quiz-option[data-option="${quizQuestions[currentQuestionIndex].answer}"]`);
+                        if (correctAnswerElement) {
+                            correctAnswerElement.classList.add('correct');
+                        }
+                    } else if (quizQuestions[currentQuestionIndex].attempted && quizQuestions[currentQuestionIndex].selectedAnswer === quizQuestions[currentQuestionIndex].answer) {
+                        selectedOptionElement.classList.add('correct');
+                    }
+                    // Disable further clicks if question has been attempted
+                    if (quizQuestions[currentQuestionIndex].attempted) {
+                        disableOptions();
+                    }
+                }
+            }
+
+            // Update button visibility
+            prevButton.disabled = currentQuestionIndex === 0;
+            prevButton.classList.toggle('button-disabled', currentQuestionIndex === 0);
+
+            nextButton.style.display = (currentQuestionIndex === quizQuestions.length - 1) ? 'none' : 'inline-block';
+            submitQuizButton.style.display = (currentQuestionIndex === quizQuestions.length - 1) ? 'inline-block' : 'none';
+
+            // Disable all buttons if quiz has been attempted
+            if (hasAttempted) {
+                disableQuizNavigation();
+            }
+        }
+
+        // Function to select an option
+        function selectOption(event) {
+            if (hasAttempted || quizQuestions[currentQuestionIndex].attempted) {
+                return; // Prevent changes if quiz completed or question answered
+            }
+
+            const selectedOption = event.target;
+            const options = questionContainer.querySelectorAll('.quiz-option');
+
+            options.forEach(option => option.classList.remove('selected', 'correct', 'incorrect'));
+            selectedOption.classList.add('selected');
+
+            quizQuestions[currentQuestionIndex].selectedAnswer = selectedOption.dataset.option;
+            quizQuestions[currentQuestionIndex].attempted = true; // Mark question as attempted
+
+            // Immediate feedback:
+            if (selectedOption.dataset.option === quizQuestions[currentQuestionIndex].answer) {
+                selectedOption.classList.add('correct');
+            } else {
+                selectedOption.classList.add('incorrect');
+                const correctAnswerElement = questionContainer.querySelector(`.quiz-option[data-option="${quizQuestions[currentQuestionIndex].answer}"]`);
+                if (correctAnswerElement) {
+                    correctAnswerElement.classList.add('correct');
+                }
+            }
+            disableOptions(); // Disable options after an answer is chosen
+        }
+
+        // Disable all options for the current question
+        function disableOptions() {
+            const options = questionContainer.querySelectorAll('.quiz-option');
+            options.forEach(option => {
+                option.removeEventListener('click', selectOption);
+                option.style.cursor = 'default';
+            });
+        }
+
+        // Disable all quiz navigation buttons and submission
+        function disableQuizNavigation() {
+            prevButton.disabled = true;
+            nextButton.disabled = true;
+            submitQuizButton.disabled = true;
+            prevButton.classList.add('button-disabled');
+            nextButton.classList.add('button-disabled');
+            submitQuizButton.classList.add('button-disabled');
+        }
+
+        // Function to calculate and display results
+        function submitQuiz() {
+            if (hasAttempted) return; // Prevent multiple submissions
+            hasAttempted = true;
+            clearInterval(quizTimer); // Stop the timer
+
+            score = 0;
+            quizQuestions.forEach(q => {
+                if (q.selectedAnswer === q.answer) {
+                    score++;
+                }
+            });
+
+            quizSection.style.display = 'none';
+            resultSection.style.display = 'block';
+            finalCandidateNameDisplay.textContent = candidateNameInput.value;
+            scoreDisplay.textContent = score;
+            totalQuestionsDisplay.textContent = quizQuestions.length;
+
+            const newAttempt = {
+                name: candidateNameInput.value,
+                score: score,
+                total: quizQuestions.length,
+                date: new Date().toLocaleString()
+            };
+            quizAttempts.push(newAttempt);
+            localStorage.setItem('platoQuizAttempts', JSON.stringify(quizAttempts)); // Save with unique key
+
+            displayAdminResults();
+            disableQuizNavigation(); // Ensure buttons are disabled after submission
+        }
+
+        // Function to display admin results
+        function displayAdminResults() {
+            adminResultsList.innerHTML = ''; // Clear previous results
+            quizAttempts.forEach(attempt => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${attempt.name}: ${attempt.score}/${attempt.total} on ${attempt.date}`;
+                adminResultsList.appendChild(listItem);
+            });
+        }
+
+        // Event Listeners
+        loginButton.addEventListener('click', () => {
             const id = adminIdInput.value;
             const password = adminPasswordInput.value;
 
-            if (id === ADMIN_ID && password === ADMIN_PASSWORD) {
-                authMessage.textContent = '';
-                authScreen.classList.add('hidden');
-                startScreen.classList.remove('hidden');
+            if (id === CORRECT_ID && password === CORRECT_PASSWORD) {
+                authSection.style.display = 'none';
+                startSection.style.display = 'block';
+                loginError.textContent = '';
             } else {
-                authMessage.textContent = 'Invalid ID or Password. Please try again.';
-                adminIdInput.value = '';
-                adminPasswordInput.value = '';
+                loginError.textContent = 'Invalid ID or Password. Please try again.';
             }
         });
 
-        /**
-         * Starts the quiz if a candidate name is entered and the quiz hasn't been attempted.
-         */
-        startButton.addEventListener('click', () => {
-            if (quizAttempted) {
-                showMessage("Quiz Already Taken", "You have already attempted this quiz. You cannot restart.");
-                return;
-            }
-
-            candidateName = candidateNameInput.value.trim();
-            if (candidateName) {
-                nameError.textContent = '';
-                startScreen.classList.add('hidden');
-                quizScreen.classList.remove('hidden');
-                totalQuestionsSpan.textContent = questions.length;
-                startQuiz();
-                quizStarted = true;
+        startQuizButton.addEventListener('click', () => {
+            const candidateName = candidateNameInput.value.trim();
+            if (candidateName && !hasAttempted) {
+                startSection.style.display = 'none';
+                quizSection.style.display = 'block';
+                renderQuestion();
+                quizTimer = setInterval(updateTimer, 1000); // Start the timer
+            } else if (hasAttempted) {
+                showModal("You have already completed the quiz. You cannot restart it.");
             } else {
-                nameError.textContent = 'Please enter your name to start the quiz.';
+                showModal("Please enter your name to start the quiz.");
             }
         });
 
-        /**
-         * Displays the current question and its options.
-         */
-        function displayQuestion() {
-            const questionData = questions[currentQuestionIndex];
-            questionText.textContent = questionData.question;
-            optionsContainer.innerHTML = '';
-            questionNumberSpan.textContent = currentQuestionIndex + 1;
-            nextButton.style.display = 'none'; // Hide next button until an option is selected
-
-            questionData.options.forEach(option => {
-                const button = document.createElement('button');
-                button.textContent = option;
-                button.classList.add('option-button');
-                button.setAttribute('data-option', option); // Store option text for comparison
-                button.addEventListener('click', () => selectOption(button, option, questionData.correct));
-                optionsContainer.appendChild(button);
-            });
-        }
-
-        /**
-         * Handles the selection of an option.
-         * @param {HTMLButtonElement} selectedButton - The button element that was clicked.
-         * @param {string} selectedOption - The text of the selected option.
-         * @param {string} correctAnswer - The text of the correct answer for the current question.
-         */
-        function selectOption(selectedButton, selectedOption, correctAnswer) {
-            // Disable all options after one is selected
-            Array.from(optionsContainer.children).forEach(button => {
-                button.classList.add('disabled');
-                button.style.pointerEvents = 'none'; // Further disable pointer events
-            });
-
-            if (selectedOption === correctAnswer) {
-                selectedButton.classList.add('correct');
-                score++;
-            } else {
-                selectedButton.classList.add('incorrect');
-                // Find and highlight the correct answer
-                Array.from(optionsContainer.children).forEach(button => {
-                    if (button.getAttribute('data-option') === correctAnswer) {
-                        button.classList.add('correct');
-                    }
-                });
-            }
-            nextButton.style.display = 'block'; // Show next button
-        }
-
-        /**
-         * Moves to the next question or ends the quiz if all questions are answered.
-         */
         nextButton.addEventListener('click', () => {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                displayQuestion();
-            } else {
-                endQuiz();
+            if (currentQuestionIndex < quizQuestions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
             }
         });
 
-        /**
-         * Starts the quiz timer.
-         */
-        function startTimer() {
-            timer = setInterval(() => {
-                timeLeft--;
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                timerSpan.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-                const progress = (timeLeft / TIME_LIMIT) * 100;
-                timerBar.style.width = `${progress}%`;
-
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    endQuiz();
-                }
-            }, 1000);
-        }
-
-        /**
-         * Initializes and starts the quiz.
-         */
-        function startQuiz() {
-            currentQuestionIndex = 0;
-            score = 0;
-            timeLeft = TIME_LIMIT;
-            quizStarted = false; // Reset for potential multiple attempts in dev, though prevented by flag
-            quizAttempted = false; // Reset this flag for safety, will be set true on endQuiz
-            displayQuestion();
-            startTimer();
-        }
-
-        /**
-         * Ends the quiz, displays the score, and saves the result to Firestore.
-         */
-        async function endQuiz() {
-            clearInterval(timer); // Stop the timer
-            quizScreen.classList.add('hidden');
-            endScreen.classList.remove('hidden');
-            quizAttempted = true; // Mark quiz as attempted
-
-            finalCandidateName.textContent = candidateName;
-            finalScoreSpan.textContent = score;
-            finalTotalQuestionsSpan.textContent = questions.length;
-
-            // Save result to Firestore only if Firebase is initialized and authenticated
-            if (isAuthReady && userId) {
-                try {
-                    // Public data: store in /artifacts/{appId}/public/data/quiz_results
-                    const quizResultRef = doc(collection(db, `artifacts/${appId}/public/data/quiz_results`));
-                    await setDoc(quizResultRef, {
-                        candidateName: candidateName,
-                        score: score,
-                        totalQuestions: questions.length,
-                        timestamp: serverTimestamp(),
-                        userId: userId // Store the user ID for admin access
-                    });
-                    console.log("Quiz result saved to Firestore:", {
-                        candidateName: candidateName,
-                        score: score,
-                        totalQuestions: questions.length,
-                        userId: userId,
-                        quizId: quizResultRef.id // Log the document ID
-                    });
-                    showMessage("Quiz Completed!", "Your score has been recorded.");
-                } catch (e) {
-                    console.error("Error adding document to Firestore: ", e);
-                    showMessage("Error Saving Result", "There was an issue saving your quiz result. Please try again later.");
-                }
-            } else {
-                console.warn("Firebase not ready or user not authenticated. Quiz result not saved.");
-                showMessage("Quiz Completed!", "Your score is displayed, but could not be saved due to an authentication issue.");
+        prevButton.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
             }
-            restartMessage.classList.remove('hidden'); // Show the message preventing restart
-        }
+        });
 
-        // Initial display for the authentication screen
+        submitQuizButton.addEventListener('click', submitQuiz);
+
+        // Initial setup on load
         document.addEventListener('DOMContentLoaded', () => {
-            authScreen.classList.remove('hidden');
-            adminIdInput.focus();
+            // No specific action needed here for a fresh start.
+        });
+
+        // Admin Panel Toggle (for you to see results)
+        // You can click anywhere on the quiz title to toggle the admin panel
+        document.querySelector('h1').addEventListener('click', () => {
+            if (adminPanel.style.display === 'block') {
+                adminPanel.style.display = 'none';
+            } else {
+                adminPanel.style.display = 'block';
+                displayAdminResults(); // Refresh results when opening
+            }
         });
 
     </script>
