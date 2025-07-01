@@ -3,687 +3,621 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plato's Philosophy Quiz</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Political Science Subject Specialist Preparation Quiz</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8; /* Light blue-gray background */
-            color: #333;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 900px;
-            margin: 20px auto;
+            background-color: #f0f4f8; /* Light background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
             padding: 20px;
+            box-sizing: border-box;
+        }
+        .quiz-container {
             background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            position: relative;
+            border-radius: 1rem; /* Rounded corners */
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
-        /* Removed display:none from .quiz-section so initial sections can be controlled by inline style */
-
-        .quiz-option {
-            background-color: #e0f2f7; /* Light cyan */
-            border: 1px solid #b2ebf2; /* Lighter blue border */
-            padding: 12px 18px;
-            margin-bottom: 10px;
-            border-radius: 8px;
+        .option-button {
+            background-color: #e2e8f0; /* Light gray */
+            color: #334155; /* Darker text */
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem; /* Rounded corners */
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            font-size: 1.05rem;
-            color: #212121;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            text-align: left;
+            width: 100%;
+            font-size: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
-        .quiz-option:hover {
-            background-color: #b2ebf2; /* Lighter blue on hover */
+        .option-button:hover:not(.disabled):not(.correct):not(.incorrect) {
+            background-color: #cbd5e1; /* Slightly darker gray on hover */
             transform: translateY(-2px);
         }
-        .quiz-option.selected {
-            background-color: #81d4fa; /* Medium blue when selected */
-            border-color: #039be5; /* Darker blue border */
-            color: #000;
-        }
-        .quiz-option.correct {
-            background-color: #a5d6a7; /* Light green for correct */
-            border-color: #4caf50; /* Green border */
-            color: #000;
-            font-weight: 600;
-        }
-        .quiz-option.incorrect {
-            background-color: #ef9a9a; /* Light red for incorrect */
-            border-color: #f44336; /* Red border */
-            color: #000;
-        }
-        .button-primary {
-            background-color: #03a9f4; /* Deep sky blue */
+        .option-button.correct {
+            background-color: #4CAF50; /* Green for correct */
             color: white;
-            padding: 12px 25px;
-            border-radius: 8px;
             font-weight: 600;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 10px rgba(3, 169, 244, 0.3);
-            text-align: center;
-            display: inline-block;
         }
-        .button-primary:hover {
-            background-color: #0288d1; /* Darker blue on hover */
-            transform: translateY(-1px);
+        .option-button.incorrect {
+            background-color: #EF4444; /* Red for incorrect */
+            color: white;
+            font-weight: 600;
         }
-        .button-disabled {
-            background-color: #e0e0e0;
-            color: #9e9e9e;
+        .option-button.disabled {
             cursor: not-allowed;
-            box-shadow: none;
+            opacity: 0.8;
         }
-        .timer {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #0288d1;
-            text-align: right;
-            margin-bottom: 15px;
+        input[type="text"],
+        input[type="password"] {
+            padding: 0.75rem 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.75rem;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 1rem;
+            color: #334155;
         }
-        .question-number {
-            font-size: 1.1rem;
+        button {
+            background-color: #3b82f6; /* Blue */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
             font-weight: 600;
-            color: #424242;
-            margin-bottom: 10px;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        button:hover:not(:disabled) {
+            background-color: #2563eb; /* Darker blue on hover */
+            transform: translateY(-2px);
+        }
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .timer-display {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e293b;
         }
         .question-text {
             font-size: 1.25rem;
             font-weight: 600;
-            margin-bottom: 20px;
-            color: #212121;
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            text-align: left;
         }
-        #result-section {
+        .options-grid {
+            display: grid;
+            gap: 0.75rem;
+        }
+        .header {
+            margin-bottom: 1.5rem;
+        }
+        .header h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+        .header p {
+            color: #475569;
+            font-size: 1rem;
+        }
+        .hidden {
             display: none;
-            text-align: center;
         }
-        #result-section h2 {
-            color: #0288d1;
-            font-size: 2.2rem;
-            margin-bottom: 15px;
+        .result-score {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1rem;
         }
-        #result-section p {
-            font-size: 1.4rem;
-            color: #424242;
+        .result-message {
+            font-size: 1.125rem;
+            color: #475569;
         }
-        #admin-panel {
-            display: none;
-            margin-top: 30px;
-            border-top: 2px solid #e0e0e0;
-            padding-top: 20px;
-        }
-        #admin-panel h3 {
-            font-size: 1.8rem;
-            color: #0288d1;
-            margin-bottom: 15px;
-        }
-        #admin-results-list li {
-            background-color: #f5f5f5;
-            border: 1px solid #e0e0e0;
-            padding: 10px;
-            margin-bottom: 8px;
-            border-radius: 6px;
-            font-size: 1.1rem;
-        }
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1000; /* Sit on top */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 30px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 400px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        .close-button {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .close-button:hover,
-        .close-button:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .error-message {
-            color: #f44336;
-            margin-top: 10px;
+        .contact-info {
             font-size: 0.9rem;
-            font-weight: 500;
+            color: #64748b;
+            margin-top: 1rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .quiz-container {
+                padding: 1.5rem;
+                margin: 10px;
+            }
+            .header h1 {
+                font-size: 1.75rem;
+            }
+            .question-text {
+                font-size: 1.1rem;
+            }
+            .option-button {
+                font-size: 0.95rem;
+            }
+            .timer-display {
+                font-size: 1rem;
+            }
+            input[type="text"],
+            input[type="password"],
+            button {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
-<body class="p-4">
-    <div class="container">
-        <div class="flex justify-center items-center mb-6">
-            <h1 class="text-3xl font-bold text-blue-700">Plato's Philosophy Quiz</h1>
+<body>
+    <div class="quiz-container">
+        <div class="header">
+            <h1>Political Science Subject Specialist Preparation Quiz</h1>
+            <p class="contact-info">Contact Number: 03188185185</p>
         </div>
 
-        <!-- Auth Section -->
-        <div id="auth-section" class="text-center" style="display: block;">
-            <h2 class="text-2xl font-semibold mb-6">Welcome to the Quiz!</h2>
-            <p class="mb-4 text-gray-700">Please enter your ID and Password to proceed.</p>
-            <div class="mb-4">
-                <input type="text" id="admin-id" placeholder="Enter ID" class="p-3 border border-gray-300 rounded-lg w-full max-w-xs focus:outline-none focus:ring-2 focus:ring-blue-400">
-            </div>
-            <div class="mb-6">
-                <input type="password" id="admin-password" placeholder="Enter Password" class="p-3 border border-gray-300 rounded-lg w-full max-w-xs focus:outline-none focus:ring-2 focus:ring-blue-400">
-            </div>
-            <button id="login-button" class="button-primary">Login</button>
-            <p id="login-error" class="error-message"></p>
+        <!-- Login Screen -->
+        <div id="login-screen">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Login to Start Quiz</h2>
+            <input type="text" id="login-id" placeholder="Enter ID" class="mb-3">
+            <input type="password" id="login-password" placeholder="Enter Password" class="mb-4">
+            <button id="login-button">Login</button>
+            <p id="login-error" class="text-red-500 mt-2 hidden">Invalid ID or Password.</p>
         </div>
 
-        <!-- Start Section -->
-        <div id="start-section" class="text-center" style="display: none;">
-            <h2 class="text-2xl font-semibold mb-6">Ready to Start?</h2>
-            <p class="mb-4 text-gray-700">Please enter your name to begin the quiz.</p>
-            <input type="text" id="candidate-name" placeholder="Your Name" class="p-3 border border-gray-300 rounded-lg w-full max-w-sm mb-6 focus:outline-none focus:ring-2 focus:ring-blue-400">
-            <button id="start-quiz-button" class="button-primary">Start Quiz</button>
+        <!-- Name Entry Screen -->
+        <div id="name-entry-screen" class="hidden">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Enter Your Name</h2>
+            <input type="text" id="candidate-name" placeholder="Your Name" class="mb-4">
+            <button id="start-quiz-button">Start Quiz</button>
         </div>
 
-        <!-- Quiz Section -->
-        <div id="quiz-section" style="display: none;">
-            <div class="timer" id="timer">20:00</div>
-            <div id="question-container">
-                <!-- Questions will be loaded here by JavaScript -->
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-4">
+                <p class="text-gray-700">Question <span id="current-question-number">1</span> / <span id="total-questions"></span></p>
+                <p class="timer-display">Time Left: <span id="time-left">20:00</span></p>
             </div>
-            <div class="flex justify-between mt-6">
-                <button id="prev-button" class="button-primary button-disabled" disabled>Previous</button>
-                <button id="next-button" class="button-primary">Next</button>
-                <button id="submit-quiz-button" class="button-primary hidden">Submit Quiz</button>
+            <p id="question-text" class="question-text"></p>
+            <div id="options-container" class="options-grid">
+                <!-- Options will be loaded here by JavaScript -->
             </div>
         </div>
 
-        <!-- Result Section -->
-        <div id="result-section" style="display: none;">
-            <h2 class="text-2xl font-bold">Quiz Complete!</h2>
-            <p class="text-xl mb-4">Candidate: <span id="final-candidate-name" class="font-semibold"></span></p>
-            <p class="text-xl mb-4">Your Score: <span id="score" class="font-bold text-blue-600"></span> / <span id="total-questions" class="font-bold"></span></p>
-            <div id="admin-panel" class="hidden">
-                <h3 class="text-xl font-bold">Admin Results</h3>
-                <ul id="admin-results-list" class="list-disc list-inside text-left mx-auto max-w-md">
-                    <!-- Admin results will be displayed here -->
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <!-- Message Modal -->
-    <div id="message-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" id="close-modal-button">&times;</span>
-            <p id="modal-message" class="text-lg font-semibold text-gray-800"></p>
+        <!-- Result Screen -->
+        <div id="result-screen" class="hidden">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">Quiz Completed!</h2>
+            <p class="result-message">Candidate: <span id="final-candidate-name" class="font-semibold"></span></p>
+            <p class="result-score">Your Score: <span id="score-display">0</span> / <span id="max-score"></span></p>
+            <p class="result-message">Percentage: <span id="percentage-display">0%</span></p>
+            <p class="text-gray-600 mt-4">You cannot restart the quiz.</p>
         </div>
     </div>
 
     <script>
-        // Array of quiz questions (35 MCQs as requested)
-        const quizQuestions = [
+        // Quiz Data (45 MCQs)
+        const quizData = [
             {
-                question: "Plato was born into an aristocratic Athenian family in what approximate year?",
-                options: ["470-400 B.C.", "427-347 B.C.", "380-300 B.C.", "500-430 B.C."],
-                answer: "427-347 B.C."
+                question: "Who is considered the founder of Utilitarianism?",
+                options: ["John Stuart Mill", "Jeremy Bentham", "David Hume", "John Locke"],
+                correct: 1 // Index of the correct option (0-based)
             },
             {
-                question: "What was Plato's original name, given at birth?",
-                options: ["Aristocles", "Socrates", "Aristotle", "Pericles"],
-                answer: "Aristocles" // Based on common knowledge about Plato, though not explicitly in the text.
+                question: "Jeremy Bentham was born in which city?",
+                options: ["Paris", "London", "Edinburgh", "Dublin"],
+                correct: 1
             },
             {
-                question: "Plato was a young man during which significant period in Athenian politics?",
-                options: ["The Golden Age", "The Peloponnesian Campaign", "The Roman Occupation", "The Persian Wars"],
-                answer: "The Peloponnesian Campaign"
+                question: "In what year was Jeremy Bentham born?",
+                options: ["1776", "1748", "1806", "1789"],
+                correct: 1
             },
             {
-                question: "What did Plato's early military successes indicate?",
-                options: ["His desire for power", "His commitment to Athens", "His strategic genius", "His artistic talent"],
-                answer: "His commitment to Athens"
+                question: "At what age did Jeremy Bentham matriculate at Queen's College, Oxford?",
+                options: ["16", "13", "18", "20"],
+                correct: 1
             },
             {
-                question: "Plato initially believed a political career would bring what?",
-                options: ["Wealth", "Fame", "Reward", "Knowledge"],
-                answer: "Reward"
+                question: "Which of Bentham's works is considered a foundational text for Utilitarianism?",
+                options: ["On Liberty", "The Wealth of Nations", "An Introduction to the Principles of Morals and Legislation", "The Social Contract"],
+                correct: 2
             },
             {
-                question: "The 'disastrous outcome' Plato experienced referred to the actions of which political group?",
-                options: ["The Democrats", "The Oligarchs", "The Thirty Tyrants", "The Philosophers"],
-                answer: "The Thirty Tyrants"
+                question: "Bentham's philosophy is primarily based on the principle of:",
+                options: ["Natural Rights", "Divine Command", "Utility", "Social Contract"],
+                correct: 2
             },
             {
-                question: "What was the ultimate fate of Socrates, which deeply impacted Plato?",
-                options: ["Exile", "Imprisonment", "Condemnation and execution", "A political appointment"],
-                answer: "Condemnation and execution"
+                question: "What is the core concept of Bentham's principle of utility?",
+                options: ["Seeking individual happiness", "The greatest happiness of the greatest number", "Adherence to moral duties", "Preservation of tradition"],
+                correct: 1
             },
             {
-                question: "What was Socrates' fundamental belief that Plato's early system reflected?",
-                options: ["Wealth is virtue", "Virtue is knowledge", "Power is justice", "Happiness is pleasure"],
-                answer: "Virtue is knowledge"
+                question: "What term did Bentham use to describe the method of calculating pleasure and pain?",
+                options: ["Hedonic Scale", "Utilitarian Calculus", "Felicific Calculus", "Moral Arithmetic"],
+                correct: 2
             },
             {
-                question: "According to the text, a system that could destroy the best within it was worthy of neither loyalty nor what?",
-                options: ["Respect", "Love", "Admiration", "Fear"],
-                answer: "Respect"
+                question: "Bentham believed that human beings are primarily governed by:",
+                options: ["Reason and virtue", "Pleasure and pain", "Law and order", "Divine will"],
+                correct: 1
             },
             {
-                question: "How long did Plato's period of 'sou' searching and intellectual development last?",
-                options: ["A few months", "A few years", "A decade", "His entire life"],
-                answer: "A few years"
+                question: "Which of the following was a key area of reform advocated by Bentham?",
+                options: ["Religious dogma", "Legal and political systems", "Artistic expression", "Scientific research"],
+                correct: 1
             },
             {
-                question: "Where did Plato travel during his period of intellectual development?",
-                options: ["Egypt", "Persia", "Italy", "All of the above (implied by text for Italy and Egypt)"],
-                answer: "All of the above (implied by text for Italy and Egypt)"
+                question: "Who was a significant influence on Bentham's early philosophical development?",
+                options: ["John Locke", "Jean-Jacques Rousseau", "Thomas Hobbes", "Immanuel Kant"],
+                correct: 2
             },
             {
-                question: "What did Plato establish upon his return to Athens?",
-                options: ["A political party", "A military academy", "A school of philosophy", "A trade guild"],
-                answer: "A school of philosophy" // Refers to the Academy
+                question: "Bentham's view on individual moral development was that it was:",
+                options: ["Crucial for societal progress", "Less important than the overall happiness", "A private matter unrelated to utility", "Dependent on religious faith"],
+                correct: 1
             },
             {
-                question: "Plato's wanderings included visits to Greek cities in which region?",
-                options: ["Northern Greece", "Southern Italy", "Asia Minor", "The Aegean Islands"],
-                answer: "Southern Italy"
+                question: "John Stuart Mill was born in what year?",
+                options: ["1748", "1806", "1848", "1776"],
+                correct: 1
             },
             {
-                question: "What did Plato study in the Greek cities of southern Italy?",
-                options: ["Art and architecture", "Military tactics", "The doctrines of the mystic Pythagorean society", "Literature and poetry"],
-                answer: "The doctrines of the mystic Pythagorean society"
+                question: "Who primarily educated John Stuart Mill in his early life?",
+                options: ["Jeremy Bentham", "His mother", "His father, James Mill", "A private tutor"],
+                correct: 2
             },
             {
-                question: "The Pythagorean society stressed the importance of what disciplines?",
-                options: ["Music and rhetoric", "Mathematics and astronomy", "Sculpture and painting", "Drama and poetry"],
-                answer: "Mathematics and astronomy"
+                question: "At what age did John Stuart Mill begin learning Greek?",
+                options: ["5", "8", "3", "10"],
+                correct: 2
             },
             {
-                question: "What did Plato likely receive instruction in during his time in Egypt?",
-                options: ["Navigation", "Mathematics", "Medicine", "Engineering"],
-                answer: "Mathematics"
+                question: "Which of the following is a famous work by John Stuart Mill?",
+                options: ["Leviathan", "Two Treatises of Government", "On Liberty", "The Prince"],
+                correct: 2
             },
             {
-                question: "According to the text, what did Plato improve upon during his travels?",
-                options: ["His debating skills", "His understanding of politics", "His physical strength", "His philosophical foundation"],
-                answer: "His philosophical foundation" // "to build a philosophy that would hold the interest of scholars and statesmen through the ages."
+                question: "Mill's contribution to Utilitarianism included the concept of:",
+                options: ["Quantitative pleasures", "Qualitative distinction of pleasures", "Absolute moral rules", "Self-interest as the sole motive"],
+                correct: 1
             },
             {
-                question: "What is the title of Plato's major work extensively discussed in the document?",
-                options: ["The Apology", "The Laws", "The Republic", "The Symposium"],
-                answer: "The Republic"
+                question: "According to Mill, what distinguishes higher pleasures from lower pleasures?",
+                options: ["Their intensity", "Their duration", "Their quality and intellectual/moral nature", "Their accessibility"],
+                correct: 2
             },
             {
-                question: "What is a central theme explored in 'The Republic'?",
-                options: ["The nature of love", "The ideal state and justice", "The origins of the universe", "The role of art in society"],
-                answer: "The ideal state and justice"
+                question: "The 'harm principle' is a central idea in which of Mill's works?",
+                options: ["Utilitarianism", "Representative Government", "On Liberty", "Principles of Political Economy"],
+                correct: 2
             },
             {
-                question: "Plato's Republic can be described as a product of his what?",
-                options: ["Early maturity and speculative vigor", "Political ambition", "Military experience", "Economic theories"],
-                answer: "Early maturity and speculative vigor"
+                question: "What does Mill's 'harm principle' state?",
+                options: ["Individuals should be free to act as they wish, as long as they do not harm others.", "The government should intervene to prevent all forms of harm.", "Harm to oneself is also a concern for society.", "All actions that cause pain are immoral."],
+                correct: 0
             },
             {
-                question: "What is considered to be a major contribution to political philosophy from 'The Republic'?",
-                options: ["The concept of democracy", "The idea of a philosopher-king", "The theory of capitalism", "The principle of anarchy"],
-                answer: "The idea of a philosopher-king" // Implied by the discussions of ideal rulers and governance.
+                question: "Mill advocated for the rights of which group, which was progressive for his time?",
+                options: ["Children", "Animals", "Women", "Slaves"],
+                correct: 2
             },
             {
-                question: "What does Plato suggest is the source of conflict in the world?",
-                options: ["Lack of education", "Desire for wealth and power", "Religious differences", "Geographical boundaries"],
-                answer: "Desire for wealth and power" // Related to communism in the Republic.
+                question: "In 'Representative Government,' Mill discusses the importance of:",
+                options: ["Absolute monarchy", "Direct democracy", "A system where citizens elect representatives", "Rule by an elite class"],
+                correct: 2
             },
             {
-                question: "Plato suggests that individuals should fulfill roles based on what?",
-                options: ["Birthright", "Wealth", "Innate abilities and virtues", "Popular vote"],
-                answer: "Innate abilities and virtues" // This is a core idea in the Republic's class system.
+                question: "Which philosopher did Mill engage with and critique regarding utilitarianism, particularly on the nature of pleasure?",
+                options: ["Immanuel Kant", "Jeremy Bentham", "John Locke", "David Hume"],
+                correct: 1
             },
             {
-                question: "According to Thrasymachus, what is justice often equated with?",
-                options: ["The interest of the weaker", "The interest of the stronger", "Divine command", "Universal equality"],
-                answer: "The interest of the stronger"
+                question: "Mill's view on the 'felicific calculus' differed from Bentham's by emphasizing:",
+                options: ["Its mathematical precision", "Its impracticality in real-world application", "The qualitative aspects of happiness", "Its universal applicability"],
+                correct: 2
             },
             {
-                question: "What is Plato's solution to achieve justice in the state?",
-                options: ["Absolute freedom for all", "Rule by the wealthy", "A system based on reason and virtue", "Constant revolution"],
-                answer: "A system based on reason and virtue" // Core to the Republic's philosophy.
+                question: "Bentham's concept of government was primarily focused on:",
+                options: ["Protecting individual liberties above all else", "Maximizing the happiness of the community through legislation", "Maintaining traditional social hierarchies", "Promoting a minimal state with no intervention"],
+                correct: 1
             },
             {
-                question: "What does Plato consider the highest good for the state?",
-                options: ["Economic prosperity", "Military strength", "The well-being of the whole community", "Individual liberty"],
-                answer: "The well-being of the whole community"
+                question: "What was Bentham's stance on natural rights?",
+                options: ["He strongly supported them.", "He viewed them as 'nonsense upon stilts.'", "He believed they were essential for a just society.", "He saw them as a foundation for his philosophy."],
+                correct: 1
             },
             {
-                question: "Plato argues that rulers should be those who are what?",
-                options: ["Most cunning", "Least selfish", "Most powerful", "Most charismatic"],
-                answer: "Least selfish" // Or rather, those who care more about the community than themselves.
+                question: "Mill believed that individuality and self-development were:",
+                options: ["Detrimental to societal harmony", "Essential for human flourishing and progress", "Only important for the elite", "Irrelevant to the principle of utility"],
+                correct: 1
             },
             {
-                question: "Plato's idea of the ideal state in 'The Republic' is often described as a form of what?",
-                options: ["Totalitarianism", "Democracy", "Aristocracy (of the best)", "Oligarchy"],
-                answer: "Aristocracy (of the best)" // Rule by the virtuous and wise.
+                question: "Which of the following best describes Mill's approach to liberty?",
+                options: ["Absolute freedom for all actions.", "Freedom limited only by the harm principle.", "Freedom granted by the state.", "Freedom based on religious doctrines."],
+                correct: 1
             },
             {
-                question: "What did Plato believe about censorship and the arts in his ideal state?",
-                options: ["They should be completely free", "They should be used for political propaganda", "They should be strictly controlled for the good of the state", "They are irrelevant"],
-                answer: "They should be strictly controlled for the good of the state"
+                question: "Bentham's 'Fragment on Government' was a critique of which legal commentator?",
+                options: ["John Locke", "William Blackstone", "David Hume", "Adam Smith"],
+                correct: 1
             },
             {
-                question: "The educational plan in 'The Republic' focuses on developing which aspects?",
-                options: ["Physical fitness and musical talent", "Intellectual and moral character", "Military strategy and combat skills", "All of the above"],
-                answer: "All of the above" // Comprehensive education for guardians.
+                question: "Mill's 'Utilitarianism' aimed to defend and refine Bentham's doctrine by:",
+                options: ["Rejecting the greatest happiness principle.", "Introducing higher and lower pleasures.", "Advocating for a purely quantitative approach.", "Ignoring the role of individual liberty."],
+                correct: 1
             },
             {
-                question: "Plato emphasizes that education should be aimed at creating what kind of citizens?",
-                options: ["Submissive and obedient", "Independent and self-sufficient", "Virtuous and wise", "Wealthy and influential"],
-                answer: "Virtuous and wise"
+                question: "Bentham's philosophy is often described as:",
+                options: ["Deontological", "Virtue ethics", "Consequentialist", "Existentialist"],
+                correct: 2
             },
             {
-                question: "What does Plato suggest happens when excessive liberty becomes unchecked?",
-                options: ["Justice flourishes", "Disorder and anarchy arise", "Harmony is achieved", "People become more virtuous"],
-                answer: "Disorder and anarchy arise" // Leads to decline from ideal state.
+                question: "What was John Stuart Mill's initial career path before focusing entirely on philosophy and writing?",
+                options: ["Lawyer", "Politician", "East India Company clerk", "Journalist"],
+                correct: 2
             },
             {
-                question: "According to Plato, who should be the guardians of the state?",
-                options: ["The wealthiest citizens", "The military leaders", "Those with the most wisdom and virtue", "The common people"],
-                answer: "Those with the most wisdom and virtue" // Philosopher-kings.
+                question: "Bentham's idea of the Panopticon was a design for:",
+                options: ["A new type of government building", "An efficient prison", "A public library", "A school"],
+                correct: 1
             },
             {
-                question: "What is the primary function of music and poetry in Plato's ideal state?",
-                options: ["Entertainment", "Economic gain", "Shaping moral character", "Historical record"],
-                answer: "Shaping moral character" // Implied by his views on censorship and education.
+                question: "Mill argued that the 'tyranny of the majority' could be a threat to:",
+                options: ["Economic growth", "Individual liberty", "National security", "Social order"],
+                correct: 1
             },
             {
-                question: "Plato believed that true happiness comes from what?",
-                options: ["Material possessions", "Seeking pleasure", "Living a virtuous life in a just society", "Political power"],
-                answer: "Living a virtuous life in a just society"
+                question: "Which of these concepts is NOT directly associated with Bentham's utilitarianism?",
+                options: ["Felicific Calculus", "Greatest Happiness Principle", "Natural Rights", "Pleasure and Pain"],
+                correct: 2
+            },
+            {
+                question: "Mill's 'On Liberty' emphasizes the importance of:",
+                options: ["Conformity to social norms", "Diversity of opinion and experimentation in living", "Strict government control over individual lives", "The suppression of unpopular ideas"],
+                correct: 1
+            },
+            {
+                question: "Bentham's view on punishment was that it should be:",
+                options: ["Retributive", "Primarily for rehabilitation", "Designed to deter crime and prevent future harm", "Based on moral desert"],
+                correct: 2
+            },
+            {
+                question: "What was the primary focus of Mill's 'The Subjection of Women'?",
+                options: ["Advocating for women's suffrage", "Discussing the economic roles of women", "Arguing for legal and social equality for women", "Analyzing historical gender roles"],
+                correct: 2
+            },
+            {
+                question: "Both Bentham and Mill were part of which philosophical movement?",
+                options: ["Rationalism", "Empiricism", "Utilitarianism", "Idealism"],
+                correct: 2
+            },
+            {
+                question: "Mill believed that a truly free society requires:",
+                options: ["Strict adherence to tradition", "The absence of any government intervention", "Protection of individual expression and thought", "Uniformity of opinion"],
+                correct: 2
+            },
+            {
+                question: "Bentham's work 'Defence of Usury' argued against:",
+                options: ["High taxes", "Restrictions on interest rates", "Government regulation", "Free trade"],
+                correct: 1
+            },
+            {
+                question: "Mill's view on democracy evolved to emphasize the need for:",
+                options: ["Rule by an enlightened despot", "Protection of minority rights and individual freedom", "Unrestricted majority rule", "A return to aristocratic governance"],
+                correct: 1
+            },
+            {
+                question: "Which of the following is a key difference between Bentham and Mill regarding the application of utility?",
+                options: ["Bentham focused on individual utility, Mill on societal utility.", "Bentham was purely quantitative, Mill introduced qualitative aspects.", "Bentham applied it to law, Mill only to ethics.", "Bentham rejected pleasure, Mill embraced it."],
+                correct: 1
+            },
+            {
+                question: "Bentham's concept of 'mischievousness' relates to:",
+                options: ["Actions that cause harm to others.", "Actions that are morally wrong.", "Actions that are unproductive.", "Actions that are illegal."],
+                correct: 0
+            },
+            {
+                question: "Mill's 'Autobiography' details his unique education and his intellectual crisis, which led him to:",
+                options: ["Abandon utilitarianism entirely.", "Reaffirm Bentham's original principles.", "Seek a broader understanding of human nature and happiness.", "Pursue a career in politics."],
+                correct: 2
             }
         ];
 
+        // DOM Elements
+        const loginScreen = document.getElementById('login-screen');
+        const loginIdInput = document.getElementById('login-id');
+        const loginPasswordInput = document.getElementById('login-password');
+        const loginButton = document.getElementById('login-button');
+        const loginError = document.getElementById('login-error');
 
+        const nameEntryScreen = document.getElementById('name-entry-screen');
+        const candidateNameInput = document.getElementById('candidate-name');
+        const startQuizButton = document.getElementById('start-quiz-button');
+
+        const quizScreen = document.getElementById('quiz-screen');
+        const currentQuestionNumberSpan = document.getElementById('current-question-number');
+        const totalQuestionsSpan = document.getElementById('total-questions');
+        const timeLeftSpan = document.getElementById('time-left');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+
+        const resultScreen = document.getElementById('result-screen');
+        const finalCandidateNameSpan = document.getElementById('final-candidate-name');
+        const scoreDisplay = document.getElementById('score-display');
+        const maxScoreDisplay = document.getElementById('max-score');
+        const percentageDisplay = document.getElementById('percentage-display');
+
+        // Quiz State Variables
         let currentQuestionIndex = 0;
         let score = 0;
-        let quizAttempts = JSON.parse(localStorage.getItem('platoQuizAttempts')) || []; // Unique key for this quiz
-        let quizTimer;
         let timeLeft = 20 * 60; // 20 minutes in seconds
-        const CORRECT_ID = "321";
-        const CORRECT_PASSWORD = "123";
-        let hasAttempted = false; // Flag to prevent multiple attempts for the current session
+        let timerInterval;
+        let quizStarted = false;
+        let quizFinished = false;
+        let candidateName = '';
 
-        const authSection = document.getElementById('auth-section');
-        const startSection = document.getElementById('start-section');
-        const quizSection = document.getElementById('quiz-section');
-        const resultSection = document.getElementById('result-section');
-        const questionContainer = document.getElementById('question-container');
-        const startQuizButton = document.getElementById('start-quiz-button');
-        const nextButton = document.getElementById('next-button');
-        const prevButton = document.getElementById('prev-button');
-        const submitQuizButton = document.getElementById('submit-quiz-button');
-        const timerDisplay = document.getElementById('timer');
-        const scoreDisplay = document.getElementById('score');
-        const totalQuestionsDisplay = document.getElementById('total-questions');
-        const finalCandidateNameDisplay = document.getElementById('final-candidate-name');
-        const adminPanel = document.getElementById('admin-panel');
-        const adminResultsList = document.getElementById('admin-results-list');
-        const loginButton = document.getElementById('login-button');
-        const adminIdInput = document.getElementById('admin-id');
-        const adminPasswordInput = document.getElementById('admin-password');
-        const loginError = document.getElementById('login-error');
-        const candidateNameInput = document.getElementById('candidate-name');
+        // Constants for Login
+        const CORRECT_ID = '2211';
+        const CORRECT_PASSWORD = '1122';
 
-        const messageModal = document.getElementById('message-modal');
-        const modalMessage = document.getElementById('modal-message');
-        const closeModalButton = document.getElementById('close-modal-button');
+        // Initialize total questions display
+        totalQuestionsSpan.textContent = quizData.length;
+        maxScoreDisplay.textContent = quizData.length;
 
-        // Show modal message
-        function showModal(message) {
-            modalMessage.textContent = message;
-            messageModal.style.display = 'flex';
+        // Function to format time for display
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
         }
 
-        // Hide modal message
-        function hideModal() {
-            messageModal.style.display = 'none';
+        // Function to start the timer
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    timeLeftSpan.textContent = formatTime(timeLeft);
+                } else {
+                    clearInterval(timerInterval);
+                    endQuiz();
+                }
+            }, 1000);
         }
 
-        closeModalButton.addEventListener('click', hideModal);
-        window.addEventListener('click', (event) => {
-            if (event.target == messageModal) {
-                hideModal();
-            }
-        });
+        // Function to load a question
+        function loadQuestion() {
+            if (currentQuestionIndex < quizData.length) {
+                const question = quizData[currentQuestionIndex];
+                currentQuestionNumberSpan.textContent = currentQuestionIndex + 1;
+                questionText.textContent = question.question;
+                optionsContainer.innerHTML = ''; // Clear previous options
 
-        // Function to update the timer display
-        function updateTimer() {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-            if (timeLeft <= 0) {
-                clearInterval(quizTimer);
-                showModal("Time's up! The quiz will now be submitted.");
-                submitQuiz();
+                question.options.forEach((option, index) => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.classList.add('option-button');
+                    button.setAttribute('data-index', index);
+                    button.addEventListener('click', handleAnswerClick);
+                    optionsContainer.appendChild(button);
+                });
             } else {
-                timeLeft--;
+                endQuiz();
             }
         }
 
-        // Function to render a question
-        function renderQuestion() {
-            const questionData = quizQuestions[currentQuestionIndex];
-            questionContainer.innerHTML = `
-                <div class="question-number">Question ${currentQuestionIndex + 1} of ${quizQuestions.length}</div>
-                <div class="question-text">${questionData.question}</div>
-                <div id="options-container">
-                    ${questionData.options.map((option, idx) => `
-                        <div class="quiz-option" data-option="${option}">${option}</div>
-                    `).join('')}
-                </div>
-            `;
+        // Function to handle answer click
+        function handleAnswerClick(event) {
+            if (quizFinished) return; // Prevent interaction after quiz ends
 
-            const options = questionContainer.querySelectorAll('.quiz-option');
-            options.forEach(option => {
-                option.addEventListener('click', selectOption);
+            const selectedButton = event.target;
+            const selectedAnswerIndex = parseInt(selectedButton.getAttribute('data-index'));
+            const correctAnswerIndex = quizData[currentQuestionIndex].correct;
+
+            // Disable all options after an answer is selected
+            Array.from(optionsContainer.children).forEach(button => {
+                button.classList.add('disabled');
+                button.removeEventListener('click', handleAnswerClick);
             });
 
-            // Restore previously selected answer if any
-            if (quizQuestions[currentQuestionIndex].selectedAnswer) {
-                const selectedOptionElement = questionContainer.querySelector(`.quiz-option[data-option="${quizQuestions[currentQuestionIndex].selectedAnswer}"]`);
-                if (selectedOptionElement) {
-                    selectedOptionElement.classList.add('selected');
-                    // If already attempted and this was a wrong answer, show correct answer
-                    if (quizQuestions[currentQuestionIndex].attempted && quizQuestions[currentQuestionIndex].selectedAnswer !== quizQuestions[currentQuestionIndex].answer) {
-                        selectedOptionElement.classList.add('incorrect');
-                        const correctAnswerElement = questionContainer.querySelector(`.quiz-option[data-option="${quizQuestions[currentQuestionIndex].answer}"]`);
-                        if (correctAnswerElement) {
-                            correctAnswerElement.classList.add('correct');
-                        }
-                    } else if (quizQuestions[currentQuestionIndex].attempted && quizQuestions[currentQuestionIndex].selectedAnswer === quizQuestions[currentQuestionIndex].answer) {
-                        selectedOptionElement.classList.add('correct');
-                    }
-                    // Disable further clicks if question has been attempted
-                    if (quizQuestions[currentQuestionIndex].attempted) {
-                        disableOptions();
-                    }
-                }
-            }
-
-            // Update button visibility
-            prevButton.disabled = currentQuestionIndex === 0;
-            prevButton.classList.toggle('button-disabled', currentQuestionIndex === 0);
-
-            nextButton.style.display = (currentQuestionIndex === quizQuestions.length - 1) ? 'none' : 'inline-block';
-            submitQuizButton.style.display = (currentQuestionIndex === quizQuestions.length - 1) ? 'inline-block' : 'none';
-
-            // Disable all buttons if quiz has been attempted
-            if (hasAttempted) {
-                disableQuizNavigation();
-            }
-        }
-
-        // Function to select an option
-        function selectOption(event) {
-            if (hasAttempted || quizQuestions[currentQuestionIndex].attempted) {
-                return; // Prevent changes if quiz completed or question answered
-            }
-
-            const selectedOption = event.target;
-            const options = questionContainer.querySelectorAll('.quiz-option');
-
-            options.forEach(option => option.classList.remove('selected', 'correct', 'incorrect'));
-            selectedOption.classList.add('selected');
-
-            quizQuestions[currentQuestionIndex].selectedAnswer = selectedOption.dataset.option;
-            quizQuestions[currentQuestionIndex].attempted = true; // Mark question as attempted
-
-            // Immediate feedback:
-            if (selectedOption.dataset.option === quizQuestions[currentQuestionIndex].answer) {
-                selectedOption.classList.add('correct');
+            if (selectedAnswerIndex === correctAnswerIndex) {
+                score++;
+                selectedButton.classList.add('correct'); // Selected correct answer turns green
             } else {
-                selectedOption.classList.add('incorrect');
-                const correctAnswerElement = questionContainer.querySelector(`.quiz-option[data-option="${quizQuestions[currentQuestionIndex].answer}"]`);
-                if (correctAnswerElement) {
-                    correctAnswerElement.classList.add('correct');
-                }
+                selectedButton.classList.add('incorrect'); // Selected wrong answer turns red
+                optionsContainer.children[correctAnswerIndex].classList.add('correct'); // Correct answer turns green
             }
-            disableOptions(); // Disable options after an answer is chosen
-        }
 
-        // Disable all options for the current question
-        function disableOptions() {
-            const options = questionContainer.querySelectorAll('.quiz-option');
-            options.forEach(option => {
-                option.removeEventListener('click', selectOption);
-                option.style.cursor = 'default';
-            });
-        }
-
-        // Disable all quiz navigation buttons and submission
-        function disableQuizNavigation() {
-            prevButton.disabled = true;
-            nextButton.disabled = true;
-            submitQuizButton.disabled = true;
-            prevButton.classList.add('button-disabled');
-            nextButton.classList.add('button-disabled');
-            submitQuizButton.classList.add('button-disabled');
-        }
-
-        // Function to calculate and display results
-        function submitQuiz() {
-            if (hasAttempted) return; // Prevent multiple submissions
-            hasAttempted = true;
-            clearInterval(quizTimer); // Stop the timer
-
-            score = 0;
-            quizQuestions.forEach(q => {
-                if (q.selectedAnswer === q.answer) {
-                    score++;
+            // Move to the next question after a short delay
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizData.length) {
+                    loadQuestion();
+                } else {
+                    endQuiz();
                 }
-            });
+            }, 1000); // 1 second delay
+        }
 
-            quizSection.style.display = 'none';
-            resultSection.style.display = 'block';
-            finalCandidateNameDisplay.textContent = candidateNameInput.value;
+        // Function to end the quiz
+        function endQuiz() {
+            clearInterval(timerInterval);
+            quizFinished = true;
+
+            quizScreen.classList.add('hidden');
+            resultScreen.classList.remove('hidden');
+
+            finalCandidateNameSpan.textContent = candidateName;
             scoreDisplay.textContent = score;
-            totalQuestionsDisplay.textContent = quizQuestions.length;
+            const percentage = (score / quizData.length) * 100;
+            percentageDisplay.textContent = `${percentage.toFixed(2)}%`;
 
-            const newAttempt = {
-                name: candidateNameInput.value,
-                score: score,
-                total: quizQuestions.length,
-                date: new Date().toLocaleString()
-            };
-            quizAttempts.push(newAttempt);
-            localStorage.setItem('platoQuizAttempts', JSON.stringify(quizAttempts)); // Save with unique key
-
-            displayAdminResults();
-            disableQuizNavigation(); // Ensure buttons are disabled after submission
-        }
-
-        // Function to display admin results
-        function displayAdminResults() {
-            adminResultsList.innerHTML = ''; // Clear previous results
-            quizAttempts.forEach(attempt => {
-                const listItem = document.createElement('li');
-                listItem.textContent = `${attempt.name}: ${attempt.score}/${attempt.total} on ${attempt.date}`;
-                adminResultsList.appendChild(listItem);
-            });
+            // Disable start button to prevent restart
+            startQuizButton.disabled = true;
+            loginButton.disabled = true;
         }
 
         // Event Listeners
         loginButton.addEventListener('click', () => {
-            const id = adminIdInput.value;
-            const password = adminPasswordInput.value;
+            const enteredId = loginIdInput.value;
+            const enteredPassword = loginPasswordInput.value;
 
-            if (id === CORRECT_ID && password === CORRECT_PASSWORD) {
-                authSection.style.display = 'none';
-                startSection.style.display = 'block';
-                loginError.textContent = '';
+            if (enteredId === CORRECT_ID && enteredPassword === CORRECT_PASSWORD) {
+                loginScreen.classList.add('hidden');
+                nameEntryScreen.classList.remove('hidden');
+                loginError.classList.add('hidden');
             } else {
-                loginError.textContent = 'Invalid ID or Password. Please try again.';
+                loginError.classList.remove('hidden');
             }
         });
 
         startQuizButton.addEventListener('click', () => {
-            const candidateName = candidateNameInput.value.trim();
-            if (candidateName && !hasAttempted) {
-                startSection.style.display = 'none';
-                quizSection.style.display = 'block';
-                renderQuestion();
-                quizTimer = setInterval(updateTimer, 1000); // Start the timer
-            } else if (hasAttempted) {
-                showModal("You have already completed the quiz. You cannot restart it.");
-            } else {
-                showModal("Please enter your name to start the quiz.");
+            candidateName = candidateNameInput.value.trim();
+            if (candidateName === '') {
+                // Using a custom message box instead of alert()
+                const messageBox = document.createElement('div');
+                messageBox.innerHTML = `
+                    <div class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-xl text-center">
+                            <p class="text-lg font-semibold mb-4 text-gray-800">Please enter your name to start the quiz.</p>
+                            <button id="close-message-box" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">OK</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(messageBox);
+                document.getElementById('close-message-box').addEventListener('click', () => {
+                    document.body.removeChild(messageBox);
+                });
+                return;
+            }
+
+            if (!quizStarted && !quizFinished) {
+                nameEntryScreen.classList.add('hidden');
+                quizScreen.classList.remove('hidden');
+                quizStarted = true;
+                startTimer();
+                loadQuestion();
             }
         });
 
-        nextButton.addEventListener('click', () => {
-            if (currentQuestionIndex < quizQuestions.length - 1) {
-                currentQuestionIndex++;
-                renderQuestion();
-            }
-        });
-
-        prevButton.addEventListener('click', () => {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                renderQuestion();
-            }
-        });
-
-        submitQuizButton.addEventListener('click', submitQuiz);
-
-        // Initial setup on load
-        document.addEventListener('DOMContentLoaded', () => {
-            // No specific action needed here for a fresh start.
-        });
-
-        // Admin Panel Toggle (for you to see results)
-        // You can click anywhere on the quiz title to toggle the admin panel
-        document.querySelector('h1').addEventListener('click', () => {
-            if (adminPanel.style.display === 'block') {
-                adminPanel.style.display = 'none';
-            } else {
-                adminPanel.style.display = 'block';
-                displayAdminResults(); // Refresh results when opening
-            }
-        });
-
+        // Initial setup - show login screen
+        loginScreen.classList.remove('hidden');
     </script>
 </body>
 </html>
