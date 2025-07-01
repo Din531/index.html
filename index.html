@@ -4,441 +4,530 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Political Science Subject Specialist Preparation Quiz</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8; /* Light background */
+            background-color: #f0f8ff; /* Light blue background */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 20px;
+            padding: 1rem;
             box-sizing: border-box;
         }
         .quiz-container {
             background-color: #ffffff;
-            border-radius: 1rem; /* Rounded corners */
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-            padding: 2.5rem;
-            width: 100%;
-            max-width: 700px;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            width: 600px;
             text-align: center;
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
+            position: relative; /* For the timer */
         }
-        .option-button {
-            background-color: #e2e8f0; /* Light gray */
-            color: #334155; /* Darker text */
-            padding: 0.75rem 1.25rem;
-            border-radius: 0.75rem; /* Rounded corners */
-            cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.1s ease;
+        .header {
+            color: #1a73e8; /* Blue for header */
+            font-weight: 700;
+            font-size: 1.75rem; /* Larger for title */
+            margin-bottom: 1rem;
+        }
+        .contact-info {
+            color: #555;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        .input-group {
+            margin-bottom: 1rem;
             text-align: left;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 600;
+        }
+        .input-group input {
             width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #c0d9ed; /* Light blue border */
+            border-radius: 0.5rem;
             font-size: 1rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-        .option-button:hover:not(.disabled):not(.correct):not(.incorrect) {
-            background-color: #cbd5e1; /* Slightly darker gray on hover */
-            transform: translateY(-2px);
-        }
-        .option-button.correct {
-            background-color: #4CAF50; /* Green for correct */
-            color: white;
-            font-weight: 600;
-        }
-        .option-button.incorrect {
-            background-color: #EF4444; /* Red for incorrect */
-            color: white;
-            font-weight: 600;
-        }
-        .option-button.disabled {
-            cursor: not-allowed;
-            opacity: 0.8;
-        }
-        input[type="text"],
-        input[type="password"] {
-            padding: 0.75rem 1rem;
-            border: 1px solid #cbd5e1;
-            border-radius: 0.75rem;
-            width: 100%;
             box-sizing: border-box;
-            font-size: 1rem;
-            color: #334155;
         }
-        button {
-            background-color: #3b82f6; /* Blue */
+        .btn-primary {
+            background-color: #1a73e8; /* Blue button */
             color: white;
             padding: 0.75rem 1.5rem;
-            border-radius: 0.75rem;
-            cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.1s ease;
+            border-radius: 0.5rem;
+            font-size: 1.1rem;
             font-weight: 600;
-            font-size: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: none;
         }
-        button:hover:not(:disabled) {
-            background-color: #2563eb; /* Darker blue on hover */
+        .btn-primary:hover {
+            background-color: #155cb7; /* Darker blue on hover */
             transform: translateY(-2px);
         }
-        button:disabled {
-            opacity: 0.6;
+        .btn-primary:disabled {
+            background-color: #a0c4f0; /* Lighter blue when disabled */
             cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
         }
-        .timer-display {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #1e293b;
+        .error-message {
+            color: #e53e3e; /* Red for errors */
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .question-container {
+            text-align: left;
+            margin-bottom: 1.5rem;
         }
         .question-text {
             font-size: 1.25rem;
             font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 1.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        .options-container button {
+            display: block;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.75rem;
+            border: 1px solid #c0d9ed;
+            border-radius: 0.5rem;
+            background-color: #e0f2f7; /* Very light blue for options */
             text-align: left;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+            font-size: 1rem;
+            color: #333;
         }
-        .options-grid {
-            display: grid;
-            gap: 0.75rem;
+        .options-container button:hover:not(.selected-correct):not(.selected-wrong):not(.disabled) {
+            background-color: #d0eaf0;
+            border-color: #9ac8e2;
+            transform: translateY(-2px);
         }
-        .header {
-            margin-bottom: 1.5rem;
+        .options-container button.selected-wrong {
+            background-color: #fee2e2; /* Light red */
+            border-color: #ef4444; /* Red */
+            color: #ef4444;
         }
-        .header h1 {
-            font-size: 2.25rem;
+        .options-container button.selected-correct {
+            background-color: #d1fae5; /* Light green */
+            border-color: #10b981; /* Green */
+            color: #10b981;
+        }
+        .options-container button.correct-answer {
+            background-color: #d1fae5; /* Light green */
+            border-color: #10b981; /* Green */
+            color: #10b981;
+            font-weight: 600;
+        }
+        .options-container button.disabled {
+            cursor: not-allowed;
+        }
+        .timer {
+            font-size: 1.2rem;
             font-weight: 700;
-            color: #1e293b;
+            color: #1a73e8;
+            margin-bottom: 1rem;
+        }
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+        .result-screen h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a73e8;
+            margin-bottom: 1rem;
+        }
+        .result-screen p {
+            font-size: 1.1rem;
+            color: #333;
             margin-bottom: 0.5rem;
         }
-        .header p {
-            color: #475569;
-            font-size: 1rem;
+        .result-screen .score {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #10b981;
+            margin-top: 1rem;
         }
         .hidden {
             display: none;
         }
-        .result-score {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #1e293b;
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            border: 2px solid #1a73e8;
+        }
+        .message-box h3 {
+            font-size: 1.5rem;
+            color: #1a73e8;
             margin-bottom: 1rem;
         }
-        .result-message {
-            font-size: 1.125rem;
-            color: #475569;
+        .message-box p {
+            margin-bottom: 1.5rem;
+            color: #333;
         }
-        .contact-info {
-            font-size: 0.9rem;
-            color: #64748b;
-            margin-top: 1rem;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .quiz-container {
-                padding: 1.5rem;
-                margin: 10px;
-            }
-            .header h1 {
-                font-size: 1.75rem;
-            }
-            .question-text {
-                font-size: 1.1rem;
-            }
-            .option-button {
-                font-size: 0.95rem;
-            }
-            .timer-display {
-                font-size: 1rem;
-            }
-            input[type="text"],
-            input[type="password"],
-            button {
-                padding: 0.6rem 1rem;
-                font-size: 0.9rem;
-            }
+        .message-box button {
+            background-color: #1a73e8;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
         }
     </style>
 </head>
 <body>
     <div class="quiz-container">
-        <div class="header">
-            <h1>Political Science Subject Specialist Preparation Quiz</h1>
-            <p class="contact-info">Contact Number: 03188185185</p>
+        <!-- Message Box for Alerts -->
+        <div id="message-box" class="message-box hidden">
+            <h3 id="message-box-title"></h3>
+            <p id="message-box-content"></p>
+            <button id="message-box-ok">OK</button>
         </div>
 
         <!-- Login Screen -->
         <div id="login-screen">
-            <h2 class="text-xl font-semibold mb-4 text-gray-800">Login to Start Quiz</h2>
-            <input type="text" id="login-id" placeholder="Enter ID" class="mb-3">
-            <input type="password" id="login-password" placeholder="Enter Password" class="mb-4">
-            <button id="login-button">Login</button>
-            <p id="login-error" class="text-red-500 mt-2 hidden">Invalid ID or Password.</p>
+            <h1 class="header">Political Science Subject Specialist Preparation Quiz</h1>
+            <p class="contact-info">Contact Number: 03188185185</p>
+            <div class="input-group">
+                <label for="login-id">ID:</label>
+                <input type="text" id="login-id" placeholder="Enter your ID">
+            </div>
+            <div class="input-group">
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" placeholder="Enter your Password">
+            </div>
+            <p id="login-error" class="error-message hidden">Incorrect ID or Password.</p>
+            <button id="login-button" class="btn-primary">Login</button>
         </div>
 
-        <!-- Name Entry Screen -->
-        <div id="name-entry-screen" class="hidden">
-            <h2 class="text-xl font-semibold mb-4 text-gray-800">Enter Your Name</h2>
-            <input type="text" id="candidate-name" placeholder="Your Name" class="mb-4">
-            <button id="start-quiz-button">Start Quiz</button>
+        <!-- Start Screen -->
+        <div id="start-screen" class="hidden">
+            <h1 class="header">Political Science Subject Specialist Preparation Quiz</h1>
+            <p class="contact-info">Contact Number: 03188185185</p>
+            <p class="text-lg text-gray-700 mb-4">Welcome to the quiz! You have 20 minutes to complete 40+ MCQs.</p>
+            <div class="input-group">
+                <label for="candidate-name">Enter Your Name:</label>
+                <input type="text" id="candidate-name" placeholder="Your Name">
+            </div>
+            <p id="name-error" class="error-message hidden">Please enter your name to start the quiz.</p>
+            <button id="start-quiz-button" class="btn-primary">Start Quiz</button>
         </div>
 
         <!-- Quiz Screen -->
         <div id="quiz-screen" class="hidden">
-            <div class="flex justify-between items-center mb-4">
-                <p class="text-gray-700">Question <span id="current-question-number">1</span> / <span id="total-questions"></span></p>
-                <p class="timer-display">Time Left: <span id="time-left">20:00</span></p>
+            <div class="timer">Time Left: <span id="time-left">20:00</span></div>
+            <div class="question-container">
+                <p class="question-text" id="question-text"></p>
+                <div class="options-container" id="options-container">
+                    <!-- Options will be dynamically loaded here -->
+                </div>
             </div>
-            <p id="question-text" class="question-text"></p>
-            <div id="options-container" class="options-grid">
-                <!-- Options will be loaded here by JavaScript -->
+            <div class="navigation-buttons">
+                <button id="next-question-button" class="btn-primary hidden">Next Question</button>
+                <button id="submit-quiz-button" class="btn-primary hidden">Submit Quiz</button>
             </div>
         </div>
 
         <!-- Result Screen -->
         <div id="result-screen" class="hidden">
-            <h2 class="text-2xl font-bold mb-4 text-gray-800">Quiz Completed!</h2>
-            <p class="result-message">Candidate: <span id="final-candidate-name" class="font-semibold"></span></p>
-            <p class="result-score">Your Score: <span id="score-display">0</span> / <span id="max-score"></span></p>
-            <p class="result-message">Percentage: <span id="percentage-display">0%</span></p>
-            <p class="text-gray-600 mt-4">You cannot restart the quiz.</p>
+            <h2 class="header">Quiz Results</h2>
+            <p>Candidate: <span id="result-name"></span></p>
+            <p>Score: <span id="result-score"></span> / <span id="total-questions"></span></p>
+            <p class="score" id="percentage-score"></p>
         </div>
     </div>
 
     <script>
-        // Quiz Data (45 MCQs)
-        const quizData = [
+        // Array of quiz questions
+        const questions = [
             {
-                question: "Who is considered the founder of Utilitarianism?",
-                options: ["John Stuart Mill", "Jeremy Bentham", "David Hume", "John Locke"],
-                correct: 1 // Index of the correct option (0-based)
+                question: "Which period in English history is described as an era of dynamic change, an industrial nation, and an industrial middle class emerging?",
+                options: ["1600 to 1700", "1775 to 1875", "1880 to 1980", "1500 to 1600"],
+                correctAnswer: "1775 to 1875"
             },
             {
-                question: "Jeremy Bentham was born in which city?",
-                options: ["Paris", "London", "Edinburgh", "Dublin"],
-                correct: 1
+                question: "According to the document, who believed that economics was the sole determining factor in human affairs?",
+                options: ["Jeremy Bentham", "John Stuart Mill", "Karl Marx", "John Locke"],
+                correctAnswer: "Karl Marx"
             },
             {
-                question: "In what year was Jeremy Bentham born?",
-                options: ["1776", "1748", "1806", "1789"],
-                correct: 1
+                question: "What was the primary barrier to political preferment for the emerging classes in England?",
+                options: ["Lack of education", "Landowning classes", "Religious differences", "Absence of a constitution"],
+                correctAnswer: "Landowning classes"
             },
             {
-                question: "At what age did Jeremy Bentham matriculate at Queen's College, Oxford?",
-                options: ["16", "13", "18", "20"],
-                correct: 1
+                question: "What was the state of suffrage in England during the period discussed, despite having a representative legislative system?",
+                options: ["Universal suffrage", "Restricted suffrage", "Suffrage for all men", "Suffrage for women only"],
+                correctAnswer: "Restricted suffrage"
             },
             {
-                question: "Which of Bentham's works is considered a foundational text for Utilitarianism?",
-                options: ["On Liberty", "The Wealth of Nations", "An Introduction to the Principles of Morals and Legislation", "The Social Contract"],
-                correct: 2
+                question: "What, according to Bentham's doctrine of utility, is the standard by which all actions, both public and private, should be judged?",
+                options: ["Divine law", "Natural rights", "The greatest happiness of the greatest number", "Individual liberty"],
+                correctAnswer: "The greatest happiness of the greatest number"
             },
             {
-                question: "Bentham's philosophy is primarily based on the principle of:",
-                options: ["Natural Rights", "Divine Command", "Utility", "Social Contract"],
-                correct: 2
+                question: "Who is credited with elaborating the principle of utility as the groundwork for the philosophical radicals?",
+                options: ["John Locke", "Thomas Hobbes", "Jeremy Bentham", "John Stuart Mill"],
+                correctAnswer: "Jeremy Bentham"
             },
             {
-                question: "What is the core concept of Bentham's principle of utility?",
-                options: ["Seeking individual happiness", "The greatest happiness of the greatest number", "Adherence to moral duties", "Preservation of tradition"],
-                correct: 1
+                question: "According to the text, what did Hobbes believe was the greatest fear for humanity?",
+                options: ["Poverty", "Anarchy", "Sickness", "Ignorance"],
+                correctAnswer: "Anarchy"
             },
             {
-                question: "What term did Bentham use to describe the method of calculating pleasure and pain?",
-                options: ["Hedonic Scale", "Utilitarian Calculus", "Felicific Calculus", "Moral Arithmetic"],
-                correct: 2
+                question: "For John Stuart Mill, what was the primary concern with happiness in his view of utilitarianism?",
+                options: ["Its quantity", "Its moral development", "Its economic impact", "Its political influence"],
+                correctAnswer: "Its moral development"
             },
             {
-                question: "Bentham believed that human beings are primarily governed by:",
-                options: ["Reason and virtue", "Pleasure and pain", "Law and order", "Divine will"],
-                correct: 1
+                question: "What did Mill reject regarding virtue, in contrast to earlier utilitarians?",
+                options: ["That it leads to happiness", "That it is a means to an end", "That it is an end in itself", "That it is a social construct"],
+                correctAnswer: "That it is an end in itself"
             },
             {
-                question: "Which of the following was a key area of reform advocated by Bentham?",
-                options: ["Religious dogma", "Legal and political systems", "Artistic expression", "Scientific research"],
-                correct: 1
+                question: "Who did Bentham consider the 'two sovereign masters' that nature placed mankind under?",
+                options: ["Good and Evil", "Reason and Emotion", "Pain and Pleasure", "Liberty and Authority"],
+                correctAnswer: "Pain and Pleasure"
             },
             {
-                question: "Who was a significant influence on Bentham's early philosophical development?",
-                options: ["John Locke", "Jean-Jacques Rousseau", "Thomas Hobbes", "Immanuel Kant"],
-                correct: 2
+                question: "What did Bentham believe was the primary purpose of government?",
+                options: ["To protect natural rights", "To compel men to follow a course of conduct that produces the greatest happiness", "To ensure economic prosperity", "To promote individual freedom"],
+                correctAnswer: "To compel men to follow a course of conduct that produces the greatest happiness"
             },
             {
-                question: "Bentham's view on individual moral development was that it was:",
-                options: ["Crucial for societal progress", "Less important than the overall happiness", "A private matter unrelated to utility", "Dependent on religious faith"],
-                correct: 1
+                question: "What was the title of Joseph Priestley's work that provided the foundation for Bentham's philosophy?",
+                options: ["On Liberty", "Essay on Government", "The Principles of Morals and Legislation", "A Fragment on Government"],
+                correctAnswer: "Essay on Government"
             },
             {
-                question: "John Stuart Mill was born in what year?",
-                options: ["1748", "1806", "1848", "1776"],
-                correct: 1
+                question: "When was Jeremy Bentham born?",
+                options: ["February 15, 1748", "May 20, 1776", "June 6, 1832", "October 10, 1806"],
+                correctAnswer: "February 15, 1748"
             },
             {
-                question: "Who primarily educated John Stuart Mill in his early life?",
-                options: ["Jeremy Bentham", "His mother", "His father, James Mill", "A private tutor"],
-                correct: 2
+                question: "At what age did Jeremy Bentham begin reading Latin and historical works?",
+                options: ["Six", "Eight", "Three", "Thirteen"],
+                correctAnswer: "Three"
             },
             {
-                question: "At what age did John Stuart Mill begin learning Greek?",
-                options: ["5", "8", "3", "10"],
-                correct: 2
+                question: "What was the title of Bentham's first anonymously published work in 1776?",
+                options: ["Introduction to the Principles of Morals and Legislation", "Defence of Usury", "A Fragment on Government", "Westminster Review"],
+                correctAnswer: "A Fragment on Government"
             },
             {
-                question: "Which of the following is a famous work by John Stuart Mill?",
-                options: ["Leviathan", "Two Treatises of Government", "On Liberty", "The Prince"],
-                correct: 2
+                question: "Who was a lifelong friend of Bentham, mentioned as Lord Shelburne?",
+                options: ["James Mill", "Joseph Priestley", "Adam Smith", "Lord Shelburne"],
+                correctAnswer: "Lord Shelburne"
             },
             {
-                question: "Mill's contribution to Utilitarianism included the concept of:",
-                options: ["Quantitative pleasures", "Qualitative distinction of pleasures", "Absolute moral rules", "Self-interest as the sole motive"],
-                correct: 1
+                question: "What was the title of Bentham's most famous work, published in 1789, that greatly enhanced his reputation?",
+                options: ["A Fragment on Government", "Defence of Usury", "Introduction to the Principles of Morals and Legislation", "Westminster Review"],
+                correctAnswer: "Introduction to the Principles of Morals and Legislation"
             },
             {
-                question: "According to Mill, what distinguishes higher pleasures from lower pleasures?",
-                options: ["Their intensity", "Their duration", "Their quality and intellectual/moral nature", "Their accessibility"],
-                correct: 2
+                question: "When did Jeremy Bentham die?",
+                options: ["June 6, 1832", "February 15, 1848", "May 20, 1856", "October 10, 1873"],
+                correctAnswer: "June 6, 1832"
             },
             {
-                question: "The 'harm principle' is a central idea in which of Mill's works?",
-                options: ["Utilitarianism", "Representative Government", "On Liberty", "Principles of Political Economy"],
-                correct: 2
+                question: "What institution preserved Jeremy Bentham's skeleton?",
+                options: ["Oxford University", "Cambridge University", "University College London", "Westminster Abbey"],
+                correctAnswer: "University College London"
             },
             {
-                question: "What does Mill's 'harm principle' state?",
-                options: ["Individuals should be free to act as they wish, as long as they do not harm others.", "The government should intervene to prevent all forms of harm.", "Harm to oneself is also a concern for society.", "All actions that cause pain are immoral."],
-                correct: 0
+                question: "What did Bentham mean by 'fecundity' in his felicific calculus?",
+                options: ["The intensity of pleasure", "The duration of pleasure", "The chance of being followed by sensations of the same kind", "The number of people affected"],
+                correctAnswer: "The chance of being followed by sensations of the same kind"
             },
             {
-                question: "Mill advocated for the rights of which group, which was progressive for his time?",
-                options: ["Children", "Animals", "Women", "Slaves"],
-                correct: 2
+                question: "Which of the following is NOT one of the seven factors Bentham considered in his felicific calculus?",
+                options: ["Intensity", "Duration", "Morality", "Certainty"],
+                correctAnswer: "Morality"
             },
             {
-                question: "In 'Representative Government,' Mill discusses the importance of:",
-                options: ["Absolute monarchy", "Direct democracy", "A system where citizens elect representatives", "Rule by an elite class"],
-                correct: 2
+                question: "What did Bentham call the principle where persons appear to be moved by a desire to avoid pleasure and seek pain?",
+                options: ["Principle of Utility", "Principle of Asceticism", "Principle of Benevolence", "Principle of Self-interest"],
+                correctAnswer: "Principle of Asceticism"
             },
             {
-                question: "Which philosopher did Mill engage with and critique regarding utilitarianism, particularly on the nature of pleasure?",
-                options: ["Immanuel Kant", "Jeremy Bentham", "John Locke", "David Hume"],
-                correct: 1
+                question: "According to Bentham, what is the 'fictitious body' composed of individual persons?",
+                options: ["The government", "The community", "The legislature", "The judiciary"],
+                correctAnswer: "The community"
             },
             {
-                question: "Mill's view on the 'felicific calculus' differed from Bentham's by emphasizing:",
-                options: ["Its mathematical precision", "Its impracticality in real-world application", "The qualitative aspects of happiness", "Its universal applicability"],
-                correct: 2
+                question: "What was Bentham's view on the idea of 'natural rights'?",
+                options: ["He strongly supported them.", "He believed they were the foundation of law.", "He rejected them as 'metaphysical nonsense.'", "He saw them as essential for individual freedom."],
+                correctAnswer: "He rejected them as 'metaphysical nonsense.'"
             },
             {
-                question: "Bentham's concept of government was primarily focused on:",
-                options: ["Protecting individual liberties above all else", "Maximizing the happiness of the community through legislation", "Maintaining traditional social hierarchies", "Promoting a minimal state with no intervention"],
-                correct: 1
+                question: "What was Bentham's stance on the codification of law?",
+                options: ["He strongly opposed it.", "He believed it was unnecessary.", "He strongly favored it.", "He thought it would lead to tyranny."],
+                correctAnswer: "He strongly favored it."
             },
             {
-                question: "What was Bentham's stance on natural rights?",
-                options: ["He strongly supported them.", "He viewed them as 'nonsense upon stilts.'", "He believed they were essential for a just society.", "He saw them as a foundation for his philosophy."],
-                correct: 1
+                question: "What did Bentham believe was the only principle by which government may be judged?",
+                options: ["Justice", "Liberty", "Utility", "Equality"],
+                correctAnswer: "Utility"
             },
             {
-                question: "Mill believed that individuality and self-development were:",
-                options: ["Detrimental to societal harmony", "Essential for human flourishing and progress", "Only important for the elite", "Irrelevant to the principle of utility"],
-                correct: 1
+                question: "What was the primary reason Bentham was attracted to the principle of utility?",
+                options: ["Its philosophical depth", "Its a priori assumptions", "Its scientific basis", "Its direct line with his own nature"],
+                correctAnswer: "Its direct line with his own nature"
             },
             {
-                question: "Which of the following best describes Mill's approach to liberty?",
-                options: ["Absolute freedom for all actions.", "Freedom limited only by the harm principle.", "Freedom granted by the state.", "Freedom based on religious doctrines."],
-                correct: 1
+                question: "What did Bentham, along with Adam Smith and classical economists, favor for individual freedom?",
+                options: ["Centralized control", "Large measure of governmental restraint", "Large measure of individual freedom", "Strict regulation"],
+                correctAnswer: "Large measure of individual freedom"
             },
             {
-                question: "Bentham's 'Fragment on Government' was a critique of which legal commentator?",
-                options: ["John Locke", "William Blackstone", "David Hume", "Adam Smith"],
-                correct: 1
+                question: "What was the 'dismal choice' faced by a legislator in Bentham's view?",
+                options: ["Acting against their will or losing votes", "Acting in accordance with the will of constituents or ignoring it", "Promoting freedom or ensuring order", "Supporting the majority or protecting the minority"],
+                correctAnswer: "Acting in accordance with the will of constituents or ignoring it"
             },
             {
-                question: "Mill's 'Utilitarianism' aimed to defend and refine Bentham's doctrine by:",
-                options: ["Rejecting the greatest happiness principle.", "Introducing higher and lower pleasures.", "Advocating for a purely quantitative approach.", "Ignoring the role of individual liberty."],
-                correct: 1
+                question: "What did Bentham propose as the 'best solution' to devise a governmental system where the happiness of governors coincides with that of the governed?",
+                options: ["Absolute monarchy", "Oligarchy", "Representative government", "Direct democracy"],
+                correctAnswer: "Representative government"
             },
             {
-                question: "Bentham's philosophy is often described as:",
-                options: ["Deontological", "Virtue ethics", "Consequentialist", "Existentialist"],
-                correct: 2
+                question: "What was one of the key reforms incorporated into the English political system in 1832, influenced by Bentham's proposals?",
+                options: ["Universal suffrage", "Abolition of the House of Lords", "Reform measures recommended by Bentham", "Establishment of a new constitution"],
+                correctAnswer: "Reform measures recommended by Bentham"
             },
             {
-                question: "What was John Stuart Mill's initial career path before focusing entirely on philosophy and writing?",
-                options: ["Lawyer", "Politician", "East India Company clerk", "Journalist"],
-                correct: 2
+                question: "What significant Act, related to slavery, was abolished in the British Empire in 1833, as mentioned in the document?",
+                options: ["The Navigation Act", "The Abolition of Slavery Act", "The Reform Act", "The Corn Laws"],
+                correctAnswer: "The Abolition of Slavery Act"
             },
             {
-                question: "Bentham's idea of the Panopticon was a design for:",
-                options: ["A new type of government building", "An efficient prison", "A public library", "A school"],
-                correct: 1
+                question: "When was John Stuart Mill born?",
+                options: ["1748", "1806", "1832", "1873"],
+                correctAnswer: "1806"
             },
             {
-                question: "Mill argued that the 'tyranny of the majority' could be a threat to:",
-                options: ["Economic growth", "Individual liberty", "National security", "Social order"],
-                correct: 1
+                question: "At what age did John Stuart Mill begin reading Greek classics?",
+                options: ["Six", "Eight", "Three", "Fourteen"],
+                correctAnswer: "Three"
             },
             {
-                question: "Which of these concepts is NOT directly associated with Bentham's utilitarianism?",
-                options: ["Felicific Calculus", "Greatest Happiness Principle", "Natural Rights", "Pleasure and Pain"],
-                correct: 2
+                question: "What were the titles of John Stuart Mill's two most important works published before he left the East India Company?",
+                options: ["On Liberty and Utilitarianism", "Logic and Principles of Political Economy", "Representative Government and The Subjection of Women", "A System of Logic and Considerations on Representative Government"],
+                correctAnswer: "Logic and Principles of Political Economy"
             },
             {
-                question: "Mill's 'On Liberty' emphasizes the importance of:",
-                options: ["Conformity to social norms", "Diversity of opinion and experimentation in living", "Strict government control over individual lives", "The suppression of unpopular ideas"],
-                correct: 1
+                question: "Who was the 'remarkable woman' John Stuart Mill met at age twenty-three and later married?",
+                options: ["Mary Wollstonecraft", "Harriet Taylor", "Florence Nightingale", "Elizabeth Cady Stanton"],
+                correctAnswer: "Harriet Taylor"
             },
             {
-                question: "Bentham's view on punishment was that it should be:",
-                options: ["Retributive", "Primarily for rehabilitation", "Designed to deter crime and prevent future harm", "Based on moral desert"],
-                correct: 2
+                question: "What did Harriet Taylor's influence stimulate in Mill's approach?",
+                options: ["A more rigid adherence to utilitarianism", "A more humanitarian and imaginative approach", "A focus on economic theories", "A return to classical liberalism"],
+                correctAnswer: "A more humanitarian and imaginative approach"
             },
             {
-                question: "What was the primary focus of Mill's 'The Subjection of Women'?",
-                options: ["Advocating for women's suffrage", "Discussing the economic roles of women", "Arguing for legal and social equality for women", "Analyzing historical gender roles"],
-                correct: 2
+                question: "When did John Stuart Mill die?",
+                options: ["1806", "1832", "1873", "1875"],
+                correctAnswer: "1873"
             },
             {
-                question: "Both Bentham and Mill were part of which philosophical movement?",
-                options: ["Rationalism", "Empiricism", "Utilitarianism", "Idealism"],
-                correct: 2
+                question: "What did Mill believe was the 'greatest fear' society itself posed, apart from government?",
+                options: ["Economic collapse", "Destruction of individualism", "Foreign invasion", "Religious conflict"],
+                correctAnswer: "Destruction of individualism"
             },
             {
-                question: "Mill believed that a truly free society requires:",
-                options: ["Strict adherence to tradition", "The absence of any government intervention", "Protection of individual expression and thought", "Uniformity of opinion"],
-                correct: 2
+                question: "What is the famous quote by Mill regarding silencing opinion, even if all mankind minus one were of one opinion?",
+                options: [
+                    "\"The only purpose for which power can be rightfully exercised over any member of a civilized community, against his will, is to prevent harm to others.\"",
+                    "\"If all mankind minus one were of one opinion, and only one person were of the contrary opinion, mankind would be no more justified in silencing that one person, than he, if he had the power, would be justified in silencing mankind.\"",
+                    "\"It is better to be a human being dissatisfied than a pig satisfied; better to be Socrates dissatisfied than a fool satisfied.\"",
+                    "\"The government of the world I live in is a government of opinion.\""
+                ],
+                correctAnswer: "\"If all mankind minus one were of one opinion, and only one person were of the contrary opinion, mankind would be no more justified in silencing that one person, than he, if he had the power, would be justified in silencing mankind.\""
             },
             {
-                question: "Bentham's work 'Defence of Usury' argued against:",
-                options: ["High taxes", "Restrictions on interest rates", "Government regulation", "Free trade"],
-                correct: 1
+                question: "According to Mill, what is the 'sole end' for which mankind is warranted, individually or collectively, in interfering with the liberty of action of any of their number?",
+                options: ["To ensure social harmony", "To promote the greatest happiness", "Self-protection", "To enforce moral conduct"],
+                correctAnswer: "Self-protection"
             },
             {
-                question: "Mill's view on democracy evolved to emphasize the need for:",
-                options: ["Rule by an enlightened despot", "Protection of minority rights and individual freedom", "Unrestricted majority rule", "A return to aristocratic governance"],
-                correct: 1
+                question: "What did Mill distinguish among various kinds of happiness?",
+                options: ["Economic and social", "Physical and mental", "Higher and lower pleasures", "Individual and collective"],
+                correctAnswer: "Higher and lower pleasures"
             },
             {
-                question: "Which of the following is a key difference between Bentham and Mill regarding the application of utility?",
-                options: ["Bentham focused on individual utility, Mill on societal utility.", "Bentham was purely quantitative, Mill introduced qualitative aspects.", "Bentham applied it to law, Mill only to ethics.", "Bentham rejected pleasure, Mill embraced it."],
-                correct: 1
+                question: "What was Mill's view on Bentham's statement 'pushpin is as good as poetry'?",
+                options: ["He fully agreed with it.", "He believed it was a profound insight.", "He could not accept it.", "He thought it applied only to lower pleasures."],
+                correctAnswer: "He could not accept it."
             },
             {
-                question: "Bentham's concept of 'mischievousness' relates to:",
-                options: ["Actions that cause harm to others.", "Actions that are morally wrong.", "Actions that are unproductive.", "Actions that are illegal."],
-                correct: 0
+                question: "What was one of the two additional precautions Mill suggested to curb the formation of a majority party?",
+                options: ["Abolishing political parties", "Encouraging the creation of a third force", "Implementing a proportional representation system", "Limiting the number of political debates"],
+                correctAnswer: "Encouraging the creation of a third force"
             },
             {
-                question: "Mill's 'Autobiography' details his unique education and his intellectual crisis, which led him to:",
-                options: ["Abandon utilitarianism entirely.", "Reaffirm Bentham's original principles.", "Seek a broader understanding of human nature and happiness.", "Pursue a career in politics."],
-                correct: 2
+                question: "What is the title of Mill's work where he deals with the question of the freedom of the individual in society?",
+                options: ["Utilitarianism", "Representative Government", "On Liberty", "Autobiography"],
+                correctAnswer: "On Liberty"
+            },
+            {
+                question: "What did Mill believe was more important: what men *are* or what men *do*?",
+                options: ["What men do", "What men are", "Both equally important", "Neither is important"],
+                correctAnswer: "What men are"
+            },
+            {
+                question: "What was the primary reason for Mill's resignation from the East India Company?",
+                options: ["To pursue writing full-time", "Opposition to English control of India", "Health reasons", "To join politics"],
+                correctAnswer: "Opposition to English control of India"
+            },
+            {
+                question: "What did Mill believe was the primary function of the mass of citizens in his representative system?",
+                options: ["To frame intricate legislation", "To choose their legislative agents", "To directly govern", "To enforce laws"],
+                correctAnswer: "To choose their legislative agents"
+            },
+            {
+                question: "What was the 'test-tube existence' that led to Mill's emotional starvation?",
+                options: ["His early education and extreme preoccupation with intellectual pursuits", "His work at the East India Company", "His philosophical debates with Bentham", "His solitary life in London"],
+                correctAnswer: "His early education and extreme preoccupation with intellectual pursuits"
+            },
+            {
+                question: "What concept did Mill emphasize in *On Liberty* as being threatened by a 'huge and monolithic society'?",
+                options: ["Economic prosperity", "Political stability", "Individuality", "Social cohesion"],
+                correctAnswer: "Individuality"
             }
         ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timeLeft = 20 * 60; // 20 minutes in seconds
+        let timerInterval;
+        let quizAttempted = false; // Flag to prevent restarting
 
         // DOM Elements
         const loginScreen = document.getElementById('login-screen');
@@ -447,177 +536,173 @@
         const loginButton = document.getElementById('login-button');
         const loginError = document.getElementById('login-error');
 
-        const nameEntryScreen = document.getElementById('name-entry-screen');
+        const startScreen = document.getElementById('start-screen');
         const candidateNameInput = document.getElementById('candidate-name');
         const startQuizButton = document.getElementById('start-quiz-button');
+        const nameError = document.getElementById('name-error');
 
         const quizScreen = document.getElementById('quiz-screen');
-        const currentQuestionNumberSpan = document.getElementById('current-question-number');
-        const totalQuestionsSpan = document.getElementById('total-questions');
         const timeLeftSpan = document.getElementById('time-left');
         const questionText = document.getElementById('question-text');
         const optionsContainer = document.getElementById('options-container');
+        const nextQuestionButton = document.getElementById('next-question-button');
+        const submitQuizButton = document.getElementById('submit-quiz-button');
 
         const resultScreen = document.getElementById('result-screen');
-        const finalCandidateNameSpan = document.getElementById('final-candidate-name');
-        const scoreDisplay = document.getElementById('score-display');
-        const maxScoreDisplay = document.getElementById('max-score');
-        const percentageDisplay = document.getElementById('percentage-display');
+        const resultNameSpan = document.getElementById('result-name');
+        const resultScoreSpan = document.getElementById('result-score');
+        const totalQuestionsSpan = document.getElementById('total-questions');
+        const percentageScoreSpan = document.getElementById('percentage-score');
 
-        // Quiz State Variables
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let timeLeft = 20 * 60; // 20 minutes in seconds
-        let timerInterval;
-        let quizStarted = false;
-        let quizFinished = false;
-        let candidateName = '';
+        const messageBox = document.getElementById('message-box');
+        const messageBoxTitle = document.getElementById('message-box-title');
+        const messageBoxContent = document.getElementById('message-box-content');
+        const messageBoxOkButton = document.getElementById('message-box-ok');
 
-        // Constants for Login
-        const CORRECT_ID = '2211';
-        const CORRECT_PASSWORD = '1122';
-
-        // Initialize total questions display
-        totalQuestionsSpan.textContent = quizData.length;
-        maxScoreDisplay.textContent = quizData.length;
-
-        // Function to format time for display
-        function formatTime(seconds) {
-            const minutes = Math.floor(seconds / 60);
-            const remainingSeconds = seconds % 60;
-            return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+        // Function to display custom message box
+        function showMessageBox(title, content, onOk = null) {
+            messageBoxTitle.textContent = title;
+            messageBoxContent.textContent = content;
+            messageBox.classList.remove('hidden');
+            messageBoxOkButton.onclick = () => {
+                messageBox.classList.add('hidden');
+                if (onOk) onOk();
+            };
         }
 
-        // Function to start the timer
-        function startTimer() {
-            timerInterval = setInterval(() => {
-                if (timeLeft > 0) {
-                    timeLeft--;
-                    timeLeftSpan.textContent = formatTime(timeLeft);
-                } else {
-                    clearInterval(timerInterval);
-                    endQuiz();
-                }
-            }, 1000);
-        }
-
-        // Function to load a question
-        function loadQuestion() {
-            if (currentQuestionIndex < quizData.length) {
-                const question = quizData[currentQuestionIndex];
-                currentQuestionNumberSpan.textContent = currentQuestionIndex + 1;
-                questionText.textContent = question.question;
-                optionsContainer.innerHTML = ''; // Clear previous options
-
-                question.options.forEach((option, index) => {
-                    const button = document.createElement('button');
-                    button.textContent = option;
-                    button.classList.add('option-button');
-                    button.setAttribute('data-index', index);
-                    button.addEventListener('click', handleAnswerClick);
-                    optionsContainer.appendChild(button);
-                });
-            } else {
-                endQuiz();
-            }
-        }
-
-        // Function to handle answer click
-        function handleAnswerClick(event) {
-            if (quizFinished) return; // Prevent interaction after quiz ends
-
-            const selectedButton = event.target;
-            const selectedAnswerIndex = parseInt(selectedButton.getAttribute('data-index'));
-            const correctAnswerIndex = quizData[currentQuestionIndex].correct;
-
-            // Disable all options after an answer is selected
-            Array.from(optionsContainer.children).forEach(button => {
-                button.classList.add('disabled');
-                button.removeEventListener('click', handleAnswerClick);
-            });
-
-            if (selectedAnswerIndex === correctAnswerIndex) {
-                score++;
-                selectedButton.classList.add('correct'); // Selected correct answer turns green
-            } else {
-                selectedButton.classList.add('incorrect'); // Selected wrong answer turns red
-                optionsContainer.children[correctAnswerIndex].classList.add('correct'); // Correct answer turns green
-            }
-
-            // Move to the next question after a short delay
-            setTimeout(() => {
-                currentQuestionIndex++;
-                if (currentQuestionIndex < quizData.length) {
-                    loadQuestion();
-                } else {
-                    endQuiz();
-                }
-            }, 1000); // 1 second delay
-        }
-
-        // Function to end the quiz
-        function endQuiz() {
-            clearInterval(timerInterval);
-            quizFinished = true;
-
-            quizScreen.classList.add('hidden');
-            resultScreen.classList.remove('hidden');
-
-            finalCandidateNameSpan.textContent = candidateName;
-            scoreDisplay.textContent = score;
-            const percentage = (score / quizData.length) * 100;
-            percentageDisplay.textContent = `${percentage.toFixed(2)}%`;
-
-            // Disable start button to prevent restart
-            startQuizButton.disabled = true;
-            loginButton.disabled = true;
-        }
-
-        // Event Listeners
+        // --- Login Logic ---
         loginButton.addEventListener('click', () => {
-            const enteredId = loginIdInput.value;
-            const enteredPassword = loginPasswordInput.value;
+            const id = loginIdInput.value;
+            const password = loginPasswordInput.value;
 
-            if (enteredId === CORRECT_ID && enteredPassword === CORRECT_PASSWORD) {
+            if (id === '2211' && password === '1122') {
                 loginScreen.classList.add('hidden');
-                nameEntryScreen.classList.remove('hidden');
+                startScreen.classList.remove('hidden');
                 loginError.classList.add('hidden');
             } else {
                 loginError.classList.remove('hidden');
             }
         });
 
+        // --- Start Quiz Logic ---
         startQuizButton.addEventListener('click', () => {
-            candidateName = candidateNameInput.value.trim();
+            const candidateName = candidateNameInput.value.trim();
             if (candidateName === '') {
-                // Using a custom message box instead of alert()
-                const messageBox = document.createElement('div');
-                messageBox.innerHTML = `
-                    <div class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
-                        <div class="bg-white p-6 rounded-lg shadow-xl text-center">
-                            <p class="text-lg font-semibold mb-4 text-gray-800">Please enter your name to start the quiz.</p>
-                            <button id="close-message-box" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">OK</button>
-                        </div>
-                    </div>
-                `;
-                document.body.appendChild(messageBox);
-                document.getElementById('close-message-box').addEventListener('click', () => {
-                    document.body.removeChild(messageBox);
-                });
+                nameError.classList.remove('hidden');
+                return;
+            }
+            if (quizAttempted) {
+                showMessageBox("Quiz Already Attempted", "You have already completed this quiz. You cannot restart it.");
                 return;
             }
 
-            if (!quizStarted && !quizFinished) {
-                nameEntryScreen.classList.add('hidden');
-                quizScreen.classList.remove('hidden');
-                quizStarted = true;
-                startTimer();
-                loadQuestion();
-            }
+            nameError.classList.add('hidden');
+            startScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            resultNameSpan.textContent = candidateName; // Set candidate name for results
+
+            startTimer();
+            loadQuestion();
         });
 
-        // Initial setup - show login screen
-        loginScreen.classList.remove('hidden');
+        // --- Timer Logic ---
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timeLeftSpan.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    showMessageBox("Time's Up!", "Your time has run out. The quiz will now be submitted.", submitQuiz);
+                }
+            }, 1000);
+        }
+
+        // --- Quiz Logic ---
+        function loadQuestion() {
+            if (currentQuestionIndex >= questions.length) {
+                submitQuiz();
+                return;
+            }
+
+            const currentQuestion = questions[currentQuestionIndex];
+            questionText.textContent = `${currentQuestionIndex + 1}. ${currentQuestion.question}`;
+            optionsContainer.innerHTML = ''; // Clear previous options
+
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('rounded-lg'); // Tailwind class for rounded corners
+                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion.correctAnswer));
+                optionsContainer.appendChild(button);
+            });
+
+            // Show/hide navigation buttons
+            if (currentQuestionIndex < questions.length - 1) {
+                nextQuestionButton.classList.remove('hidden');
+                submitQuizButton.classList.add('hidden');
+            } else {
+                nextQuestionButton.classList.add('hidden');
+                submitQuizButton.classList.remove('hidden');
+            }
+        }
+
+        function selectAnswer(selectedButton, selectedOption, correctAnswer) {
+            // Disable all options after selection
+            Array.from(optionsContainer.children).forEach(button => {
+                button.classList.add('disabled');
+                button.removeEventListener('click', () => {}); // Remove event listener
+            });
+
+            if (selectedOption === correctAnswer) {
+                selectedButton.classList.add('selected-correct');
+                score++;
+            } else {
+                selectedButton.classList.add('selected-wrong');
+                // Highlight the correct answer
+                Array.from(optionsContainer.children).forEach(button => {
+                    if (button.textContent === correctAnswer) {
+                        button.classList.add('correct-answer');
+                    }
+                });
+            }
+
+            // Enable next/submit button only after an answer is selected
+            if (currentQuestionIndex < questions.length - 1) {
+                nextQuestionButton.disabled = false;
+            } else {
+                submitQuizButton.disabled = false;
+            }
+        }
+
+        nextQuestionButton.addEventListener('click', () => {
+            currentQuestionIndex++;
+            nextQuestionButton.disabled = true; // Disable until next selection
+            loadQuestion();
+        });
+
+        submitQuizButton.addEventListener('click', submitQuiz);
+
+        function submitQuiz() {
+            clearInterval(timerInterval);
+            quizAttempted = true; // Mark quiz as attempted
+            quizScreen.classList.add('hidden');
+            resultScreen.classList.remove('hidden');
+
+            totalQuestionsSpan.textContent = questions.length;
+            resultScoreSpan.textContent = score;
+            const percentage = (score / questions.length) * 100;
+            percentageScoreSpan.textContent = `Score: ${percentage.toFixed(2)}%`;
+
+            // Disable start button to prevent restart
+            startQuizButton.disabled = true;
+        }
+
+        // Initialize button states
+        nextQuestionButton.disabled = true;
+        submitQuizButton.disabled = true;
     </script>
 </body>
 </html>
