@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Political Science Subject Specialist Preparation Quiz</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -14,187 +14,179 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            padding: 1rem;
+            padding: 20px;
             box-sizing: border-box;
         }
         .quiz-container {
             background-color: #ffffff;
-            padding: 2rem;
-            border-radius: 1rem;
+            border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            max-width: 90%;
-            width: 600px;
+            padding: 30px;
+            width: 100%;
+            max-width: 700px;
             text-align: center;
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
-            position: relative; /* For the timer */
+            align-items: center;
         }
         .header {
-            color: #1a73e8; /* Blue for header */
-            font-weight: 700;
-            font-size: 1.75rem; /* Larger for title */
-            margin-bottom: 1rem;
+            margin-bottom: 20px;
         }
-        .contact-info {
-            color: #555;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
+        .header h1 {
+            color: #1e3a8a; /* Darker blue for title */
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 700; /* font-bold */
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: #3b82f6; /* Blue for contact */
+            font-size: 1.125rem; /* text-lg */
+        }
+        .header .subtitle {
+            font-weight: 700; /* Bold text */
+            color: #1e3a8a; /* Darker blue for subtitle */
+            margin-top: 5px;
+            font-size: 1.2rem;
         }
         .input-group {
-            margin-bottom: 1rem;
-            text-align: left;
+            margin-bottom: 15px;
+            width: 100%;
+            max-width: 400px;
         }
         .input-group label {
             display: block;
-            margin-bottom: 0.5rem;
-            color: #333;
+            margin-bottom: 8px;
+            color: #4b5563;
             font-weight: 600;
+            text-align: left;
         }
         .input-group input {
             width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #c0d9ed; /* Light blue border */
-            border-radius: 0.5rem;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
             font-size: 1rem;
+            color: #374151;
             box-sizing: border-box;
         }
-        .btn-primary {
-            background-color: #1a73e8; /* Blue button */
+        .button-blue {
+            background-color: #3b82f6; /* Blue */
             color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-size: 1.1rem;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.125rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
             border: none;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
         }
-        .btn-primary:hover {
-            background-color: #155cb7; /* Darker blue on hover */
-            transform: translateY(-2px);
+        .button-blue:hover {
+            background-color: #2563eb; /* Darker blue on hover */
         }
-        .btn-primary:disabled {
-            background-color: #a0c4f0; /* Lighter blue when disabled */
-            cursor: not-allowed;
-            box-shadow: none;
-            transform: none;
+        .hidden {
+            display: none;
         }
-        .error-message {
-            color: #e53e3e; /* Red for errors */
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
-        }
-        .question-container {
-            text-align: left;
-            margin-bottom: 1.5rem;
+        .quiz-section {
+            width: 100%;
         }
         .question-text {
-            font-size: 1.25rem;
+            font-size: 1.5rem; /* text-2xl */
             font-weight: 600;
-            color: #333;
-            margin-bottom: 1rem;
+            margin-bottom: 25px;
+            color: #1f2937;
+            text-align: left;
         }
         .options-container button {
             display: block;
             width: 100%;
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.75rem;
-            border: 1px solid #c0d9ed;
-            border-radius: 0.5rem;
-            background-color: #e0f2f7; /* Very light blue for options */
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            background-color: #e0f2fe; /* Light blue option background */
+            border: 1px solid #90cdf4;
+            border-radius: 10px;
             text-align: left;
+            font-size: 1.1rem;
+            color: #1e40af; /* Dark blue text for options */
             cursor: pointer;
-            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
-            font-size: 1rem;
-            color: #333;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
-        .options-container button:hover:not(.selected-correct):not(.selected-wrong):not(.disabled) {
-            background-color: #d0eaf0;
-            border-color: #9ac8e2;
-            transform: translateY(-2px);
+        .options-container button:hover:not(.correct):not(.incorrect) {
+            background-color: #bfdbfe; /* Slightly darker light blue on hover */
         }
-        .options-container button.selected-wrong {
+        .options-container button.correct {
+            background-color: #d1fae5; /* Light green */
+            border-color: #34d399; /* Green border */
+            color: #065f46; /* Dark green text */
+            pointer-events: none; /* Disable clicks after selection */
+        }
+        .options-container button.incorrect {
             background-color: #fee2e2; /* Light red */
-            border-color: #ef4444; /* Red */
-            color: #ef4444;
-        }
-        .options-container button.selected-correct {
-            background-color: #d1fae5; /* Light green */
-            border-color: #10b981; /* Green */
-            color: #10b981;
-        }
-        .options-container button.correct-answer {
-            background-color: #d1fae5; /* Light green */
-            border-color: #10b981; /* Green */
-            color: #10b981;
-            font-weight: 600;
-        }
-        .options-container button.disabled {
-            cursor: not-allowed;
+            border-color: #ef4444; /* Red border */
+            color: #991b1b; /* Dark red text */
+            pointer-events: none; /* Disable clicks after selection */
         }
         .timer {
-            font-size: 1.2rem;
+            font-size: 1.25rem; /* text-xl */
             font-weight: 700;
-            color: #1a73e8;
-            margin-bottom: 1rem;
+            color: #ef4444; /* Red for timer */
+            margin-bottom: 20px;
         }
-        .navigation-buttons {
+        .quiz-navigation {
             display: flex;
             justify-content: space-between;
-            margin-top: 1.5rem;
+            width: 100%;
+            margin-top: 20px;
         }
-        .result-screen h2 {
-            font-size: 1.5rem;
+        .result-section {
+            width: 100%;
+        }
+        .result-section h2 {
+            font-size: 2rem; /* text-3xl */
             font-weight: 700;
-            color: #1a73e8;
-            margin-bottom: 1rem;
+            color: #1e3a8a;
+            margin-bottom: 15px;
         }
-        .result-screen p {
-            font-size: 1.1rem;
-            color: #333;
-            margin-bottom: 0.5rem;
+        .result-section p {
+            font-size: 1.25rem; /* text-xl */
+            color: #374151;
+            margin-bottom: 10px;
         }
-        .result-screen .score {
-            font-size: 2rem;
+        .result-section .score {
+            font-size: 2.5rem; /* text-5xl */
             font-weight: 700;
-            color: #10b981;
-            margin-top: 1rem;
-        }
-        .hidden {
-            display: none;
+            color: #059669; /* Green for score */
+            margin-top: 20px;
         }
         .message-box {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             z-index: 1000;
             text-align: center;
-            max-width: 400px;
-            width: 90%;
-            border: 2px solid #1a73e8;
+            max-width: 90%;
+            width: 400px;
         }
         .message-box h3 {
             font-size: 1.5rem;
-            color: #1a73e8;
-            margin-bottom: 1rem;
+            color: #1e3a8a;
+            margin-bottom: 15px;
         }
         .message-box p {
-            margin-bottom: 1.5rem;
-            color: #333;
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 20px;
         }
         .message-box button {
-            background-color: #1a73e8;
+            background-color: #3b82f6;
             color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
+            padding: 10px 20px;
+            border-radius: 8px;
             font-size: 1rem;
             cursor: pointer;
             border: none;
@@ -203,506 +195,486 @@
 </head>
 <body>
     <div class="quiz-container">
-        <!-- Message Box for Alerts -->
-        <div id="message-box" class="message-box hidden">
-            <h3 id="message-box-title"></h3>
-            <p id="message-box-content"></p>
-            <button id="message-box-ok">OK</button>
+        <div class="header">
+            <h1>Political Science Subject Specialist Preparation Quiz</h1>
+            <p>Contact Number: 03188185185</p>
+            <p class="subtitle">US Constitution</p>
         </div>
 
-        <!-- Login Screen -->
-        <div id="login-screen">
-            <h1 class="header">Political Science Subject Specialist Preparation Quiz</h1>
-            <p class="contact-info">Contact Number: 03188185185</p>
+        <!-- Login Section -->
+        <div id="login-section" class="w-full flex flex-col items-center">
             <div class="input-group">
-                <label for="login-id">ID:</label>
-                <input type="text" id="login-id" placeholder="Enter your ID">
+                <label for="user-id">ID:</label>
+                <input type="text" id="user-id" placeholder="Enter your ID">
             </div>
             <div class="input-group">
-                <label for="login-password">Password:</label>
-                <input type="password" id="login-password" placeholder="Enter your Password">
+                <label for="password">Password:</label>
+                <input type="password" id="password" placeholder="Enter your Password">
             </div>
-            <p id="login-error" class="error-message hidden">Incorrect ID or Password.</p>
-            <button id="login-button" class="btn-primary">Login</button>
+            <button id="login-button" class="button-blue">Login</button>
+            <p id="login-error" class="text-red-500 mt-2 hidden">Invalid ID or Password</p>
         </div>
 
-        <!-- Start Screen -->
-        <div id="start-screen" class="hidden">
-            <h1 class="header">Political Science Subject Specialist Preparation Quiz</h1>
-            <p class="contact-info">Contact Number: 03188185185</p>
-            <p class="text-lg text-gray-700 mb-4">Welcome to the quiz! You have 20 minutes to complete 40+ MCQs.</p>
+        <!-- Name Input Section -->
+        <div id="name-section" class="hidden w-full flex flex-col items-center">
             <div class="input-group">
                 <label for="candidate-name">Enter Your Name:</label>
                 <input type="text" id="candidate-name" placeholder="Your Name">
             </div>
-            <p id="name-error" class="error-message hidden">Please enter your name to start the quiz.</p>
-            <button id="start-quiz-button" class="btn-primary">Start Quiz</button>
+            <button id="start-quiz-button" class="button-blue">Start Quiz</button>
         </div>
 
-        <!-- Quiz Screen -->
-        <div id="quiz-screen" class="hidden">
-            <div class="timer">Time Left: <span id="time-left">20:00</span></div>
-            <div class="question-container">
-                <p class="question-text" id="question-text"></p>
-                <div class="options-container" id="options-container">
-                    <!-- Options will be dynamically loaded here -->
-                </div>
+        <!-- Quiz Section -->
+        <div id="quiz-section" class="hidden quiz-section">
+            <div class="timer" id="timer">Time Left: 20:00</div>
+            <div class="question-text" id="question-text"></div>
+            <div class="options-container w-full" id="options-container">
+                <!-- Options will be dynamically loaded here -->
             </div>
-            <div class="navigation-buttons">
-                <button id="next-question-button" class="btn-primary hidden">Next Question</button>
-                <button id="submit-quiz-button" class="btn-primary hidden">Submit Quiz</button>
+            <div class="quiz-navigation">
+                <button id="prev-button" class="button-blue hidden">Previous</button>
+                <button id="next-button" class="button-blue">Next</button>
             </div>
         </div>
 
-        <!-- Result Screen -->
-        <div id="result-screen" class="hidden">
-            <h2 class="header">Quiz Results</h2>
-            <p>Candidate: <span id="result-name"></span></p>
-            <p>Score: <span id="result-score"></span> / <span id="total-questions"></span></p>
-            <p class="score" id="percentage-score"></p>
+        <!-- Result Section -->
+        <div id="result-section" class="hidden result-section">
+            <h2>Quiz Result</h2>
+            <p>Candidate Name: <span id="result-name"></span></p>
+            <p>Total Questions: <span id="total-questions-display"></span></p>
+            <p>Correct Answers: <span id="correct-answers-display"></span></p>
+            <p>Incorrect Answers: <span id="incorrect-answers-display"></span></p>
+            <p class="score">Your Score: <span id="score-display"></span>%</p>
         </div>
     </div>
 
+    <!-- Message Box for alerts -->
+    <div id="message-box" class="message-box hidden">
+        <h3 id="message-title"></h3>
+        <p id="message-content"></p>
+        <button id="message-ok-button">OK</button>
+    </div>
+
     <script>
-        // Array of quiz questions
-        const questions = [
+        // Quiz Data - 40 MCQs
+        const quizData = [
             {
-                question: "Which period in English history is described as an era of dynamic change, an industrial nation, and an industrial middle class emerging?",
-                options: ["1600 to 1700", "1775 to 1875", "1880 to 1980", "1500 to 1600"],
-                correctAnswer: "1775 to 1875"
+                question: "The United States of America is a federal constitutional republic comprising how many states?",
+                options: ["48", "50", "52", "49"],
+                answer: "50"
             },
             {
-                question: "According to the document, who believed that economics was the sole determining factor in human affairs?",
-                options: ["Jeremy Bentham", "John Stuart Mill", "Karl Marx", "John Locke"],
-                correctAnswer: "Karl Marx"
+                question: "The capital district of the United States, Washington, D.C., lies between which two oceans?",
+                options: ["Indian and Pacific", "Atlantic and Arctic", "Pacific and Atlantic", "Southern and Atlantic"],
+                answer: "Pacific and Atlantic"
             },
             {
-                question: "What was the primary barrier to political preferment for the emerging classes in England?",
-                options: ["Lack of education", "Landowning classes", "Religious differences", "Absence of a constitution"],
-                correctAnswer: "Landowning classes"
+                question: "Which country borders the United States to the north?",
+                options: ["Mexico", "Canada", "Russia", "Cuba"],
+                answer: "Canada"
             },
             {
-                question: "What was the state of suffrage in England during the period discussed, despite having a representative legislative system?",
-                options: ["Universal suffrage", "Restricted suffrage", "Suffrage for all men", "Suffrage for women only"],
-                correctAnswer: "Restricted suffrage"
+                question: "Which country borders the United States to the south?",
+                options: ["Canada", "Mexico", "Cuba", "Guatemala"],
+                answer: "Mexico"
             },
             {
-                question: "What, according to Bentham's doctrine of utility, is the standard by which all actions, both public and private, should be judged?",
-                options: ["Divine law", "Natural rights", "The greatest happiness of the greatest number", "Individual liberty"],
-                correctAnswer: "The greatest happiness of the greatest number"
+                question: "The state of Alaska is located in the northwest of the continent, with Canada to the east and which country to the west across the Bering Strait?",
+                options: ["China", "Japan", "Russia", "North Korea"],
+                answer: "Russia"
             },
             {
-                question: "Who is credited with elaborating the principle of utility as the groundwork for the philosophical radicals?",
-                options: ["John Locke", "Thomas Hobbes", "Jeremy Bentham", "John Stuart Mill"],
-                correctAnswer: "Jeremy Bentham"
+                question: "The state of Hawaii is an archipelago in which ocean?",
+                options: ["Atlantic", "Indian", "Arctic", "Pacific"],
+                answer: "Pacific"
             },
             {
-                question: "According to the text, what did Hobbes believe was the greatest fear for humanity?",
-                options: ["Poverty", "Anarchy", "Sickness", "Ignorance"],
-                correctAnswer: "Anarchy"
+                question: "Approximately how many million square miles is the United States by total area?",
+                options: ["2.5 million", "3.79 million", "4.1 million", "5.0 million"],
+                answer: "3.79 million"
             },
             {
-                question: "For John Stuart Mill, what was the primary concern with happiness in his view of utilitarianism?",
-                options: ["Its quantity", "Its moral development", "Its economic impact", "Its political influence"],
-                correctAnswer: "Its moral development"
+                question: "What is the approximate population of the United States?",
+                options: ["200 million", "250 million", "309 million", "350 million"],
+                answer: "309 million"
             },
             {
-                question: "What did Mill reject regarding virtue, in contrast to earlier utilitarians?",
-                options: ["That it leads to happiness", "That it is a means to an end", "That it is an end in itself", "That it is a social construct"],
-                correctAnswer: "That it is an end in itself"
+                question: "The United States is the third largest country by total area and population. It is a product of large-scale immigration from many countries, making it one of the world's most culturally diverse and what kind of nations?",
+                options: ["Homogeneous", "Monocultural", "Multicultural", "Isolated"],
+                answer: "Multicultural"
             },
             {
-                question: "Who did Bentham consider the 'two sovereign masters' that nature placed mankind under?",
-                options: ["Good and Evil", "Reason and Emotion", "Pain and Pleasure", "Liberty and Authority"],
-                correctAnswer: "Pain and Pleasure"
+                question: "What is the status of the US economy in the world?",
+                options: ["Second largest national economy", "Largest national economy", "Third largest national economy", "Fourth largest national economy"],
+                answer: "Largest national economy"
             },
             {
-                question: "What did Bentham believe was the primary purpose of government?",
-                options: ["To protect natural rights", "To compel men to follow a course of conduct that produces the greatest happiness", "To ensure economic prosperity", "To promote individual freedom"],
-                correctAnswer: "To compel men to follow a course of conduct that produces the greatest happiness"
+                question: "Indigenous peoples of which origin have inhabited what is now the mainland United States for many hundreds of years?",
+                options: ["European", "African", "Asian", "Australian"],
+                answer: "Asian"
             },
             {
-                question: "What was the title of Joseph Priestley's work that provided the foundation for Bentham's philosophy?",
-                options: ["On Liberty", "Essay on Government", "The Principles of Morals and Legislation", "A Fragment on Government"],
-                correctAnswer: "Essay on Government"
+                question: "The Native American population was greatly reduced after European contact due to disease and what else?",
+                options: ["Famine", "Natural disasters", "Warfare", "Migration"],
+                answer: "Warfare"
             },
             {
-                question: "When was Jeremy Bentham born?",
-                options: ["February 15, 1748", "May 20, 1776", "June 6, 1832", "October 10, 1806"],
-                correctAnswer: "February 15, 1748"
+                question: "The United States was founded by how many British colonies located along the Atlantic seaboard?",
+                options: ["10", "13", "15", "7"],
+                answer: "13"
             },
             {
-                question: "At what age did Jeremy Bentham begin reading Latin and historical works?",
-                options: ["Six", "Eight", "Three", "Thirteen"],
-                correctAnswer: "Three"
+                question: "On what date did the 13 British colonies issue the Declaration of Independence?",
+                options: ["June 4, 1776", "July 4, 1776", "August 4, 1776", "September 4, 1776"],
+                answer: "July 4, 1776"
             },
             {
-                question: "What was the title of Bentham's first anonymously published work in 1776?",
-                options: ["Introduction to the Principles of Morals and Legislation", "Defence of Usury", "A Fragment on Government", "Westminster Review"],
-                correctAnswer: "A Fragment on Government"
+                question: "The rebellious states defeated which empire in the American Revolution?",
+                options: ["French Empire", "Spanish Empire", "British Empire", "German Empire"],
+                answer: "British Empire"
             },
             {
-                question: "Who was a lifelong friend of Bentham, mentioned as Lord Shelburne?",
-                options: ["James Mill", "Joseph Priestley", "Adam Smith", "Lord Shelburne"],
-                correctAnswer: "Lord Shelburne"
+                question: "When was the current United States Constitution adopted by the Philadelphia Convention?",
+                options: ["September 17, 1776", "July 4, 1787", "September 17, 1787", "December 15, 1791"],
+                answer: "September 17, 1787"
             },
             {
-                question: "What was the title of Bentham's most famous work, published in 1789, that greatly enhanced his reputation?",
-                options: ["A Fragment on Government", "Defence of Usury", "Introduction to the Principles of Morals and Legislation", "Westminster Review"],
-                correctAnswer: "Introduction to the Principles of Morals and Legislation"
+                question: "What was ratified in 1791, comprising ten constitutional amendments guaranteeing many fundamental civil rights and freedoms?",
+                options: ["The Articles of Confederation", "The Federalist Papers", "The Bill of Rights", "The Emancipation Proclamation"],
+                answer: "The Bill of Rights"
             },
             {
-                question: "When did Jeremy Bentham die?",
-                options: ["June 6, 1832", "February 15, 1848", "May 20, 1856", "October 10, 1873"],
-                correctAnswer: "June 6, 1832"
+                question: "In the 19th century, the United States acquired land from France, Spain, the United Kingdom, Mexico, Russia, and annexed which two republics?",
+                options: ["Republic of California and Republic of Florida", "Republic of Texas and Republic of Hawaii", "Republic of Louisiana and Republic of Alaska", "Republic of New York and Republic of Virginia"],
+                answer: "Republic of Texas and Republic of Hawaii"
             },
             {
-                question: "What institution preserved Jeremy Bentham's skeleton?",
-                options: ["Oxford University", "Cambridge University", "University College London", "Westminster Abbey"],
-                correctAnswer: "University College London"
+                question: "The American Civil War of the 1860s was provoked by disputes between the agrarian South and industrial North over states' rights and the expansion of what institution?",
+                options: ["Taxation", "Slavery", "Trade", "Education"],
+                answer: "Slavery"
             },
             {
-                question: "What did Bentham mean by 'fecundity' in his felicific calculus?",
-                options: ["The intensity of pleasure", "The duration of pleasure", "The chance of being followed by sensations of the same kind", "The number of people affected"],
-                correctAnswer: "The chance of being followed by sensations of the same kind"
+                question: "By which decade was the national economy of the United States the world's largest?",
+                options: ["1850s", "1860s", "1870s", "1880s"],
+                answer: "1870s"
             },
             {
-                question: "Which of the following is NOT one of the seven factors Bentham considered in his felicific calculus?",
-                options: ["Intensity", "Duration", "Morality", "Certainty"],
-                correctAnswer: "Morality"
+                question: "The Spanish-American War and World War I confirmed the country's status as a what?",
+                options: ["Economic power", "Cultural power", "Military power", "Technological power"],
+                answer: "Military power"
             },
             {
-                question: "What did Bentham call the principle where persons appear to be moved by a desire to avoid pleasure and seek pain?",
-                options: ["Principle of Utility", "Principle of Asceticism", "Principle of Benevolence", "Principle of Self-interest"],
-                correctAnswer: "Principle of Asceticism"
+                question: "The United States emerged from World War II as the first country with nuclear weapons and a permanent member of which international body?",
+                options: ["League of Nations", "NATO", "United Nations Security Council", "World Bank"],
+                answer: "United Nations Security Council"
             },
             {
-                question: "According to Bentham, what is the 'fictitious body' composed of individual persons?",
-                options: ["The government", "The community", "The legislature", "The judiciary"],
-                correctAnswer: "The community"
+                question: "The end of the Cold War and the dissolution of the Soviet Union left the United States as what?",
+                options: ["A regional power", "A declining power", "The sole superpower", "One of many superpowers"],
+                answer: "The sole superpower"
             },
             {
-                question: "What was Bentham's view on the idea of 'natural rights'?",
-                options: ["He strongly supported them.", "He believed they were the foundation of law.", "He rejected them as 'metaphysical nonsense.'", "He saw them as essential for individual freedom."],
-                correctAnswer: "He rejected them as 'metaphysical nonsense.'"
+                question: "What percentage of global military spending does the United States account for?",
+                options: ["One-fifth", "Two-fifths", "Three-fifths", "Four-fifths"],
+                answer: "Two-fifths"
             },
             {
-                question: "What was Bentham's stance on the codification of law?",
-                options: ["He strongly opposed it.", "He believed it was unnecessary.", "He strongly favored it.", "He thought it would lead to tyranny."],
-                correctAnswer: "He strongly favored it."
+                question: "How many original states were the successors of the 13 colonies that rebelled against British rule?",
+                options: ["10", "13", "15", "12"],
+                answer: "13"
             },
             {
-                question: "What did Bentham believe was the only principle by which government may be judged?",
-                options: ["Justice", "Liberty", "Utility", "Equality"],
-                correctAnswer: "Utility"
+                question: "Which of these states was organised on territory separated from the claims of existing states?",
+                options: ["California", "Texas", "Kentucky", "Florida"],
+                answer: "Kentucky"
             },
             {
-                question: "What was the primary reason Bentham was attracted to the principle of utility?",
-                options: ["Its philosophical depth", "Its a priori assumptions", "Its scientific basis", "Its direct line with his own nature"],
-                correctAnswer: "Its direct line with his own nature"
+                question: "Which state was an independent republic before joining the union?",
+                options: ["Ohio", "Illinois", "Vermont", "Georgia"],
+                answer: "Vermont"
             },
             {
-                question: "What did Bentham, along with Adam Smith and classical economists, favor for individual freedom?",
-                options: ["Centralized control", "Large measure of governmental restraint", "Large measure of individual freedom", "Strict regulation"],
-                correctAnswer: "Large measure of individual freedom"
+                question: "During the American Civil War, which state broke away from Virginia?",
+                options: ["North Carolina", "West Virginia", "South Carolina", "Maryland"],
+                answer: "West Virginia"
             },
             {
-                question: "What was the 'dismal choice' faced by a legislator in Bentham's view?",
-                options: ["Acting against their will or losing votes", "Acting in accordance with the will of constituents or ignoring it", "Promoting freedom or ensuring order", "Supporting the majority or protecting the minority"],
-                correctAnswer: "Acting in accordance with the will of constituents or ignoring it"
+                question: "When did Hawaii achieve statehood?",
+                options: ["August 21, 1950", "August 21, 1959", "August 21, 1960", "August 21, 1969"],
+                answer: "August 21, 1959"
             },
             {
-                question: "What did Bentham propose as the 'best solution' to devise a governmental system where the happiness of governors coincides with that of the governed?",
-                options: ["Absolute monarchy", "Oligarchy", "Representative government", "Direct democracy"],
-                correctAnswer: "Representative government"
+                question: "In the American federalist system, citizens are usually subject to how many levels of government?",
+                options: ["One", "Two", "Three", "Four"],
+                answer: "Three"
             },
             {
-                question: "What was one of the key reforms incorporated into the English political system in 1832, influenced by Bentham's proposals?",
-                options: ["Universal suffrage", "Abolition of the House of Lords", "Reform measures recommended by Bentham", "Establishment of a new constitution"],
-                correctAnswer: "Reform measures recommended by Bentham"
+                question: "What is the US Constitution considered to be, serving as the country's supreme legal document?",
+                options: ["A set of guidelines", "A supreme legal document", "A historical artifact", "A political manifesto"],
+                answer: "A supreme legal document"
             },
             {
-                question: "What significant Act, related to slavery, was abolished in the British Empire in 1833, as mentioned in the document?",
-                options: ["The Navigation Act", "The Abolition of Slavery Act", "The Reform Act", "The Corn Laws"],
-                correctAnswer: "The Abolition of Slavery Act"
+                question: "Article 1 of the US Constitution protects the right to the 'great writ' of what?",
+                options: ["Bill of attainder", "Ex post facto law", "Habeas corpus", "Eminent domain"],
+                answer: "Habeas corpus"
             },
             {
-                question: "When was John Stuart Mill born?",
-                options: ["1748", "1806", "1832", "1873"],
-                correctAnswer: "1806"
+                question: "How many times has the US Constitution been amended?",
+                options: ["10", "20", "27", "30"],
+                answer: "27"
             },
             {
-                question: "At what age did John Stuart Mill begin reading Greek classics?",
-                options: ["Six", "Eight", "Three", "Fourteen"],
-                correctAnswer: "Three"
+                question: "The first 10 amendments, which make up the Bill of Rights, and which other amendment form the central basis of Americans' individual rights?",
+                options: ["First Amendment", "Tenth Amendment", "Fourteenth Amendment", "Nineteenth Amendment"],
+                answer: "Fourteenth Amendment"
             },
             {
-                question: "What were the titles of John Stuart Mill's two most important works published before he left the East India Company?",
-                options: ["On Liberty and Utilitarianism", "Logic and Principles of Political Economy", "Representative Government and The Subjection of Women", "A System of Logic and Considerations on Representative Government"],
-                correctAnswer: "Logic and Principles of Political Economy"
+                question: "Which political party in the United States is considered center-right or conservative?",
+                options: ["Democratic Party", "Green Party", "Republican Party", "Libertarian Party"],
+                answer: "Republican Party"
             },
             {
-                question: "Who was the 'remarkable woman' John Stuart Mill met at age twenty-three and later married?",
-                options: ["Mary Wollstonecraft", "Harriet Taylor", "Florence Nightingale", "Elizabeth Cady Stanton"],
-                correctAnswer: "Harriet Taylor"
+                question: "The states of the Northeast and West Coast and some of the Great Lakes states are known as what kind of states, being relatively liberal?",
+                options: ["Red states", "Purple states", "Blue states", "Yellow states"],
+                answer: "Blue states"
             },
             {
-                question: "What did Harriet Taylor's influence stimulate in Mill's approach?",
-                options: ["A more rigid adherence to utilitarianism", "A more humanitarian and imaginative approach", "A focus on economic theories", "A return to classical liberalism"],
-                correctAnswer: "A more humanitarian and imaginative approach"
+                question: "The Constitution of the United States of America is the supreme law of what?",
+                options: ["Individual states", "The federal government", "The United States", "International law"],
+                answer: "The United States"
             },
             {
-                question: "When did John Stuart Mill die?",
-                options: ["1806", "1832", "1873", "1875"],
-                correctAnswer: "1873"
+                question: "The US Constitution defines how many main branches of government?",
+                options: ["Two", "Three", "Four", "Five"],
+                answer: "Three"
             },
             {
-                question: "What did Mill believe was the 'greatest fear' society itself posed, apart from government?",
-                options: ["Economic collapse", "Destruction of individualism", "Foreign invasion", "Religious conflict"],
-                correctAnswer: "Destruction of individualism"
+                question: "What is the legislative branch of the federal government called?",
+                options: ["The Parliament", "The Assembly", "The Congress", "The Senate"],
+                answer: "The Congress"
             },
             {
-                question: "What is the famous quote by Mill regarding silencing opinion, even if all mankind minus one were of one opinion?",
-                options: [
-                    "\"The only purpose for which power can be rightfully exercised over any member of a civilized community, against his will, is to prevent harm to others.\"",
-                    "\"If all mankind minus one were of one opinion, and only one person were of the contrary opinion, mankind would be no more justified in silencing that one person, than he, if he had the power, would be justified in silencing mankind.\"",
-                    "\"It is better to be a human being dissatisfied than a pig satisfied; better to be Socrates dissatisfied than a fool satisfied.\"",
-                    "\"The government of the world I live in is a government of opinion.\""
-                ],
-                correctAnswer: "\"If all mankind minus one were of one opinion, and only one person were of the contrary opinion, mankind would be no more justified in silencing that one person, than he, if he had the power, would be justified in silencing mankind.\""
-            },
-            {
-                question: "According to Mill, what is the 'sole end' for which mankind is warranted, individually or collectively, in interfering with the liberty of action of any of their number?",
-                options: ["To ensure social harmony", "To promote the greatest happiness", "Self-protection", "To enforce moral conduct"],
-                correctAnswer: "Self-protection"
-            },
-            {
-                question: "What did Mill distinguish among various kinds of happiness?",
-                options: ["Economic and social", "Physical and mental", "Higher and lower pleasures", "Individual and collective"],
-                correctAnswer: "Higher and lower pleasures"
-            },
-            {
-                question: "What was Mill's view on Bentham's statement 'pushpin is as good as poetry'?",
-                options: ["He fully agreed with it.", "He believed it was a profound insight.", "He could not accept it.", "He thought it applied only to lower pleasures."],
-                correctAnswer: "He could not accept it."
-            },
-            {
-                question: "What was one of the two additional precautions Mill suggested to curb the formation of a majority party?",
-                options: ["Abolishing political parties", "Encouraging the creation of a third force", "Implementing a proportional representation system", "Limiting the number of political debates"],
-                correctAnswer: "Encouraging the creation of a third force"
-            },
-            {
-                question: "What is the title of Mill's work where he deals with the question of the freedom of the individual in society?",
-                options: ["Utilitarianism", "Representative Government", "On Liberty", "Autobiography"],
-                correctAnswer: "On Liberty"
-            },
-            {
-                question: "What did Mill believe was more important: what men *are* or what men *do*?",
-                options: ["What men do", "What men are", "Both equally important", "Neither is important"],
-                correctAnswer: "What men are"
-            },
-            {
-                question: "What was the primary reason for Mill's resignation from the East India Company?",
-                options: ["To pursue writing full-time", "Opposition to English control of India", "Health reasons", "To join politics"],
-                correctAnswer: "Opposition to English control of India"
-            },
-            {
-                question: "What did Mill believe was the primary function of the mass of citizens in his representative system?",
-                options: ["To frame intricate legislation", "To choose their legislative agents", "To directly govern", "To enforce laws"],
-                correctAnswer: "To choose their legislative agents"
-            },
-            {
-                question: "What was the 'test-tube existence' that led to Mill's emotional starvation?",
-                options: ["His early education and extreme preoccupation with intellectual pursuits", "His work at the East India Company", "His philosophical debates with Bentham", "His solitary life in London"],
-                correctAnswer: "His early education and extreme preoccupation with intellectual pursuits"
-            },
-            {
-                question: "What concept did Mill emphasize in *On Liberty* as being threatened by a 'huge and monolithic society'?",
-                options: ["Economic prosperity", "Political stability", "Individuality", "Social cohesion"],
-                correctAnswer: "Individuality"
+                question: "The executive branch of the US government is led by whom?",
+                options: ["The Speaker of the House", "The Chief Justice", "The President", "The Vice President"],
+                answer: "The President"
             }
         ];
 
         let currentQuestionIndex = 0;
         let score = 0;
-        let timeLeft = 20 * 60; // 20 minutes in seconds
+        let quizAttempted = false;
         let timerInterval;
-        let quizAttempted = false; // Flag to prevent restarting
+        const quizDuration = 20 * 60; // 20 minutes in seconds
+        let timeLeft = quizDuration;
+        let userName = "";
 
-        // DOM Elements
-        const loginScreen = document.getElementById('login-screen');
-        const loginIdInput = document.getElementById('login-id');
-        const loginPasswordInput = document.getElementById('login-password');
+        // Elements
+        const loginSection = document.getElementById('login-section');
+        const userIdInput = document.getElementById('user-id');
+        const passwordInput = document.getElementById('password');
         const loginButton = document.getElementById('login-button');
         const loginError = document.getElementById('login-error');
 
-        const startScreen = document.getElementById('start-screen');
+        const nameSection = document.getElementById('name-section');
         const candidateNameInput = document.getElementById('candidate-name');
         const startQuizButton = document.getElementById('start-quiz-button');
-        const nameError = document.getElementById('name-error');
 
-        const quizScreen = document.getElementById('quiz-screen');
-        const timeLeftSpan = document.getElementById('time-left');
+        const quizSection = document.getElementById('quiz-section');
         const questionText = document.getElementById('question-text');
         const optionsContainer = document.getElementById('options-container');
-        const nextQuestionButton = document.getElementById('next-question-button');
-        const submitQuizButton = document.getElementById('submit-quiz-button');
+        const timerDisplay = document.getElementById('timer');
+        const prevButton = document.getElementById('prev-button');
+        const nextButton = document.getElementById('next-button');
 
-        const resultScreen = document.getElementById('result-screen');
-        const resultNameSpan = document.getElementById('result-name');
-        const resultScoreSpan = document.getElementById('result-score');
-        const totalQuestionsSpan = document.getElementById('total-questions');
-        const percentageScoreSpan = document.getElementById('percentage-score');
+        const resultSection = document.getElementById('result-section');
+        const resultName = document.getElementById('result-name');
+        const totalQuestionsDisplay = document.getElementById('total-questions-display');
+        const correctAnswersDisplay = document.getElementById('correct-answers-display');
+        const incorrectAnswersDisplay = document.getElementById('incorrect-answers-display');
+        const scoreDisplay = document.getElementById('score-display');
 
         const messageBox = document.getElementById('message-box');
-        const messageBoxTitle = document.getElementById('message-box-title');
-        const messageBoxContent = document.getElementById('message-box-content');
-        const messageBoxOkButton = document.getElementById('message-box-ok');
+        const messageTitle = document.getElementById('message-title');
+        const messageContent = document.getElementById('message-content');
+        const messageOkButton = document.getElementById('message-ok-button');
 
-        // Function to display custom message box
-        function showMessageBox(title, content, onOk = null) {
-            messageBoxTitle.textContent = title;
-            messageBoxContent.textContent = content;
+        // Store user answers
+        const userAnswers = new Array(quizData.length).fill(null);
+        const answeredCorrectly = new Array(quizData.length).fill(false);
+
+        // Function to show custom message box
+        function showMessageBox(title, content, callback = null) {
+            messageTitle.textContent = title;
+            messageContent.textContent = content;
             messageBox.classList.remove('hidden');
-            messageBoxOkButton.onclick = () => {
+            messageOkButton.onclick = () => {
                 messageBox.classList.add('hidden');
-                if (onOk) onOk();
+                if (callback) callback();
             };
         }
 
-        // --- Login Logic ---
+        // Login Logic
         loginButton.addEventListener('click', () => {
-            const id = loginIdInput.value;
-            const password = loginPasswordInput.value;
+            const enteredId = userIdInput.value;
+            const enteredPassword = passwordInput.value;
 
-            if (id === '2211' && password === '1122') {
-                loginScreen.classList.add('hidden');
-                startScreen.classList.remove('hidden');
+            // Updated ID and Password
+            if (enteredId === '903' && enteredPassword === '309') {
+                loginSection.classList.add('hidden');
+                nameSection.classList.remove('hidden');
                 loginError.classList.add('hidden');
             } else {
                 loginError.classList.remove('hidden');
             }
         });
 
-        // --- Start Quiz Logic ---
+        // Start Quiz Logic
         startQuizButton.addEventListener('click', () => {
-            const candidateName = candidateNameInput.value.trim();
-            if (candidateName === '') {
-                nameError.classList.remove('hidden');
-                return;
-            }
-            if (quizAttempted) {
-                showMessageBox("Quiz Already Attempted", "You have already completed this quiz. You cannot restart it.");
+            userName = candidateNameInput.value.trim();
+            if (userName === "") {
+                showMessageBox("Input Required", "Please enter your name to start the quiz.");
                 return;
             }
 
-            nameError.classList.add('hidden');
-            startScreen.classList.add('hidden');
-            quizScreen.classList.remove('hidden');
-            resultNameSpan.textContent = candidateName; // Set candidate name for results
-
+            nameSection.classList.add('hidden');
+            quizSection.classList.remove('hidden');
             startTimer();
             loadQuestion();
         });
 
-        // --- Timer Logic ---
+        // Timer Logic
         function startTimer() {
             timerInterval = setInterval(() => {
                 timeLeft--;
                 const minutes = Math.floor(timeLeft / 60);
                 const seconds = timeLeft % 60;
-                timeLeftSpan.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                timerDisplay.textContent = `Time Left: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
-                    showMessageBox("Time's Up!", "Your time has run out. The quiz will now be submitted.", submitQuiz);
+                    submitQuiz();
+                    showMessageBox("Time's Up!", "Your time for the quiz has ended. Your results are displayed.");
                 }
             }, 1000);
         }
 
-        // --- Quiz Logic ---
+        // Load Question
         function loadQuestion() {
-            if (currentQuestionIndex >= questions.length) {
-                submitQuiz();
-                return;
-            }
+            const question = quizData[currentQuestionIndex];
+            questionText.textContent = `${currentQuestionIndex + 1}. ${question.question}`;
+            optionsContainer.innerHTML = '';
 
-            const currentQuestion = questions[currentQuestionIndex];
-            questionText.textContent = `${currentQuestionIndex + 1}. ${currentQuestion.question}`;
-            optionsContainer.innerHTML = ''; // Clear previous options
-
-            currentQuestion.options.forEach(option => {
+            question.options.forEach(option => {
                 const button = document.createElement('button');
                 button.textContent = option;
-                button.classList.add('rounded-lg'); // Tailwind class for rounded corners
-                button.addEventListener('click', () => selectAnswer(button, option, currentQuestion.correctAnswer));
+                button.classList.add('rounded-lg', 'shadow-md');
+                button.addEventListener('click', () => selectOption(option, button));
                 optionsContainer.appendChild(button);
+
+                // If already answered, show selected state and correct/incorrect colors
+                if (userAnswers[currentQuestionIndex] !== null) {
+                    if (option === userAnswers[currentQuestionIndex]) {
+                        if (option === question.answer) {
+                            button.classList.add('correct');
+                        } else {
+                            button.classList.add('incorrect');
+                        }
+                    }
+                    if (option === question.answer) {
+                        button.classList.add('correct'); // Always show correct answer in green
+                    }
+                    // Disable all options once an answer is selected for the current question
+                    Array.from(optionsContainer.children).forEach(btn => btn.style.pointerEvents = 'none');
+                }
             });
 
-            // Show/hide navigation buttons
-            if (currentQuestionIndex < questions.length - 1) {
-                nextQuestionButton.classList.remove('hidden');
-                submitQuizButton.classList.add('hidden');
-            } else {
-                nextQuestionButton.classList.add('hidden');
-                submitQuizButton.classList.remove('hidden');
-            }
+            updateNavigationButtons();
         }
 
-        function selectAnswer(selectedButton, selectedOption, correctAnswer) {
-            // Disable all options after selection
+        // Select Option
+        function selectOption(selectedOption, clickedButton) {
+            if (quizAttempted) return; // Prevent re-answering after quiz is submitted
+
+            const question = quizData[currentQuestionIndex];
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            // Remove previous styling from all options for the current question
             Array.from(optionsContainer.children).forEach(button => {
-                button.classList.add('disabled');
-                button.removeEventListener('click', () => {}); // Remove event listener
+                button.classList.remove('correct', 'incorrect');
+                button.style.pointerEvents = 'none'; // Disable all options after one is clicked
             });
 
-            if (selectedOption === correctAnswer) {
-                selectedButton.classList.add('selected-correct');
-                score++;
+            if (selectedOption === question.answer) {
+                clickedButton.classList.add('correct');
+                answeredCorrectly[currentQuestionIndex] = true;
             } else {
-                selectedButton.classList.add('selected-wrong');
-                // Highlight the correct answer
+                clickedButton.classList.add('incorrect');
+                answeredCorrectly[currentQuestionIndex] = false;
+
+                // Mark the correct answer in green if the selected answer was wrong
                 Array.from(optionsContainer.children).forEach(button => {
-                    if (button.textContent === correctAnswer) {
-                        button.classList.add('correct-answer');
+                    if (button.textContent === question.answer) {
+                        button.classList.add('correct');
                     }
                 });
             }
-
-            // Enable next/submit button only after an answer is selected
-            if (currentQuestionIndex < questions.length - 1) {
-                nextQuestionButton.disabled = false;
-            } else {
-                submitQuizButton.disabled = false;
-            }
         }
 
-        nextQuestionButton.addEventListener('click', () => {
-            currentQuestionIndex++;
-            nextQuestionButton.disabled = true; // Disable until next selection
-            loadQuestion();
+        // Navigation Buttons
+        function updateNavigationButtons() {
+            prevButton.classList.toggle('hidden', currentQuestionIndex === 0);
+            nextButton.textContent = (currentQuestionIndex === quizData.length - 1) ? 'Submit Quiz' : 'Next';
+        }
+
+        prevButton.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
         });
 
-        submitQuizButton.addEventListener('click', submitQuiz);
+        nextButton.addEventListener('click', () => {
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            } else {
+                // Last question, submit quiz
+                submitQuiz();
+            }
+        });
 
+        // Submit Quiz
         function submitQuiz() {
-            clearInterval(timerInterval);
-            quizAttempted = true; // Mark quiz as attempted
-            quizScreen.classList.add('hidden');
-            resultScreen.classList.remove('hidden');
+            if (quizAttempted) return; // Prevent multiple submissions
+            quizAttempted = true;
+            clearInterval(timerInterval); // Stop the timer
 
-            totalQuestionsSpan.textContent = questions.length;
-            resultScoreSpan.textContent = score;
-            const percentage = (score / questions.length) * 100;
-            percentageScoreSpan.textContent = `Score: ${percentage.toFixed(2)}%`;
+            let correctCount = 0;
+            for (let i = 0; i < quizData.length; i++) {
+                if (userAnswers[i] === quizData[i].answer) {
+                    correctCount++;
+                }
+            }
 
-            // Disable start button to prevent restart
-            startQuizButton.disabled = true;
+            const totalQuestions = quizData.length;
+            const incorrectCount = totalQuestions - correctCount;
+            const percentageScore = (correctCount / totalQuestions) * 100;
+
+            quizSection.classList.add('hidden');
+            resultSection.classList.remove('hidden');
+
+            resultName.textContent = userName;
+            totalQuestionsDisplay.textContent = totalQuestions;
+            correctAnswersDisplay.textContent = correctCount;
+            incorrectAnswersDisplay.textContent = incorrectCount;
+            scoreDisplay.textContent = percentageScore.toFixed(2); // Display score with 2 decimal places
+
+            // Disable all buttons in the quiz section to prevent further interaction
+            Array.from(document.querySelectorAll('#quiz-section button')).forEach(button => {
+                button.disabled = true;
+                button.style.pointerEvents = 'none';
+            });
         }
-
-        // Initialize button states
-        nextQuestionButton.disabled = true;
-        submitQuizButton.disabled = true;
     </script>
 </body>
 </html>
