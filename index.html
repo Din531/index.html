@@ -9,439 +9,298 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f8ff; /* Light blue background */
+            background-color: #e0f2f7; /* Light blue background */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            margin: 0;
             padding: 20px;
             box-sizing: border-box;
         }
-        .quiz-container {
+        .container {
             background-color: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 700px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            max-width: 800px;
+            box-sizing: border-box;
         }
         .header {
-            margin-bottom: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #1e3a8a; /* Darker blue for text */
         }
         .header h1 {
-            color: #1e3a8a; /* Darker blue for title */
             font-size: 2.25rem; /* text-4xl */
             font-weight: 700; /* font-bold */
             margin-bottom: 10px;
         }
         .header p {
+            font-size: 1rem; /* text-base */
             color: #3b82f6; /* Blue for contact */
-            font-size: 1.125rem; /* text-lg */
         }
-        .header .subtitle {
-            font-weight: 700; /* Bold text */
-            color: #1e3a8a; /* Darker blue for subtitle */
-            margin-top: 5px;
-            font-size: 1.2rem;
-        }
-        .input-group {
-            margin-bottom: 15px;
-            width: 100%;
-            max-width: 400px;
-        }
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #4b5563;
-            font-weight: 600;
-            text-align: left;
-        }
-        .input-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 1rem;
-            color: #374151;
-            box-sizing: border-box;
-        }
-        .button-blue {
+        .btn-blue {
             background-color: #3b82f6; /* Blue */
             color: white;
             padding: 12px 25px;
-            border-radius: 8px;
-            font-size: 1.125rem;
+            border-radius: 10px;
             font-weight: 600;
-            cursor: pointer;
             transition: background-color 0.3s ease;
+            cursor: pointer;
             border: none;
-            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .button-blue:hover {
+        .btn-blue:hover {
             background-color: #2563eb; /* Darker blue on hover */
         }
-        .hidden {
-            display: none;
+        .input-field {
+            padding: 12px;
+            border: 2px solid #93c5fd; /* Light blue border */
+            border-radius: 10px;
+            width: 100%;
+            margin-bottom: 15px;
+            box-sizing: border-box;
         }
         .quiz-section {
-            width: 100%;
+            display: none; /* Hidden by default */
         }
-        .question-text {
-            font-size: 1.5rem; /* text-2xl */
+        .question-card {
+            background-color: #eff6ff; /* Very light blue for question card */
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+        }
+        .question-card p {
+            font-size: 1.125rem; /* text-lg */
             font-weight: 600;
-            margin-bottom: 25px;
-            color: #1f2937;
-            text-align: left;
+            margin-bottom: 20px;
+            color: #1e3a8a;
         }
-        .options-container button {
-            display: block;
-            width: 100%;
-            padding: 15px 20px;
-            margin-bottom: 12px;
-            background-color: #e0f2fe; /* Light blue option background */
-            border: 1px solid #90cdf4;
-            border-radius: 10px;
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+        .option-button {
+            background-color: #dbeafe; /* Lighter blue for options */
+            color: #1e3a8a;
+            padding: 12px 15px;
+            border-radius: 8px;
             text-align: left;
-            font-size: 1.1rem;
-            color: #1e40af; /* Dark blue text for options */
+            transition: background-color 0.2s ease, transform 0.1s ease;
             cursor: pointer;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
+            border: 1px solid #93c5fd;
+            font-weight: 500;
         }
-        .options-container button:hover:not(.correct):not(.incorrect) {
-            background-color: #bfdbfe; /* Slightly darker light blue on hover */
+        .option-button:hover:not(.correct):not(.incorrect) {
+            background-color: #bfdbfe; /* Slightly darker on hover */
+            transform: translateY(-2px);
         }
-        .options-container button.correct {
-            background-color: #d1fae5; /* Light green */
-            border-color: #34d399; /* Green border */
-            color: #065f46; /* Dark green text */
-            pointer-events: none; /* Disable clicks after selection */
+        .option-button.correct {
+            background-color: #a7f3d0; /* Green */
+            color: #065f46;
+            border-color: #34d399;
         }
-        .options-container button.incorrect {
-            background-color: #fee2e2; /* Light red */
-            border-color: #ef4444; /* Red border */
-            color: #991b1b; /* Dark red text */
-            pointer-events: none; /* Disable clicks after selection */
+        .option-button.incorrect {
+            background-color: #fecaca; /* Red */
+            color: #991b1b;
+            border-color: #ef4444;
         }
         .timer {
             font-size: 1.25rem; /* text-xl */
             font-weight: 700;
-            color: #ef4444; /* Red for timer */
+            color: #1e3a8a;
+            text-align: center;
             margin-bottom: 20px;
         }
-        .quiz-navigation {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            margin-top: 20px;
-        }
         .result-section {
-            width: 100%;
+            display: none; /* Hidden by default */
+            text-align: center;
+            color: #1e3a8a;
         }
         .result-section h2 {
             font-size: 2rem; /* text-3xl */
             font-weight: 700;
-            color: #1e3a8a;
             margin-bottom: 15px;
         }
         .result-section p {
             font-size: 1.25rem; /* text-xl */
-            color: #374151;
             margin-bottom: 10px;
         }
-        .result-section .score {
-            font-size: 2.5rem; /* text-5xl */
-            font-weight: 700;
-            color: #059669; /* Green for score */
-            margin-top: 20px;
-        }
         .message-box {
+            display: none;
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: #fff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             z-index: 1000;
             text-align: center;
-            max-width: 90%;
-            width: 400px;
-        }
-        .message-box h3 {
-            font-size: 1.5rem;
-            color: #1e3a8a;
-            margin-bottom: 15px;
+            max-width: 400px;
+            width: 90%;
+            border: 2px solid #3b82f6;
         }
         .message-box p {
-            font-size: 1.1rem;
-            color: #4b5563;
             margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: #1e3a8a;
         }
         .message-box button {
             background-color: #3b82f6;
             color: white;
             padding: 10px 20px;
             border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
             border: none;
+            cursor: pointer;
+        }
+        .message-box button:hover {
+            background-color: #2563eb;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 1.75rem; /* text-3xl for small screens */
+            }
+            .container {
+                padding: 20px;
+            }
+            .question-card {
+                padding: 15px;
+            }
+            .question-card p {
+                font-size: 1rem;
+            }
+            .option-button {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="quiz-container">
+    <div class="container">
         <div class="header">
             <h1>Political Science Subject Specialist Preparation Quiz</h1>
             <p>Contact Number: 03188185185</p>
-            <p class="subtitle">US Constitution</p>
         </div>
 
         <!-- Login Section -->
-        <div id="login-section" class="w-full flex flex-col items-center">
-            <div class="input-group">
-                <label for="user-id">ID:</label>
-                <input type="text" id="user-id" placeholder="Enter your ID">
-            </div>
-            <div class="input-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" placeholder="Enter your Password">
-            </div>
-            <button id="login-button" class="button-blue">Login</button>
-            <p id="login-error" class="text-red-500 mt-2 hidden">Invalid ID or Password</p>
+        <div id="login-section" class="quiz-section" style="display: block;">
+            <h2 class="text-2xl font-bold text-center mb-6 text-blue-800">Login</h2>
+            <input type="text" id="login-id" class="input-field" placeholder="Enter ID">
+            <input type="password" id="login-password" class="input-field" placeholder="Enter Password">
+            <button id="login-button" class="btn-blue w-full">Login</button>
+            <p id="login-error" class="text-red-600 text-center mt-3 hidden">Invalid ID or Password.</p>
         </div>
 
-        <!-- Name Input Section -->
-        <div id="name-section" class="hidden w-full flex flex-col items-center">
-            <div class="input-group">
-                <label for="candidate-name">Enter Your Name:</label>
-                <input type="text" id="candidate-name" placeholder="Your Name">
-            </div>
-            <button id="start-quiz-button" class="button-blue">Start Quiz</button>
+        <!-- Name Entry Section -->
+        <div id="name-section" class="quiz-section">
+            <h2 class="text-2xl font-bold text-center mb-6 text-blue-800">Enter Your Name</h2>
+            <input type="text" id="candidate-name" class="input-field" placeholder="Your Name">
+            <button id="start-quiz-button" class="btn-blue w-full">Start Quiz</button>
         </div>
 
         <!-- Quiz Section -->
-        <div id="quiz-section" class="hidden quiz-section">
-            <div class="timer" id="timer">Time Left: 20:00</div>
-            <div class="question-text" id="question-text"></div>
-            <div class="options-container w-full" id="options-container">
-                <!-- Options will be dynamically loaded here -->
+        <div id="quiz-section" class="quiz-section">
+            <div class="timer" id="timer">20:00</div>
+            <div id="question-container">
+                <!-- Questions will be loaded here by JavaScript -->
             </div>
-            <div class="quiz-navigation">
-                <button id="prev-button" class="button-blue hidden">Previous</button>
-                <button id="next-button" class="button-blue">Next</button>
+            <div class="flex justify-between mt-6">
+                <button id="prev-button" class="btn-blue" style="display: none;">Previous</button>
+                <button id="next-button" class="btn-blue ml-auto">Next</button>
             </div>
         </div>
 
         <!-- Result Section -->
-        <div id="result-section" class="hidden result-section">
+        <div id="result-section" class="result-section">
             <h2>Quiz Result</h2>
-            <p>Candidate Name: <span id="result-name"></span></p>
-            <p>Total Questions: <span id="total-questions-display"></span></p>
-            <p>Correct Answers: <span id="correct-answers-display"></span></p>
-            <p>Incorrect Answers: <span id="incorrect-answers-display"></span></p>
-            <p class="score">Your Score: <span id="score-display"></span>%</p>
+            <p>Candidate: <span id="final-candidate-name"></span></p>
+            <p>Score: <span id="score"></span> / <span id="total-questions"></span></p>
+            <p>Time Taken: <span id="time-taken"></span></p>
+        </div>
+
+        <!-- Message Box -->
+        <div id="message-box" class="message-box">
+            <p id="message-text"></p>
+            <button id="message-box-ok">OK</button>
         </div>
     </div>
 
-    <!-- Message Box for alerts -->
-    <div id="message-box" class="message-box hidden">
-        <h3 id="message-title"></h3>
-        <p id="message-content"></p>
-        <button id="message-ok-button">OK</button>
-    </div>
-
     <script>
-        // Quiz Data - 40 MCQs
-        const quizData = [
+        // Quiz data
+        const quizQuestions = [
             {
                 question: "The United States of America is a federal constitutional republic comprising how many states?",
-                options: ["48", "50", "52", "49"],
+                options: ["48", "49", "50", "52"],
                 answer: "50"
             },
             {
-                question: "The capital district of the United States, Washington, D.C., lies between which two oceans?",
-                options: ["Indian and Pacific", "Atlantic and Arctic", "Pacific and Atlantic", "Southern and Atlantic"],
+                question: "Which oceans border the contiguous states of the United States?",
+                options: ["Pacific and Indian", "Atlantic and Arctic", "Pacific and Atlantic", "Indian and Arctic"],
                 answer: "Pacific and Atlantic"
             },
             {
-                question: "Which country borders the United States to the north?",
-                options: ["Mexico", "Canada", "Russia", "Cuba"],
-                answer: "Canada"
-            },
-            {
-                question: "Which country borders the United States to the south?",
-                options: ["Canada", "Mexico", "Cuba", "Guatemala"],
-                answer: "Mexico"
-            },
-            {
-                question: "The state of Alaska is located in the northwest of the continent, with Canada to the east and which country to the west across the Bering Strait?",
-                options: ["China", "Japan", "Russia", "North Korea"],
-                answer: "Russia"
-            },
-            {
-                question: "The state of Hawaii is an archipelago in which ocean?",
-                options: ["Atlantic", "Indian", "Arctic", "Pacific"],
-                answer: "Pacific"
-            },
-            {
-                question: "Approximately how many million square miles is the United States by total area?",
-                options: ["2.5 million", "3.79 million", "4.1 million", "5.0 million"],
+                question: "What is the approximate total area of the United States in square miles?",
+                options: ["2.5 million", "3.0 million", "3.79 million", "4.5 million"],
                 answer: "3.79 million"
             },
             {
-                question: "What is the approximate population of the United States?",
-                options: ["200 million", "250 million", "309 million", "350 million"],
-                answer: "309 million"
-            },
-            {
-                question: "The United States is the third largest country by total area and population. It is a product of large-scale immigration from many countries, making it one of the world's most culturally diverse and what kind of nations?",
-                options: ["Homogeneous", "Monocultural", "Multicultural", "Isolated"],
-                answer: "Multicultural"
-            },
-            {
-                question: "What is the status of the US economy in the world?",
-                options: ["Second largest national economy", "Largest national economy", "Third largest national economy", "Fourth largest national economy"],
-                answer: "Largest national economy"
-            },
-            {
-                question: "Indigenous peoples of which origin have inhabited what is now the mainland United States for many hundreds of years?",
-                options: ["European", "African", "Asian", "Australian"],
-                answer: "Asian"
-            },
-            {
-                question: "The Native American population was greatly reduced after European contact due to disease and what else?",
-                options: ["Famine", "Natural disasters", "Warfare", "Migration"],
-                answer: "Warfare"
-            },
-            {
-                question: "The United States was founded by how many British colonies located along the Atlantic seaboard?",
-                options: ["10", "13", "15", "7"],
-                answer: "13"
-            },
-            {
-                question: "On what date did the 13 British colonies issue the Declaration of Independence?",
-                options: ["June 4, 1776", "July 4, 1776", "August 4, 1776", "September 4, 1776"],
+                question: "When was the Declaration of Independence issued?",
+                options: ["July 4, 1774", "July 4, 1775", "July 4, 1776", "July 4, 1787"],
                 answer: "July 4, 1776"
             },
             {
-                question: "The rebellious states defeated which empire in the American Revolution?",
-                options: ["French Empire", "Spanish Empire", "British Empire", "German Empire"],
-                answer: "British Empire"
-            },
-            {
                 question: "When was the current United States Constitution adopted by the Philadelphia Convention?",
-                options: ["September 17, 1776", "July 4, 1787", "September 17, 1787", "December 15, 1791"],
+                options: ["September 17, 1776", "March 4, 1789", "September 17, 1787", "July 4, 1789"],
                 answer: "September 17, 1787"
             },
             {
-                question: "What was ratified in 1791, comprising ten constitutional amendments guaranteeing many fundamental civil rights and freedoms?",
-                options: ["The Articles of Confederation", "The Federalist Papers", "The Bill of Rights", "The Emancipation Proclamation"],
-                answer: "The Bill of Rights"
+                question: "How many amendments comprise the Bill of Rights?",
+                options: ["7", "10", "12", "13"],
+                answer: "10"
             },
             {
-                question: "In the 19th century, the United States acquired land from France, Spain, the United Kingdom, Mexico, Russia, and annexed which two republics?",
-                options: ["Republic of California and Republic of Florida", "Republic of Texas and Republic of Hawaii", "Republic of Louisiana and Republic of Alaska", "Republic of New York and Republic of Virginia"],
-                answer: "Republic of Texas and Republic of Hawaii"
+                question: "Which of these was an independent republic before joining the Union?",
+                options: ["Kentucky", "Tennessee", "Maine", "Hawaii"],
+                answer: "Hawaii"
             },
             {
-                question: "The American Civil War of the 1860s was provoked by disputes between the agrarian South and industrial North over states' rights and the expansion of what institution?",
-                options: ["Taxation", "Slavery", "Trade", "Education"],
-                answer: "Slavery"
+                question: "What is the supreme legal document of the United States?",
+                options: ["The Declaration of Independence", "The Articles of Confederation", "The US Constitution", "The Bill of Rights"],
+                answer: "The US Constitution"
             },
             {
-                question: "By which decade was the national economy of the United States the world's largest?",
-                options: ["1850s", "1860s", "1870s", "1880s"],
-                answer: "1870s"
-            },
-            {
-                question: "The Spanish-American War and World War I confirmed the country's status as a what?",
-                options: ["Economic power", "Cultural power", "Military power", "Technological power"],
-                answer: "Military power"
-            },
-            {
-                question: "The United States emerged from World War II as the first country with nuclear weapons and a permanent member of which international body?",
-                options: ["League of Nations", "NATO", "United Nations Security Council", "World Bank"],
-                answer: "United Nations Security Council"
-            },
-            {
-                question: "The end of the Cold War and the dissolution of the Soviet Union left the United States as what?",
-                options: ["A regional power", "A declining power", "The sole superpower", "One of many superpowers"],
-                answer: "The sole superpower"
-            },
-            {
-                question: "What percentage of global military spending does the United States account for?",
-                options: ["One-fifth", "Two-fifths", "Three-fifths", "Four-fifths"],
-                answer: "Two-fifths"
-            },
-            {
-                question: "How many original states were the successors of the 13 colonies that rebelled against British rule?",
-                options: ["10", "13", "15", "12"],
-                answer: "13"
-            },
-            {
-                question: "Which of these states was organised on territory separated from the claims of existing states?",
-                options: ["California", "Texas", "Kentucky", "Florida"],
-                answer: "Kentucky"
-            },
-            {
-                question: "Which state was an independent republic before joining the union?",
-                options: ["Ohio", "Illinois", "Vermont", "Georgia"],
-                answer: "Vermont"
-            },
-            {
-                question: "During the American Civil War, which state broke away from Virginia?",
-                options: ["North Carolina", "West Virginia", "South Carolina", "Maryland"],
-                answer: "West Virginia"
-            },
-            {
-                question: "When did Hawaii achieve statehood?",
-                options: ["August 21, 1950", "August 21, 1959", "August 21, 1960", "August 21, 1969"],
-                answer: "August 21, 1959"
-            },
-            {
-                question: "In the American federalist system, citizens are usually subject to how many levels of government?",
+                question: "How many levels of government are citizens usually subject to in the American federalist system?",
                 options: ["One", "Two", "Three", "Four"],
                 answer: "Three"
             },
             {
-                question: "What is the US Constitution considered to be, serving as the country's supreme legal document?",
-                options: ["A set of guidelines", "A supreme legal document", "A historical artifact", "A political manifesto"],
-                answer: "A supreme legal document"
-            },
-            {
-                question: "Article 1 of the US Constitution protects the right to the 'great writ' of what?",
-                options: ["Bill of attainder", "Ex post facto law", "Habeas corpus", "Eminent domain"],
-                answer: "Habeas corpus"
-            },
-            {
-                question: "How many times has the US Constitution been amended?",
-                options: ["10", "20", "27", "30"],
+                question: "How many times has the Constitution been amended?",
+                options: ["10", "14", "27", "30"],
                 answer: "27"
             },
             {
-                question: "The first 10 amendments, which make up the Bill of Rights, and which other amendment form the central basis of Americans' individual rights?",
-                options: ["First Amendment", "Tenth Amendment", "Fourteenth Amendment", "Nineteenth Amendment"],
+                question: "Which amendment forms a central basis of Americans' individual rights, along with the first 10?",
+                options: ["Thirteenth Amendment", "Fourteenth Amendment", "Fifteenth Amendment", "Sixteenth Amendment"],
                 answer: "Fourteenth Amendment"
             },
             {
-                question: "Which political party in the United States is considered center-right or conservative?",
+                question: "Which political party is considered center-right or conservative in American political culture?",
                 options: ["Democratic Party", "Green Party", "Republican Party", "Libertarian Party"],
                 answer: "Republican Party"
             },
             {
-                question: "The states of the Northeast and West Coast and some of the Great Lakes states are known as what kind of states, being relatively liberal?",
-                options: ["Red states", "Purple states", "Blue states", "Yellow states"],
+                question: "What are the states of the Northeast and West Coast, and some Great Lakes states, known as?",
+                options: ["Red states", "Purple states", "Blue states", "Swing states"],
                 answer: "Blue states"
-            },
-            {
-                question: "The Constitution of the United States of America is the supreme law of what?",
-                options: ["Individual states", "The federal government", "The United States", "International law"],
-                answer: "The United States"
             },
             {
                 question: "The US Constitution defines how many main branches of government?",
@@ -449,29 +308,160 @@
                 answer: "Three"
             },
             {
-                question: "What is the legislative branch of the federal government called?",
+                question: "What is the legislative branch of the US government called?",
                 options: ["The Parliament", "The Assembly", "The Congress", "The Senate"],
                 answer: "The Congress"
             },
             {
-                question: "The executive branch of the US government is led by whom?",
+                question: "Who leads the executive branch?",
                 options: ["The Speaker of the House", "The Chief Justice", "The President", "The Vice President"],
                 answer: "The President"
+            },
+            {
+                question: "What is the shortest and oldest written constitution still in use by any nation in the world today?",
+                options: ["Indian Constitution", "British Constitution", "US Constitution", "Canadian Constitution"],
+                answer: "US Constitution"
+            },
+            {
+                question: "Where is the handwritten original document of the US Constitution displayed?",
+                options: ["The Library of Congress", "The National Archives and Records Administration", "The White House", "The Supreme Court Building"],
+                answer: "The National Archives and Records Administration"
+            },
+            {
+                question: "What is the purpose of the Preamble of the US Constitution?",
+                options: ["To grant specific authority to the federal government", "To prohibit certain authorities", "To establish the federal government's authority is limited to what follows", "To list the Bill of Rights"],
+                answer: "To establish the federal government's authority is limited to what follows"
+            },
+            {
+                question: "The American Constitution is said to be 'skeleton in form' because its details are to be filled in by the acts of which body?",
+                options: ["The Supreme Court", "The President", "The States", "The Congress"],
+                answer: "The Congress"
+            },
+            {
+                question: "What is an example of checks and balances in the US Constitution?",
+                options: ["The President can dissolve Congress", "The Supreme Court can declare a law passed by Congress ultra vires", "Congress can remove the President at will", "States can veto federal laws"],
+                answer: "The Supreme Court can declare a law passed by Congress ultra vires"
+            },
+            {
+                question: "In the American federal system, powers are divided between the federation and what other entities?",
+                options: ["Counties", "Cities", "States", "Territories"],
+                answer: "States"
+            },
+            {
+                question: "Article I of the US Constitution describes which branch of the federal government?",
+                options: ["Executive", "Judicial", "Legislative", "All three"],
+                answer: "Legislative"
+            },
+            {
+                question: "The United States Congress is a bicameral body consisting of which two houses?",
+                options: ["House of Lords and House of Commons", "House of Representatives and House of States", "House of Representatives and the Senate", "Assembly and and Council"],
+                answer: "House of Representatives and the Senate"
+            },
+            {
+                question: "What is the minimum age to be a Representative in the US Congress?",
+                options: ["21", "25", "30", "35"],
+                answer: "25"
+            },
+            {
+                question: "How long must a Senator be a citizen of the United States?",
+                options: ["7 years", "8 years", "9 years", "10 years"],
+                answer: "9 years"
+            },
+            {
+                question: "In which case did the Supreme Court interpret the Commerce Clause and Necessary and Proper Clause to allow Congress broader legislative power?",
+                options: ["Marbury v. Madison", "McCulloch v. Maryland", "Dred Scott v. Sandford", "Roe v. Wade"],
+                answer: "McCulloch v. Maryland"
+            },
+            {
+                question: "What is the term length for the President and Vice President of the United States?",
+                options: ["Two years", "Three years", "Four years", "Six years"],
+                answer: "Four years"
+            },
+            {
+                question: "What makes the US Constitution rigid in nature?",
+                options: ["Its length", "Its detailed provisions", "The difficult amendment process", "The power of the President"],
+                answer: "The difficult amendment process"
+            },
+            {
+                question: "In a Presidential form of government, to whom is the President of the USA responsible?",
+                options: ["The Congress", "The Supreme Court", "The people", "He is not directly responsible to the Congress"],
+                answer: "He is not directly responsible to the Congress"
+            },
+            {
+                question: "Article III of the Constitution describes which branch of government?",
+                options: ["Executive", "Legislative", "Judicial", "State"],
+                answer: "Judicial"
+            },
+            {
+                question: "Article III also creates the right to trial by jury in which type of cases?",
+                options: ["Civil cases", "All cases", "Criminal cases", "Appellate cases"],
+                answer: "Criminal cases"
+            },
+            {
+                question: "What does Article IV require states to give to the public acts, records, and court proceedings of other states?",
+                options: ["Partial recognition", "Full faith and credit", "Discretionary review", "Conditional acceptance"],
+                answer: "Full faith and credit"
+            },
+            {
+                question: "How many ways can an amendment to the US Constitution be ratified?",
+                options: ["One", "Two", "Three", "Four"],
+                answer: "Three"
+            },
+            {
+                question: "What is the minimum number of states required to ratify an amendment for it to take effect?",
+                options: ["One-half", "Two-thirds", "Three-fourths", "All states"],
+                answer: "Three-fourths"
+            },
+            {
+                question: "According to Article VI, what is the supreme law of the land?",
+                options: ["State laws", "Local ordinances", "Laws and treaties of the United States", "Executive orders"],
+                answer: "Laws and treaties of the United States"
+            },
+            {
+                question: "Article VII sets forth the requirements for what?",
+                options: ["Presidential elections", "Congressional powers", "Ratification of the Constitution", "Judicial review"],
+                answer: "Ratification of the Constitution"
+            },
+            {
+                question: "What is a qualification for the President of the United States according to the Constitution?",
+                options: ["Must be a naturalized citizen", "Must be at least 30 years old", "Must have served in Congress", "Must be a natural born citizen"],
+                answer: "Must be a natural born citizen"
+            },
+            {
+                question: "As chief of state, what power does the President have regarding other foreign heads of state?",
+                options: ["To declare war on them", "To impose sanctions", "To receive them in official ceremonies", "To negotiate treaties without Senate approval"],
+                answer: "To receive them in official ceremonies"
+            },
+            {
+                question: "What are the rules, regulations, and instructions issued by the President that have the binding force of law upon federal agencies called?",
+                options: ["Legislative acts", "Proclamations", "Executive orders", "Presidential decrees"],
+                answer: "Executive orders"
             }
         ];
 
+        // Shuffle the questions to ensure randomness
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        shuffleArray(quizQuestions);
+
         let currentQuestionIndex = 0;
         let score = 0;
-        let quizAttempted = false;
+        let quizStarted = false;
         let timerInterval;
-        const quizDuration = 20 * 60; // 20 minutes in seconds
-        let timeLeft = quizDuration;
-        let userName = "";
+        let timeLeft = 20 * 60; // 20 minutes in seconds
+        let candidateName = '';
+        const userAnswers = new Array(quizQuestions.length).fill(null); // To store user's selected option index
+        const correctAnswers = new Array(quizQuestions.length).fill(null); // To store correct option indices
+        let quizCompleted = false;
 
-        // Elements
+        // Cache DOM elements
         const loginSection = document.getElementById('login-section');
-        const userIdInput = document.getElementById('user-id');
-        const passwordInput = document.getElementById('password');
+        const loginIdInput = document.getElementById('login-id');
+        const loginPasswordInput = document.getElementById('login-password');
         const loginButton = document.getElementById('login-button');
         const loginError = document.getElementById('login-error');
 
@@ -480,213 +470,203 @@
         const startQuizButton = document.getElementById('start-quiz-button');
 
         const quizSection = document.getElementById('quiz-section');
-        const questionText = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container');
+        const questionContainer = document.getElementById('question-container');
         const timerDisplay = document.getElementById('timer');
         const prevButton = document.getElementById('prev-button');
         const nextButton = document.getElementById('next-button');
 
         const resultSection = document.getElementById('result-section');
-        const resultName = document.getElementById('result-name');
-        const totalQuestionsDisplay = document.getElementById('total-questions-display');
-        const correctAnswersDisplay = document.getElementById('correct-answers-display');
-        const incorrectAnswersDisplay = document.getElementById('incorrect-answers-display');
-        const scoreDisplay = document.getElementById('score-display');
+        const finalCandidateName = document.getElementById('final-candidate-name');
+        const scoreDisplay = document.getElementById('score');
+        const totalQuestionsDisplay = document.getElementById('total-questions');
+        const timeTakenDisplay = document.getElementById('time-taken');
 
         const messageBox = document.getElementById('message-box');
-        const messageTitle = document.getElementById('message-title');
-        const messageContent = document.getElementById('message-content');
-        const messageOkButton = document.getElementById('message-ok-button');
+        const messageText = document.getElementById('message-text');
+        const messageBoxOkButton = document.getElementById('message-box-ok');
 
-        // Store user answers
-        const userAnswers = new Array(quizData.length).fill(null);
-        const answeredCorrectly = new Array(quizData.length).fill(false);
-
-        // Function to show custom message box
-        function showMessageBox(title, content, callback = null) {
-            messageTitle.textContent = title;
-            messageContent.textContent = content;
-            messageBox.classList.remove('hidden');
-            messageOkButton.onclick = () => {
-                messageBox.classList.add('hidden');
-                if (callback) callback();
-            };
+        // Show message box
+        function showMessageBox(message) {
+            messageText.textContent = message;
+            messageBox.style.display = 'block';
         }
 
-        // Login Logic
+        // Hide message box
+        function hideMessageBox() {
+            messageBox.style.display = 'none';
+        }
+
+        // Event listener for message box OK button
+        messageBoxOkButton.addEventListener('click', hideMessageBox);
+
+        // Login functionality
         loginButton.addEventListener('click', () => {
-            const enteredId = userIdInput.value;
-            const enteredPassword = passwordInput.value;
+            const id = loginIdInput.value;
+            const password = loginPasswordInput.value;
 
             // Updated ID and Password
-            if (enteredId === '903' && enteredPassword === '309') {
-                loginSection.classList.add('hidden');
-                nameSection.classList.remove('hidden');
+            if (id === '903' && password === '309') {
+                loginSection.style.display = 'none';
+                nameSection.style.display = 'block';
                 loginError.classList.add('hidden');
             } else {
                 loginError.classList.remove('hidden');
             }
         });
 
-        // Start Quiz Logic
+        // Start Quiz functionality
         startQuizButton.addEventListener('click', () => {
-            userName = candidateNameInput.value.trim();
-            if (userName === "") {
-                showMessageBox("Input Required", "Please enter your name to start the quiz.");
-                return;
+            candidateName = candidateNameInput.value.trim();
+            if (candidateName) {
+                nameSection.style.display = 'none';
+                quizSection.style.display = 'block';
+                quizStarted = true;
+                startTimer();
+                displayQuestion();
+            } else {
+                showMessageBox("Please enter your name to start the quiz.");
             }
-
-            nameSection.classList.add('hidden');
-            quizSection.classList.remove('hidden');
-            startTimer();
-            loadQuestion();
         });
 
-        // Timer Logic
         function startTimer() {
             timerInterval = setInterval(() => {
                 timeLeft--;
                 const minutes = Math.floor(timeLeft / 60);
                 const seconds = timeLeft % 60;
-                timerDisplay.textContent = `Time Left: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
-                    submitQuiz();
-                    showMessageBox("Time's Up!", "Your time for the quiz has ended. Your results are displayed.");
+                    endQuiz();
                 }
             }, 1000);
         }
 
-        // Function to shuffle an array (Fisher-Yates algorithm)
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
+        function displayQuestion() {
+            if (quizCompleted) return; // Prevent interaction after quiz ends
 
-        // Load Question
-        function loadQuestion() {
-            const question = quizData[currentQuestionIndex];
-            questionText.textContent = `${currentQuestionIndex + 1}. ${question.question}`;
-            optionsContainer.innerHTML = '';
+            const questionData = quizQuestions[currentQuestionIndex];
+            questionContainer.innerHTML = ''; // Clear previous question
 
-            // Create a shuffled copy of options for display
-            const shuffledOptions = [...question.options];
-            shuffleArray(shuffledOptions);
+            const questionCard = document.createElement('div');
+            questionCard.className = 'question-card';
 
-            shuffledOptions.forEach(option => {
-                const button = document.createElement('button');
-                button.textContent = option;
-                button.classList.add('rounded-lg', 'shadow-md');
-                button.addEventListener('click', () => selectOption(option, button));
-                optionsContainer.appendChild(button);
+            const questionText = document.createElement('p');
+            questionText.textContent = `${currentQuestionIndex + 1}. ${questionData.question}`;
+            questionCard.appendChild(questionText);
 
-                // If already answered, show selected state and correct/incorrect colors
-                if (userAnswers[currentQuestionIndex] !== null) {
-                    if (option === userAnswers[currentQuestionIndex]) {
-                        if (option === question.answer) {
-                            button.classList.add('correct');
-                        } else {
-                            button.classList.add('incorrect');
-                        }
-                    }
-                    if (option === question.answer) {
-                        button.classList.add('correct'); // Always show correct answer in green
-                    }
-                    // Disable all options once an answer is selected for the current question
-                    Array.from(optionsContainer.children).forEach(btn => btn.style.pointerEvents = 'none');
+            const optionsGrid = document.createElement('div');
+            optionsGrid.className = 'options-grid';
+
+            questionData.options.forEach((option, index) => {
+                const optionButton = document.createElement('button');
+                optionButton.className = 'option-button';
+                optionButton.textContent = option;
+                optionButton.dataset.index = index; // Store index of the option
+
+                // Store the correct answer's index for later use
+                if (option === questionData.answer) {
+                    correctAnswers[currentQuestionIndex] = index;
                 }
+
+                // If user has already answered this question, show their selection and correct answer
+                if (userAnswers[currentQuestionIndex] !== null) {
+                    if (index === correctAnswers[currentQuestionIndex]) {
+                        optionButton.classList.add('correct');
+                    } else if (index === userAnswers[currentQuestionIndex]) {
+                        optionButton.classList.add('incorrect');
+                    }
+                    optionButton.disabled = true; // Disable buttons after answer
+                } else {
+                    optionButton.addEventListener('click', () => selectAnswer(optionButton, index));
+                }
+                optionsGrid.appendChild(optionButton);
             });
+
+            questionCard.appendChild(optionsGrid);
+            questionContainer.appendChild(questionCard);
 
             updateNavigationButtons();
         }
 
-        // Select Option
-        function selectOption(selectedOption, clickedButton) {
-            if (quizAttempted) return; // Prevent re-answering after quiz is submitted
+        function selectAnswer(selectedButton, selectedIndex) {
+            if (quizCompleted) return; // Prevent interaction after quiz ends
 
-            const question = quizData[currentQuestionIndex];
-            userAnswers[currentQuestionIndex] = selectedOption;
+            const questionData = quizQuestions[currentQuestionIndex];
+            const allOptionButtons = questionContainer.querySelectorAll('.option-button');
 
-            // Remove previous styling from all options for the current question
-            Array.from(optionsContainer.children).forEach(button => {
-                button.classList.remove('correct', 'incorrect');
-                button.style.pointerEvents = 'none'; // Disable all options after one is clicked
-            });
+            // Disable all options for the current question
+            allOptionButtons.forEach(button => button.disabled = true);
 
-            if (selectedOption === question.answer) {
-                clickedButton.classList.add('correct');
-                answeredCorrectly[currentQuestionIndex] = true;
+            userAnswers[currentQuestionIndex] = selectedIndex; // Store user's selected option index
+
+            const correctAnswerIndex = correctAnswers[currentQuestionIndex];
+
+            if (selectedIndex === correctAnswerIndex) {
+                selectedButton.classList.add('correct');
+                score++;
             } else {
-                clickedButton.classList.add('incorrect');
-                answeredCorrectly[currentQuestionIndex] = false;
-
-                // Mark the correct answer in green if the selected answer was wrong
-                Array.from(optionsContainer.children).forEach(button => {
-                    if (button.textContent === question.answer) {
-                        button.classList.add('correct');
-                    }
-                });
+                selectedButton.classList.add('incorrect');
+                // Highlight the correct answer in green
+                allOptionButtons[correctAnswerIndex].classList.add('correct');
             }
         }
 
-        // Navigation Buttons
         function updateNavigationButtons() {
-            prevButton.classList.toggle('hidden', currentQuestionIndex === 0);
-            nextButton.textContent = (currentQuestionIndex === quizData.length - 1) ? 'Submit Quiz' : 'Next';
+            prevButton.style.display = currentQuestionIndex > 0 ? 'block' : 'none';
+            nextButton.textContent = currentQuestionIndex === quizQuestions.length - 1 ? 'Submit Quiz' : 'Next';
         }
 
         prevButton.addEventListener('click', () => {
             if (currentQuestionIndex > 0) {
                 currentQuestionIndex--;
-                loadQuestion();
+                displayQuestion();
             }
         });
 
         nextButton.addEventListener('click', () => {
-            if (currentQuestionIndex < quizData.length - 1) {
+            if (currentQuestionIndex < quizQuestions.length - 1) {
+                // If the current question hasn't been answered, prompt the user
+                if (userAnswers[currentQuestionIndex] === null) {
+                    showMessageBox("Please select an answer before proceeding.");
+                    return;
+                }
                 currentQuestionIndex++;
-                loadQuestion();
+                displayQuestion();
             } else {
                 // Last question, submit quiz
-                submitQuiz();
+                if (userAnswers[currentQuestionIndex] === null) {
+                    showMessageBox("Please select an answer before submitting the quiz.");
+                    return;
+                }
+                endQuiz();
             }
         });
 
-        // Submit Quiz
-        function submitQuiz() {
-            if (quizAttempted) return; // Prevent multiple submissions
-            quizAttempted = true;
-            clearInterval(timerInterval); // Stop the timer
+        function endQuiz() {
+            clearInterval(timerInterval);
+            quizCompleted = true; // Mark quiz as completed
+            quizSection.style.display = 'none';
+            resultSection.style.display = 'block';
 
-            let correctCount = 0;
-            for (let i = 0; i < quizData.length; i++) {
-                if (userAnswers[i] === quizData[i].answer) {
-                    correctCount++;
-                }
-            }
+            const timeTaken = (20 * 60) - timeLeft;
+            const minutesTaken = Math.floor(timeTaken / 60);
+            const secondsTaken = timeTaken % 60;
 
-            const totalQuestions = quizData.length;
-            const incorrectCount = totalQuestions - correctCount;
-            const percentageScore = (correctCount / totalQuestions) * 100;
-
-            quizSection.classList.add('hidden');
-            resultSection.classList.remove('hidden');
-
-            resultName.textContent = userName;
-            totalQuestionsDisplay.textContent = totalQuestions;
-            correctAnswersDisplay.textContent = correctCount;
-            incorrectAnswersDisplay.textContent = incorrectCount;
-            scoreDisplay.textContent = percentageScore.toFixed(2); // Display score with 2 decimal places
-
-            // Disable all buttons in the quiz section to prevent further interaction
-            Array.from(document.querySelectorAll('#quiz-section button')).forEach(button => {
-                button.disabled = true;
-                button.style.pointerEvents = 'none';
-            });
+            finalCandidateName.textContent = candidateName;
+            scoreDisplay.textContent = score;
+            totalQuestionsDisplay.textContent = quizQuestions.length;
+            timeTakenDisplay.textContent = `${minutesTaken.toString().padStart(2, '0')}m ${secondsTaken.toString().padStart(2, '0')}s`;
         }
+
+        // Initial setup - show login section
+        document.addEventListener('DOMContentLoaded', () => {
+            loginSection.style.display = 'block';
+            nameSection.style.display = 'none';
+            quizSection.style.display = 'none';
+            resultSection.style.display = 'none';
+        });
+
     </script>
 </body>
 </html>
