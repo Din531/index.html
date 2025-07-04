@@ -18,123 +18,150 @@
             padding: 20px;
             box-sizing: border-box;
         }
-        .container {
+        .quiz-container {
             background-color: #ffffff;
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 800px;
-            box-sizing: border-box;
-        }
-        .header {
+            max-width: 700px;
             text-align: center;
-            margin-bottom: 30px;
-            color: #1e3a8a; /* Darker blue for text */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        .header h1 {
-            font-size: 2.25rem; /* text-4xl */
-            font-weight: 700; /* font-bold */
+        .quiz-header {
+            margin-bottom: 25px;
+            width: 100%;
+        }
+        .quiz-header h1 {
+            font-size: 2.2rem;
+            color: #1e3a8a; /* Darker blue for title */
             margin-bottom: 10px;
+            font-weight: 700;
         }
-        .header p {
-            font-size: 1rem; /* text-base */
+        .quiz-header p {
+            font-size: 1rem;
             color: #3b82f6; /* Blue for contact */
-            margin-bottom: 5px; /* Added margin for spacing */
+            margin-bottom: 5px;
         }
-        .header strong { /* Style for the new bold text */
-            font-size: 1.125rem; /* text-lg */
+        .quiz-header strong {
+            color: #1e3a8a; /* Darker blue for bold text */
+            font-size: 1.1rem;
+        }
+        .input-group {
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
             color: #1e3a8a;
-            display: block; /* Ensures it's on its own line */
-            margin-top: 5px;
+            font-weight: 600;
+            text-align: left;
         }
-        .btn-blue {
-            background-color: #3b82f6; /* Blue */
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #93c5fd; /* Light blue border */
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #1e3a8a;
+            transition: border-color 0.3s ease;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #3b82f6; /* Blue on focus */
+        }
+        .btn {
+            background-color: #3b82f6; /* Blue button */
             color: white;
             padding: 12px 25px;
-            border-radius: 10px;
-            font-weight: 600;
-            transition: background-color 0.3s ease;
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .btn-blue:hover {
-            background-color: #2563eb; /* Darker blue on hover */
-        }
-        .input-field {
-            padding: 12px;
-            border: 2px solid #93c5fd; /* Light blue border */
-            border-radius: 10px;
-            width: 100%;
-            margin-bottom: 15px;
-            box-sizing: border-box;
-        }
-        .quiz-section {
-            display: none; /* Hidden by default */
-        }
-        .question-card {
-            background-color: #eff6ff; /* Very light blue for question card */
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
-        }
-        .question-card p {
-            font-size: 1.125rem; /* text-lg */
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #1e3a8a;
-        }
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-        }
-        .option-button {
-            background-color: #dbeafe; /* Lighter blue for options */
-            color: #1e3a8a;
-            padding: 12px 15px;
             border-radius: 8px;
-            text-align: left;
-            transition: background-color 0.2s ease, transform 0.1s ease;
+            font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
-            border: 1px solid #93c5fd;
-            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: none;
         }
-        .option-button:hover:not(.correct):not(.incorrect) {
-            background-color: #bfdbfe; /* Slightly darker on hover */
+        .btn:hover {
+            background-color: #2563eb; /* Darker blue on hover */
             transform: translateY(-2px);
         }
-        .option-button.correct {
-            background-color: #a7f3d0; /* Green */
-            color: #065f46;
-            border-color: #34d399;
+        .btn:disabled {
+            background-color: #93c5fd;
+            cursor: not-allowed;
+            box-shadow: none;
         }
-        .option-button.incorrect {
-            background-color: #fecaca; /* Red */
-            color: #991b1b;
-            border-color: #ef4444;
+        .question-container {
+            display: none;
+            width: 100%;
+            text-align: left;
         }
-        .timer {
-            font-size: 1.25rem; /* text-xl */
-            font-weight: 700;
+        .question-text {
+            font-size: 1.3rem;
             color: #1e3a8a;
-            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+        .options-container button {
+            display: block;
+            width: 100%;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            background-color: #e0f2f7; /* Lighter blue for options */
+            border: 2px solid #93c5fd;
+            border-radius: 10px;
+            text-align: left;
+            font-size: 1.1rem;
+            color: #1e3a8a;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+            word-wrap: break-word; /* Ensure long sentences wrap */
+            white-space: normal; /* Allow text to wrap */
+        }
+        .options-container button:hover:not(.correct):not(.wrong) {
+            background-color: #c7e8f5;
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+        }
+        .options-container button.correct {
+            background-color: #b9fbc0; /* Green */
+            border-color: #28a745;
+            color: #1e3a8a;
+            font-weight: 600;
+        }
+        .options-container button.wrong {
+            background-color: #ffcdd2; /* Red */
+            border-color: #dc3545;
+            color: #1e3a8a;
+            font-weight: 600;
+        }
+        .timer-container {
+            font-size: 1.2rem;
+            color: #dc3545; /* Red for timer */
             margin-bottom: 20px;
+            font-weight: 700;
         }
-        .result-section {
-            display: none; /* Hidden by default */
-            text-align: center;
+        .result-container {
+            display: none;
+            width: 100%;
+            padding: 20px;
+            background-color: #e0f2f7;
+            border-radius: 10px;
+            margin-top: 20px;
             color: #1e3a8a;
         }
-        .result-section h2 {
-            font-size: 2rem; /* text-3xl */
-            font-weight: 700;
+        .result-container h2 {
+            font-size: 2rem;
             margin-bottom: 15px;
+            color: #1e3a8a;
         }
-        .result-section p {
-            font-size: 1.25rem; /* text-xl */
+        .result-container p {
+            font-size: 1.2rem;
             margin-bottom: 10px;
         }
         .message-box {
@@ -146,17 +173,14 @@
             background-color: #fff;
             padding: 25px;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             z-index: 1000;
             text-align: center;
-            max-width: 400px;
-            width: 90%;
-            border: 2px solid #3b82f6;
         }
         .message-box p {
-            margin-bottom: 20px;
             font-size: 1.1rem;
             color: #1e3a8a;
+            margin-bottom: 20px;
         }
         .message-box button {
             background-color: #3b82f6;
@@ -169,510 +193,720 @@
         .message-box button:hover {
             background-color: #2563eb;
         }
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3b82f6;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
         /* Responsive adjustments */
-        @media (max-width: 640px) {
-            .header h1 {
-                font-size: 1.75rem; /* text-3xl for small screens */
+        @media (max-width: 768px) {
+            .quiz-header h1 {
+                font-size: 1.8rem;
             }
-            .container {
-                padding: 20px;
+            .question-text {
+                font-size: 1.1rem;
             }
-            .question-card {
-                padding: 15px;
+            .options-container button {
+                font-size: 0.95rem;
+                padding: 12px 15px;
             }
-            .question-card p {
+            .btn {
+                padding: 10px 20px;
                 font-size: 1rem;
             }
-            .option-button {
-                padding: 10px;
+        }
+
+        @media (max-width: 480px) {
+            .quiz-container {
+                padding: 20px;
+            }
+            .quiz-header h1 {
+                font-size: 1.5rem;
+            }
+            .question-text {
+                font-size: 1rem;
+            }
+            .options-container button {
                 font-size: 0.9rem;
+                padding: 10px 12px;
+            }
+            .input-group input {
+                padding: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="quiz-container" id="quizContainer">
+        <div class="quiz-header">
             <h1>Political Science Subject Specialist Preparation Quiz</h1>
             <p>Contact Number: 03188185185</p>
-            <strong>US CONSTITUTION</strong>
+            <p><strong>Aristotle's Philosophy</strong></p>
         </div>
 
-        <!-- Login Section -->
-        <div id="login-section" class="quiz-section" style="display: block;">
-            <h2 class="text-2xl font-bold text-center mb-6 text-blue-800">Login</h2>
-            <input type="text" id="login-id" class="input-field" placeholder="Enter ID">
-            <input type="password" id="login-password" class="input-field" placeholder="Enter Password">
-            <button id="login-button" class="btn-blue w-full">Login</button>
-            <p id="login-error" class="text-red-600 text-center mt-3 hidden">Invalid ID or Password.</p>
-        </div>
-
-        <!-- Name Entry Section -->
-        <div id="name-section" class="quiz-section">
-            <h2 class="text-2xl font-bold text-center mb-6 text-blue-800">Enter Your Name</h2>
-            <input type="text" id="candidate-name" class="input-field" placeholder="Your Name">
-            <button id="start-quiz-button" class="btn-blue w-full">Start Quiz</button>
-        </div>
-
-        <!-- Quiz Section -->
-        <div id="quiz-section" class="quiz-section">
-            <div class="timer" id="timer">20:00</div>
-            <div id="question-container">
-                <!-- Questions will be loaded here by JavaScript -->
+        <!-- Login Screen -->
+        <div id="loginScreen" class="w-full flex flex-col items-center">
+            <div class="input-group">
+                <label for="idInput">ID:</label>
+                <input type="text" id="idInput" placeholder="Enter your ID">
             </div>
-            <div class="flex justify-between mt-6">
-                <button id="prev-button" class="btn-blue" style="display: none;">Previous</button>
-                <button id="next-button" class="btn-blue ml-auto">Next</button>
+            <div class="input-group">
+                <label for="passwordInput">Password:</label>
+                <input type="password" id="passwordInput" placeholder="Enter your password">
             </div>
+            <button id="loginBtn" class="btn">Login</button>
+            <p id="loginMessage" class="text-red-600 mt-3"></p>
         </div>
 
-        <!-- Result Section -->
-        <div id="result-section" class="result-section">
+        <!-- Name Entry Screen -->
+        <div id="nameScreen" class="w-full flex flex-col items-center hidden">
+            <div class="input-group">
+                <label for="candidateName">Your Name:</label>
+                <input type="text" id="candidateName" placeholder="Enter your name">
+            </div>
+            <button id="startQuizBtn" class="btn">Start Quiz</button>
+            <p id="nameMessage" class="text-red-600 mt-3"></p>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quizScreen" class="question-container">
+            <div class="timer-container" id="timer">Time Left: 20:00</div>
+            <div class="question-text" id="questionText"></div>
+            <div class="options-container" id="optionsContainer">
+                <!-- Options will be dynamically loaded here -->
+            </div>
+            <button id="nextBtn" class="btn mt-6 hidden">Next Question</button>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="resultScreen" class="result-container">
             <h2>Quiz Result</h2>
-            <p>Candidate: <span id="final-candidate-name"></span></p>
-            <p>Score: <span id="score"></span> / <span id="total-questions"></span></p>
-            <p>Time Taken: <span id="time-taken"></span></p>
-        </div>
-
-        <!-- Message Box -->
-        <div id="message-box" class="message-box">
-            <p id="message-text"></p>
-            <button id="message-box-ok">OK</button>
+            <p>Candidate: <span id="finalCandidateName"></span></p>
+            <p>Score: <span id="scoreDisplay"></span> / <span id="totalQuestionsDisplay"></span></p>
+            <p>Percentage: <span id="percentageDisplay"></span>%</p>
+            <p id="timeTakenDisplay"></p>
         </div>
     </div>
 
+    <!-- Custom Message Box -->
+    <div id="messageBox" class="message-box">
+        <p id="messageBoxText"></p>
+        <button id="messageBoxCloseBtn">OK</button>
+    </div>
+
     <script>
-        // Quiz data
-        const quizQuestions = [
+        const quizData = [
             {
-                question: "The United States of America is a federal constitutional republic comprising how many states?",
-                options: ["48", "49", "50", "52"],
-                answer: "50"
+                question: "Aristotle was born in Stagira on the borders of Macedonia to parents of which origin?",
+                options: ["Roman origin", "Greek origin", "Ionian origin", "Egyptian origin"],
+                correct: "Ionian origin",
+                category: "early_life"
             },
             {
-                question: "Which oceans border the contiguous states of the United States?",
-                options: ["Pacific and Indian", "Atlantic and Arctic", "Pacific and Atlantic", "Indian and Arctic"],
-                answer: "Pacific and Atlantic"
+                question: "At what age did Aristotle attach himself to Plato's Academy?",
+                options: ["17 years old", "20 years old", "25 years old", "30 years old"],
+                correct: "17 years old",
+                category: "early_life"
             },
             {
-                question: "What is the approximate total area of the United States in square miles?",
-                options: ["2.5 million", "3.0 million", "3.79 million", "4.5 million"],
-                answer: "3.79 million"
+                question: "What was the name of Aristotle's father, who was a physician of note and ultimately appointed to the Macedonian court?",
+                options: ["Plato", "Nicomachus", "Socrates", "Alexander"],
+                correct: "Nicomachus",
+                category: "early_life"
             },
             {
-                question: "When was the Declaration of Independence issued?",
-                options: ["July 4, 1774", "July 4, 1775", "July 4, 1776", "July 4, 1787"],
-                answer: "July 4, 1776"
+                question: "Aristotle remained at Plato's Academy for a period of how many years?",
+                options: ["10 years", "15 years", "20 years", "25 years"],
+                correct: "20 years",
+                category: "early_life"
             },
             {
-                question: "When was the current United States Constitution adopted by the Philadelphia Convention?",
-                options: ["September 17, 1776", "March 4, 1789", "September 17, 1787", "July 4, 1789"],
-                answer: "September 17, 1787"
+                question: "Who was Aristotle's unofficial adviser of Hermias for several years?",
+                options: ["Plato", "Alexander", "Hermias", "Theophrastus"],
+                correct: "Hermias",
+                category: "early_life"
             },
             {
-                question: "How many amendments comprise the Bill of Rights?",
-                options: ["7", "10", "12", "13"],
-                answer: "10"
+                question: "Which work of Plato did Aristotle engage in when he was in Athens, compiling material for his last major work?",
+                options: ["Republic", "Symposium", "Laws", "Phaedo"],
+                correct: "Laws",
+                category: "work_writings"
             },
             {
-                question: "Which of these was an independent republic before joining the Union?",
-                options: ["Kentucky", "Tennessee", "Maine", "Hawaii"],
-                answer: "Hawaii"
+                question: "Aristotle's most important work on politics is titled:",
+                options: ["The Republic", "The Politics", "Nicomachean Ethics", "Metaphysics"],
+                correct: "The Politics",
+                category: "work_writings"
             },
             {
-                question: "What is the supreme legal document of the United States?",
-                options: ["The Declaration of Independence", "The Articles of Confederation", "The US Constitution", "The Bill of Rights"],
-                answer: "The US Constitution"
+                question: "Which of Aristotle's works deals with the ethical framework for achieving human flourishing?",
+                options: ["Rhetoric", "Poetics", "Nicomachean Ethics", "On the Soul"],
+                correct: "Nicomachean Ethics",
+                category: "work_writings"
             },
             {
-                question: "How many levels of government are citizens usually subject to in the American federalist system?",
-                options: ["One", "Two", "Three", "Four"],
-                answer: "Three"
+                question: "Aristotle's work 'Categories' is primarily concerned with:",
+                options: ["Logic and classification of being", "The nature of the soul", "Political systems", "Poetic forms"],
+                correct: "Logic and classification of being",
+                category: "work_writings"
             },
             {
-                question: "How many times has the Constitution been amended?",
-                options: ["10", "14", "27", "30"],
-                answer: "27"
+                question: "The treatise 'On the Soul' by Aristotle explores:",
+                options: ["The structure of the ideal state", "The principles of rhetoric", "The nature of living beings and their faculties", "The causes of revolution"],
+                correct: "The nature of living beings and their faculties",
+                category: "work_writings"
             },
             {
-                question: "Which amendment forms a central basis of Americans' individual rights, along with the first 10?",
-                options: ["Thirteenth Amendment", "Fourteenth Amendment", "Fifteenth Amendment", "Sixteenth Amendment"],
-                answer: "Fourteenth Amendment"
+                question: "According to Aristotle, 'Man is by nature a political animal.' What does this imply?",
+                options: ["Humans are meant to rule over others.", "Humans thrive in isolation.", "Humans are inherently social and political beings.", "Humans are primarily driven by self-interest."],
+                correct: "Humans are inherently social and political beings.",
+                category: "quotation"
             },
             {
-                question: "Which political party is considered center-right or conservative in American political culture?",
-                options: ["Democratic Party", "Green Party", "Republican Party", "Libertarian Party"],
-                answer: "Republican Party"
+                question: "Aristotle stated, 'The roots of education are bitter, but the fruit is sweet.' What is the essence of this quote?",
+                options: ["Education is inherently unpleasant.", "Learning requires effort but yields valuable rewards.", "Only sweet subjects should be taught.", "Education is a quick and easy process."],
+                correct: "Learning requires effort but yields valuable rewards.",
+                category: "quotation"
             },
             {
-                question: "What are the states of the Northeast and West Coast, and some Great Lakes states, known as?",
-                options: ["Red states", "Purple states", "Blue states", "Swing states"],
-                answer: "Blue states"
+                question: "Aristotle said, 'It is the mark of an educated mind to be able to entertain a thought without accepting it.' This emphasizes:",
+                options: ["The importance of blind acceptance.", "The necessity of critical thinking and open-mindedness.", "That all thoughts are equally valid.", "The rejection of new ideas."],
+                correct: "The necessity of critical thinking and open-mindedness.",
+                category: "quotation"
             },
             {
-                question: "The US Constitution defines how many main branches of government?",
-                options: ["Two", "Three", "Four", "Five"],
-                answer: "Three"
+                question: "Which of the following best reflects Aristotle's quote: 'We are what we repeatedly do. Excellence, then, is not an act, but a habit.'?",
+                options: ["Success is a matter of luck.", "Excellence is achieved through single, grand gestures.", "Virtue and skill are developed through consistent practice.", "One should only focus on the outcome, not the process."],
+                correct: "Virtue and skill are developed through consistent practice.",
+                category: "quotation"
             },
             {
-                question: "What is the legislative branch of the US government called?",
-                options: ["The Parliament", "The Assembly", "The Congress", "The Senate"],
-                answer: "The Congress"
+                question: "Aristotle's statement, 'Poverty is the parent of revolution and crime,' highlights his view on:",
+                options: ["The moral failings of the poor.", "The economic causes of social instability.", "The necessity of a strong police force.", "The benefits of extreme wealth inequality."],
+                correct: "The economic causes of social instability.",
+                category: "quotation"
             },
             {
-                question: "Who leads the executive branch?",
-                options: ["The Speaker of the House", "The Chief Justice", "The President", "The Vice President"],
-                answer: "The President"
+                question: "Aristotle believed that the ultimate goal of human life is:",
+                options: ["Wealth accumulation", "Political power", "Eudaimonia (flourishing or living well)", "Pleasure seeking"],
+                correct: "Eudaimonia (flourishing or living well)",
+                category: "philosophy"
             },
             {
-                question: "What is the shortest and oldest written constitution still in use by any nation in the world today?",
-                options: ["Indian Constitution", "British Constitution", "US Constitution", "Canadian Constitution"],
-                answer: "US Constitution"
+                question: "Which of these is NOT considered one of Aristotle's 'right' kinds of constitution?",
+                options: ["Monarchy", "Tyranny", "Aristocracy", "Polity"],
+                correct: "Tyranny",
+                category: "philosophy"
             },
             {
-                question: "Where is the handwritten original document of the US Constitution displayed?",
-                options: ["The Library of Congress", "The National Archives and Records Administration", "The White House", "The Supreme Court Building"],
-                answer: "The National Archives and Records Administration"
+                question: "Aristotle's concept of the 'Golden Mean' suggests that virtue lies:",
+                options: ["In extremes of behavior", "In moderation between two vices", "In avoiding all action", "In following strict rules without deviation"],
+                correct: "In moderation between two vices",
+                category: "philosophy"
             },
             {
-                question: "What is the purpose of the Preamble of the US Constitution?",
-                options: ["To grant specific authority to the federal government", "To prohibit certain authorities", "To establish the federal government's authority is limited to what follows", "To list the Bill of Rights"],
-                answer: "To establish the federal government's authority is limited to what follows"
+                question: "According to Aristotle, what is the highest form of organization in the community?",
+                options: ["The family", "The village", "The city-state (polis)", "The empire"],
+                correct: "The city-state (polis)",
+                category: "philosophy"
             },
             {
-                question: "The American Constitution is said to be 'skeleton in form' because its details are to be filled in by the acts of which body?",
-                options: ["The Supreme Court", "The President", "The States", "The Congress"],
-                answer: "The Congress"
+                question: "Aristotle's theory of causation includes four types of causes. Which of the following is NOT one of them?",
+                options: ["Material cause", "Efficient cause", "Accidental cause", "Final cause"],
+                correct: "Accidental cause",
+                category: "philosophy"
             },
             {
-                question: "What is an example of checks and balances in the US Constitution?",
-                options: ["The President can dissolve Congress", "The Supreme Court can declare a law passed by Congress ultra vires", "Congress can remove the President at will", "States can veto federal laws"],
-                answer: "The Supreme Court can declare a law passed by Congress ultra vires"
+                question: "Aristotle argued that the best practical state is one that finds a working balance of liberty and authority. This is a characteristic of his ideal state, which he calls:",
+                options: ["Democracy", "Oligarchy", "Polity", "Aristocracy"],
+                correct: "Polity",
+                category: "philosophy"
             },
             {
-                question: "In the American federal system, powers are divided between the federation and what other entities?",
-                options: ["Counties", "Cities", "States", "Territories"],
-                answer: "States"
+                question: "What did Aristotle consider the 'end' or purpose of the state?",
+                options: ["To ensure economic prosperity for all citizens.", "To facilitate the good life and moral perfection of its citizens.", "To expand its territory and power.", "To maintain social order at all costs."],
+                correct: "To facilitate the good life and moral perfection of its citizens.",
+                category: "philosophy"
             },
             {
-                question: "Article I of the US Constitution describes which branch of the federal government?",
-                options: ["Executive", "Judicial", "Legislative", "All three"],
-                answer: "Legislative"
+                question: "Aristotle's view on property was that it should be:",
+                options: ["Held in common by all citizens.", "Abolished entirely to prevent conflict.", "Private, but used in common to some extent.", "Controlled solely by the state."],
+                correct: "Private, but used in common to some extent.",
+                category: "philosophy"
             },
             {
-                question: "The United States Congress is a bicameral body consisting of which two houses?",
-                options: ["House of Lords and House of Commons", "House of Representatives and House of States", "House of Representatives and the Senate", "Assembly and and Council"],
-                answer: "House of Representatives and the Senate"
+                question: "Aristotle believed that education should aim at:",
+                options: ["Developing physical strength above all else.", "Instilling obedience and military discipline.", "Cultivating moral character and intellectual virtues.", "Preparing individuals for specific trades."],
+                correct: "Cultivating moral character and intellectual virtues.",
+                category: "philosophy"
             },
             {
-                question: "What is the minimum age to be a Representative in the US Congress?",
-                options: ["21", "25", "30", "35"],
-                answer: "25"
+                question: "In Aristotle's political philosophy, which group is considered the 'middle class'?",
+                options: ["The extremely wealthy", "The very poor", "Those with moderate wealth, balancing rich and poor", "Only philosophers and rulers"],
+                correct: "Those with moderate wealth, balancing rich and poor",
+                category: "philosophy"
             },
             {
-                question: "How long must a Senator be a citizen of the United States?",
-                options: ["7 years", "8 years", "9 years", "10 years"],
-                answer: "9 years"
+                question: "Aristotle's concept of justice is primarily concerned with:",
+                options: ["Strict equality in all aspects.", "Distributive justice (fair distribution of goods) and corrective justice (rectifying wrongs).", "Revenge for past wrongs.", "Maintaining the status quo regardless of fairness."],
+                correct: "Distributive justice (fair distribution of goods) and corrective justice (rectifying wrongs).",
+                category: "philosophy"
             },
             {
-                question: "In which case did the Supreme Court interpret the Commerce Clause and Necessary and Proper Clause to allow Congress broader legislative power?",
-                options: ["Marbury v. Madison", "McCulloch v. Maryland", "Dred Scott v. Sandford", "Roe v. Wade"],
-                answer: "McCulloch v. Maryland"
+                question: "What is the primary difference between Aristotle's ideal state and Plato's ideal state (as described in the document)?",
+                options: ["Aristotle emphasized a more practical, achievable state, while Plato focused on a theoretical ideal.", "Aristotle believed in philosopher-kings, while Plato did not.", "Aristotle advocated for communism, while Plato supported private property.", "Aristotle focused on individual rights, while Plato prioritized the collective."],
+                correct: "Aristotle emphasized a more practical, achievable state, while Plato focused on a theoretical ideal.",
+                category: "philosophy"
             },
             {
-                question: "What is the term length for the President and Vice President of the United States?",
-                options: ["Two years", "Three years", "Four years", "Six years"],
-                answer: "Four years"
+                question: "Aristotle's view on slavery was that it was:",
+                options: ["Completely unjust and should be abolished.", "A natural institution where some are naturally suited to be masters and others slaves.", "A temporary condition that should be overcome.", "Only acceptable for foreign captives of war."],
+                correct: "A natural institution where some are naturally suited to be masters and others slaves.",
+                category: "philosophy"
             },
             {
-                question: "What makes the US Constitution rigid in nature?",
-                options: ["Its length", "Its detailed provisions", "The difficult amendment process", "The power of the President"],
-                answer: "The difficult amendment process"
+                question: "Which of the following is a key element of Aristotle's theory of development in states?",
+                options: ["States always progress towards democracy.", "States are natural institutions that grow and develop like living organisms.", "States are purely artificial constructs.", "States are static and do not change over time."],
+                correct: "States are natural institutions that grow and develop like living organisms.",
+                category: "philosophy"
             },
             {
-                question: "In a Presidential form of government, to whom is the President of the USA responsible?",
-                options: ["The Congress", "The Supreme Court", "The people", "He is not directly responsible to the Congress"],
-                answer: "He is not directly responsible to the Congress"
+                question: "Aristotle believed that the best form of government for most states, given their practical realities, is a mixed constitution, which he often referred to as:",
+                options: ["Tyranny", "Oligarchy", "Polity", "Democracy"],
+                correct: "Polity",
+                category: "philosophy"
             },
             {
-                question: "Article III of the Constitution describes which branch of government?",
-                options: ["Executive", "Legislative", "Judicial", "State"],
-                answer: "Judicial"
+                question: "What did Aristotle consider the most important function of the legislator?",
+                options: ["To accumulate wealth for the state.", "To maintain existing laws without change.", "To improve the qualities of citizens and achieve the good life.", "To engage in constant warfare."],
+                correct: "To improve the qualities of citizens and achieve the good life.",
+                category: "philosophy"
             },
             {
-                question: "Article III also creates the right to trial by jury in which type of cases?",
-                options: ["Civil cases", "All cases", "Criminal cases", "Appellate cases"],
-                answer: "Criminal cases"
+                question: "Aristotle's criticism of Plato's ideal state included the argument that Plato's communism of property and family would lead to:",
+                options: ["Greater unity and social harmony.", "Increased individual freedom.", "Lack of affection and responsibility.", "More efficient governance."],
+                correct: "Lack of affection and responsibility.",
+                category: "philosophy"
             },
             {
-                question: "What does Article IV require states to give to the public acts, records, and court proceedings of other states?",
-                options: ["Partial recognition", "Full faith and credit", "Discretionary review", "Conditional acceptance"],
-                answer: "Full faith and credit"
+                question: "According to Aristotle, what is the primary purpose of law?",
+                options: ["To punish wrongdoers severely.", "To ensure the happiness and virtue of citizens.", "To protect the interests of the ruling class.", "To facilitate trade and commerce."],
+                correct: "To ensure the happiness and virtue of citizens.",
+                category: "philosophy"
             },
             {
-                question: "How many ways can an amendment to the US Constitution be ratified?",
-                options: ["One", "Two", "Three", "Four"],
-                answer: "Three"
+                question: "Aristotle's concept of 'magnanimity' (greatness of soul) is a virtue that involves:",
+                options: ["Being excessively proud and arrogant.", "Having a proper sense of one's own worth and deserving great things.", "Ignoring the opinions of others.", "Being overly humble and self-deprecating."],
+                correct: "Having a proper sense of one's own worth and deserving great things.",
+                category: "philosophy"
             },
             {
-                question: "What is the minimum number of states required to ratify an amendment for it to take effect?",
-                options: ["One-half", "Two-thirds", "Three-fourths", "All states"],
-                answer: "Three-fourths"
+                question: "Which of the following best describes Aristotle's approach to studying politics?",
+                options: ["Purely theoretical and idealistic.", "Empirical and practical, based on observations of existing states.", "Focused solely on historical analysis.", "Primarily concerned with abstract mathematical models."],
+                correct: "Empirical and practical, based on observations of existing states.",
+                category: "philosophy"
             },
             {
-                question: "According to Article VI, what is the supreme law of the land?",
-                options: ["State laws", "Local ordinances", "Laws and treaties of the United States", "Executive orders"],
-                answer: "Laws and treaties of the United States"
+                question: "Aristotle believed that the best form of government is one that aims at the common good. Which of these 'perverted' forms aims at the good of the rulers only?",
+                options: ["Monarchy", "Aristocracy", "Polity", "Tyranny"],
+                correct: "Tyranny",
+                category: "philosophy"
             },
             {
-                question: "Article VII sets forth the requirements for what?",
-                options: ["Presidential elections", "Congressional powers", "Ratification of the Constitution", "Judicial review"],
-                answer: "Ratification of the Constitution"
+                question: "What role did Aristotle assign to the middle class in maintaining constitutional stability?",
+                options: ["They are a source of constant revolution.", "They are irrelevant to political stability.", "They provide balance and prevent extremes of oligarchy and democracy.", "They always side with the wealthy."],
+                correct: "They provide balance and prevent extremes of oligarchy and democracy.",
+                category: "philosophy"
             },
             {
-                question: "What is a qualification for the President of the United States according to the Constitution?",
-                options: ["Must be a naturalized citizen", "Must be at least 30 years old", "Must have served in Congress", "Must be a natural born citizen"],
-                answer: "Must be a natural born citizen"
+                question: "Aristotle argued that a state should be self-sufficient. What does this 'self-sufficiency' primarily refer to?",
+                options: ["Economic independence only.", "Ability to defend itself militarily.", "Providing all necessary goods and services for its citizens to live a good life.", "Isolation from other states."],
+                correct: "Providing all necessary goods and services for its citizens to live a good life.",
+                category: "philosophy"
             },
             {
-                question: "As chief of state, what power does the President have regarding other foreign heads of state?",
-                options: ["To declare war on them", "To impose sanctions", "To receive them in official ceremonies", "To negotiate treaties without Senate approval"],
-                answer: "To receive them in official ceremonies"
+                question: "In Aristotle's view, the purpose of human association in a political community is to achieve:",
+                options: ["Maximum individual freedom.", "The highest form of wealth.", "A good and virtuous life.", "Absolute power for the rulers."],
+                correct: "A good and virtuous life.",
+                category: "philosophy"
             },
             {
-                question: "What are the rules, regulations, and instructions issued by the President that have the binding force of law upon federal agencies called?",
-                options: ["Legislative acts", "Proclamations", "Executive orders", "Presidential decrees"],
-                answer: "Executive orders"
+                question: "Aristotle's theory of virtue emphasizes the development of character through:",
+                options: ["Strict adherence to religious dogma.", "Innate abilities that cannot be changed.", "Habit and practice of virtuous actions.", "Sudden moments of enlightenment."],
+                correct: "Habit and practice of virtuous actions.",
+                category: "philosophy"
+            },
+            {
+                question: "Aristotle's concept of 'distributive justice' is concerned with:",
+                options: ["Punishing criminals fairly.", "The fair allocation of honors, wealth, and other goods among citizens.", "Ensuring equal pay for all jobs.", "Providing charity to the poor."],
+                correct: "The fair allocation of honors, wealth, and other goods among citizens.",
+                category: "philosophy"
+            },
+            {
+                question: "What was Aristotle's stance on the importance of law in a state?",
+                options: ["Laws are unnecessary if rulers are virtuous.", "Law is essential for stability and good governance, guiding citizens towards virtue.", "Laws should be frequently changed to adapt to new circumstances.", "Laws are only for the lower classes."],
+                correct: "Law is essential for stability and good governance, guiding citizens towards virtue.",
+                category: "philosophy"
+            },
+            {
+                question: "Aristotle believed that the best constitution is one that is suitable for the majority of states, considering their practical realities. This pragmatic approach contrasts with Plato's focus on:",
+                options: ["Empirical observation.", "The ideal, perfect state.", "The role of the military.", "Economic factors."],
+                correct: "The ideal, perfect state.",
+                category: "philosophy"
+            },
+            {
+                question: "Which of the following is a 'right' form of government according to Aristotle, where rule is by the many for the common good?",
+                options: ["Democracy (as mob rule)", "Oligarchy", "Polity", "Tyranny"],
+                correct: "Polity",
+                category: "philosophy"
+            },
+            {
+                question: "Aristotle's political thought emphasizes the importance of the 'polis' (city-state) as:",
+                options: ["Merely a collection of individuals.", "The highest form of human association for achieving the good life.", "A temporary arrangement for defense.", "A system designed for economic exploitation."],
+                correct: "The highest form of human association for achieving the good life.",
+                category: "philosophy"
+            },
+            {
+                question: "What did Aristotle consider the primary reason for the decline of states?",
+                options: ["External invasions.", "Lack of economic resources.", "Internal instability and factionalism.", "Too much freedom for citizens."],
+                correct: "Internal instability and factionalism.",
+                category: "philosophy"
+            },
+            {
+                question: "Aristotle's concept of the 'citizen' was primarily defined by their ability to:",
+                options: ["Accumulate wealth.", "Participate in the political life of the polis.", "Serve in the military.", "Engage in philosophical debate."],
+                correct: "Participate in the political life of the polis.",
+                category: "philosophy"
+            },
+            {
+                question: "According to Aristotle, what is the relationship between ethics and politics?",
+                options: ["They are entirely separate fields.", "Ethics is a branch of politics, as the good life for individuals is achieved within the political community.", "Politics is superior to ethics.", "Ethics only applies to private life, not public life."],
+                correct: "Ethics is a branch of politics, as the good life for individuals is achieved within the political community.",
+                category: "philosophy"
+            },
+            {
+                question: "Aristotle's view on the family was that it is:",
+                options: ["An outdated institution.", "The fundamental unit of the state, essential for its stability.", "A hindrance to individual freedom.", "Only for procreation."],
+                correct: "The fundamental unit of the state, essential for its stability.",
+                category: "philosophy"
+            },
+            {
+                question: "What is the role of 'reason' in Aristotle's philosophy?",
+                options: ["It is irrelevant to human conduct.", "It is the highest human faculty, guiding us towards virtue and understanding.", "It is only for philosophers, not ordinary people.", "It leads to emotional detachment."],
+                correct: "It is the highest human faculty, guiding us towards virtue and understanding.",
+                category: "philosophy"
+            },
+            {
+                question: "Aristotle believed that the best form of government is determined by:",
+                options: ["A universal ideal that applies everywhere.", "The specific circumstances and character of the people in a given state.", "The wealth of the ruling class.", "Military strength."],
+                correct: "The specific circumstances and character of the people in a given state.",
+                category: "philosophy"
+            },
+            {
+                question: "What is the primary aim of Aristotle's 'Politics'?",
+                options: ["To describe the perfect, unattainable state.", "To analyze existing political systems and identify the best practical forms of government.", "To advocate for a specific type of revolution.", "To provide a historical account of ancient Greek city-states."],
+                correct: "To analyze existing political systems and identify the best practical forms of government.",
+                category: "philosophy"
+            },
+            {
+                question: "Aristotle's idea of 'happiness' (eudaimonia) is best described as:",
+                options: ["A fleeting emotion of pleasure.", "A state of contentment achieved through material possessions.", "A lifelong activity of living in accordance with virtue and reason.", "A passive state of being free from pain."],
+                correct: "A lifelong activity of living in accordance with virtue and reason.",
+                category: "philosophy"
+            },
+            {
+                question: "Which of these is a 'perverted' form of rule by the few, according to Aristotle?",
+                options: ["Aristocracy", "Oligarchy", "Polity", "Monarchy"],
+                correct: "Oligarchy",
+                category: "philosophy"
+            },
+            {
+                question: "Aristotle argued that a good constitution should aim to balance:",
+                options: ["Wealth and poverty.", "Freedom and tyranny.", "The interests of the rich and the poor.", "Agriculture and industry."],
+                correct: "The interests of the rich and the poor.",
+                category: "philosophy"
+            },
+            {
+                question: "What did Aristotle consider the most important factor for maintaining constitutional stability?",
+                options: ["A strong military.", "Economic equality.", "A large and influential middle class.", "Frequent changes in leadership."],
+                correct: "A large and influential middle class.",
+                category: "philosophy"
+            },
+            {
+                question: "Aristotle's view on the purpose of the state is teleological, meaning it is focused on:",
+                options: ["Its historical origins.", "Its final end or purpose.", "Its current economic status.", "Its military power."],
+                correct: "Its final end or purpose.",
+                category: "philosophy"
+            },
+            {
+                question: "According to Aristotle, the 'rule of law' is crucial because:",
+                options: ["It allows rulers to act arbitrarily.", "It ensures stability and prevents rule by arbitrary will.", "It leads to constant revolution.", "It is only for the wealthy."],
+                correct: "It ensures stability and prevents rule by arbitrary will.",
+                category: "philosophy"
+            },
+            {
+                question: "Aristotle's ethical theory is primarily concerned with:",
+                options: ["Determining what actions are morally right or wrong in themselves.", "The character of the moral agent and the development of virtues.", "The consequences of actions.", "Divine commands."],
+                correct: "The character of the moral agent and the development of virtues.",
+                category: "philosophy"
             }
         ];
 
-        // Shuffle the questions to ensure randomness
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timer;
+        let timeLeft = 20 * 60; // 20 minutes in seconds
+        let quizStartTime;
+        let candidateName = "";
+        let quizAttempted = false; // Flag to prevent restarting
+
+        const loginScreen = document.getElementById('loginScreen');
+        const nameScreen = document.getElementById('nameScreen');
+        const quizScreen = document.getElementById('quizScreen');
+        const resultScreen = document.getElementById('resultScreen');
+        const idInput = document.getElementById('idInput');
+        const passwordInput = document.getElementById('passwordInput');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginMessage = document.getElementById('loginMessage');
+        const candidateNameInput = document.getElementById('candidateName');
+        const startQuizBtn = document.getElementById('startQuizBtn');
+        const nameMessage = document.getElementById('nameMessage');
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const nextBtn = document.getElementById('nextBtn');
+        const timerDisplay = document.getElementById('timer');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const totalQuestionsDisplay = document.getElementById('totalQuestionsDisplay');
+        const percentageDisplay = document.getElementById('percentageDisplay');
+        const finalCandidateNameDisplay = document.getElementById('finalCandidateName');
+        const timeTakenDisplay = document.getElementById('timeTakenDisplay');
+        const messageBox = document.getElementById('messageBox');
+        const messageBoxText = document.getElementById('messageBoxText');
+        const messageBoxCloseBtn = document.getElementById('messageBoxCloseBtn');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+
+        const correctID = "5544";
+        const correctPassword = "4455";
+
+        // Shuffle questions and options
+        let shuffledQuizData = [];
+
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [array[i], array[j]] = [array[j], array[i]];
             }
         }
-        shuffleArray(quizQuestions);
 
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let quizStarted = false;
-        let timerInterval;
-        let timeLeft = 20 * 60; // 20 minutes in seconds
-        let candidateName = '';
-        const userAnswers = new Array(quizQuestions.length).fill(null); // To store user's selected option index
-        const correctAnswers = new Array(quizQuestions.length).fill(null); // To store correct option indices
-        let quizCompleted = false;
+        function generateShuffledQuiz() {
+            const earlyLife = quizData.filter(q => q.category === 'early_life');
+            const workWritings = quizData.filter(q => q.category === 'work_writings');
+            const quotations = quizData.filter(q => q.category === 'quotation');
+            const philosophy = quizData.filter(q => q.category === 'philosophy');
 
-        // Cache DOM elements
-        const loginSection = document.getElementById('login-section');
-        const loginIdInput = document.getElementById('login-id');
-        const loginPasswordInput = document.getElementById('login-password');
-        const loginButton = document.getElementById('login-button');
-        const loginError = document.getElementById('login-error');
+            shuffleArray(earlyLife);
+            shuffleArray(workWritings);
+            shuffleArray(quotations);
+            shuffleArray(philosophy);
 
-        const nameSection = document.getElementById('name-section');
-        const candidateNameInput = document.getElementById('candidate-name');
-        const startQuizButton = document.getElementById('start-quiz-button');
+            // Ensure minimum percentages
+            const numEarlyLife = Math.ceil(0.05 * quizData.length);
+            const numWorkWritings = Math.ceil(0.05 * quizData.length);
+            const numQuotations = Math.ceil(0.10 * quizData.length);
 
-        const quizSection = document.getElementById('quiz-section');
-        const questionContainer = document.getElementById('question-container');
-        const timerDisplay = document.getElementById('timer');
-        const prevButton = document.getElementById('prev-button');
-        const nextButton = document.getElementById('next-button');
+            shuffledQuizData = [];
+            shuffledQuizData.push(...earlyLife.slice(0, numEarlyLife));
+            shuffledQuizData.push(...workWritings.slice(0, numWorkWritings));
+            shuffledQuizData.push(...quotations.slice(0, numQuotations));
 
-        const resultSection = document.getElementById('result-section');
-        const finalCandidateName = document.getElementById('final-candidate-name');
-        const scoreDisplay = document.getElementById('score');
-        const totalQuestionsDisplay = document.getElementById('total-questions');
-        const timeTakenDisplay = document.getElementById('time-taken');
+            // Fill remaining with philosophy questions, ensuring no duplicates
+            const philosophyToAdd = philosophy.filter(q =>
+                !shuffledQuizData.some(sq => sq.question === q.question)
+            );
+            shuffledQuizData.push(...philosophyToAdd);
 
-        const messageBox = document.getElementById('message-box');
-        const messageText = document.getElementById('message-text');
-        const messageBoxOkButton = document.getElementById('message-box-ok');
+            // If still less than 40, add more philosophy or other categories until 40
+            let safetyCounter = 0;
+            while (shuffledQuizData.length < 40 && safetyCounter < 100) { // Safety break
+                const remainingPhilosophy = philosophy.filter(q =>
+                    !shuffledQuizData.some(sq => sq.question === q.question)
+                );
+                if (remainingPhilosophy.length > 0) {
+                    shuffledQuizData.push(remainingPhilosophy[0]);
+                } else {
+                    // If philosophy runs out, add from other categories again
+                    const allRemaining = quizData.filter(q =>
+                        !shuffledQuizData.some(sq => sq.question === q.question)
+                    );
+                    if (allRemaining.length > 0) {
+                        shuffledQuizData.push(allRemaining[0]);
+                    } else {
+                        break; // No more unique questions
+                    }
+                }
+                safetyCounter++;
+            }
 
-        // Show message box
+            // Final shuffle of the combined list
+            shuffleArray(shuffledQuizData);
+
+            // Shuffle options for each question
+            shuffledQuizData.forEach(q => shuffleArray(q.options));
+        }
+
         function showMessageBox(message) {
-            messageText.textContent = message;
+            messageBoxText.textContent = message;
             messageBox.style.display = 'block';
         }
 
-        // Hide message box
-        function hideMessageBox() {
+        messageBoxCloseBtn.addEventListener('click', () => {
             messageBox.style.display = 'none';
-        }
+        });
 
-        // Event listener for message box OK button
-        messageBoxOkButton.addEventListener('click', hideMessageBox);
+        loginBtn.addEventListener('click', () => {
+            const enteredID = idInput.value;
+            const enteredPassword = passwordInput.value;
 
-        // Login functionality
-        loginButton.addEventListener('click', () => {
-            const id = loginIdInput.value;
-            const password = loginPasswordInput.value;
-
-            // Updated ID and Password
-            if (id === '903' && password === '309') {
-                loginSection.style.display = 'none';
-                nameSection.style.display = 'block';
-                loginError.classList.add('hidden');
+            if (enteredID === correctID && enteredPassword === correctPassword) {
+                loginScreen.classList.add('hidden');
+                nameScreen.classList.remove('hidden');
+                loginMessage.textContent = '';
             } else {
-                loginError.classList.remove('hidden');
+                loginMessage.textContent = 'Invalid ID or Password.';
             }
         });
 
-        // Start Quiz functionality
-        startQuizButton.addEventListener('click', () => {
-            candidateName = candidateNameInput.value.trim();
-            if (candidateName) {
-                nameSection.style.display = 'none';
-                quizSection.style.display = 'block';
-                quizStarted = true;
-                startTimer();
-                displayQuestion();
-            } else {
-                showMessageBox("Please enter your name to start the quiz.");
+        startQuizBtn.addEventListener('click', () => {
+            if (quizAttempted) {
+                showMessageBox("You have already attempted the quiz and cannot restart it.");
+                return;
             }
+
+            candidateName = candidateNameInput.value.trim();
+            if (candidateName === "") {
+                nameMessage.textContent = "Please enter your name to start the quiz.";
+                return;
+            }
+
+            nameScreen.classList.add('hidden');
+            quizScreen.style.display = 'block';
+            quizAttempted = true; // Mark quiz as attempted
+
+            generateShuffledQuiz(); // Generate and shuffle quiz data
+            loadQuestion();
+            startTimer();
+            quizStartTime = new Date();
+        });
+
+        function loadQuestion() {
+            if (currentQuestionIndex < shuffledQuizData.length) {
+                const question = shuffledQuizData[currentQuestionIndex];
+                questionText.textContent = question.question;
+                optionsContainer.innerHTML = '';
+                nextBtn.classList.add('hidden'); // Hide next button until an option is selected
+
+                question.options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.classList.add('rounded-lg', 'font-medium', 'text-base');
+                    button.addEventListener('click', () => selectOption(button, option, question.correct));
+                    optionsContainer.appendChild(button);
+                });
+            } else {
+                endQuiz();
+            }
+        }
+
+        function selectOption(selectedButton, selectedOption, correctAnswer) {
+            // Disable all options after selection
+            Array.from(optionsContainer.children).forEach(button => {
+                button.disabled = true;
+            });
+
+            if (selectedOption === correctAnswer) {
+                selectedButton.classList.add('correct');
+                score++;
+            } else {
+                selectedButton.classList.add('wrong');
+                // Find and highlight the correct answer
+                Array.from(optionsContainer.children).forEach(button => {
+                    if (button.textContent === correctAnswer) {
+                        button.classList.add('correct');
+                    }
+                });
+            }
+            nextBtn.classList.remove('hidden'); // Show next button
+        }
+
+        nextBtn.addEventListener('click', () => {
+            currentQuestionIndex++;
+            loadQuestion();
         });
 
         function startTimer() {
-            timerInterval = setInterval(() => {
+            timer = setInterval(() => {
                 timeLeft--;
                 const minutes = Math.floor(timeLeft / 60);
                 const seconds = timeLeft % 60;
-                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                timerDisplay.textContent = `Time Left: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
                 if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
+                    clearInterval(timer);
                     endQuiz();
+                    showMessageBox("Time's up! The quiz has ended.");
                 }
             }, 1000);
         }
 
-        function displayQuestion() {
-            if (quizCompleted) return; // Prevent interaction after quiz ends
-
-            const questionData = quizQuestions[currentQuestionIndex];
-            questionContainer.innerHTML = ''; // Clear previous question
-
-            const questionCard = document.createElement('div');
-            questionCard.className = 'question-card';
-
-            const questionText = document.createElement('p');
-            questionText.textContent = `${currentQuestionIndex + 1}. ${questionData.question}`;
-            questionCard.appendChild(questionText);
-
-            const optionsGrid = document.createElement('div');
-            optionsGrid.className = 'options-grid';
-
-            questionData.options.forEach((option, index) => {
-                const optionButton = document.createElement('button');
-                optionButton.className = 'option-button';
-                optionButton.textContent = option;
-                optionButton.dataset.index = index; // Store index of the option
-
-                // Store the correct answer's index for later use
-                if (option === questionData.answer) {
-                    correctAnswers[currentQuestionIndex] = index;
-                }
-
-                // If user has already answered this question, show their selection and correct answer
-                if (userAnswers[currentQuestionIndex] !== null) {
-                    if (index === correctAnswers[currentQuestionIndex]) {
-                        optionButton.classList.add('correct');
-                    } else if (index === userAnswers[currentQuestionIndex]) {
-                        optionButton.classList.add('incorrect');
-                    }
-                    optionButton.disabled = true; // Disable buttons after answer
-                } else {
-                    optionButton.addEventListener('click', () => selectAnswer(optionButton, index));
-                }
-                optionsGrid.appendChild(optionButton);
-            });
-
-            questionCard.appendChild(optionsGrid);
-            questionContainer.appendChild(questionCard);
-
-            updateNavigationButtons();
-        }
-
-        function selectAnswer(selectedButton, selectedIndex) {
-            if (quizCompleted) return; // Prevent interaction after quiz ends
-
-            const questionData = quizQuestions[currentQuestionIndex];
-            const allOptionButtons = questionContainer.querySelectorAll('.option-button');
-
-            // Disable all options for the current question
-            allOptionButtons.forEach(button => button.disabled = true);
-
-            userAnswers[currentQuestionIndex] = selectedIndex; // Store user's selected option index
-
-            const correctAnswerIndex = correctAnswers[currentQuestionIndex];
-
-            if (selectedIndex === correctAnswerIndex) {
-                selectedButton.classList.add('correct');
-                score++;
-            } else {
-                selectedButton.classList.add('incorrect');
-                // Highlight the correct answer in green
-                allOptionButtons[correctAnswerIndex].classList.add('correct');
-            }
-        }
-
-        function updateNavigationButtons() {
-            prevButton.style.display = currentQuestionIndex > 0 ? 'block' : 'none';
-            nextButton.textContent = currentQuestionIndex === quizQuestions.length - 1 ? 'Submit Quiz' : 'Next';
-        }
-
-        prevButton.addEventListener('click', () => {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                displayQuestion();
-            }
-        });
-
-        nextButton.addEventListener('click', () => {
-            if (currentQuestionIndex < quizQuestions.length - 1) {
-                // If the current question hasn't been answered, prompt the user
-                if (userAnswers[currentQuestionIndex] === null) {
-                    showMessageBox("Please select an answer before proceeding.");
-                    return;
-                }
-                currentQuestionIndex++;
-                displayQuestion();
-            } else {
-                // Last question, submit quiz
-                if (userAnswers[currentQuestionIndex] === null) {
-                    showMessageBox("Please select an answer before submitting the quiz.");
-                    return;
-                }
-                endQuiz();
-            }
-        });
-
         function endQuiz() {
-            clearInterval(timerInterval);
-            quizCompleted = true; // Mark quiz as completed
-            quizSection.style.display = 'none';
-            resultSection.style.display = 'block';
+            clearInterval(timer);
+            quizScreen.style.display = 'none';
+            resultScreen.style.display = 'block';
 
-            const timeTaken = (20 * 60) - timeLeft;
+            const quizEndTime = new Date();
+            const timeTaken = Math.floor((quizEndTime - quizStartTime) / 1000); // Time in seconds
             const minutesTaken = Math.floor(timeTaken / 60);
             const secondsTaken = timeTaken % 60;
 
-            finalCandidateName.textContent = candidateName;
+            finalCandidateNameDisplay.textContent = candidateName;
             scoreDisplay.textContent = score;
-            totalQuestionsDisplay.textContent = quizQuestions.length;
-            timeTakenDisplay.textContent = `${minutesTaken.toString().padStart(2, '0')}m ${secondsTaken.toString().padStart(2, '0')}s`;
+            totalQuestionsDisplay.textContent = shuffledQuizData.length;
+            const percentage = (score / shuffledQuizData.length) * 100;
+            percentageDisplay.textContent = percentage.toFixed(2);
+            timeTakenDisplay.textContent = `Time Taken: ${minutesTaken} minutes and ${secondsTaken} seconds`;
+
+            // Disable start button permanently after quiz ends
+            startQuizBtn.disabled = true;
         }
 
-        // Initial setup - show login section
-        document.addEventListener('DOMContentLoaded', () => {
-            loginSection.style.display = 'block';
-            nameSection.style.display = 'none';
-            quizSection.style.display = 'none';
-            resultSection.style.display = 'none';
+        // Show loading overlay initially while content loads (though for local HTML it's quick)
+        window.addEventListener('load', () => {
+            loadingOverlay.style.display = 'none';
         });
 
     </script>
