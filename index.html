@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Political Science Subject Specialist Preparation Quiz</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #e0f2f7; /* Light blue background */
+            background-color: #f0f8ff; /* Alice Blue */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -18,7 +17,7 @@
             padding: 20px;
             box-sizing: border-box;
         }
-        .quiz-container {
+        .container {
             background-color: #ffffff;
             padding: 30px;
             border-radius: 15px;
@@ -28,140 +27,123 @@
             text-align: center;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            gap: 20px;
         }
-        .quiz-header {
-            margin-bottom: 25px;
-            width: 100%;
-        }
-        .quiz-header h1 {
-            font-size: 2.2rem;
-            color: #1e3a8a; /* Darker blue for title */
+        .header {
+            color: #4682b4; /* Steel Blue */
+            font-size: 1.8rem;
+            font-weight: bold;
             margin-bottom: 10px;
-            font-weight: 700;
         }
-        .quiz-header p {
+        .contact-info {
+            color: #6a5acd; /* Slate Blue */
             font-size: 1rem;
-            color: #3b82f6; /* Blue for contact */
             margin-bottom: 5px;
         }
-        .quiz-header strong {
-            color: #1e3a8a; /* Darker blue for bold text */
+        .plato-philosophy {
+            color: #483d8b; /* Dark Slate Blue */
             font-size: 1.1rem;
+            margin-bottom: 20px;
         }
         .input-group {
-            margin-bottom: 20px;
-            width: 100%;
-            max-width: 400px;
+            margin-bottom: 15px;
+            text-align: left;
         }
         .input-group label {
             display: block;
             margin-bottom: 8px;
-            color: #1e3a8a;
-            font-weight: 600;
-            text-align: left;
+            font-weight: bold;
+            color: #5f9ea0; /* Cadet Blue */
         }
         .input-group input {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #93c5fd; /* Light blue border */
+            padding: 12px;
+            border: 1px solid #add8e6; /* Light Blue */
             border-radius: 8px;
+            box-sizing: border-box;
             font-size: 1rem;
-            color: #1e3a8a;
-            transition: border-color 0.3s ease;
-        }
-        .input-group input:focus {
-            outline: none;
-            border-color: #3b82f6; /* Blue on focus */
+            color: #333;
         }
         .btn {
-            background-color: #3b82f6; /* Blue button */
+            background-color: #87cefa; /* Light Sky Blue */
             color: white;
             padding: 12px 25px;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
         }
         .btn:hover {
-            background-color: #2563eb; /* Darker blue on hover */
-            transform: translateY(-2px);
+            background-color: #6495ed; /* Cornflower Blue */
         }
-        .btn:disabled {
-            background-color: #93c5fd;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-        .question-container {
+        .quiz-section {
             display: none;
-            width: 100%;
             text-align: left;
         }
+        .question-container {
+            background-color: #e0ffff; /* Light Cyan */
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
         .question-text {
-            font-size: 1.3rem;
-            color: #1e3a8a;
-            margin-bottom: 25px;
-            font-weight: 600;
-            line-height: 1.6;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2f4f4f; /* Dark Slate Gray */
+            margin-bottom: 15px;
         }
         .options-container button {
             display: block;
             width: 100%;
-            padding: 15px 20px;
-            margin-bottom: 12px;
-            background-color: #e0f2f7; /* Lighter blue for options */
-            border: 2px solid #93c5fd;
-            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #b0e0e6; /* Powder Blue */
+            border-radius: 8px;
+            background-color: #f0faff; /* Light Cyan */
             text-align: left;
-            font-size: 1.1rem;
-            color: #1e3a8a;
             cursor: pointer;
-            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
-            word-wrap: break-word; /* Ensure long sentences wrap */
-            white-space: normal; /* Allow text to wrap */
+            font-size: 1rem;
+            color: #333;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
         }
-        .options-container button:hover:not(.correct):not(.wrong) {
-            background-color: #c7e8f5;
-            border-color: #3b82f6;
-            transform: translateY(-2px);
+        .options-container button:hover {
+            background-color: #e6f7ff; /* Lighter Cyan */
+            border-color: #87cefa; /* Light Sky Blue */
         }
         .options-container button.correct {
-            background-color: #b9fbc0; /* Green */
-            border-color: #28a745;
-            color: #1e3a8a;
-            font-weight: 600;
+            background-color: #90ee90; /* Light Green */
+            border-color: #3cb371; /* Medium Sea Green */
+            color: #228b22; /* Forest Green */
         }
         .options-container button.wrong {
-            background-color: #ffcdd2; /* Red */
-            border-color: #dc3545;
-            color: #1e3a8a;
-            font-weight: 600;
+            background-color: #ffb6c1; /* Light Pink */
+            border-color: #ff6347; /* Tomato */
+            color: #b22222; /* Firebrick */
         }
-        .timer-container {
-            font-size: 1.2rem;
-            color: #dc3545; /* Red for timer */
-            margin-bottom: 20px;
-            font-weight: 700;
+        .timer {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #dc143c; /* Crimson */
+            margin-bottom: 15px;
         }
-        .result-container {
-            display: none;
-            width: 100%;
-            padding: 20px;
-            background-color: #e0f2f7;
-            border-radius: 10px;
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
             margin-top: 20px;
-            color: #1e3a8a;
         }
-        .result-container h2 {
+        .result-section {
+            display: none;
+            text-align: center;
+        }
+        .result-section h2 {
+            color: #4682b4;
             font-size: 2rem;
             margin-bottom: 15px;
-            color: #1e3a8a;
         }
-        .result-container p {
+        .result-section p {
             font-size: 1.2rem;
+            color: #2f4f4f;
             margin-bottom: 10px;
         }
         .message-box {
@@ -179,543 +161,434 @@
         }
         .message-box p {
             font-size: 1.1rem;
-            color: #1e3a8a;
+            color: #333;
             margin-bottom: 20px;
         }
         .message-box button {
-            background-color: #3b82f6;
+            background-color: #87cefa;
             color: white;
             padding: 10px 20px;
-            border-radius: 8px;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
+            font-size: 1rem;
         }
         .message-box button:hover {
-            background-color: #2563eb;
-        }
-        .loading-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-        }
-        .spinner {
-            border: 8px solid #f3f3f3;
-            border-top: 8px solid #3b82f6;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .quiz-header h1 {
-                font-size: 1.8rem;
-            }
-            .question-text {
-                font-size: 1.1rem;
-            }
-            .options-container button {
-                font-size: 0.95rem;
-                padding: 12px 15px;
-            }
-            .btn {
-                padding: 10px 20px;
-                font-size: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .quiz-container {
-                padding: 20px;
-            }
-            .quiz-header h1 {
-                font-size: 1.5rem;
-            }
-            .question-text {
-                font-size: 1rem;
-            }
-            .options-container button {
-                font-size: 0.9rem;
-                padding: 10px 12px;
-            }
-            .input-group input {
-                padding: 10px;
-            }
+            background-color: #6495ed;
         }
     </style>
 </head>
 <body>
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="spinner"></div>
-    </div>
+    <div class="container rounded-xl">
+        <div id="login-screen">
+            <h1 class="header">Political Science Subject Specialist Preparation Quiz</h1>
+            <p class="contact-info">Contact Number: 03188185185</p>
+            <p class="plato-philosophy"><b>Plato’s Philosophy</b></p>
 
-    <div class="quiz-container" id="quizContainer">
-        <div class="quiz-header">
-            <h1>Political Science Subject Specialist Preparation Quiz</h1>
-            <p>Contact Number: 03188185185</p>
-            <p><strong>Aristotle's Philosophy</strong></p>
-        </div>
-
-        <!-- Login Screen -->
-        <div id="loginScreen" class="w-full flex flex-col items-center">
             <div class="input-group">
-                <label for="idInput">ID:</label>
-                <input type="text" id="idInput" placeholder="Enter your ID">
+                <label for="user-id">ID:</label>
+                <input type="text" id="user-id" placeholder="Enter your ID">
             </div>
             <div class="input-group">
-                <label for="passwordInput">Password:</label>
-                <input type="password" id="passwordInput" placeholder="Enter your password">
+                <label for="password">Password:</label>
+                <input type="password" id="password" placeholder="Enter your Password">
             </div>
-            <button id="loginBtn" class="btn">Login</button>
-            <p id="loginMessage" class="text-red-600 mt-3"></p>
-        </div>
-
-        <!-- Name Entry Screen -->
-        <div id="nameScreen" class="w-full flex flex-col items-center hidden">
             <div class="input-group">
-                <label for="candidateName">Your Name:</label>
-                <input type="text" id="candidateName" placeholder="Enter your name">
+                <label for="candidate-name">Candidate Name:</label>
+                <input type="text" id="candidate-name" placeholder="Enter your name">
             </div>
-            <button id="startQuizBtn" class="btn">Start Quiz</button>
-            <p id="nameMessage" class="text-red-600 mt-3"></p>
+            <button class="btn rounded-lg" id="start-quiz-btn">Start Quiz</button>
         </div>
 
-        <!-- Quiz Screen -->
-        <div id="quizScreen" class="question-container">
-            <div class="timer-container" id="timer">Time Left: 20:00</div>
-            <div class="question-text" id="questionText"></div>
-            <div class="options-container" id="optionsContainer">
-                <!-- Options will be dynamically loaded here -->
+        <div id="quiz-screen" class="quiz-section">
+            <div class="timer" id="timer">Time Left: 20:00</div>
+            <div class="question-container rounded-lg">
+                <p class="question-text" id="question-text"></p>
+                <div class="options-container" id="options-container">
+                    <!-- Options will be loaded here by JavaScript -->
+                </div>
             </div>
-            <button id="nextBtn" class="btn mt-6 hidden">Next Question</button>
+            <div class="navigation-buttons">
+                <button class="btn rounded-lg" id="prev-btn" style="display: none;">Previous</button>
+                <button class="btn rounded-lg" id="next-btn">Next</button>
+                <button class="btn rounded-lg" id="submit-quiz-btn" style="display: none;">Submit Quiz</button>
+            </div>
         </div>
 
-        <!-- Result Screen -->
-        <div id="resultScreen" class="result-container">
+        <div id="result-screen" class="result-section">
             <h2>Quiz Result</h2>
-            <p>Candidate: <span id="finalCandidateName"></span></p>
-            <p>Score: <span id="scoreDisplay"></span> / <span id="totalQuestionsDisplay"></span></p>
-            <p>Percentage: <span id="percentageDisplay"></span>%</p>
-            <p id="timeTakenDisplay"></p>
+            <p>Candidate: <span id="result-candidate-name"></span></p>
+            <p>Score: <span id="score"></span> / <span id="total-questions"></span></p>
+            <p>Percentage: <span id="percentage"></span>%</p>
+            <p id="time-taken"></p>
         </div>
     </div>
 
-    <!-- Custom Message Box -->
-    <div id="messageBox" class="message-box">
-        <p id="messageBoxText"></p>
-        <button id="messageBoxCloseBtn">OK</button>
+    <div id="message-box" class="message-box rounded-lg">
+        <p id="message-text"></p>
+        <button id="message-ok-btn" class="rounded-lg">OK</button>
     </div>
 
     <script>
+        // Quiz data based on the provided document content
         const quizData = [
+            // 5% from early life (2 questions)
             {
-                question: "Aristotle was born in Stagira on the borders of Macedonia to parents of which origin?",
-                options: ["Roman origin", "Greek origin", "Ionian origin", "Egyptian origin"],
-                correct: "Ionian origin",
+                question: "Plato was born into what kind of family?",
+                options: ["Poor", "Artisan", "Aristocratic", "Merchant"],
+                answer: "Aristocratic",
                 category: "early_life"
             },
             {
-                question: "At what age did Aristotle attach himself to Plato's Academy?",
-                options: ["17 years old", "20 years old", "25 years old", "30 years old"],
-                correct: "17 years old",
+                question: "What was Plato's primary career aspiration in his early life?",
+                options: ["Military leader", "Public service", "Philosopher", "Artist"],
+                answer: "Public service",
                 category: "early_life"
             },
+            // 5% from philosopher's work or writings (2 questions)
             {
-                question: "What was the name of Aristotle's father, who was a physician of note and ultimately appointed to the Macedonian court?",
-                options: ["Plato", "Nicomachus", "Socrates", "Alexander"],
-                correct: "Nicomachus",
-                category: "early_life"
+                question: "Which of Plato's works is considered a foundation for his later great work and discusses the ideal state?",
+                options: ["Apology", "Crito", "Protagoras", "Republic"],
+                answer: "Republic",
+                category: "works"
             },
             {
-                question: "Aristotle remained at Plato's Academy for a period of how many years?",
-                options: ["10 years", "15 years", "20 years", "25 years"],
-                correct: "20 years",
-                category: "early_life"
+                question: "Plato's 'The Republic' is primarily a major contribution to which philosophical field?",
+                options: ["Epistemology", "Metaphysics", "Political Philosophy", "Ethics"],
+                answer: "Political Philosophy",
+                category: "works"
+            },
+            // 10% from quotations (4 questions)
+            {
+                question: "Which concept did Plato believe was the basic tenet of Socratic thought, as mentioned in the text?",
+                options: ["Justice is power", "Virtue is knowledge", "Might makes right", "Happiness is pleasure"],
+                answer: "Virtue is knowledge",
+                category: "quotations"
             },
             {
-                question: "Who was Aristotle's unofficial adviser of Hermias for several years?",
-                options: ["Plato", "Alexander", "Hermias", "Theophrastus"],
-                correct: "Hermias",
-                category: "early_life"
+                question: "According to Plato, what is the 'good' for 'truth'?",
+                options: ["Pleasure", "Utility", "Justice", "Enlightenment"],
+                answer: "Enlightenment", // Inferred from "The last is the ultimate 'n formal instruction. Here first principles are explored, and the search for the 'good'—for 'truth'—is launched."
+                category: "quotations"
             },
             {
-                question: "Which work of Plato did Aristotle engage in when he was in Athens, compiling material for his last major work?",
-                options: ["Republic", "Symposium", "Laws", "Phaedo"],
-                correct: "Laws",
-                category: "work_writings"
+                question: "Plato believed that education should be a process of turning the soul towards what?",
+                options: ["Wealth", "Power", "Truth and reality", "Social status"],
+                answer: "Truth and reality", // Inferred from the educational plan in Republic
+                category: "quotations"
             },
             {
-                question: "Aristotle's most important work on politics is titled:",
-                options: ["The Republic", "The Politics", "Nicomachean Ethics", "Metaphysics"],
-                correct: "The Politics",
-                category: "work_writings"
+                question: "Plato's view on democracy, as implied in the text, is that it is a system issuing from the lust for what?",
+                options: ["Freedom", "Order", "Equality", "Justice"],
+                answer: "Freedom",
+                category: "quotations"
             },
+            // Remaining 80% from philosophy/ideas (32 questions)
             {
-                question: "Which of Aristotle's works deals with the ethical framework for achieving human flourishing?",
-                options: ["Rhetoric", "Poetics", "Nicomachean Ethics", "On the Soul"],
-                correct: "Nicomachean Ethics",
-                category: "work_writings"
-            },
-            {
-                question: "Aristotle's work 'Categories' is primarily concerned with:",
-                options: ["Logic and classification of being", "The nature of the soul", "Political systems", "Poetic forms"],
-                correct: "Logic and classification of being",
-                category: "work_writings"
-            },
-            {
-                question: "The treatise 'On the Soul' by Aristotle explores:",
-                options: ["The structure of the ideal state", "The principles of rhetoric", "The nature of living beings and their faculties", "The causes of revolution"],
-                correct: "The nature of living beings and their faculties",
-                category: "work_writings"
-            },
-            {
-                question: "According to Aristotle, 'Man is by nature a political animal.' What does this imply?",
-                options: ["Humans are meant to rule over others.", "Humans thrive in isolation.", "Humans are inherently social and political beings.", "Humans are primarily driven by self-interest."],
-                correct: "Humans are inherently social and political beings.",
-                category: "quotation"
-            },
-            {
-                question: "Aristotle stated, 'The roots of education are bitter, but the fruit is sweet.' What is the essence of this quote?",
-                options: ["Education is inherently unpleasant.", "Learning requires effort but yields valuable rewards.", "Only sweet subjects should be taught.", "Education is a quick and easy process."],
-                correct: "Learning requires effort but yields valuable rewards.",
-                category: "quotation"
-            },
-            {
-                question: "Aristotle said, 'It is the mark of an educated mind to be able to entertain a thought without accepting it.' This emphasizes:",
-                options: ["The importance of blind acceptance.", "The necessity of critical thinking and open-mindedness.", "That all thoughts are equally valid.", "The rejection of new ideas."],
-                correct: "The necessity of critical thinking and open-mindedness.",
-                category: "quotation"
-            },
-            {
-                question: "Which of the following best reflects Aristotle's quote: 'We are what we repeatedly do. Excellence, then, is not an act, but a habit.'?",
-                options: ["Success is a matter of luck.", "Excellence is achieved through single, grand gestures.", "Virtue and skill are developed through consistent practice.", "One should only focus on the outcome, not the process."],
-                correct: "Virtue and skill are developed through consistent practice.",
-                category: "quotation"
-            },
-            {
-                question: "Aristotle's statement, 'Poverty is the parent of revolution and crime,' highlights his view on:",
-                options: ["The moral failings of the poor.", "The economic causes of social instability.", "The necessity of a strong police force.", "The benefits of extreme wealth inequality."],
-                correct: "The economic causes of social instability.",
-                category: "quotation"
-            },
-            {
-                question: "Aristotle believed that the ultimate goal of human life is:",
-                options: ["Wealth accumulation", "Political power", "Eudaimonia (flourishing or living well)", "Pleasure seeking"],
-                correct: "Eudaimonia (flourishing or living well)",
+                question: "Plato's early political career was disrupted by the condemnation and execution of which philosopher?",
+                options: ["Aristotle", "Socrates", "Thales", "Pythagoras"],
+                answer: "Socrates",
                 category: "philosophy"
             },
             {
-                question: "Which of these is NOT considered one of Aristotle's 'right' kinds of constitution?",
-                options: ["Monarchy", "Tyranny", "Aristocracy", "Polity"],
-                correct: "Tyranny",
+                question: "Plato's belief that 'Socrates' attacks upon democracy had been justified implies his view on what?",
+                options: ["Democracy", "Tyranny", "Monarchy", "Oligarchy"],
+                answer: "Democracy",
                 category: "philosophy"
             },
             {
-                question: "Aristotle's concept of the 'Golden Mean' suggests that virtue lies:",
-                options: ["In extremes of behavior", "In moderation between two vices", "In avoiding all action", "In following strict rules without deviation"],
-                correct: "In moderation between two vices",
+                question: "Plato abandoned Athenian politics to travel and learn, eventually focusing on building a philosophy that would hold the interest of scholars and statesmen through the ages. What was a key reason for this abandonment?",
+                options: ["Lack of personal ambition", "Dissatisfaction with the political system", "Financial difficulties", "Desire for adventure"],
+                answer: "Dissatisfaction with the political system",
                 category: "philosophy"
             },
             {
-                question: "According to Aristotle, what is the highest form of organization in the community?",
-                options: ["The family", "The village", "The city-state (polis)", "The empire"],
-                correct: "The city-state (polis)",
+                question: "Plato's wanderings in Southern Italy led him to study the doctrines of which mystic group?",
+                options: ["Stoics", "Epicureans", "Pythagorean society", "Sophists"],
+                answer: "Pythagorean society",
                 category: "philosophy"
             },
             {
-                question: "Aristotle's theory of causation includes four types of causes. Which of the following is NOT one of them?",
-                options: ["Material cause", "Efficient cause", "Accidental cause", "Final cause"],
-                correct: "Accidental cause",
+                question: "Plato likely received instruction in mathematics in which ancient civilization?",
+                options: ["Greece", "Rome", "Egypt", "Persia"],
+                answer: "Egypt",
                 category: "philosophy"
             },
             {
-                question: "Aristotle argued that the best practical state is one that finds a working balance of liberty and authority. This is a characteristic of his ideal state, which he calls:",
-                options: ["Democracy", "Oligarchy", "Polity", "Aristocracy"],
-                correct: "Polity",
+                question: "Which of the following is NOT one of Plato's later dialogues mentioned as a foundation for his great work?",
+                options: ["Apology", "Crito", "Statesman", "Laws"],
+                answer: "Apology", // Apology is an early dialogue
                 category: "philosophy"
             },
             {
-                question: "What did Aristotle consider the 'end' or purpose of the state?",
-                options: ["To ensure economic prosperity for all citizens.", "To facilitate the good life and moral perfection of its citizens.", "To expand its territory and power.", "To maintain social order at all costs."],
-                correct: "To facilitate the good life and moral perfection of its citizens.",
+                question: "Plato's 'The Republic' discusses the nature of the state and the ideal form of government. What is the central theme of 'The Republic'?",
+                options: ["Justice", "Liberty", "Equality", "Fraternity"],
+                answer: "Justice",
                 category: "philosophy"
             },
             {
-                question: "Aristotle's view on property was that it should be:",
-                options: ["Held in common by all citizens.", "Abolished entirely to prevent conflict.", "Private, but used in common to some extent.", "Controlled solely by the state."],
-                correct: "Private, but used in common to some extent.",
+                question: "In 'The Republic', Plato argues that justice in the state is the interest of whom?",
+                options: ["The strongest", "The weakest", "The ruling class", "The entire community"],
+                answer: "The entire community", // While Thrasymachus argues for the strongest, Plato refutes this.
                 category: "philosophy"
             },
             {
-                question: "Aristotle believed that education should aim at:",
-                options: ["Developing physical strength above all else.", "Instilling obedience and military discipline.", "Cultivating moral character and intellectual virtues.", "Preparing individuals for specific trades."],
-                correct: "Cultivating moral character and intellectual virtues.",
+                question: "Plato's philosophy emphasizes the importance of a well-ordered society. What is the role of the philosopher-kings in his ideal state?",
+                options: ["To accumulate wealth", "To rule based on wisdom and knowledge", "To serve the military", "To entertain the citizens"],
+                answer: "To rule based on wisdom and knowledge",
                 category: "philosophy"
             },
             {
-                question: "In Aristotle's political philosophy, which group is considered the 'middle class'?",
-                options: ["The extremely wealthy", "The very poor", "Those with moderate wealth, balancing rich and poor", "Only philosophers and rulers"],
-                correct: "Those with moderate wealth, balancing rich and poor",
+                question: "What is the primary purpose of education in Plato's ideal state?",
+                options: ["To prepare citizens for war", "To develop individual talents", "To train individuals for specific economic roles", "To turn the soul towards truth and reality"],
+                answer: "To turn the soul towards truth and reality",
                 category: "philosophy"
             },
             {
-                question: "Aristotle's concept of justice is primarily concerned with:",
-                options: ["Strict equality in all aspects.", "Distributive justice (fair distribution of goods) and corrective justice (rectifying wrongs).", "Revenge for past wrongs.", "Maintaining the status quo regardless of fairness."],
-                correct: "Distributive justice (fair distribution of goods) and corrective justice (rectifying wrongs).",
+                question: "Plato's educational plan in 'The Republic' includes elementary training for citizens up to what age?",
+                options: ["10", "15", "18", "20"],
+                answer: "20",
                 category: "philosophy"
             },
             {
-                question: "What is the primary difference between Aristotle's ideal state and Plato's ideal state (as described in the document)?",
-                options: ["Aristotle emphasized a more practical, achievable state, while Plato focused on a theoretical ideal.", "Aristotle believed in philosopher-kings, while Plato did not.", "Aristotle advocated for communism, while Plato supported private property.", "Aristotle focused on individual rights, while Plato prioritized the collective."],
-                correct: "Aristotle emphasized a more practical, achievable state, while Plato focused on a theoretical ideal.",
+                question: "After elementary training, what is the next stage of education for those pursuing higher studies in Plato's plan?",
+                options: ["Military training", "Artistic training", "Vocational training", "Philosophical training"],
+                answer: "Military training",
                 category: "philosophy"
             },
             {
-                question: "Aristotle's view on slavery was that it was:",
-                options: ["Completely unjust and should be abolished.", "A natural institution where some are naturally suited to be masters and others slaves.", "A temporary condition that should be overcome.", "Only acceptable for foreign captives of war."],
-                correct: "A natural institution where some are naturally suited to be masters and others slaves.",
+                question: "What is the sole criterion for determining a citizen's station in Plato's educational system?",
+                options: ["Family background", "Wealth", "Educational attainment", "Physical strength"],
+                answer: "Educational attainment",
                 category: "philosophy"
             },
             {
-                question: "Which of the following is a key element of Aristotle's theory of development in states?",
-                options: ["States always progress towards democracy.", "States are natural institutions that grow and develop like living organisms.", "States are purely artificial constructs.", "States are static and do not change over time."],
-                correct: "States are natural institutions that grow and develop like living organisms.",
+                question: "Plato's educational curriculum includes gymnastics and music. What is the purpose of music in this context?",
+                options: ["To provide entertainment", "To develop physical fitness", "To develop the soul's sound physique", "To train for military bands"],
+                answer: "To develop the soul's sound physique",
                 category: "philosophy"
             },
             {
-                question: "Aristotle believed that the best form of government for most states, given their practical realities, is a mixed constitution, which he often referred to as:",
-                options: ["Tyranny", "Oligarchy", "Polity", "Democracy"],
-                correct: "Polity",
+                question: "What does Plato propose regarding censorship in his ideal state?",
+                options: ["Complete freedom of expression", "No censorship at all", "Rigid system of censorship to ensure desirable social and political character", "Censorship only for political dissent"],
+                answer: "Rigid system of censorship to ensure desirable social and political character",
                 category: "philosophy"
             },
             {
-                question: "What did Aristotle consider the most important function of the legislator?",
-                options: ["To accumulate wealth for the state.", "To maintain existing laws without change.", "To improve the qualities of citizens and achieve the good life.", "To engage in constant warfare."],
-                correct: "To improve the qualities of citizens and achieve the good life.",
+                question: "Plato's concept of the 'philosopher-kings' is based on the idea that political power should be in the hands of those with what quality?",
+                options: ["Physical strength", "Wealth", "Moral virtue and intellectual ability", "Popular support"],
+                answer: "Moral virtue and intellectual ability",
                 category: "philosophy"
             },
             {
-                question: "Aristotle's criticism of Plato's ideal state included the argument that Plato's communism of property and family would lead to:",
-                options: ["Greater unity and social harmony.", "Increased individual freedom.", "Lack of affection and responsibility.", "More efficient governance."],
-                correct: "Lack of affection and responsibility.",
+                question: "What is Plato's view on private property in 'The Republic' for the guardians?",
+                options: ["It is encouraged for all citizens", "It is strictly regulated but allowed", "It is abolished to prevent corruption", "It is a sign of success"],
+                answer: "It is abolished to prevent corruption",
                 category: "philosophy"
             },
             {
-                question: "According to Aristotle, what is the primary purpose of law?",
-                options: ["To punish wrongdoers severely.", "To ensure the happiness and virtue of citizens.", "To protect the interests of the ruling class.", "To facilitate trade and commerce."],
-                correct: "To ensure the happiness and virtue of citizens.",
+                question: "Plato's ideal state aims to prevent excessive individualism. What is one way he proposes to achieve this?",
+                options: ["Promoting competition", "Encouraging private enterprise", "Community of wives and children", "Allowing free movement of wealth"],
+                answer: "Community of wives and children",
                 category: "philosophy"
             },
             {
-                question: "Aristotle's concept of 'magnanimity' (greatness of soul) is a virtue that involves:",
-                options: ["Being excessively proud and arrogant.", "Having a proper sense of one's own worth and deserving great things.", "Ignoring the opinions of others.", "Being overly humble and self-deprecating."],
-                correct: "Having a proper sense of one's own worth and deserving great things.",
+                question: "What is Plato's view on the equality of women in his ideal state?",
+                options: ["Women should be confined to domestic roles", "Women should have equal opportunities as men to perform the best of their ability", "Women are inferior to men in all aspects", "Women should only be educated for household duties"],
+                answer: "Women should have equal opportunities as men to perform the best of their ability",
                 category: "philosophy"
             },
             {
-                question: "Which of the following best describes Aristotle's approach to studying politics?",
-                options: ["Purely theoretical and idealistic.", "Empirical and practical, based on observations of existing states.", "Focused solely on historical analysis.", "Primarily concerned with abstract mathematical models."],
-                correct: "Empirical and practical, based on observations of existing states.",
+                question: "Plato believed that a just state would lead to what?",
+                options: ["Economic prosperity", "Individual freedom", "Social harmony and stability", "Military dominance"],
+                answer: "Social harmony and stability",
                 category: "philosophy"
             },
             {
-                question: "Aristotle believed that the best form of government is one that aims at the common good. Which of these 'perverted' forms aims at the good of the rulers only?",
-                options: ["Monarchy", "Aristocracy", "Polity", "Tyranny"],
-                correct: "Tyranny",
+                question: "What is the ultimate goal of Plato's philosophy, particularly as outlined in 'The Republic'?",
+                options: ["To achieve personal happiness", "To create a perfect society based on justice and reason", "To conquer other city-states", "To abolish all forms of government"],
+                answer: "To create a perfect society based on justice and reason",
                 category: "philosophy"
             },
             {
-                question: "What role did Aristotle assign to the middle class in maintaining constitutional stability?",
-                options: ["They are a source of constant revolution.", "They are irrelevant to political stability.", "They provide balance and prevent extremes of oligarchy and democracy.", "They always side with the wealthy."],
-                correct: "They provide balance and prevent extremes of oligarchy and democracy.",
+                question: "Plato's theory of Forms suggests that the physical world is merely a shadow of a higher, more real realm. What is this realm composed of?",
+                options: ["Ideas or Forms", "Sensory experiences", "Human emotions", "Material objects"],
+                answer: "Ideas or Forms",
                 category: "philosophy"
             },
             {
-                question: "Aristotle argued that a state should be self-sufficient. What does this 'self-sufficiency' primarily refer to?",
-                options: ["Economic independence only.", "Ability to defend itself militarily.", "Providing all necessary goods and services for its citizens to live a good life.", "Isolation from other states."],
-                correct: "Providing all necessary goods and services for its citizens to live a good life.",
+                question: "According to Plato, what is the highest form of knowledge?",
+                options: ["Opinion", "Belief", "Reason/Understanding of Forms", "Imagination"],
+                answer: "Reason/Understanding of Forms",
                 category: "philosophy"
             },
             {
-                question: "In Aristotle's view, the purpose of human association in a political community is to achieve:",
-                options: ["Maximum individual freedom.", "The highest form of wealth.", "A good and virtuous life.", "Absolute power for the rulers."],
-                correct: "A good and virtuous life.",
+                question: "What is the 'Allegory of the Cave' primarily used by Plato to illustrate?",
+                options: ["The importance of physical exercise", "The nature of reality and enlightenment", "The dangers of political power", "The benefits of democracy"],
+                answer: "The nature of reality and enlightenment",
                 category: "philosophy"
             },
             {
-                question: "Aristotle's theory of virtue emphasizes the development of character through:",
-                options: ["Strict adherence to religious dogma.", "Innate abilities that cannot be changed.", "Habit and practice of virtuous actions.", "Sudden moments of enlightenment."],
-                correct: "Habit and practice of virtuous actions.",
+                question: "Plato believed that the soul is composed of three parts: reason, spirit, and appetite. Which part should rule the others?",
+                options: ["Spirit", "Appetite", "Reason", "All equally"],
+                answer: "Reason",
                 category: "philosophy"
             },
             {
-                question: "Aristotle's concept of 'distributive justice' is concerned with:",
-                options: ["Punishing criminals fairly.", "The fair allocation of honors, wealth, and other goods among citizens.", "Ensuring equal pay for all jobs.", "Providing charity to the poor."],
-                correct: "The fair allocation of honors, wealth, and other goods among citizens.",
+                question: "In Plato's ideal state, which class corresponds to the 'reason' part of the soul?",
+                options: ["Artisans", "Guardians (Philosopher-Kings)", "Auxiliaries (Soldiers)", "Farmers"],
+                answer: "Guardians (Philosopher-Kings)",
                 category: "philosophy"
             },
             {
-                question: "What was Aristotle's stance on the importance of law in a state?",
-                options: ["Laws are unnecessary if rulers are virtuous.", "Law is essential for stability and good governance, guiding citizens towards virtue.", "Laws should be frequently changed to adapt to new circumstances.", "Laws are only for the lower classes."],
-                correct: "Law is essential for stability and good governance, guiding citizens towards virtue.",
+                question: "Plato's political philosophy can be seen as a critique of which existing political system in Athens?",
+                options: ["Monarchy", "Oligarchy", "Democracy", "Tyranny"],
+                answer: "Democracy",
                 category: "philosophy"
             },
             {
-                question: "Aristotle believed that the best constitution is one that is suitable for the majority of states, considering their practical realities. This pragmatic approach contrasts with Plato's focus on:",
-                options: ["Empirical observation.", "The ideal, perfect state.", "The role of the military.", "Economic factors."],
-                correct: "The ideal, perfect state.",
+                question: "What is the ultimate good, according to Plato, that all individuals and the state should strive for?",
+                options: ["Wealth", "Pleasure", "Justice", "Power"],
+                answer: "Justice",
                 category: "philosophy"
             },
             {
-                question: "Which of the following is a 'right' form of government according to Aristotle, where rule is by the many for the common good?",
-                options: ["Democracy (as mob rule)", "Oligarchy", "Polity", "Tyranny"],
-                correct: "Polity",
+                question: "Plato argues that the decline of ideal states follows a progression. Which form of government is considered the first stage of degeneration from the ideal republic?",
+                options: ["Oligarchy", "Democracy", "Timocracy", "Tyranny"],
+                answer: "Timocracy",
                 category: "philosophy"
             },
             {
-                question: "Aristotle's political thought emphasizes the importance of the 'polis' (city-state) as:",
-                options: ["Merely a collection of individuals.", "The highest form of human association for achieving the good life.", "A temporary arrangement for defense.", "A system designed for economic exploitation."],
-                correct: "The highest form of human association for achieving the good life.",
+                question: "What characterizes a timocracy in Plato's political degeneration theory?",
+                options: ["Rule by the wealthy", "Rule by the honorable and ambitious", "Rule by the people", "Rule by a single tyrant"],
+                answer: "Rule by the honorable and ambitious",
                 category: "philosophy"
             },
             {
-                question: "What did Aristotle consider the primary reason for the decline of states?",
-                options: ["External invasions.", "Lack of economic resources.", "Internal instability and factionalism.", "Too much freedom for citizens."],
-                correct: "Internal instability and factionalism.",
+                question: "In Plato's view, what is the primary vice of an oligarchy?",
+                options: ["Excessive freedom", "Lust for honor", "Lust for wealth", "Unrestrained desires"],
+                answer: "Lust for wealth",
                 category: "philosophy"
             },
             {
-                question: "Aristotle's concept of the 'citizen' was primarily defined by their ability to:",
-                options: ["Accumulate wealth.", "Participate in the political life of the polis.", "Serve in the military.", "Engage in philosophical debate."],
-                correct: "Participate in the political life of the polis.",
+                question: "What is the defining characteristic of a democracy in Plato's eyes, which he views negatively?",
+                options: ["Order", "Discipline", "Excessive freedom and license", "Justice"],
+                answer: "Excessive freedom and license",
                 category: "philosophy"
             },
             {
-                question: "According to Aristotle, what is the relationship between ethics and politics?",
-                options: ["They are entirely separate fields.", "Ethics is a branch of politics, as the good life for individuals is achieved within the political community.", "Politics is superior to ethics.", "Ethics only applies to private life, not public life."],
-                correct: "Ethics is a branch of politics, as the good life for individuals is achieved within the political community.",
+                question: "According to Plato, what is the final and worst stage of political degeneration?",
+                options: ["Oligarchy", "Democracy", "Timocracy", "Tyranny"],
+                answer: "Tyranny",
                 category: "philosophy"
             },
             {
-                question: "Aristotle's view on the family was that it is:",
-                options: ["An outdated institution.", "The fundamental unit of the state, essential for its stability.", "A hindrance to individual freedom.", "Only for procreation."],
-                correct: "The fundamental unit of the state, essential for its stability.",
+                question: "Plato's 'The Statesman' and 'The Laws' are considered later works that reflect a more pragmatic approach to politics. How do they differ from 'The Republic'?",
+                options: ["They are more idealistic", "They are less concerned with law", "They are more moderate and less antagonistic towards democracy", "They focus solely on individual ethics"],
+                answer: "They are more moderate and less antagonistic towards democracy",
                 category: "philosophy"
             },
             {
-                question: "What is the role of 'reason' in Aristotle's philosophy?",
-                options: ["It is irrelevant to human conduct.", "It is the highest human faculty, guiding us towards virtue and understanding.", "It is only for philosophers, not ordinary people.", "It leads to emotional detachment."],
-                correct: "It is the highest human faculty, guiding us towards virtue and understanding.",
+                question: "In 'The Statesman', Plato discusses the role of a true ruler. What quality does he emphasize for this ruler?",
+                options: ["Military might", "Economic power", "Knowledge and expertise", "Popularity"],
+                answer: "Knowledge and expertise",
                 category: "philosophy"
             },
             {
-                question: "Aristotle believed that the best form of government is determined by:",
-                options: ["A universal ideal that applies everywhere.", "The specific circumstances and character of the people in a given state.", "The wealth of the ruling class.", "Military strength."],
-                correct: "The specific circumstances and character of the people in a given state.",
+                question: "Plato's philosophy often involves the concept of 'forms' or 'ideas'. What is the relationship between the physical world and these forms?",
+                options: ["The physical world is the only reality", "The physical world is a perfect reflection of the forms", "The physical world is an imperfect copy of the forms", "The forms are irrelevant to the physical world"],
+                answer: "The physical world is an imperfect copy of the forms",
                 category: "philosophy"
             },
             {
-                question: "What is the primary aim of Aristotle's 'Politics'?",
-                options: ["To describe the perfect, unattainable state.", "To analyze existing political systems and identify the best practical forms of government.", "To advocate for a specific type of revolution.", "To provide a historical account of ancient Greek city-states."],
-                correct: "To analyze existing political systems and identify the best practical forms of government.",
+                question: "What is the main idea behind Plato's concept of the 'Noble Lie'?",
+                options: ["To deceive the citizens for personal gain", "To maintain social order and stability by convincing citizens of a foundational myth", "To promote individual freedom", "To encourage rebellion against the state"],
+                answer: "To maintain social order and stability by convincing citizens of a foundational myth",
                 category: "philosophy"
             },
             {
-                question: "Aristotle's idea of 'happiness' (eudaimonia) is best described as:",
-                options: ["A fleeting emotion of pleasure.", "A state of contentment achieved through material possessions.", "A lifelong activity of living in accordance with virtue and reason.", "A passive state of being free from pain."],
-                correct: "A lifelong activity of living in accordance with virtue and reason.",
+                question: "Plato's theory of justice in the individual mirrors his theory of justice in the state. What does individual justice involve?",
+                options: ["Each part of the soul performing its proper function in harmony", "Pursuing personal desires without restraint", "Accumulating as much wealth as possible", "Seeking power over others"],
+                answer: "Each part of the soul performing its proper function in harmony",
                 category: "philosophy"
             },
             {
-                question: "Which of these is a 'perverted' form of rule by the few, according to Aristotle?",
-                options: ["Aristocracy", "Oligarchy", "Polity", "Monarchy"],
-                correct: "Oligarchy",
+                question: "What is the primary concern of Plato's 'Republic' regarding the education of the guardians?",
+                options: ["To make them wealthy", "To make them physically strong only", "To cultivate their intellectual and moral virtues", "To prepare them for trade"],
+                answer: "To cultivate their intellectual and moral virtues",
                 category: "philosophy"
             },
             {
-                question: "Aristotle argued that a good constitution should aim to balance:",
-                options: ["Wealth and poverty.", "Freedom and tyranny.", "The interests of the rich and the poor.", "Agriculture and industry."],
-                correct: "The interests of the rich and the poor.",
+                question: "Plato believed that true knowledge is attained through what?",
+                options: ["Sensory experience", "Divine revelation", "Rational thought and philosophical inquiry", "Social consensus"],
+                answer: "Rational thought and philosophical inquiry",
                 category: "philosophy"
             },
             {
-                question: "What did Aristotle consider the most important factor for maintaining constitutional stability?",
-                options: ["A strong military.", "Economic equality.", "A large and influential middle class.", "Frequent changes in leadership."],
-                correct: "A large and influential middle class.",
+                question: "What is the role of the 'auxiliary' class in Plato's ideal state?",
+                options: ["To produce goods and services", "To defend the state", "To rule the state", "To provide entertainment"],
+                answer: "To defend the state",
                 category: "philosophy"
             },
             {
-                question: "Aristotle's view on the purpose of the state is teleological, meaning it is focused on:",
-                options: ["Its historical origins.", "Its final end or purpose.", "Its current economic status.", "Its military power."],
-                correct: "Its final end or purpose.",
+                question: "Plato's political philosophy emphasizes the importance of stability and order. What did he see as a major threat to these in a democracy?",
+                options: ["Lack of wealth", "Too much freedom leading to anarchy", "Strong leadership", "External invasions"],
+                answer: "Too much freedom leading to anarchy",
                 category: "philosophy"
             },
             {
-                question: "According to Aristotle, the 'rule of law' is crucial because:",
-                options: ["It allows rulers to act arbitrarily.", "It ensures stability and prevents rule by arbitrary will.", "It leads to constant revolution.", "It is only for the wealthy."],
-                correct: "It ensures stability and prevents rule by arbitrary will.",
-                category: "philosophy"
-            },
-            {
-                question: "Aristotle's ethical theory is primarily concerned with:",
-                options: ["Determining what actions are morally right or wrong in themselves.", "The character of the moral agent and the development of virtues.", "The consequences of actions.", "Divine commands."],
-                correct: "The character of the moral agent and the development of virtues.",
+                question: "Which of the following best describes Plato's view on art and poetry in 'The Republic'?",
+                options: ["He encouraged all forms of art", "He believed art was essential for emotional development", "He advocated for censorship of art that did not promote virtue", "He saw art as a direct path to truth"],
+                answer: "He advocated for censorship of art that did not promote virtue",
                 category: "philosophy"
             }
         ];
 
         let currentQuestionIndex = 0;
         let score = 0;
-        let timer;
+        let candidateName = '';
+        let quizStarted = false;
+        let timerInterval;
         let timeLeft = 20 * 60; // 20 minutes in seconds
-        let quizStartTime;
-        let candidateName = "";
-        let quizAttempted = false; // Flag to prevent restarting
+        const userAnswers = new Array(quizData.length).fill(null);
+        let quizAttempted = false;
 
-        const loginScreen = document.getElementById('loginScreen');
-        const nameScreen = document.getElementById('nameScreen');
-        const quizScreen = document.getElementById('quizScreen');
-        const resultScreen = document.getElementById('resultScreen');
-        const idInput = document.getElementById('idInput');
-        const passwordInput = document.getElementById('passwordInput');
-        const loginBtn = document.getElementById('loginBtn');
-        const loginMessage = document.getElementById('loginMessage');
-        const candidateNameInput = document.getElementById('candidateName');
-        const startQuizBtn = document.getElementById('startQuizBtn');
-        const nameMessage = document.getElementById('nameMessage');
-        const questionText = document.getElementById('questionText');
-        const optionsContainer = document.getElementById('optionsContainer');
-        const nextBtn = document.getElementById('nextBtn');
+        const loginScreen = document.getElementById('login-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const startQuizBtn = document.getElementById('start-quiz-btn');
+        const userIdInput = document.getElementById('user-id');
+        const passwordInput = document.getElementById('password');
+        const candidateNameInput = document.getElementById('candidate-name');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitQuizBtn = document.getElementById('submit-quiz-btn');
         const timerDisplay = document.getElementById('timer');
-        const scoreDisplay = document.getElementById('scoreDisplay');
-        const totalQuestionsDisplay = document.getElementById('totalQuestionsDisplay');
-        const percentageDisplay = document.getElementById('percentageDisplay');
-        const finalCandidateNameDisplay = document.getElementById('finalCandidateName');
-        const timeTakenDisplay = document.getElementById('timeTakenDisplay');
-        const messageBox = document.getElementById('messageBox');
-        const messageBoxText = document.getElementById('messageBoxText');
-        const messageBoxCloseBtn = document.getElementById('messageBoxCloseBtn');
-        const loadingOverlay = document.getElementById('loadingOverlay');
+        const resultCandidateName = document.getElementById('result-candidate-name');
+        const scoreDisplay = document.getElementById('score');
+        const totalQuestionsDisplay = document.getElementById('total-questions');
+        const percentageDisplay = document.getElementById('percentage');
+        const timeTakenDisplay = document.getElementById('time-taken');
+        const messageBox = document.getElementById('message-box');
+        const messageText = document.getElementById('message-text');
+        const messageOkBtn = document.getElementById('message-ok-btn');
 
-        const correctID = "5544";
-        const correctPassword = "4455";
+        // Function to display a message box
+        function showMessageBox(message) {
+            messageText.textContent = message;
+            messageBox.style.display = 'block';
+        }
 
-        // Shuffle questions and options
-        let shuffledQuizData = [];
+        // Function to hide the message box
+        function hideMessageBox() {
+            messageBox.style.display = 'none';
+        }
 
+        messageOkBtn.addEventListener('click', hideMessageBox);
+
+        // Function to shuffle array (Fisher-Yates algorithm)
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -723,190 +596,190 @@
             }
         }
 
-        function generateShuffledQuiz() {
-            const earlyLife = quizData.filter(q => q.category === 'early_life');
-            const workWritings = quizData.filter(q => q.category === 'work_writings');
-            const quotations = quizData.filter(q => q.category === 'quotation');
-            const philosophy = quizData.filter(q => q.category === 'philosophy');
+        // Shuffle quiz data once at the beginning
+        shuffleArray(quizData);
 
-            shuffleArray(earlyLife);
-            shuffleArray(workWritings);
-            shuffleArray(quotations);
-            shuffleArray(philosophy);
+        // Function to display current question
+        function displayQuestion() {
+            const question = quizData[currentQuestionIndex];
+            questionText.textContent = `${currentQuestionIndex + 1}. ${question.question}`;
+            optionsContainer.innerHTML = ''; // Clear previous options
 
-            // Ensure minimum percentages
-            const numEarlyLife = Math.ceil(0.05 * quizData.length);
-            const numWorkWritings = Math.ceil(0.05 * quizData.length);
-            const numQuotations = Math.ceil(0.10 * quizData.length);
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('rounded-lg');
+                button.addEventListener('click', () => selectOption(option, button));
 
-            shuffledQuizData = [];
-            shuffledQuizData.push(...earlyLife.slice(0, numEarlyLife));
-            shuffledQuizData.push(...workWritings.slice(0, numWorkWritings));
-            shuffledQuizData.push(...quotations.slice(0, numQuotations));
-
-            // Fill remaining with philosophy questions, ensuring no duplicates
-            const philosophyToAdd = philosophy.filter(q =>
-                !shuffledQuizData.some(sq => sq.question === q.question)
-            );
-            shuffledQuizData.push(...philosophyToAdd);
-
-            // If still less than 40, add more philosophy or other categories until 40
-            let safetyCounter = 0;
-            while (shuffledQuizData.length < 40 && safetyCounter < 100) { // Safety break
-                const remainingPhilosophy = philosophy.filter(q =>
-                    !shuffledQuizData.some(sq => sq.question === q.question)
-                );
-                if (remainingPhilosophy.length > 0) {
-                    shuffledQuizData.push(remainingPhilosophy[0]);
-                } else {
-                    // If philosophy runs out, add from other categories again
-                    const allRemaining = quizData.filter(q =>
-                        !shuffledQuizData.some(sq => sq.question === q.question)
-                    );
-                    if (allRemaining.length > 0) {
-                        shuffledQuizData.push(allRemaining[0]);
-                    } else {
-                        break; // No more unique questions
-                    }
+                // If an answer was previously selected for this question, highlight it
+                if (userAnswers[currentQuestionIndex] === option) {
+                    button.classList.add('selected');
                 }
-                safetyCounter++;
-            }
-
-            // Final shuffle of the combined list
-            shuffleArray(shuffledQuizData);
-
-            // Shuffle options for each question
-            shuffledQuizData.forEach(q => shuffleArray(q.options));
-        }
-
-        function showMessageBox(message) {
-            messageBoxText.textContent = message;
-            messageBox.style.display = 'block';
-        }
-
-        messageBoxCloseBtn.addEventListener('click', () => {
-            messageBox.style.display = 'none';
-        });
-
-        loginBtn.addEventListener('click', () => {
-            const enteredID = idInput.value;
-            const enteredPassword = passwordInput.value;
-
-            if (enteredID === correctID && enteredPassword === correctPassword) {
-                loginScreen.classList.add('hidden');
-                nameScreen.classList.remove('hidden');
-                loginMessage.textContent = '';
-            } else {
-                loginMessage.textContent = 'Invalid ID or Password.';
-            }
-        });
-
-        startQuizBtn.addEventListener('click', () => {
-            if (quizAttempted) {
-                showMessageBox("You have already attempted the quiz and cannot restart it.");
-                return;
-            }
-
-            candidateName = candidateNameInput.value.trim();
-            if (candidateName === "") {
-                nameMessage.textContent = "Please enter your name to start the quiz.";
-                return;
-            }
-
-            nameScreen.classList.add('hidden');
-            quizScreen.style.display = 'block';
-            quizAttempted = true; // Mark quiz as attempted
-
-            generateShuffledQuiz(); // Generate and shuffle quiz data
-            loadQuestion();
-            startTimer();
-            quizStartTime = new Date();
-        });
-
-        function loadQuestion() {
-            if (currentQuestionIndex < shuffledQuizData.length) {
-                const question = shuffledQuizData[currentQuestionIndex];
-                questionText.textContent = question.question;
-                optionsContainer.innerHTML = '';
-                nextBtn.classList.add('hidden'); // Hide next button until an option is selected
-
-                question.options.forEach(option => {
-                    const button = document.createElement('button');
-                    button.textContent = option;
-                    button.classList.add('rounded-lg', 'font-medium', 'text-base');
-                    button.addEventListener('click', () => selectOption(button, option, question.correct));
-                    optionsContainer.appendChild(button);
-                });
-            } else {
-                endQuiz();
-            }
-        }
-
-        function selectOption(selectedButton, selectedOption, correctAnswer) {
-            // Disable all options after selection
-            Array.from(optionsContainer.children).forEach(button => {
-                button.disabled = true;
+                optionsContainer.appendChild(button);
             });
 
+            updateNavigationButtons();
+            applyPreviousSelectionHighlight();
+        }
+
+        // Function to apply highlighting based on previous selection
+        function applyPreviousSelectionHighlight() {
+            const selectedAnswer = userAnswers[currentQuestionIndex];
+            if (selectedAnswer !== null) {
+                const buttons = optionsContainer.querySelectorAll('button');
+                buttons.forEach(button => {
+                    button.disabled = true; // Disable all options after selection
+                    if (button.textContent === selectedAnswer) {
+                        if (selectedAnswer === quizData[currentQuestionIndex].answer) {
+                            button.classList.add('correct');
+                        } else {
+                            button.classList.add('wrong');
+                            // Highlight the correct answer if the selected one was wrong
+                            buttons.forEach(btn => {
+                                if (btn.textContent === quizData[currentQuestionIndex].answer) {
+                                    btn.classList.add('correct');
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }
+
+        // Function to handle option selection
+        function selectOption(selectedOption, clickedButton) {
+            if (quizAttempted) return; // Prevent re-answering after quiz submission
+
+            userAnswers[currentQuestionIndex] = selectedOption;
+
+            const buttons = optionsContainer.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.disabled = true; // Disable all options after selection
+                button.classList.remove('selected', 'correct', 'wrong'); // Clear previous highlights
+            });
+
+            const correctAnswer = quizData[currentQuestionIndex].answer;
+
             if (selectedOption === correctAnswer) {
-                selectedButton.classList.add('correct');
-                score++;
+                clickedButton.classList.add('correct');
             } else {
-                selectedButton.classList.add('wrong');
-                // Find and highlight the correct answer
-                Array.from(optionsContainer.children).forEach(button => {
+                clickedButton.classList.add('wrong');
+                // Highlight the correct answer
+                buttons.forEach(button => {
                     if (button.textContent === correctAnswer) {
                         button.classList.add('correct');
                     }
                 });
             }
-            nextBtn.classList.remove('hidden'); // Show next button
         }
 
-        nextBtn.addEventListener('click', () => {
-            currentQuestionIndex++;
-            loadQuestion();
+        // Function to update navigation button visibility
+        function updateNavigationButtons() {
+            prevBtn.style.display = currentQuestionIndex > 0 ? 'inline-block' : 'none';
+            nextBtn.style.display = currentQuestionIndex < quizData.length - 1 ? 'inline-block' : 'none';
+            submitQuizBtn.style.display = currentQuestionIndex === quizData.length - 1 ? 'inline-block' : 'none';
+        }
+
+        // Event listener for Start Quiz button
+        startQuizBtn.addEventListener('click', () => {
+            const userId = userIdInput.value.trim();
+            const password = passwordInput.value.trim();
+            candidateName = candidateNameInput.value.trim();
+
+            if (userId === '9922' && password === '2299') {
+                if (candidateName) {
+                    if (!quizAttempted) {
+                        loginScreen.style.display = 'none';
+                        quizScreen.style.display = 'block';
+                        quizStarted = true;
+                        startTimer();
+                        displayQuestion();
+                    } else {
+                        showMessageBox("You have already attempted the quiz. You cannot restart.");
+                    }
+                } else {
+                    showMessageBox("Please enter your name to start the quiz.");
+                }
+            } else {
+                showMessageBox("Invalid ID or Password.");
+            }
         });
 
+        // Event listener for Previous button
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion();
+            }
+        });
+
+        // Event listener for Next button
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion();
+            }
+        });
+
+        // Event listener for Submit Quiz button
+        submitQuizBtn.addEventListener('click', () => {
+            if (quizAttempted) {
+                showMessageBox("You have already submitted the quiz.");
+                return;
+            }
+            clearInterval(timerInterval);
+            calculateResult();
+            quizScreen.style.display = 'none';
+            resultScreen.style.display = 'block';
+            quizAttempted = true;
+        });
+
+        // Function to start the timer
         function startTimer() {
-            timer = setInterval(() => {
+            timerInterval = setInterval(() => {
                 timeLeft--;
                 const minutes = Math.floor(timeLeft / 60);
                 const seconds = timeLeft % 60;
                 timerDisplay.textContent = `Time Left: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
                 if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    endQuiz();
-                    showMessageBox("Time's up! The quiz has ended.");
+                    clearInterval(timerInterval);
+                    showMessageBox("Time's up! Submitting your quiz.");
+                    calculateResult();
+                    quizScreen.style.display = 'none';
+                    resultScreen.style.display = 'block';
+                    quizAttempted = true;
                 }
             }, 1000);
         }
 
-        function endQuiz() {
-            clearInterval(timer);
-            quizScreen.style.display = 'none';
-            resultScreen.style.display = 'block';
+        // Function to calculate and display result
+        function calculateResult() {
+            score = 0;
+            for (let i = 0; i < quizData.length; i++) {
+                if (userAnswers[i] === quizData[i].answer) {
+                    score++;
+                }
+            }
 
-            const quizEndTime = new Date();
-            const timeTaken = Math.floor((quizEndTime - quizStartTime) / 1000); // Time in seconds
+            const totalQuestions = quizData.length;
+            const percentage = (score / totalQuestions) * 100;
+            const timeTaken = (20 * 60) - timeLeft;
             const minutesTaken = Math.floor(timeTaken / 60);
             const secondsTaken = timeTaken % 60;
 
-            finalCandidateNameDisplay.textContent = candidateName;
+            resultCandidateName.textContent = candidateName;
             scoreDisplay.textContent = score;
-            totalQuestionsDisplay.textContent = shuffledQuizData.length;
-            const percentage = (score / shuffledQuizData.length) * 100;
+            totalQuestionsDisplay.textContent = totalQuestions;
             percentageDisplay.textContent = percentage.toFixed(2);
             timeTakenDisplay.textContent = `Time Taken: ${minutesTaken} minutes and ${secondsTaken} seconds`;
-
-            // Disable start button permanently after quiz ends
-            startQuizBtn.disabled = true;
         }
 
-        // Show loading overlay initially while content loads (though for local HTML it's quick)
-        window.addEventListener('load', () => {
-            loadingOverlay.style.display = 'none';
+        // Initial setup on page load (ensure login screen is visible)
+        document.addEventListener('DOMContentLoaded', () => {
+            loginScreen.style.display = 'block';
+            quizScreen.style.display = 'none';
+            resultScreen.style.display = 'none';
         });
 
     </script>
