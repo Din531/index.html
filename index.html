@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Political Science Subject Specialist Preparation Quiz</title>
+    <title>Election Commission Officer BPS 17 Quiz</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f8ff; /* Alice Blue */
+            background-color: #e0f2f7; /* Light blue background */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -17,32 +17,26 @@
             padding: 20px;
             box-sizing: border-box;
         }
-        .container {
+        .quiz-container {
             background-color: #ffffff;
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 700px;
+            max-width: 600px;
             text-align: center;
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
-        .header {
-            color: #4682b4; /* Steel Blue */
+        h1 {
             font-size: 1.8rem;
-            font-weight: bold;
+            color: #1a73e8; /* Blue for title */
             margin-bottom: 10px;
         }
-        .contact-info {
-            color: #6a5acd; /* Slate Blue */
-            font-size: 1rem;
-            margin-bottom: 5px;
-        }
-        .plato-philosophy {
-            color: #483d8b; /* Dark Slate Blue */
-            font-size: 1.1rem;
+        h2 {
+            font-size: 1.2rem;
+            color: #333;
             margin-bottom: 20px;
         }
         .input-group {
@@ -52,736 +46,709 @@
         .input-group label {
             display: block;
             margin-bottom: 8px;
-            font-weight: bold;
-            color: #5f9ea0; /* Cadet Blue */
+            font-weight: 600;
+            color: #333;
         }
         .input-group input {
             width: 100%;
             padding: 12px;
-            border: 1px solid #add8e6; /* Light Blue */
+            border: 1px solid #cce7ff; /* Light blue border */
             border-radius: 8px;
             box-sizing: border-box;
             font-size: 1rem;
-            color: #333;
         }
-        .btn {
-            background-color: #87cefa; /* Light Sky Blue */
+        .button {
+            background-color: #1a73e8; /* Blue button */
             color: white;
             padding: 12px 25px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-size: 1.1rem;
-            transition: background-color 0.3s ease;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .btn:hover {
-            background-color: #6495ed; /* Cornflower Blue */
+        .button:hover {
+            background-color: #155cb8; /* Darker blue on hover */
+            transform: translateY(-2px);
         }
-        .quiz-section {
-            display: none;
+        .button:disabled {
+            background-color: #a0c4ff; /* Lighter blue when disabled */
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .message {
+            color: red;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+        .question-section {
             text-align: left;
         }
-        .question-container {
-            background-color: #e0ffff; /* Light Cyan */
-            padding: 20px;
-            border-radius: 10px;
+        .question-section p {
+            font-size: 1.1rem;
             margin-bottom: 20px;
-        }
-        .question-text {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #2f4f4f; /* Dark Slate Gray */
-            margin-bottom: 15px;
+            color: #333;
+            font-weight: 500;
         }
         .options-container button {
             display: block;
             width: 100%;
             padding: 12px;
             margin-bottom: 10px;
-            border: 1px solid #b0e0e6; /* Powder Blue */
+            background-color: #e3f2fd; /* Very light blue for options */
+            border: 1px solid #bbdefb; /* Light blue border */
             border-radius: 8px;
-            background-color: #f0faff; /* Light Cyan */
             text-align: left;
             cursor: pointer;
             font-size: 1rem;
             color: #333;
-            transition: background-color 0.2s ease, border-color 0.2s ease;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
-        .options-container button:hover {
-            background-color: #e6f7ff; /* Lighter Cyan */
-            border-color: #87cefa; /* Light Sky Blue */
+        .options-container button:hover:not(.correct):not(.wrong) {
+            background-color: #cce7ff; /* Slightly darker light blue on hover */
         }
         .options-container button.correct {
-            background-color: #90ee90; /* Light Green */
-            border-color: #3cb371; /* Medium Sea Green */
-            color: #228b22; /* Forest Green */
+            background-color: #d4edda; /* Light green */
+            border-color: #28a745; /* Green */
+            color: #155724;
         }
         .options-container button.wrong {
-            background-color: #ffb6c1; /* Light Pink */
-            border-color: #ff6347; /* Tomato */
-            color: #b22222; /* Firebrick */
+            background-color: #f8d7da; /* Light red */
+            border-color: #dc3545; /* Red */
+            color: #721c24;
         }
         .timer {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #dc143c; /* Crimson */
-            margin-bottom: 15px;
-        }
-        .navigation-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-        .result-section {
-            display: none;
-            text-align: center;
-        }
-        .result-section h2 {
-            color: #4682b4;
-            font-size: 2rem;
-            margin-bottom: 15px;
-        }
-        .result-section p {
             font-size: 1.2rem;
-            color: #2f4f4f;
+            font-weight: bold;
+            color: #1a73e8; /* Blue for timer */
+            margin-bottom: 15px;
+        }
+        .results-section {
+            font-size: 1.2rem;
+            color: #333;
+        }
+        .results-section p {
             margin-bottom: 10px;
         }
-        .message-box {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            text-align: center;
-        }
-        .message-box p {
-            font-size: 1.1rem;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        .message-box button {
-            background-color: #87cefa;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        .message-box button:hover {
-            background-color: #6495ed;
+        .contact-info {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #555;
         }
     </style>
 </head>
 <body>
-    <div class="container rounded-xl">
-        <div id="login-screen">
-            <h1 class="header">Political Science Subject Specialist Preparation Quiz</h1>
-            <p class="contact-info">Contact Number: 03188185185</p>
-            <p class="plato-philosophy"><b>Plato’s Philosophy</b></p>
+    <div class="quiz-container" id="quizContainer">
+        <h1 class="text-2xl font-bold">Election Commission Officer BPS 17 Quiz</h1>
+        <!-- Updated Contact Info with blue color, bold, and larger text -->
+        <div class="contact-info text-blue-700 font-bold text-lg">CONTACT: 03188185185</div>
 
+        <!-- Login Screen -->
+        <div id="loginScreen">
+            <h2 class="text-xl font-semibold mb-4">Login</h2>
             <div class="input-group">
-                <label for="user-id">ID:</label>
-                <input type="text" id="user-id" placeholder="Enter your ID">
+                <label for="loginId">ID:</label>
+                <input type="text" id="loginId" placeholder="Enter your ID" class="rounded-lg">
             </div>
             <div class="input-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" placeholder="Enter your Password">
+                <label for="loginPassword">Password:</label>
+                <input type="password" id="loginPassword" placeholder="Enter your Password" class="rounded-lg">
             </div>
-            <div class="input-group">
-                <label for="candidate-name">Candidate Name:</label>
-                <input type="text" id="candidate-name" placeholder="Enter your name">
-            </div>
-            <button class="btn rounded-lg" id="start-quiz-btn">Start Quiz</button>
+            <button class="button" id="loginButton">Login</button>
+            <p id="loginMessage" class="message"></p>
         </div>
 
-        <div id="quiz-screen" class="quiz-section">
+        <!-- Name Entry Screen -->
+        <div id="nameEntryScreen" class="hidden">
+            <h2 class="text-xl font-semibold mb-4">Enter Your Name</h2>
+            <div class="input-group">
+                <label for="candidateName">Name:</label>
+                <input type="text" id="candidateName" placeholder="Enter your name" class="rounded-lg">
+            </div>
+            <button class="button" id="startButton">Start Quiz</button>
+            <p id="nameMessage" class="message"></p>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quizScreen" class="hidden">
             <div class="timer" id="timer">Time Left: 20:00</div>
-            <div class="question-container rounded-lg">
-                <p class="question-text" id="question-text"></p>
-                <div class="options-container" id="options-container">
+            <div class="question-section">
+                <p id="questionText" class="text-lg font-medium mb-4"></p>
+                <div id="optionsContainer" class="options-container">
                     <!-- Options will be loaded here by JavaScript -->
                 </div>
             </div>
-            <div class="navigation-buttons">
-                <button class="btn rounded-lg" id="prev-btn" style="display: none;">Previous</button>
-                <button class="btn rounded-lg" id="next-btn">Next</button>
-                <button class="btn rounded-lg" id="submit-quiz-btn" style="display: none;">Submit Quiz</button>
-            </div>
+            <p id="feedbackMessage" class="message"></p>
+            <button class="button hidden mt-4" id="nextButton">Next Question</button>
         </div>
 
-        <div id="result-screen" class="result-section">
-            <h2>Quiz Result</h2>
-            <p>Candidate: <span id="result-candidate-name"></span></p>
-            <p>Score: <span id="score"></span> / <span id="total-questions"></span></p>
-            <p>Percentage: <span id="percentage"></span>%</p>
-            <p id="time-taken"></p>
+        <!-- Result Screen -->
+        <div id="resultScreen" class="hidden">
+            <h2 class="text-xl font-semibold mb-4">Quiz Result</h2>
+            <p id="scoreText"></p>
+            <p id="timeTakenText"></p>
         </div>
-    </div>
-
-    <div id="message-box" class="message-box rounded-lg">
-        <p id="message-text"></p>
-        <button id="message-ok-btn" class="rounded-lg">OK</button>
     </div>
 
     <script>
-        // Quiz data based on the provided document content
+        // Quiz data based on the provided document
         const quizData = [
-            // 5% from early life (2 questions)
             {
-                question: "Plato was born into what kind of family?",
-                options: ["Poor", "Artisan", "Aristocratic", "Merchant"],
-                answer: "Aristocratic",
-                category: "early_life"
+                question: "The Elections Act, 2017 is officially known to extend its application to which specific geographical area?",
+                options: [
+                    "Its jurisdiction is limited solely to the federal capital territory and its immediate surrounding regions.",
+                    "The Act extends its full legal authority and operational scope across the entire geographical expanse of Pakistan.",
+                    "Its applicability is strictly confined to the major urban centers and their respective administrative districts.",
+                    "The provisions of this Act are primarily effective within the boundaries of specific, designated provinces only."
+                ],
+                correctAnswer: "The Act extends its full legal authority and operational scope across the entire geographical expanse of Pakistan."
             },
             {
-                question: "What was Plato's primary career aspiration in his early life?",
-                options: ["Military leader", "Public service", "Philosopher", "Artist"],
-                answer: "Public service",
-                category: "early_life"
-            },
-            // 5% from philosopher's work or writings (2 questions)
-            {
-                question: "Which of Plato's works is considered a foundation for his later great work and discusses the ideal state?",
-                options: ["Apology", "Crito", "Protagoras", "Republic"],
-                answer: "Republic",
-                category: "works"
+                question: "According to the definitions provided in the Act, what is the precise meaning of the term 'aalim'?",
+                options: [
+                    "A person possessing an advanced degree in any scientific or technological discipline from a recognized university.",
+                    "A Muslim scholar who holds a degree or sanad requiring a minimum of sixteen years of education, recognized by the Higher Education Commission, and has at least twenty years of experience as a teacher or researcher in fields related to Islamic principles and law.",
+                    "An individual who has successfully completed a comprehensive course of religious studies, irrespective of formal academic recognition or duration.",
+                    "Any instructor or academic professional engaged in teaching subjects within the broad domain of religious education."
+                ],
+                correctAnswer: "A Muslim scholar who holds a degree or sanad requiring a minimum of sixteen years of education, recognized by the Higher Education Commission, and has at least twenty years of experience as a teacher or researcher in fields related to Islamic principles and law."
             },
             {
-                question: "Plato's 'The Republic' is primarily a major contribution to which philosophical field?",
-                options: ["Epistemology", "Metaphysics", "Political Philosophy", "Ethics"],
-                answer: "Political Philosophy",
-                category: "works"
-            },
-            // 10% from quotations (4 questions)
-            {
-                question: "Which concept did Plato believe was the basic tenet of Socratic thought, as mentioned in the text?",
-                options: ["Justice is power", "Virtue is knowledge", "Might makes right", "Happiness is pleasure"],
-                answer: "Virtue is knowledge",
-                category: "quotations"
+                question: "As defined within the context of this Act, what does the term 'accredited' specifically signify?",
+                options: [
+                    "It implies a formal recognition granted by an established international regulatory body.",
+                    "It denotes an official authorization or approval that has been duly provided by the Commission.",
+                    "It refers to a certification process administered and verified by a reputable academic institution.",
+                    "It indicates a general endorsement or sanction issued directly by the federal government."
+                ],
+                correctAnswer: "It denotes an official authorization or approval that has been duly provided by the Commission."
             },
             {
-                question: "According to Plato, what is the 'good' for 'truth'?",
-                options: ["Pleasure", "Utility", "Justice", "Enlightenment"],
-                answer: "Enlightenment", // Inferred from "The last is the ultimate 'n formal instruction. Here first principles are explored, and the search for the 'good'—for 'truth'—is launched."
-                category: "quotations"
+                question: "What does the term 'applicable local government law' encompass, according to the Act's definitions?",
+                options: [
+                    "It exclusively includes legislative enactments passed by the various Provincial Assemblies concerning local governance structures.",
+                    "It refers to an Act promulgated by the Majlis-e-Shoora (Parliament) or a Provincial Assembly for the establishment of a local government, and explicitly includes any relevant Ordinance.",
+                    "Its scope is limited strictly to Ordinances that have been specifically issued for the regulation of local government affairs.",
+                    "It pertains solely to the legal frameworks and statutes enacted by district-level administrative councils."
+                ],
+                correctAnswer: "It refers to an Act promulgated by the Majlis-e-Shoora (Parliament) or a Provincial Assembly for the establishment of a local government, and explicitly includes any relevant Ordinance."
             },
             {
-                question: "Plato believed that education should be a process of turning the soul towards what?",
-                options: ["Wealth", "Power", "Truth and reality", "Social status"],
-                answer: "Truth and reality", // Inferred from the educational plan in Republic
-                category: "quotations"
+                question: "What does 'Assembly' refer to in the context of the Act?",
+                options: [
+                    "The term 'Assembly' is used broadly to refer to any legislative body or deliberative council at any level of government.",
+                    "It specifically denotes either the National Assembly or any of the Provincial Assemblies within the country.",
+                    "The definition of 'Assembly' is strictly confined to mean only the National Assembly of Pakistan.",
+                    "It signifies a formal gathering or convention of citizens convened for the purpose of public discourse or decision-making."
+                ],
+                correctAnswer: "It specifically denotes either the National Assembly or any of the Provincial Assemblies within the country."
             },
             {
-                question: "Plato's view on democracy, as implied in the text, is that it is a system issuing from the lust for what?",
-                options: ["Freedom", "Order", "Equality", "Justice"],
-                answer: "Freedom",
-                category: "quotations"
-            },
-            // Remaining 80% from philosophy/ideas (32 questions)
-            {
-                question: "Plato's early political career was disrupted by the condemnation and execution of which philosopher?",
-                options: ["Aristotle", "Socrates", "Thales", "Pythagoras"],
-                answer: "Socrates",
-                category: "philosophy"
+                question: "What precisely constitutes an 'asset' when referring to a candidate or a Member, as defined in this Act?",
+                options: [
+                    "It refers exclusively to any immovable property that is directly owned by the candidate themselves.",
+                    "It encompasses any property that is either owned or held by a candidate or a Member, and explicitly includes the property of their spouse and dependent children.",
+                    "The definition of an 'asset' is limited to liquid financial resources and monetary investments only.",
+                    "It includes only those properties that have been acquired by the individual during the specific period of the election campaign."
+                ],
+                correctAnswer: "It encompasses any property that is either owned or held by a candidate or a Member, and explicitly includes the property of their spouse and dependent children."
             },
             {
-                question: "Plato's belief that 'Socrates' attacks upon democracy had been justified implies his view on what?",
-                options: ["Democracy", "Tyranny", "Monarchy", "Oligarchy"],
-                answer: "Democracy",
-                category: "philosophy"
+                question: "What is the specific purpose of a 'bye-election' as described within the provisions of this Act?",
+                options: [
+                    "A bye-election is a regularly scheduled electoral event that is conducted on an annual basis.",
+                    "It is an election specifically organized and held for the purpose of filling a casual vacancy that has arisen.",
+                    "This type of election is designed for the creation of a new electoral constituency or administrative area.",
+                    "A bye-election serves as a preliminary or initial round of voting before the main electoral process begins."
+                ],
+                correctAnswer: "It is an election specifically organized and held for the purpose of filling a casual vacancy that has arisen."
             },
             {
-                question: "Plato abandoned Athenian politics to travel and learn, eventually focusing on building a philosophy that would hold the interest of scholars and statesmen through the ages. What was a key reason for this abandonment?",
-                options: ["Lack of personal ambition", "Dissatisfaction with the political system", "Financial difficulties", "Desire for adventure"],
-                answer: "Dissatisfaction with the political system",
-                category: "philosophy"
+                question: "Who is formally recognized as a 'candidate' under the definitions provided in this Act?",
+                options: [
+                    "Any individual who has publicly expressed an interest in participating in an upcoming election.",
+                    "A person who has been formally proposed and seconded as a candidate for, or is actively seeking, election as a Member.",
+                    "Only those individuals who have successfully submitted all required nomination papers and forms.",
+                    "An individual who has already been elected to a public office or holds a current official position."
+                ],
+                correctAnswer: "A person who has been formally proposed and seconded as a candidate for, or is actively seeking, election as a Member."
             },
             {
-                question: "Plato's wanderings in Southern Italy led him to study the doctrines of which mystic group?",
-                options: ["Stoics", "Epicureans", "Pythagorean society", "Sophists"],
-                answer: "Pythagorean society",
-                category: "philosophy"
+                question: "What specific entity is denoted by the term 'Commission' within the context of this Act?",
+                options: [
+                    "It refers to any general government commission established for public inquiry or oversight purposes.",
+                    "It specifically means the Election Commission of Pakistan, which has been duly constituted under the provisions of Article 218 of the Constitution.",
+                    "The term 'Commission' designates a judicial commission responsible for legal arbitration and dispute resolution.",
+                    "It refers to a parliamentary committee formed to deliberate on legislative matters and policy formulation."
+                ],
+                correctAnswer: "It specifically means the Election Commission of Pakistan, which has been duly constituted under the provisions of Article 218 of the Constitution."
             },
             {
-                question: "Plato likely received instruction in mathematics in which ancient civilization?",
-                options: ["Greece", "Rome", "Egypt", "Persia"],
-                answer: "Egypt",
-                category: "philosophy"
+                question: "According to the Act, who is identified as the 'Commissioner'?",
+                options: [
+                    "Any individual who holds a membership position within the Election Commission.",
+                    "The Chief Election Commissioner appointed under Article 213, and this definition also includes any Acting Chief Election Commissioner appointed under Article 217.",
+                    "A district-level election officer responsible for local electoral administration.",
+                    "A provincial election commissioner who oversees electoral processes within a specific province."
+                ],
+                correctAnswer: "The Chief Election Commissioner appointed under Article 213, and this definition also includes any Acting Chief Election Commissioner appointed under Article 217."
             },
             {
-                question: "Which of the following is NOT one of Plato's later dialogues mentioned as a foundation for his great work?",
-                options: ["Apology", "Crito", "Statesman", "Laws"],
-                answer: "Apology", // Apology is an early dialogue
-                category: "philosophy"
+                question: "What is the precise definition of a 'constituency' as established under this Act?",
+                options: [
+                    "It refers to any administrative division or geographical unit established for general governance purposes.",
+                    "A constituency is an electoral area that has been formally delimited in accordance with the specific provisions outlined in this Act.",
+                    "It is a voting district primarily defined by the local government for the purpose of municipal elections.",
+                    "An area characterized by a particular population density, irrespective of formal delimitation procedures."
+                ],
+                correctAnswer: "A constituency is an electoral area that has been formally delimited in accordance with the specific provisions outlined in this Act."
             },
             {
-                question: "Plato's 'The Republic' discusses the nature of the state and the ideal form of government. What is the central theme of 'The Republic'?",
-                options: ["Justice", "Liberty", "Equality", "Fraternity"],
-                answer: "Justice",
-                category: "philosophy"
+                question: "What specific document is referred to as the 'Constitution' in the context of this Act?",
+                options: [
+                    "Any national constitution or foundational legal document of a sovereign state.",
+                    "It specifically refers to the Constitution of the Islamic Republic of Pakistan.",
+                    "The internal constitutional framework or governing rules of the Election Commission itself.",
+                    "A comprehensive set of procedural rules and regulations designed exclusively for electoral processes."
+                ],
+                correctAnswer: "It specifically refers to the Constitution of the Islamic Republic of Pakistan."
             },
             {
-                question: "In 'The Republic', Plato argues that justice in the state is the interest of whom?",
-                options: ["The strongest", "The weakest", "The ruling class", "The entire community"],
-                answer: "The entire community", // While Thrasymachus argues for the strongest, Plato refutes this.
-                category: "philosophy"
+                question: "Who is precisely defined as a 'contesting candidate' within the framework of this Act?",
+                options: [
+                    "Any candidate who has successfully submitted all their required nomination papers for an election.",
+                    "A validly nominated candidate who has not formally exercised their right to withdraw their candidature from the election process.",
+                    "A candidate who has been declared the winner of an election and has assumed their public office.",
+                    "An individual who is actively participating in public debates or electoral discussions."
+                ],
+                correctAnswer: "A validly nominated candidate who has not formally exercised their right to withdraw their candidature from the election process."
             },
             {
-                question: "Plato's philosophy emphasizes the importance of a well-ordered society. What is the role of the philosopher-kings in his ideal state?",
-                options: ["To accumulate wealth", "To rule based on wisdom and knowledge", "To serve the military", "To entertain the citizens"],
-                answer: "To rule based on wisdom and knowledge",
-                category: "philosophy"
+                question: "According to the Act, who is eligible to be considered an 'election agent'?",
+                options: [
+                    "The role is strictly reserved for a qualified legal professional, such as a lawyer.",
+                    "A person formally appointed by a candidate as their election agent under this Act, or the candidate themselves if no such appointment is made.",
+                    "Any individual who is a registered voter and is willing to assist in the election process.",
+                    "A government official specifically assigned to oversee aspects of electoral campaigns."
+                ],
+                correctAnswer: "A person formally appointed by a candidate as their election agent under this Act, or the candidate themselves if no such appointment is made."
             },
             {
-                question: "What is the primary purpose of education in Plato's ideal state?",
-                options: ["To prepare citizens for war", "To develop individual talents", "To train individuals for specific economic roles", "To turn the soul towards truth and reality"],
-                answer: "To turn the soul towards truth and reality",
-                category: "philosophy"
+                question: "What does the definition of 'election expenses' encompass, as per the Act?",
+                options: [
+                    "It strictly covers only the costs associated with campaign advertising and media outreach.",
+                    "It includes any expenditure incurred before, during, and after an election for its arrangement, conduct, or benefit, including publications, but explicitly excludes the deposit made under section 61 or section 111.",
+                    "The term 'election expenses' is limited solely to the operational costs incurred on the official polling day.",
+                    "It refers to any personal expenditures made by the candidate for their own needs during the election period."
+                ],
+                correctAnswer: "It includes any expenditure incurred before, during, and after an election for its arrangement, conduct, or benefit, including publications, but explicitly excludes the deposit made under section 61 or section 111."
             },
             {
-                question: "Plato's educational plan in 'The Republic' includes elementary training for citizens up to what age?",
-                options: ["10", "15", "18", "20"],
-                answer: "20",
-                category: "philosophy"
+                question: "In rural areas, how is an 'electoral area' specifically defined under the provisions of this Act?",
+                options: [
+                    "It is typically identified as a designated city block or a defined urban zone.",
+                    "It is defined as a village or a specific census block within the rural geographical limits.",
+                    "The term refers to a district headquarters or a central administrative point in a rural region.",
+                    "It encompasses any designated urban zone that has been officially recognized for electoral purposes."
+                ],
+                correctAnswer: "It is defined as a village or a specific census block within the rural geographical limits."
             },
             {
-                question: "After elementary training, what is the next stage of education for those pursuing higher studies in Plato's plan?",
-                options: ["Military training", "Artistic training", "Vocational training", "Philosophical training"],
-                answer: "Military training",
-                category: "philosophy"
+                question: "Who is formally recognized as an 'election observer' according to the Act's definitions?",
+                options: [
+                    "A journalist or media representative who is reporting on the general conduct of elections.",
+                    "A person who has been specifically authorized by the Commission to officially observe the conduct of an election process.",
+                    "A political party representative officially appointed to monitor voting procedures.",
+                    "A foreign dignitary or international delegate present to witness the electoral proceedings."
+                ],
+                correctAnswer: "A person who has been specifically authorized by the Commission to officially observe the conduct of an election process."
             },
             {
-                question: "What is the sole criterion for determining a citizen's station in Plato's educational system?",
-                options: ["Family background", "Wealth", "Educational attainment", "Physical strength"],
-                answer: "Educational attainment",
-                category: "philosophy"
+                question: "What does the term 'electoral roll' specifically mean within the context of this Act?",
+                options: [
+                    "It refers to a comprehensive list containing the names of all election officials and staff.",
+                    "An electoral roll prepared, revised, or corrected under this Act, and it explicitly includes the electoral rolls prepared under the Electoral Rolls Act 1974 (XXI of 1974) existing immediately before the commencement of this Act.",
+                    "A formal document that outlines all the detailed procedures and guidelines for conducting elections.",
+                    "A historical record of past election results and voter turnout statistics."
+                ],
+                correctAnswer: "An electoral roll prepared, revised, or corrected under this Act, and it explicitly includes the electoral rolls prepared under the Electoral Rolls Act 1974 (XXI of 1974) existing immediately before the commencement of this Act."
             },
             {
-                question: "Plato's educational curriculum includes gymnastics and music. What is the purpose of music in this context?",
-                options: ["To provide entertainment", "To develop physical fitness", "To develop the soul's sound physique", "To train for military bands"],
-                answer: "To develop the soul's sound physique",
-                category: "philosophy"
+                question: "What does the term 'Government' refer to in the comprehensive definitions provided by the Act?",
+                options: [
+                    "It is strictly limited to mean only the Federal Government of Pakistan.",
+                    "It means the Federal Government, and the phrase 'any Government' specifically includes the Federal Government, a Provincial Government, or a local government.",
+                    "The term 'Government' is used to refer exclusively to the various Provincial Governments within the federation.",
+                    "It broadly encompasses international governmental organizations and their respective administrative bodies."
+                ],
+                correctAnswer: "It means the Federal Government, and the phrase 'any Government' specifically includes the Federal Government, a Provincial Government, or a local government."
             },
             {
-                question: "What does Plato propose regarding censorship in his ideal state?",
-                options: ["Complete freedom of expression", "No censorship at all", "Rigid system of censorship to ensure desirable social and political character", "Censorship only for political dissent"],
-                answer: "Rigid system of censorship to ensure desirable social and political character",
-                category: "philosophy"
+                question: "What does the term 'loan' include, according to the definitions?",
+                options: [
+                    "Any form of financial assistance or aid received from any source.",
+                    "Any loan, advance, credit, or finance obtained or written off on or after December 31, 1985, but it shall not include any loan the recovery of which has been stayed by a court or tribunal.",
+                    "The term 'loan' is strictly confined to formal bank loans issued by commercial banking institutions.",
+                    "It pertains to grants or financial support provided by non-governmental organizations or charitable trusts."
+                ],
+                correctAnswer: "Any loan, advance, credit, or finance obtained or written off on or after December 31, 1985, but it shall not include any loan the recovery of which has been stayed by a court or tribunal."
             },
             {
-                question: "Plato's concept of the 'philosopher-kings' is based on the idea that political power should be in the hands of those with what quality?",
-                options: ["Physical strength", "Wealth", "Moral virtue and intellectual ability", "Popular support"],
-                answer: "Moral virtue and intellectual ability",
-                category: "philosophy"
+                question: "What is the definition of a 'local government' as specified in the Act?",
+                options: [
+                    "It refers to a regional administrative body responsible for a specific geographical area.",
+                    "A local government, irrespective of the specific name by which it is called, that has been duly established by law.",
+                    "It signifies a temporary governing committee or provisional council established for a limited duration.",
+                    "The term 'local government' denotes a community council primarily focused on social welfare initiatives."
+                ],
+                correctAnswer: "A local government, irrespective of the specific name by which it is called, that has been duly established by law."
             },
             {
-                question: "What is Plato's view on private property in 'The Republic' for the guardians?",
-                options: ["It is encouraged for all citizens", "It is strictly regulated but allowed", "It is abolished to prevent corruption", "It is a sign of success"],
-                answer: "It is abolished to prevent corruption",
-                category: "philosophy"
+                question: "Who is formally identified as a 'Member' within the context of this Act?",
+                options: [
+                    "Any individual who casts a vote in an election process.",
+                    "A member of an Assembly, the Senate, or a local government body.",
+                    "An individual who holds registered membership within a recognized political party.",
+                    "A public official primarily engaged in the administration of electoral processes."
+                ],
+                correctAnswer: "A member of an Assembly, the Senate, or a local government body."
             },
             {
-                question: "Plato's ideal state aims to prevent excessive individualism. What is one way he proposes to achieve this?",
-                options: ["Promoting competition", "Encouraging private enterprise", "Community of wives and children", "Allowing free movement of wealth"],
-                answer: "Community of wives and children",
-                category: "philosophy"
+                question: "What specific entity is referred to as the 'National Database and Registration Authority' in the Act?",
+                options: [
+                    "A governmental department responsible for maintaining general public records and archives.",
+                    "The National Database and Registration Authority, which was duly constituted under the National Database and Registration Authority Ordinance, 2000 (VIII of 2000).",
+                    "A specialized department within the government tasked with collecting and analyzing statistical data.",
+                    "An agency primarily responsible for the issuance of national identification documents and passports."
+                ],
+                correctAnswer: "The National Database and Registration Authority, which was duly constituted under the National Database and Registration Authority Ordinance, 2000 (VIII of 2000)."
             },
             {
-                question: "What is Plato's view on the equality of women in his ideal state?",
-                options: ["Women should be confined to domestic roles", "Women should have equal opportunities as men to perform the best of their ability", "Women are inferior to men in all aspects", "Women should only be educated for household duties"],
-                answer: "Women should have equal opportunities as men to perform the best of their ability",
-                category: "philosophy"
+                question: "What is the comprehensive definition of a 'political party' as outlined in this Act?",
+                options: [
+                    "Any informal group of individuals sharing common interests or hobbies.",
+                    "An association of citizens or a combination or group of such associations formed with a view to propagating or influencing political opinion and participating in elections for any elective public office or for membership of a legislative body, including an Assembly, the Senate, or local government.",
+                    "A social club or community organization primarily focused on recreational activities.",
+                    "An organization established exclusively for charitable work or humanitarian aid initiatives."
+                ],
+                correctAnswer: "An association of citizens or a combination or group of such associations formed with a view to propagating or influencing political opinion and participating in elections for any elective public office or for membership of a legislative body, including an Assembly, the Senate, or local government."
             },
             {
-                question: "Plato believed that a just state would lead to what?",
-                options: ["Economic prosperity", "Individual freedom", "Social harmony and stability", "Military dominance"],
-                answer: "Social harmony and stability",
-                category: "philosophy"
+                question: "What specific population figures are implied by the term 'population' within the context of this Act?",
+                options: [
+                    "The most recent estimated population figures available at the current time.",
+                    "The population figures that have been officially published in accordance with the last preceding census.",
+                    "The total number of registered voters recorded for a particular electoral district.",
+                    "Population data that is exclusively derived from major urban centers and metropolitan areas."
+                ],
+                correctAnswer: "The population figures that have been officially published in accordance with the last preceding census."
             },
             {
-                question: "What is the ultimate goal of Plato's philosophy, particularly as outlined in 'The Republic'?",
-                options: ["To achieve personal happiness", "To create a perfect society based on justice and reason", "To conquer other city-states", "To abolish all forms of government"],
-                answer: "To create a perfect society based on justice and reason",
-                category: "philosophy"
+                question: "What does the term 'prescribed' specifically mean when used in this Act?",
+                options: [
+                    "It indicates something that has been formally stated or mandated within the Constitution of the country.",
+                    "It means something that has been specifically prescribed by the Rules that are made under the authority of this Act.",
+                    "The term refers to a definition or guideline that has been formally established by the Commission.",
+                    "It implies a consensus or agreement that has been reached and accepted by all participating parties."
+                ],
+                correctAnswer: "It means something that has been specifically prescribed by the Rules that are made under the authority of this Act."
             },
             {
-                question: "Plato's theory of Forms suggests that the physical world is merely a shadow of a higher, more real realm. What is this realm composed of?",
-                options: ["Ideas or Forms", "Sensory experiences", "Human emotions", "Material objects"],
-                answer: "Ideas or Forms",
-                category: "philosophy"
+                question: "Who is formally designated as a 'Presiding Officer' under the provisions of this Act?",
+                options: [
+                    "A judicial officer or judge who is responsible for overseeing the general conduct of elections.",
+                    "A Presiding Officer appointed under this Act for a polling station, and this definition also includes an Assistant Presiding Officer performing the functions of a Presiding Officer.",
+                    "A security official or law enforcement agent stationed at a polling station to maintain order.",
+                    "An individual responsible for managing the overall election campaign activities of a candidate."
+                ],
+                correctAnswer: "A Presiding Officer appointed under this Act for a polling station, and this definition also includes an Assistant Presiding Officer performing the functions of a Presiding Officer."
             },
             {
-                question: "According to Plato, what is the highest form of knowledge?",
-                options: ["Opinion", "Belief", "Reason/Understanding of Forms", "Imagination"],
-                answer: "Reason/Understanding of Forms",
-                category: "philosophy"
+                question: "What is the precise meaning of the term 'provisional' as defined in this Act?",
+                options: [
+                    "It signifies something that has been fully confirmed and is considered to be final and unchangeable.",
+                    "It indicates something that is unofficial and not yet considered to be final or conclusive.",
+                    "The term implies a temporary status, but one that is legally binding until a permanent decision is made.",
+                    "It refers to a legal status that is immediately enforceable and definitive."
+                ],
+                correctAnswer: "It indicates something that is unofficial and not yet considered to be final or conclusive."
             },
             {
-                question: "What is the 'Allegory of the Cave' primarily used by Plato to illustrate?",
-                options: ["The importance of physical exercise", "The nature of reality and enlightenment", "The dangers of political power", "The benefits of democracy"],
-                answer: "The nature of reality and enlightenment",
-                category: "philosophy"
+                question: "Who is formally recognized as a 'Registration Officer' according to the Act?",
+                options: [
+                    "A person primarily responsible for registering political parties and their respective manifestos.",
+                    "A Registration Officer appointed under this Act, and this definition also includes an Assistant Registration Officer performing the functions of a Registration Officer.",
+                    "An officer whose main duty is to monitor and increase voter turnout during elections.",
+                    "A government statistician or data analyst responsible for collecting demographic information."
+                ],
+                correctAnswer: "A Registration Officer appointed under this Act, and this definition also includes an Assistant Registration Officer performing the functions of a Registration Officer."
             },
             {
-                question: "Plato believed that the soul is composed of three parts: reason, spirit, and appetite. Which part should rule the others?",
-                options: ["Spirit", "Appetite", "Reason", "All equally"],
-                answer: "Reason",
-                category: "philosophy"
+                question: "What is the definition of a 'returned candidate' as provided in this Act?",
+                options: [
+                    "A candidate who voluntarily withdrew their candidature from the election process before the final results.",
+                    "A candidate who has been officially declared elected as a Member under the specific provisions of this Act.",
+                    "An individual who participated in the election but ultimately did not secure a winning position.",
+                    "A candidate who has successfully completed their term of office and is no longer serving."
+                ],
+                correctAnswer: "A candidate who has been officially declared elected as a Member under the specific provisions of this Act."
             },
             {
-                question: "In Plato's ideal state, which class corresponds to the 'reason' part of the soul?",
-                options: ["Artisans", "Guardians (Philosopher-Kings)", "Auxiliaries (Soldiers)", "Farmers"],
-                answer: "Guardians (Philosopher-Kings)",
-                category: "philosophy"
+                question: "What is the primary function of a 'Revising Authority' as defined in this Act?",
+                options: [
+                    "An official whose main responsibility is to review and validate the final results of an election.",
+                    "A person appointed under this Act to hear and dispose of claims and objections, as well as applications for corrections, specifically relating to the electoral rolls.",
+                    "An authority established for the purpose of proposing and implementing broad electoral reforms.",
+                    "A committee primarily tasked with conducting legal reviews of electoral disputes and appeals."
+                ],
+                correctAnswer: "A person appointed under this Act to hear and dispose of claims and objections, as well as applications for corrections, specifically relating to the electoral rolls."
             },
             {
-                question: "Plato's political philosophy can be seen as a critique of which existing political system in Athens?",
-                options: ["Monarchy", "Oligarchy", "Democracy", "Tyranny"],
-                answer: "Democracy",
-                category: "philosophy"
+                question: "What does the term 'Rules' specifically refer to within the context of this Act?",
+                options: [
+                    "It refers to general guidelines or informal procedures that are followed during elections.",
+                    "It specifically refers to the rules that have been formally made under the authority of this Act.",
+                    "The term denotes regulations and directives that are set forth by the central government.",
+                    "It implies international standards or conventions that govern electoral processes globally."
+                ],
+                correctAnswer: "It specifically refers to the rules that have been formally made under the authority of this Act."
             },
             {
-                question: "What is the ultimate good, according to Plato, that all individuals and the state should strive for?",
-                options: ["Wealth", "Pleasure", "Justice", "Power"],
-                answer: "Justice",
-                category: "philosophy"
+                question: "What is the precise meaning of 'section' as used in this Act?",
+                options: [
+                    "It refers to a general part or division of any legal document or publication.",
+                    "It specifically designates a particular section of this Elections Act.",
+                    "The term denotes a geographical division or sub-unit within an electoral constituency.",
+                    "It implies a specific legal clause or provision found in general legislation."
+                ],
+                correctAnswer: "It specifically designates a particular section of this Elections Act."
             },
             {
-                question: "Plato argues that the decline of ideal states follows a progression. Which form of government is considered the first stage of degeneration from the ideal republic?",
-                options: ["Oligarchy", "Democracy", "Timocracy", "Tyranny"],
-                answer: "Timocracy",
-                category: "philosophy"
+                question: "What does the term 'tax' include, as defined in the Act?",
+                options: [
+                    "It is limited to mean only federal taxes imposed by the central government.",
+                    "It includes any tax levied by any Government, but it explicitly excludes taxes the recovery of which has been stayed by a court or tribunal.",
+                    "The definition of 'tax' is strictly confined to income tax and other direct taxes.",
+                    "It refers solely to taxes imposed on property and real estate assets."
+                ],
+                correctAnswer: "It includes any tax levied by any Government, but it explicitly excludes taxes the recovery of which has been stayed by a court or tribunal."
             },
             {
-                question: "What characterizes a timocracy in Plato's political degeneration theory?",
-                options: ["Rule by the wealthy", "Rule by the honorable and ambitious", "Rule by the people", "Rule by a single tyrant"],
-                answer: "Rule by the honorable and ambitious",
-                category: "philosophy"
+                question: "Who is defined as a 'technocrat' according to the provisions of this Act?",
+                options: [
+                    "A person holding a degree specifically in a field of technology or engineering.",
+                    "A person who holds a degree requiring the conclusion of at least sixteen years of education recognized by the Higher Education Commission, and has at least twenty years of post-qualification experience including a record of achievement at the national or international level.",
+                    "An expert in the field of political science or public administration.",
+                    "A government administrator or bureaucrat with extensive experience in policy implementation."
+                ],
+                correctAnswer: "A person who holds a degree requiring the conclusion of at least sixteen years of education recognized by the Higher Education Commission, and has at least twenty years of post-qualification experience including a record of achievement at the national or international level."
             },
             {
-                question: "In Plato's view, what is the primary vice of an oligarchy?",
-                options: ["Excessive freedom", "Lust for honor", "Lust for wealth", "Unrestrained desires"],
-                answer: "Lust for wealth",
-                category: "philosophy"
+                question: "Who is considered a 'validly nominated candidate' under the terms of this Act?",
+                options: [
+                    "A candidate who has merely submitted their nomination paper for consideration.",
+                    "A candidate whose nomination paper has undergone due scrutiny and has been officially accepted.",
+                    "A candidate who has received formal approval from a recognized political party.",
+                    "A candidate who has completed all necessary financial payments and fees."
+                ],
+                correctAnswer: "A candidate whose nomination paper has undergone due scrutiny and has been officially accepted."
             },
             {
-                question: "What is the defining characteristic of a democracy in Plato's eyes, which he views negatively?",
-                options: ["Order", "Discipline", "Excessive freedom and license", "Justice"],
-                answer: "Excessive freedom and license",
-                category: "philosophy"
+                question: "In relation to an Assembly or a local government, who is defined as a 'voter'?",
+                options: [
+                    "Any citizen who has attained the age of eighteen years.",
+                    "A person who is duly enrolled as a voter on the electoral roll of any electoral area within a constituency.",
+                    "An individual who has maintained continuous residency in the constituency for a minimum period of one year.",
+                    "A person who has fulfilled all their tax obligations to the government."
+                ],
+                correctAnswer: "A person who is duly enrolled as a voter on the electoral roll of any electoral area within a constituency."
             },
             {
-                question: "According to Plato, what is the final and worst stage of political degeneration?",
-                options: ["Oligarchy", "Democracy", "Timocracy", "Tyranny"],
-                answer: "Tyranny",
-                category: "philosophy"
-            },
-            {
-                question: "Plato's 'The Statesman' and 'The Laws' are considered later works that reflect a more pragmatic approach to politics. How do they differ from 'The Republic'?",
-                options: ["They are more idealistic", "They are less concerned with law", "They are more moderate and less antagonistic towards democracy", "They focus solely on individual ethics"],
-                answer: "They are more moderate and less antagonistic towards democracy",
-                category: "philosophy"
-            },
-            {
-                question: "In 'The Statesman', Plato discusses the role of a true ruler. What quality does he emphasize for this ruler?",
-                options: ["Military might", "Economic power", "Knowledge and expertise", "Popularity"],
-                answer: "Knowledge and expertise",
-                category: "philosophy"
-            },
-            {
-                question: "Plato's philosophy often involves the concept of 'forms' or 'ideas'. What is the relationship between the physical world and these forms?",
-                options: ["The physical world is the only reality", "The physical world is a perfect reflection of the forms", "The physical world is an imperfect copy of the forms", "The forms are irrelevant to the physical world"],
-                answer: "The physical world is an imperfect copy of the forms",
-                category: "philosophy"
-            },
-            {
-                question: "What is the main idea behind Plato's concept of the 'Noble Lie'?",
-                options: ["To deceive the citizens for personal gain", "To maintain social order and stability by convincing citizens of a foundational myth", "To promote individual freedom", "To encourage rebellion against the state"],
-                answer: "To maintain social order and stability by convincing citizens of a foundational myth",
-                category: "philosophy"
-            },
-            {
-                question: "Plato's theory of justice in the individual mirrors his theory of justice in the state. What does individual justice involve?",
-                options: ["Each part of the soul performing its proper function in harmony", "Pursuing personal desires without restraint", "Accumulating as much wealth as possible", "Seeking power over others"],
-                answer: "Each part of the soul performing its proper function in harmony",
-                category: "philosophy"
-            },
-            {
-                question: "What is the primary concern of Plato's 'Republic' regarding the education of the guardians?",
-                options: ["To make them wealthy", "To make them physically strong only", "To cultivate their intellectual and moral virtues", "To prepare them for trade"],
-                answer: "To cultivate their intellectual and moral virtues",
-                category: "philosophy"
-            },
-            {
-                question: "Plato believed that true knowledge is attained through what?",
-                options: ["Sensory experience", "Divine revelation", "Rational thought and philosophical inquiry", "Social consensus"],
-                answer: "Rational thought and philosophical inquiry",
-                category: "philosophy"
-            },
-            {
-                question: "What is the role of the 'auxiliary' class in Plato's ideal state?",
-                options: ["To produce goods and services", "To defend the state", "To rule the state", "To provide entertainment"],
-                answer: "To defend the state",
-                category: "philosophy"
-            },
-            {
-                question: "Plato's political philosophy emphasizes the importance of stability and order. What did he see as a major threat to these in a democracy?",
-                options: ["Lack of wealth", "Too much freedom leading to anarchy", "Strong leadership", "External invasions"],
-                answer: "Too much freedom leading to anarchy",
-                category: "philosophy"
-            },
-            {
-                question: "Which of the following best describes Plato's view on art and poetry in 'The Republic'?",
-                options: ["He encouraged all forms of art", "He believed art was essential for emotional development", "He advocated for censorship of art that did not promote virtue", "He saw art as a direct path to truth"],
-                answer: "He advocated for censorship of art that did not promote virtue",
-                category: "philosophy"
+                question: "For election to a seat from a Province in the Senate, who is specifically identified as a 'voter'?",
+                options: [
+                    "Any resident who is legally eligible to vote within that specific province.",
+                    "A Member of the Provincial Assembly of the respective province.",
+                    "An individual who is a registered voter from the electoral rolls of that province.",
+                    "A government employee who resides and works within the provincial boundaries."
+                ],
+                correctAnswer: "A Member of the Provincial Assembly of the respective province."
             }
         ];
 
+        // Shuffle quiz data to randomize question order
+        quizData.sort(() => Math.random() - 0.5);
+
         let currentQuestionIndex = 0;
         let score = 0;
+        let timer;
+        const quizDuration = 20 * 60; // 20 minutes in seconds
+        let timeLeft = quizDuration;
+        let quizStartTime;
         let candidateName = '';
-        let quizStarted = false;
-        let timerInterval;
-        let timeLeft = 20 * 60; // 20 minutes in seconds
-        const userAnswers = new Array(quizData.length).fill(null);
-        let quizAttempted = false;
+        let quizEnded = false;
 
-        const loginScreen = document.getElementById('login-screen');
-        const quizScreen = document.getElementById('quiz-screen');
-        const resultScreen = document.getElementById('result-screen');
-        const startQuizBtn = document.getElementById('start-quiz-btn');
-        const userIdInput = document.getElementById('user-id');
-        const passwordInput = document.getElementById('password');
-        const candidateNameInput = document.getElementById('candidate-name');
-        const questionText = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const submitQuizBtn = document.getElementById('submit-quiz-btn');
+        const loginScreen = document.getElementById('loginScreen');
+        const nameEntryScreen = document.getElementById('nameEntryScreen');
+        const quizScreen = document.getElementById('quizScreen');
+        const resultScreen = document.getElementById('resultScreen');
+
+        const loginIdInput = document.getElementById('loginId');
+        const loginPasswordInput = document.getElementById('loginPassword');
+        const loginButton = document.getElementById('loginButton');
+        const loginMessage = document.getElementById('loginMessage');
+
+        const candidateNameInput = document.getElementById('candidateName');
+        const startButton = document.getElementById('startButton');
+        const nameMessage = document.getElementById('nameMessage');
+
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
         const timerDisplay = document.getElementById('timer');
-        const resultCandidateName = document.getElementById('result-candidate-name');
-        const scoreDisplay = document.getElementById('score');
-        const totalQuestionsDisplay = document.getElementById('total-questions');
-        const percentageDisplay = document.getElementById('percentage');
-        const timeTakenDisplay = document.getElementById('time-taken');
-        const messageBox = document.getElementById('message-box');
-        const messageText = document.getElementById('message-text');
-        const messageOkBtn = document.getElementById('message-ok-btn');
+        const feedbackMessage = document.getElementById('feedbackMessage');
+        const nextButton = document.getElementById('nextButton'); // Get the new next button
 
-        // Function to display a message box
-        function showMessageBox(message) {
-            messageText.textContent = message;
-            messageBox.style.display = 'block';
-        }
+        const scoreText = document.getElementById('scoreText');
+        const timeTakenText = document.getElementById('timeTakenText');
 
-        // Function to hide the message box
-        function hideMessageBox() {
-            messageBox.style.display = 'none';
-        }
+        // Event Listeners
+        loginButton.addEventListener('click', handleLogin);
+        startButton.addEventListener('click', handleStartQuiz);
+        nextButton.addEventListener('click', handleNextQuestion); // Add event listener for next button
 
-        messageOkBtn.addEventListener('click', hideMessageBox);
+        function handleLogin() {
+            const id = loginIdInput.value;
+            const password = loginPasswordInput.value;
 
-        // Function to shuffle array (Fisher-Yates algorithm)
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
-
-        // Shuffle quiz data once at the beginning
-        shuffleArray(quizData);
-
-        // Function to display current question
-        function displayQuestion() {
-            const question = quizData[currentQuestionIndex];
-            questionText.textContent = `${currentQuestionIndex + 1}. ${question.question}`;
-            optionsContainer.innerHTML = ''; // Clear previous options
-
-            question.options.forEach((option, index) => {
-                const button = document.createElement('button');
-                button.textContent = option;
-                button.classList.add('rounded-lg');
-                button.addEventListener('click', () => selectOption(option, button));
-
-                // If an answer was previously selected for this question, highlight it
-                if (userAnswers[currentQuestionIndex] === option) {
-                    button.classList.add('selected');
-                }
-                optionsContainer.appendChild(button);
-            });
-
-            updateNavigationButtons();
-            applyPreviousSelectionHighlight();
-        }
-
-        // Function to apply highlighting based on previous selection
-        function applyPreviousSelectionHighlight() {
-            const selectedAnswer = userAnswers[currentQuestionIndex];
-            if (selectedAnswer !== null) {
-                const buttons = optionsContainer.querySelectorAll('button');
-                buttons.forEach(button => {
-                    button.disabled = true; // Disable all options after selection
-                    if (button.textContent === selectedAnswer) {
-                        if (selectedAnswer === quizData[currentQuestionIndex].answer) {
-                            button.classList.add('correct');
-                        } else {
-                            button.classList.add('wrong');
-                            // Highlight the correct answer if the selected one was wrong
-                            buttons.forEach(btn => {
-                                if (btn.textContent === quizData[currentQuestionIndex].answer) {
-                                    btn.classList.add('correct');
-                                }
-                            });
-                        }
-                    }
-                });
-            }
-        }
-
-        // Function to handle option selection
-        function selectOption(selectedOption, clickedButton) {
-            if (quizAttempted) return; // Prevent re-answering after quiz submission
-
-            userAnswers[currentQuestionIndex] = selectedOption;
-
-            const buttons = optionsContainer.querySelectorAll('button');
-            buttons.forEach(button => {
-                button.disabled = true; // Disable all options after selection
-                button.classList.remove('selected', 'correct', 'wrong'); // Clear previous highlights
-            });
-
-            const correctAnswer = quizData[currentQuestionIndex].answer;
-
-            if (selectedOption === correctAnswer) {
-                clickedButton.classList.add('correct');
+            if (id === '9922' && password === '2299') {
+                loginMessage.textContent = '';
+                loginScreen.classList.add('hidden');
+                nameEntryScreen.classList.remove('hidden');
             } else {
-                clickedButton.classList.add('wrong');
-                // Highlight the correct answer
-                buttons.forEach(button => {
-                    if (button.textContent === correctAnswer) {
-                        button.classList.add('correct');
-                    }
-                });
+                loginMessage.textContent = 'Invalid ID or Password. Please try again.';
+                loginMessage.style.color = 'red';
             }
         }
 
-        // Function to update navigation button visibility
-        function updateNavigationButtons() {
-            prevBtn.style.display = currentQuestionIndex > 0 ? 'inline-block' : 'none';
-            nextBtn.style.display = currentQuestionIndex < quizData.length - 1 ? 'inline-block' : 'none';
-            submitQuizBtn.style.display = currentQuestionIndex === quizData.length - 1 ? 'inline-block' : 'none';
-        }
-
-        // Event listener for Start Quiz button
-        startQuizBtn.addEventListener('click', () => {
-            const userId = userIdInput.value.trim();
-            const password = passwordInput.value.trim();
-            candidateName = candidateNameInput.value.trim();
-
-            if (userId === '9922' && password === '2299') {
-                if (candidateName) {
-                    if (!quizAttempted) {
-                        loginScreen.style.display = 'none';
-                        quizScreen.style.display = 'block';
-                        quizStarted = true;
-                        startTimer();
-                        displayQuestion();
-                    } else {
-                        showMessageBox("You have already attempted the quiz. You cannot restart.");
-                    }
-                } else {
-                    showMessageBox("Please enter your name to start the quiz.");
-                }
+        function handleStartQuiz() {
+            const name = candidateNameInput.value.trim();
+            if (name) {
+                candidateName = name;
+                nameMessage.textContent = '';
+                nameEntryScreen.classList.add('hidden');
+                quizScreen.classList.remove('hidden');
+                startQuiz();
             } else {
-                showMessageBox("Invalid ID or Password.");
+                nameMessage.textContent = 'Please enter your name to start the quiz.';
+                nameMessage.style.color = 'red';
             }
-        });
+        }
 
-        // Event listener for Previous button
-        prevBtn.addEventListener('click', () => {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                displayQuestion();
-            }
-        });
+        function startQuiz() {
+            quizStartTime = Date.now();
+            displayQuestion();
+            startTimer();
+        }
 
-        // Event listener for Next button
-        nextBtn.addEventListener('click', () => {
-            if (currentQuestionIndex < quizData.length - 1) {
-                currentQuestionIndex++;
-                displayQuestion();
-            }
-        });
-
-        // Event listener for Submit Quiz button
-        submitQuizBtn.addEventListener('click', () => {
-            if (quizAttempted) {
-                showMessageBox("You have already submitted the quiz.");
-                return;
-            }
-            clearInterval(timerInterval);
-            calculateResult();
-            quizScreen.style.display = 'none';
-            resultScreen.style.display = 'block';
-            quizAttempted = true;
-        });
-
-        // Function to start the timer
         function startTimer() {
-            timerInterval = setInterval(() => {
+            timer = setInterval(() => {
                 timeLeft--;
                 const minutes = Math.floor(timeLeft / 60);
                 const seconds = timeLeft % 60;
                 timerDisplay.textContent = `Time Left: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
                 if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    showMessageBox("Time's up! Submitting your quiz.");
-                    calculateResult();
-                    quizScreen.style.display = 'none';
-                    resultScreen.style.display = 'block';
-                    quizAttempted = true;
+                    clearInterval(timer);
+                    endQuiz();
                 }
             }, 1000);
         }
 
-        // Function to calculate and display result
-        function calculateResult() {
-            score = 0;
-            for (let i = 0; i < quizData.length; i++) {
-                if (userAnswers[i] === quizData[i].answer) {
-                    score++;
-                }
-            }
+        function displayQuestion() {
+            if (currentQuestionIndex < quizData.length) {
+                const question = quizData[currentQuestionIndex];
+                questionText.textContent = `${currentQuestionIndex + 1}. ${question.question}`;
+                optionsContainer.innerHTML = '';
+                feedbackMessage.textContent = '';
+                nextButton.classList.add('hidden'); // Hide next button for new question
 
-            const totalQuestions = quizData.length;
-            const percentage = (score / totalQuestions) * 100;
-            const timeTaken = (20 * 60) - timeLeft;
+                // Shuffle options for the current question
+                const shuffledOptions = [...question.options];
+                shuffledOptions.sort(() => Math.random() - 0.5);
+
+                shuffledOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.classList.add('rounded-lg');
+                    button.addEventListener('click', () => selectOption(button, option, question.correctAnswer));
+                    optionsContainer.appendChild(button);
+                });
+
+                // Update next button text for the last question
+                if (currentQuestionIndex === quizData.length - 1) {
+                    nextButton.textContent = 'Finish Quiz';
+                } else {
+                    nextButton.textContent = 'Next Question';
+                }
+
+            } else {
+                endQuiz();
+            }
+        }
+
+        function selectOption(selectedButton, selectedAnswer, correctAnswer) {
+            if (quizEnded) return; // Prevent interaction after quiz ends
+
+            // Disable all options after one is selected
+            Array.from(optionsContainer.children).forEach(button => {
+                button.disabled = true;
+            });
+
+            if (selectedAnswer === correctAnswer) {
+                score++;
+                selectedButton.classList.add('correct');
+                feedbackMessage.textContent = 'Correct!';
+                feedbackMessage.style.color = 'green';
+            } else {
+                selectedButton.classList.add('wrong');
+                feedbackMessage.textContent = 'Wrong Answer!';
+                feedbackMessage.style.color = 'red';
+                // Highlight the correct answer in green
+                Array.from(optionsContainer.children).forEach(button => {
+                    if (button.textContent === correctAnswer) {
+                        button.classList.add('correct');
+                    }
+                });
+            }
+            nextButton.classList.remove('hidden'); // Show next button
+        }
+
+        function handleNextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                displayQuestion();
+            } else {
+                endQuiz();
+            }
+        }
+
+        function endQuiz() {
+            if (quizEnded) return; // Prevent multiple calls to endQuiz
+            quizEnded = true;
+            clearInterval(timer);
+            quizScreen.classList.add('hidden');
+            resultScreen.classList.remove('hidden');
+
+            const timeTaken = Math.floor((Date.now() - quizStartTime) / 1000);
             const minutesTaken = Math.floor(timeTaken / 60);
             const secondsTaken = timeTaken % 60;
 
-            resultCandidateName.textContent = candidateName;
-            scoreDisplay.textContent = score;
-            totalQuestionsDisplay.textContent = totalQuestions;
-            percentageDisplay.textContent = percentage.toFixed(2);
-            timeTakenDisplay.textContent = `Time Taken: ${minutesTaken} minutes and ${secondsTaken} seconds`;
+            scoreText.textContent = `${candidateName}, your score: ${score} out of ${quizData.length}`;
+            timeTakenText.textContent = `Time taken: ${minutesTaken.toString().padStart(2, '0')}:${secondsTaken.toString().padStart(2, '0')}`;
         }
-
-        // Initial setup on page load (ensure login screen is visible)
-        document.addEventListener('DOMContentLoaded', () => {
-            loginScreen.style.display = 'block';
-            quizScreen.style.display = 'none';
-            resultScreen.style.display = 'none';
-        });
-
     </script>
 </body>
 </html>
+
