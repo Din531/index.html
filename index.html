@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Election Commission Officer BPS 17 Quiz</title>
+    <title>MTP and One Paper Mcqs Preparation</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -20,11 +19,11 @@
         }
         .quiz-container {
             background-color: #ffffff;
+            padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 600px;
-            padding: 30px;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -34,15 +33,15 @@
             margin-bottom: 20px;
         }
         .header h1 {
-            color: #1a73e8; /* Blue */
+            font-size: 1.8em;
+            color: #1a73e8; /* Blue color */
             font-weight: bold;
-            font-size: 1.8rem;
             margin-bottom: 5px;
         }
         .header p {
-            color: #1a73e8; /* Blue */
+            font-size: 1.1em;
+            color: #1a73e8; /* Blue color */
             font-weight: bold;
-            font-size: 1rem;
         }
         .input-group {
             margin-bottom: 15px;
@@ -51,26 +50,27 @@
         .input-group label {
             display: block;
             margin-bottom: 8px;
-            font-weight: bold;
+            font-weight: 600;
             color: #333;
         }
         .input-group input {
             width: 100%;
             padding: 12px;
-            border: 1px solid #b0d8f0; /* Light blue border */
+            border: 1px solid #cce7f0; /* Light blue border */
             border-radius: 8px;
-            font-size: 1rem;
             box-sizing: border-box;
+            font-size: 1em;
+            background-color: #f8fcff; /* Very light blue input background */
         }
         .button {
-            background-color: #1a73e8; /* Blue */
+            background-color: #1a73e8; /* Blue button */
             color: white;
             padding: 12px 25px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: bold;
+            font-size: 1.1em;
+            font-weight: 600;
             transition: background-color 0.3s ease, transform 0.2s ease;
             width: 100%;
         }
@@ -79,71 +79,71 @@
             transform: translateY(-2px);
         }
         .button:disabled {
-            background-color: #a0c4ff; /* Lighter blue when disabled */
+            background-color: #a0c4e8;
             cursor: not-allowed;
         }
-        .question-text {
-            font-size: 1.2rem;
+        .question-section {
+            display: none;
+            text-align: left;
+        }
+        .question-section h2 {
+            font-size: 1.4em;
+            color: #333;
             margin-bottom: 20px;
-            color: #333;
-            text-align: left;
+            line-height: 1.5;
         }
-        .options-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .option-button {
-            background-color: #e3f2fd; /* Very light blue */
-            color: #333;
-            padding: 12px 15px;
-            border: 1px solid #c0e0f0; /* Light blue border */
+        .options-container button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #cce7f0;
             border-radius: 8px;
+            background-color: #f8fcff;
             text-align: left;
+            font-size: 1em;
             cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-            word-wrap: break-word; /* Ensure long options wrap */
-            white-space: normal; /* Ensure long options wrap */
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            color: #333;
+            line-height: 1.4; /* Ensure good line spacing for longer options */
         }
-        .option-button:hover:not(.correct):not(.incorrect):not(.disabled) {
-            background-color: #d1ecf1; /* Slightly darker light blue on hover */
-            border-color: #a8d6e0;
+        .options-container button:hover:not(.correct):not(.wrong) {
+            background-color: #e6f7ff; /* Lighter blue on hover */
+            border-color: #99d6f2;
         }
-        .option-button.correct {
+        .options-container button.correct {
             background-color: #d4edda; /* Light green */
             border-color: #28a745; /* Green */
             color: #155724; /* Dark green text */
-            font-weight: bold;
         }
-        .option-button.incorrect {
+        .options-container button.wrong {
             background-color: #f8d7da; /* Light red */
             border-color: #dc3545; /* Red */
             color: #721c24; /* Dark red text */
-            font-weight: bold;
-        }
-        .option-button.disabled {
-            cursor: not-allowed;
         }
         .timer {
-            font-size: 1.1rem;
+            font-size: 1.2em;
             font-weight: bold;
-            color: #1a73e8; /* Blue */
-            margin-bottom: 20px;
-        }
-        .result-screen h2 {
-            font-size: 2rem;
             color: #1a73e8;
+            margin-bottom: 20px;
+            text-align: right;
+        }
+        .result-section {
+            display: none;
+            text-align: center;
+        }
+        .result-section h2 {
+            font-size: 2em;
+            color: #1a73e8;
+            margin-bottom: 15px;
+        }
+        .result-section p {
+            font-size: 1.2em;
+            color: #333;
             margin-bottom: 10px;
         }
-        .result-screen p {
-            font-size: 1.2rem;
-            color: #333;
-        }
-        .hidden {
-            display: none;
-        }
         .message-box {
+            display: none;
             position: fixed;
             top: 50%;
             left: 50%;
@@ -154,14 +154,16 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             z-index: 1000;
             text-align: center;
-            max-width: 350px;
-            width: 90%;
-            border: 1px solid #b0d8f0;
+            max-width: 90%;
+        }
+        .message-box h3 {
+            margin-top: 0;
+            color: #1a73e8;
+            font-size: 1.5em;
         }
         .message-box p {
             margin-bottom: 20px;
-            font-size: 1.1rem;
-            color: #333;
+            color: #555;
         }
         .message-box button {
             background-color: #1a73e8;
@@ -170,35 +172,70 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1rem;
         }
-        .message-box button:hover {
-            background-color: #155cb8;
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .quiz-container {
+                padding: 20px;
+            }
+            .header h1 {
+                font-size: 1.5em;
+            }
+            .header p {
+                font-size: 1em;
+            }
+            .question-section h2 {
+                font-size: 1.2em;
+            }
+            .options-container button {
+                font-size: 0.95em;
+                padding: 10px;
+            }
+            .timer {
+                font-size: 1em;
+            }
+            .result-section h2 {
+                font-size: 1.8em;
+            }
+            .result-section p {
+                font-size: 1.1em;
+            }
         }
     </style>
 </head>
-<body class="bg-blue-50">
+<body>
     <div class="quiz-container">
-        <header class="header">
-            <h1 class="text-blue-700 font-extrabold text-2xl md:text-3xl">Election Commission Officer BPS 17</h1>
-            <p class="text-blue-700 font-extrabold text-lg md:text-xl">CONTACT: 03188185185</p>
-        </header>
+        <div class="header">
+            <h1><b>MTP and One Paper Mcqs Preparation</b></h1>
+            <p><b>CONTACT: 03188185185</b></p>
+        </div>
 
-        <!-- Login Screen -->
-        <div id="login-screen" class="flex flex-col gap-4">
+        <!-- Login Section -->
+        <div id="login-section">
             <div class="input-group">
                 <label for="login-id">ID:</label>
-                <input type="password" id="login-id" placeholder="Enter ID">
+                <input type="text" id="login-id" placeholder="Enter your ID">
             </div>
             <div class="input-group">
                 <label for="login-password">Password:</label>
-                <input type="password" id="login-password" placeholder="Enter Password">
+                <input type="password" id="login-password" placeholder="Enter your Password">
             </div>
             <button id="login-button" class="button">Login</button>
         </div>
 
-        <!-- Name Entry Screen -->
-        <div id="name-entry-screen" class="hidden flex flex-col gap-4">
+        <!-- Name Entry Section -->
+        <div id="name-entry-section" style="display: none;">
             <div class="input-group">
                 <label for="candidate-name">Enter Your Name:</label>
                 <input type="text" id="candidate-name" placeholder="Your Name">
@@ -206,620 +243,372 @@
             <button id="start-quiz-button" class="button">Start Quiz</button>
         </div>
 
-        <!-- Quiz Screen -->
-        <div id="quiz-screen" class="hidden flex flex-col gap-4">
+        <!-- Quiz Section -->
+        <div id="quiz-section" class="question-section">
             <div class="timer" id="timer">Time Left: 60:00</div>
-            <p id="question-number" class="text-gray-700 text-lg font-semibold text-left"></p>
-            <p id="question-text" class="question-text"></p>
+            <h2 id="question-text"></h2>
             <div id="options-container" class="options-container">
                 <!-- Options will be dynamically loaded here -->
             </div>
-            <button id="next-button" class="button mt-4" disabled>Next Question</button>
         </div>
 
-        <!-- Result Screen -->
-        <div id="result-screen" class="hidden result-screen">
-            <h2 class="text-blue-700">Quiz Completed!</h2>
-            <p id="final-score"></p>
-            <p id="user-name-display"></p>
+        <!-- Result Section -->
+        <div id="result-section" class="result-section">
+            <h2>Quiz Result</h2>
+            <p>Candidate Name: <span id="final-name"></span></p>
+            <p>Score: <span id="score"></span> / 100</p>
+            <p>Time Taken: <span id="time-taken"></span></p>
         </div>
     </div>
 
-    <!-- Message Box for alerts -->
-    <div id="message-box" class="message-box hidden">
-        <p id="message-text"></p>
+    <!-- Message Box for Alerts -->
+    <div id="message-box" class="message-box">
+        <h3 id="message-title"></h3>
+        <p id="message-content"></p>
         <button id="message-ok-button">OK</button>
     </div>
+    <div id="overlay" class="overlay"></div>
 
     <script>
-        // Quiz Data (100 MCQs) - Verified and Corrected
-        const quizData = [
-            // 30 MCQs from Constitution of Pakistan and Election Act, 2017
-            {
-                question: "Who is responsible for appointing the Chief Election Commissioner (CEC) of Pakistan?",
-                options: ["The Prime Minister of Pakistan", "The Chief Justice of Pakistan", "The President of Pakistan", "The Speaker of the National Assembly"],
-                answer: "The President of Pakistan"
-            },
-            {
-                question: "As per the 22nd Constitutional Amendment, how many names for CEC appointment are forwarded by the Prime Minister to the Parliamentary Committee?",
-                options: ["Only one name is forwarded directly", "A list containing two suitable names", "A panel of three potential candidates", "Four names, one from each province"],
-                answer: "A panel of three potential candidates"
-            },
-            {
-                question: "What is the maximum age limit for a retired judge to be eligible for appointment as the Chief Election Commissioner?",
-                options: ["Not exceeding 60 years of age", "A maximum of 65 years of age", "Not more than 68 years of age", "Up to 70 years of age is acceptable"],
-                answer: "Not more than 68 years of age"
-            },
-            {
-                question: "Before whom does the Chief Election Commissioner take the oath of office upon assuming their duties?",
-                options: ["The President of Pakistan", "The Prime Minister of Pakistan", "The Chief Justice of Pakistan", "The Chairman of the Senate"],
-                answer: "The Chief Justice of Pakistan"
-            },
-            {
-                question: "What is the specified term of office for both the Chief Election Commissioner and the members of the Election Commission?",
-                options: ["A fixed term of 3 years", "A tenure of 4 years from appointment", "A period of 5 years from the date of entering office", "An extendable term of 6 years"],
-                answer: "A period of 5 years from the date of entering office"
-            },
-            {
-                question: "Under which specific Article of the Constitution can the Chief Election Commissioner be removed from their office?",
-                options: ["Article 209, similar to a Supreme Court Judge", "Article 210, by a simple parliamentary resolution", "Article 211, upon the advice of the Prime Minister", "Article 212, through a presidential decree"],
-                answer: "Article 209, similar to a Supreme Court Judge"
-            },
-            {
-                question: "Excluding the Chief Election Commissioner, how many members does the Election Commission of Pakistan typically consist of?",
-                options: ["Two additional members", "Three additional members", "Four additional members, one from each Province", "Five additional members from various regions"],
-                answer: "Four additional members, one from each Province"
-            },
-            {
-                question: "What is the maximum age for a retired civil servant to be appointed as a member of the Election Commission?",
-                options: ["Not more than 60 years old", "A maximum age of 65 years", "Not exceeding 68 years of age", "Up to 70 years old"],
-                answer: "A maximum age of 65 years"
-            },
-            {
-                question: "Which constitutional body holds the responsibility for preparing and periodically revising electoral rolls for National Assembly, Provincial Assemblies, and local governments?",
-                options: ["The National Database and Registration Authority (NADRA)", "The Election Commission of Pakistan (ECP)", "The Ministry of Parliamentary Affairs", "The Provincial Election Commissions"],
-                answer: "The Election Commission of Pakistan (ECP)"
-            },
-            {
-                question: "All executive authorities in both the Federation and the Provinces are constitutionally obligated to assist which specific body in the discharge of its functions?",
-                options: ["The Supreme Court of Pakistan", "The Parliament of Pakistan", "The Election Commission of Pakistan", "The Office of the Prime Minister"],
-                answer: "The Election Commission of Pakistan"
-            },
-            {
-                question: "Under which Article of the Constitution does Parliament possess the authority to legislate on the delimitation of constituencies?",
-                options: ["Article 220, concerning executive assistance", "Article 221, regarding officers and staff", "Article 222, pertaining to electoral laws", "Article 223, on double membership"],
-                answer: "Article 222, pertaining to electoral laws"
-            },
-            {
-                question: "What is the maximum permissible period for holding a general election after a Provincial Assembly has been dissolved?",
-                options: ["Within 30 days of dissolution", "Within 60 days following dissolution", "Within 90 days after the dissolution", "Within 120 days from the date of dissolution"],
-                answer: "Within 90 days after the dissolution"
-            },
-            {
-                question: "Which Article of the Constitution explicitly prohibits a person from simultaneously holding membership in both Houses of Parliament?",
-                options: ["Article 221, related to staff appointments", "Article 222, on electoral legislation", "Article 223, titled 'Bar Against Double Membership'", "Article 224, concerning election timeframes"],
-                answer: "Article 223, titled 'Bar Against Double Membership'"
-            },
-            {
-                question: "How many days are legally allowed for the declaration of election results after the conclusion of polls for a general election?",
-                options: ["Not later than 7 days", "Within 10 days of polling", "Not later than 14 days after the conclusion of polls", "Within 21 days from election day"],
-                answer: "Not later than 14 days after the conclusion of polls"
-            },
-            {
-                question: "Which specific elections under the Constitution are NOT necessarily required to be conducted by secret ballot?",
-                options: ["The election of the President of Pakistan", "Elections for seats in the Senate", "Elections for the Prime Minister and Chief Minister", "Elections for Provincial Assembly members"],
-                answer: "Elections for the Prime Minister and Chief Minister"
-            },
-            {
-                question: "According to the Elections Act, 2017, the term 'accredited' specifically means authorized by which entity?",
-                options: ["Authorized by the Federal Government", "Authorized by the Election Commission", "Authorized by the Supreme Court of Pakistan", "Authorized by a recognized political party"],
-                answer: "Authorized by the Election Commission"
-            },
-            {
-                question: "In the context of the Elections Act, 2017, what does the term 'Assembly' refer to?",
-                options: ["Only the National Assembly of Pakistan", "Only a Provincial Assembly", "Both the National Assembly and any Provincial Assembly", "Any legislative body at the federal or provincial level"],
-                answer: "Both the National Assembly and any Provincial Assembly"
-            },
-            {
-                question: "What is the precise definition of a 'bye-election' as provided in the Elections Act, 2017?",
-                options: ["An election held to create a new legislative seat", "An election conducted to fill a casual vacancy", "An election that takes place before its scheduled term", "An election exclusively for local government bodies"],
-                answer: "An election conducted to fill a casual vacancy"
-            },
-            {
-                question: "Which Article of the Constitution specifically defines the 'Commission' as referred to in the Elections Act, 2017?",
-                options: ["Article 213, regarding the CEC's appointment", "Article 215, on terms of office", "Article 217, for acting commissioners", "Article 218, establishing the Election Commission"],
-                answer: "Article 218, establishing the Election Commission"
-            },
-            {
-                question: "What is the minimum number of years of education required for a 'technocrat' as defined by the Elections Act, 2017?",
-                options: ["At least 14 years of formal education", "A minimum of 16 years of education recognized by HEC", "At least 18 years of higher education", "A minimum of 20 years of academic study"],
-                answer: "A minimum of 16 years of education recognized by HEC"
-            },
-            {
-                question: "A 'validly nominated candidate' is precisely defined in the Elections Act, 2017, as a candidate whose:",
-                options: ["Campaign funding has been fully verified", "Nomination paper has been officially accepted", "Political party has formally endorsed their candidature", "Eligibility criteria have been met and confirmed"],
-                answer: "Nomination paper has been officially accepted"
-            },
-            {
-                question: "According to the Elections Act, 2017, what does the term 'electoral roll' encompass?",
-                options: ["Only newly prepared voter lists", "Only revised electoral registers", "Electoral rolls prepared, revised, or corrected under this Act, including those from the 1974 Act", "Only rolls specifically for national-level elections"],
-                answer: "Electoral rolls prepared, revised, or corrected under this Act, including those from the 1974 Act"
-            },
-            {
-                question: "What is the fundamental duty of the Election Commission as outlined in Article 218(3) of the Constitution?",
-                options: ["To register and regulate all political parties in the country", "To organize and conduct elections honestly, justly, fairly, and in accordance with law, guarding against corrupt practices", "To manage the financial resources allocated for all electoral activities", "To mediate disputes and conflicts between contesting political parties"],
-                answer: "To organize and conduct elections honestly, justly, fairly, and in accordance with law, guarding against corrupt practices"
-            },
-            {
-                question: "In the event that the office of the Chief Election Commissioner is vacant, who is responsible for nominating the Acting Chief Election Commissioner?",
-                options: ["The President of Pakistan", "The Prime Minister of Pakistan", "The Chief Justice of Pakistan", "The most senior member of the Election Commission"],
-                answer: "The Chief Justice of Pakistan"
-            },
-            {
-                question: "What is the minimum service requirement for a retired senior civil servant to be considered eligible for the appointment of Chief Election Commissioner?",
-                options: ["15 years of service in BPS-21", "20 years of service in BPS-22 or above", "25 years of service in BPS-20", "30 years of service in any BPS"],
-                answer: "20 years of service in BPS-22 or above"
-            },
-            {
-                question: "If the Prime Minister and the Leader of the Opposition fail to reach a consensus on names for the CEC, which body makes the final decision on the appointment?",
-                options: ["The Supreme Court of Pakistan", "The Parliamentary Committee", "The President of Pakistan", "The Election Commission of Pakistan"],
-                answer: "The Election Commission of Pakistan"
-            },
-            {
-                question: "The Election Commission is empowered to decide cases of disqualification of members of Parliament and Provincial Assemblies under which specific Articles of the Constitution?",
-                options: ["Articles 60 and 61, related to membership qualifications", "Articles 62 and 63(1), concerning eligibility criteria", "Articles 63(2) and 63A, pertaining to disqualifications", "Articles 64 and 65, on vacation of seats"],
-                answer: "Articles 63(2) and 63A, pertaining to disqualifications"
-            },
-            {
-                question: "In the context of the Elections Act, 2017, what is the precise meaning of 'population'?",
-                options: ["The estimated population provided by the United Nations", "The population figures based on the latest officially published census", "The population determined by the most recent voter registration drive", "The population as assessed by the Election Commission of Pakistan"],
-                answer: "The population figures based on the latest officially published census"
-            },
-            {
-                question: "The term 'election observer' in the Elections Act, 2017, specifically refers to a person who is authorized by whom to observe the conduct of an election?",
-                options: ["The Federal Government of Pakistan", "A registered political party", "The Election Commission of Pakistan", "An accredited international non-governmental organization"],
-                answer: "The Election Commission of Pakistan"
-            },
-            {
-                question: "According to Article 222 of the Constitution, what specific power does Parliament have regarding electoral rolls?",
-                options: ["To directly prepare and maintain all electoral rolls", "To supervise the Election Commission's preparation of rolls", "To provide by law for the preparation and revision of electoral rolls", "To approve all changes and updates to electoral rolls"],
-                answer: "To provide by law for the preparation and revision of electoral rolls"
-            },
+        // Utility function to show a custom message box instead of alert()
+        function showMessageBox(title, message, callback) {
+            document.getElementById('message-title').innerText = title;
+            document.getElementById('message-content').innerText = message;
+            document.getElementById('message-box').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
 
-            // 30 MCQs from English
-            {
-                question: "Choose the best synonym for 'Abundant'.",
-                options: ["Scarce", "Plentiful", "Rare", "Limited"],
-                answer: "Plentiful"
-            },
-            {
-                question: "Which word is a synonym for 'Benevolent'?",
-                options: ["Cruel", "Kind", "Selfish", "Strict"],
-                answer: "Kind"
-            },
-            {
-                question: "Identify the synonym for 'Diligent'.",
-                options: ["Lazy", "Careless", "Hardworking", "Slow"],
-                answer: "Hardworking"
-            },
-            {
-                question: "Which word is most similar in meaning to 'Ephemeral'?",
-                options: ["Permanent", "Lasting", "Temporary", "Eternal"],
-                answer: "Temporary"
-            },
-            {
-                question: "Find the synonym for 'Gregarious'.",
-                options: ["Shy", "Sociable", "Reserved", "Solitary"],
-                answer: "Sociable"
-            },
-            {
-                question: "What is a synonym for 'Meticulous'?",
-                options: ["Careless", "Precise", "Hasty", "Rough"],
-                answer: "Precise"
-            },
-            {
-                question: "Choose the best antonym for 'Amateur'.",
-                options: ["Beginner", "Novice", "Professional", "Learner"],
-                answer: "Professional"
-            },
-            {
-                question: "Which word is an antonym for 'Conceal'?",
-                options: ["Hide", "Reveal", "Bury", "Cover"],
-                answer: "Reveal"
-            },
-            {
-                question: "Identify the antonym for 'Fragile'.",
-                options: ["Delicate", "Weak", "Sturdy", "Brittle"],
-                answer: "Sturdy"
-            },
-            {
-                question: "Which word is the opposite of 'Optimistic'?",
-                options: ["Hopeful", "Positive", "Pessimistic", "Cheerful"],
-                answer: "Pessimistic"
-            },
-            {
-                question: "Find the antonym for 'Venerate'.",
-                options: ["Revere", "Worship", "Despise", "Admire"],
-                answer: "Despise"
-            },
-            {
-                question: "What is an antonym for 'Zealous'?",
-                options: ["Passionate", "Enthusiastic", "Apathetic", "Eager"],
-                answer: "Apathetic"
-            },
-            {
-                question: "What does the idiom 'Bite the bullet' mean?",
-                options: ["To chew on metal", "To face a difficult situation with courage", "To shoot someone", "To avoid a problem"],
-                answer: "To face a difficult situation with courage"
-            },
-            {
-                question: "The idiom 'Break a leg' means:",
-                options: ["To injure oneself", "To wish someone good luck", "To fall down", "To run fast"],
-                answer: "To wish someone good luck"
-            },
-            {
-                question: "What is the meaning of 'Cost an arm and a leg'?",
-                options: ["To pay a small amount", "To be very expensive", "To lose body parts", "To bargain effectively"],
-                answer: "To be very expensive"
-            },
-            {
-                question: "If someone 'Spill the beans', what do they do?",
-                options: ["Drop food", "Reveal a secret", "Plant seeds", "Make a mess"],
-                answer: "Reveal a secret"
-            },
-            {
-                question: "What does 'Hit the road' mean?",
-                options: ["To strike the ground", "To start a journey", "To repair a road", "To get lost"],
-                answer: "To start a journey"
-            },
-            {
-                question: "The idiom 'Once in a blue moon' implies:",
-                options: ["Very frequently", "Every month", "Very rarely", "During a full moon"],
-                answer: "Very rarely"
-            },
-            {
-                question: "Change into indirect speech: He said, 'I am going to the market.'",
-                options: ["He said that he was going to the market.", "He said that I am going to the market.", "He said he is going to the market.", "He said that he goes to the market."],
-                answer: "He said that he was going to the market."
-            },
-            {
-                question: "Change into direct speech: She asked me if I could help her.",
-                options: ["She said to me, 'Can you help me?'", "She said, 'Could you help her?'", "She asked, 'Will you help me?'", "She asked, 'Do you help her?'"],
-                answer: "She said to me, 'Can you help me?'"
-            },
-            {
-                question: "Change into indirect speech: The teacher said, 'The Earth revolves around the Sun.'",
-                options: ["The teacher said that the Earth revolved around the Sun.", "The teacher said that the Earth revolves around the Sun.", "The teacher said the Earth is revolving around the Sun.", "The teacher said that the Earth had revolved around the Sun."],
-                answer: "The teacher said that the Earth revolves around the Sun."
-            },
-            {
-                question: "Change into direct speech: He told me that he would visit me the next day.",
-                options: ["He said to me, 'I will visit you tomorrow.'", "He said to me, 'I would visit you tomorrow.'", "He said, 'He will visit me tomorrow.'", "He said, 'I visit you next day.'"],
-                answer: "He said to me, 'I will visit you tomorrow.'"
-            },
-            {
-                question: "Change into indirect speech: My mother said, 'Honesty is the best policy.'",
-                options: ["My mother said that honesty was the best policy.", "My mother said that honesty is the best policy.", "My mother said honesty would be the best policy.", "My mother said that honesty has been the best policy."],
-                answer: "My mother said that honesty is the best policy."
-            },
-            {
-                question: "Change into direct speech: They asked where I was going.",
-                options: ["They said, 'Where are you going?'", "They asked, 'Where was I going?'", "They said, 'Where am I going?'", "They asked, 'Where you are going?'"],
-                answer: "They said, 'Where are you going?'"
-            },
-            {
-                question: "Change into passive voice: She writes a letter.",
-                options: ["A letter is written by her.", "A letter was written by her.", "A letter has been written by her.", "A letter is being written by her."],
-                answer: "A letter is written by her."
-            },
-            {
-                question: "Change into active voice: The ball was caught by the boy.",
-                options: ["The boy caught the ball.", "The boy catches the ball.", "The boy had caught the ball.", "The boy is catching the ball."],
-                answer: "The boy caught the ball."
-            },
-            {
-                question: "Change into passive voice: They are building a house.",
-                options: ["A house is built by them.", "A house is being built by them.", "A house was built by them.", "A house has been built by them."],
-                answer: "A house is being built by them."
-            },
-            {
-                question: "Change into active voice: The book was read by him.",
-                options: ["He reads the book.", "He has read the book.", "He read the book.", "He had read the book."],
-                answer: "He read the book."
-            },
-            {
-                question: "Change into passive voice: He will finish the work.",
-                options: ["The work will be finished by him.", "The work is finished by him.", "The work was finished by him.", "The work has been finished by him."],
-                answer: "The work will be finished by him."
-            },
-            {
-                question: "Change into active voice: The song was sung by her.",
-                options: ["She sings the song.", "She sang the song.", "She has sung the song.", "She is singing the song."],
-                answer: "She sang the song."
-            },
+            const okButton = document.getElementById('message-ok-button');
+            okButton.onclick = () => {
+                document.getElementById('message-box').style.display = 'none';
+                document.getElementById('overlay').style.display = 'none';
+                if (callback) callback();
+            };
+        }
 
-            // 10 MCQs from Pakistan Affairs (from image)
-            {
-                question: "Who was the first Muslim Commander in India who entered India as conqueror?",
-                options: ["Mahmud Ghazni", "Muhammad bin Qasim", "Muhammad Ghori", "Aurangzeb"],
-                answer: "Muhammad bin Qasim"
-            },
-            {
-                question: "When was the first invasion of Sultan Muhammad Ghazni in subcontinent?",
-                options: ["998 AD", "1000 AD", "1008 AD", "1026 AD"],
-                answer: "1000 AD"
-            },
-            {
-                question: "The battle of Tarain and the foundation of Muslim rule in India is associated with which ruler?",
-                options: ["Sultan Muhammad Ghori", "Qutb-ud-din Aibak", "Akbar", "Babur"],
-                answer: "Sultan Muhammad Ghori"
-            },
-            {
-                question: "When did the End of Slave Dynasty in India occur?",
-                options: ["1206 AD", "1210 AD", "1290 AD", "1296 AD"],
-                answer: "1290 AD"
-            },
-            {
-                question: "When was the End of Khilji Dynasty founded in India?",
-                options: ["1316 AD", "1320 AD", "1325 AD", "1330 AD"],
-                answer: "1320 AD"
-            },
-            {
-                question: "The Lodhi Dynasty was founded in India in which year?",
-                options: ["1414 AD", "1421 AD", "1451 AD", "1498 AD"],
-                answer: "1451 AD"
-            },
-            {
-                question: "When did the First Anglo-Sikh War take place?",
-                options: ["1839-42", "1845-46", "1848-49", "1857-58"],
-                answer: "1845-46"
-            },
-            {
-                question: "Sir Syed Ahmad Khan wrote his famous book 'Asar us Sanadid' in which year?",
-                options: ["1840", "1842", "1844", "1847"],
-                answer: "1847"
-            },
-            {
-                question: "When was the War of Independence (Sepoy Mutiny) fought?",
-                options: ["1850", "1857", "1860", "1865"],
-                answer: "1857"
-            },
-            {
-                question: "When was the First Partition of Bengal under Lord Curzon?",
-                options: ["1901", "1905", "1906", "1911"],
-                answer: "1905"
-            },
-
-            // 10 MCQs from Current Affairs (January 2024)
-            {
-                question: "Which country hosted the first-ever global health security summit in January 2024?",
-                options: ["Pakistan", "India", "China", "USA"],
-                answer: "Pakistan"
-            },
-            {
-                question: "Who was recently appointed as the chief executive officer of the Global Alliance for Vaccines and Immunisation (Gavi)?",
-                options: ["Dr. Sania Nishtar", "Dr. Tedros Adhanom", "Bill Gates", "Dr. Anthony Fauci"],
-                answer: "Dr. Sania Nishtar"
-            },
-            {
-                question: "Which country's passport was ranked as the fourth-worst in the world in January 2024?",
-                options: ["Syria", "Iraq", "Afghanistan", "Pakistan"],
-                answer: "Pakistan"
-            },
-            {
-                question: "According to the 2024 rankings released by The Henley Passport Index, Pakistani passport has been ranked out of 104 countries?",
-                options: ["98th", "101st", "104th", "106th"],
-                answer: "104th"
-            },
-            {
-                question: "Ahmed Amin Murad made a two-day official visit to which country on 8 January 2024?",
-                options: ["Qatar", "UAE", "Bahrain", "Saudi Arabia"],
-                answer: "Bahrain"
-            },
-            {
-                question: "Which country's population fell for a second consecutive year in 2023?",
-                options: ["India", "China", "USA", "Indonesia"],
-                answer: "China"
-            },
-            {
-                question: "The International Monetary Fund (IMF) has downgraded Pakistan's growth estimate for fiscal year 2024 to what percentage?",
-                options: ["1%", "2%", "2.5%", "3%"],
-                answer: "2%"
-            },
-            {
-                question: "Imran Khan and Shah Mahmood Qureshi were sentenced to how many years in jail in a cipher case in January 2024?",
-                options: ["5 years", "7 years", "10 years", "14 years"],
-                answer: "10 years"
-            },
-            {
-                question: "Which country recently launched three rockets into space as part of a missile program?",
-                options: ["Iran", "North Korea", "Israel", "Turkey"],
-                answer: "Iran"
-            },
-            {
-                question: "Which country has recently banned UN women staff from working?",
-                options: ["Syria", "Yemen", "Afghanistan", "Somalia"],
-                answer: "Afghanistan"
-            },
-
-            // 10 MCQs from Islamiyat (from image)
-            {
-                question: "When did the incident of placing Hajjr-e-Aswad occur?",
-                options: ["606 A.D.", "610 A.D.", "615 A.D.", "616 A.D."],
-                answer: "606 A.D."
-            },
-            {
-                question: "In which year was Prophethood conferred?",
-                options: ["606 A.D.", "610 A.D.", "615 A.D.", "616 A.D."],
-                answer: "610 A.D."
-            },
-            {
-                question: "When did the boycott of Bani Hashim end?",
-                options: ["616 A.D.", "618 A.D.", "619 A.D.", "621 A.D."],
-                answer: "618 A.D."
-            },
-            {
-                question: "The migration to Madina and the start of the Hijri calendar occurred in which year?",
-                options: ["621 A.D.", "622 A.D.", "623 A.D.", "624 A.D."],
-                answer: "623 A.D."
-            },
-            {
-                question: "When was the Foundation of Masjid Nabwi laid?",
-                options: ["1 A.H.", "2 A.H.", "3 A.H.", "4 A.H."],
-                answer: "1 A.H."
-            },
-            {
-                question: "The Battle of Uhad took place in which year A.H.?",
-                options: ["2 A.H.", "3 A.H.", "4 A.H.", "5 A.H."],
-                answer: "3 A.H."
-            },
-            {
-                question: "When was the Truce of Hudaybiyah signed?",
-                options: ["5 A.H.", "6 A.H.", "7 A.H.", "8 A.H."],
-                answer: "6 A.H."
-            },
-            {
-                question: "When was the Conquest of Makkah?",
-                options: ["7 A.H.", "8 A.H.", "9 A.H.", "10 A.H."],
-                answer: "8 A.H."
-            },
-            {
-                question: "Who was the first among men who accepted Islam?",
-                options: ["Hazrat Ali", "Hazrat Abu Bakr", "Hazrat Umar", "Hazrat Usman"],
-                answer: "Hazrat Abu Bakr"
-            },
-            {
-                question: "Who was the first among women who accepted Islam?",
-                options: ["Hazrat Ayesha", "Hazrat Fatima", "Hazrat Khadija", "Hazrat Sumayyah"],
-                answer: "Hazrat Khadija"
-            },
-
-            // 10 MCQs from General Knowledge
-            {
-                question: "What is the capital city of France?",
-                options: ["Rome", "Berlin", "Paris", "Madrid"],
-                answer: "Paris"
-            },
-            {
-                question: "Which of these cities is the capital of Italy?",
-                options: ["Venice", "Florence", "Milan", "Rome"],
-                answer: "Rome"
-            },
-            {
-                question: "What is the currency of the European Union, used by most member states?",
-                options: ["Pound Sterling", "Swiss Franc", "Euro", "US Dollar"],
-                answer: "Euro"
-            },
-            {
-                question: "Which currency is used in Sweden?",
-                options: ["Euro", "Danish Krone", "Swedish Krona", "Norwegian Krone"],
-                answer: "Swedish Krona"
-            },
-            {
-                question: "Which of the following is the largest freshwater lake by surface area in the world?",
-                options: ["Lake Superior", "Lake Victoria", "Lake Baikal", "Caspian Sea"],
-                answer: "Lake Superior"
-            },
-            {
-                question: "Lake Titicaca is located on the border of which two South American countries?",
-                options: ["Brazil and Argentina", "Chile and Peru", "Peru and Bolivia", "Colombia and Ecuador"],
-                answer: "Peru and Bolivia"
-            },
-            {
-                question: "Mount Everest, the world's highest peak, is part of which mountain range?",
-                options: ["Andes", "Rockies", "Himalayas", "Alps"],
-                answer: "Himalayas"
-            },
-            {
-                question: "Which mountain range runs along the eastern side of North America?",
-                options: ["Sierra Nevada", "Appalachian Mountains", "Cascade Range", "Rocky Mountains"],
-                answer: "Appalachian Mountains"
-            },
-            {
-                question: "What is the capital of Spain?",
-                options: ["Lisbon", "Barcelona", "Madrid", "Seville"],
-                answer: "Madrid"
-            },
-            {
-                question: "Which country uses the currency 'Złoty'?",
-                options: ["Hungary", "Czech Republic", "Poland", "Romania"],
-                answer: "Poland"
-            }
-        ];
+        const loginIdInput = document.getElementById('login-id');
+        const loginPasswordInput = document.getElementById('login-password');
+        const loginButton = document.getElementById('login-button');
+        const nameEntrySection = document.getElementById('name-entry-section');
+        const loginSection = document.getElementById('login-section');
+        const candidateNameInput = document.getElementById('candidate-name');
+        const startQuizButton = document.getElementById('start-quiz-button');
+        const quizSection = document.getElementById('quiz-section');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const timerDisplay = document.getElementById('timer');
+        const resultSection = document.getElementById('result-section');
+        const finalNameSpan = document.getElementById('final-name');
+        const scoreSpan = document.getElementById('score');
+        const timeTakenSpan = document.getElementById('time-taken');
 
         let currentQuestionIndex = 0;
         let score = 0;
         let timer;
         let timeLeft = 60 * 60; // 60 minutes in seconds
-        let quizActive = false;
-        let userName = "";
+        let quizStartedTime;
+        let quizEndedTime;
         let quizAttempted = false; // To prevent restarting
 
-        // DOM Elements
-        const loginScreen = document.getElementById('login-screen');
-        const loginIdInput = document.getElementById('login-id');
-        const loginPasswordInput = document.getElementById('login-password');
-        const loginButton = document.getElementById('login-button');
+        const correctId = '7766';
+        const correctPassword = '6677';
 
-        const nameEntryScreen = document.getElementById('name-entry-screen');
-        const candidateNameInput = document.getElementById('candidate-name');
-        const startQuizButton = document.getElementById('start-quiz-button');
+        // All original questions categorized for proper slicing
+        const allOriginalQuestions = [
+            // English (30 questions)
+            // Synonyms (5)
+            { question: "Which word is a synonym for 'Abundant'?", options: ["Scarce", "Plentiful", "Rare", "Limited"], correct: 1 },
+            { question: "Choose the synonym for 'Adversity'.", options: ["Prosperity", "Misfortune", "Happiness", "Success"], correct: 1 },
+            { question: "What is a synonym for 'Ameliorate'?", options: ["Worsen", "Improve", "Damage", "Aggravate"], correct: 1 },
+            { question: "Identify the synonym for 'Aptitude'.", options: ["Inability", "Talent", "Weakness", "Disinterest"], correct: 1 },
+            { question: "Which word is closest in meaning to 'Audacious'?", options: ["Timid", "Brave", "Cowardly", "Shy"], correct: 1 },
+            // Antonyms (5)
+            { question: "What is the antonym of 'Ancient'?", options: ["Old", "Modern", "Historic", "Aged"], correct: 1 },
+            { question: "Choose the antonym for 'Arrogant'.", options: ["Haughty", "Humble", "Proud", "Conceited"], correct: 1 },
+            { question: "Which word is an antonym for 'Ascend'?", options: ["Climb", "Rise", "Descend", "Mount"], correct: 2 },
+            { question: "Identify the antonym for 'Artificial'.", options: ["Fake", "Genuine", "Synthetic", "Man-made"], correct: 1 },
+            { question: "What is the opposite of 'Attract'?", options: ["Charm", "Repel", "Draw", "Lure"], correct: 1 },
+            // Idioms (5)
+            { question: "What does the idiom 'Achilles' heel' mean?", options: ["A strong point", "A fatal weakness", "A hidden talent", "A great advantage"], correct: 1 },
+            { question: "The idiom 'Add insult to injury' means:", options: ["To praise someone", "To make a bad situation worse", "To offer help", "To apologize sincerely"], correct: 1 },
+            { question: "If you are 'All ears', it means you are:", options: ["Not listening", "Completely attentive", "Hard of hearing", "Talking too much"], correct: 1 },
+            { question: "What does 'An axe to grind' imply?", options: ["Having a secret plan", "Having a personal motive for doing something", "Being very angry", "Being extremely busy"], correct: 1 },
+            { question: "To 'At arm's length' means to:", options: ["Keep someone very close", "Keep someone at a distance", "Be physically strong", "Offer a helping hand"], correct: 1 },
+            // Narrations (5)
+            { question: "Change into indirect speech: He said, 'I am going to the market.'", options: ["He said that he was going to the market.", "He said that I am going to the market.", "He said he is going to the market.", "He said that he will go to the market."], correct: 0 },
+            { question: "Change into indirect speech: She said, 'I have finished my work.'", options: ["She said that she had finished her work.", "She said that she has finished her work.", "She said she finished her work.", "She said that I had finished my work."], correct: 0 },
+            { question: "Change into indirect speech: They said, 'We are playing football.'", options: ["They said that they were playing football.", "They said that we are playing football.", "They said they played football.", "They said that they had played football."], correct: 0 },
+            { question: "Change into indirect speech: He asked, 'Are you coming?'", options: ["He asked if I was coming.", "He asked if you are coming.", "He asked if I am coming.", "He asked if you were coming."], correct: 0 },
+            { question: "Change into indirect speech: She exclaimed, 'What a beautiful flower!'", options: ["She exclaimed that it was a beautiful flower.", "She exclaimed what a beautiful flower it was.", "She exclaimed that the flower was beautiful.", "She exclaimed with joy that it was a very beautiful flower."], correct: 3 },
+            // Active and Passive Voice (5)
+            { question: "Change into passive voice: 'She writes a letter.'", options: ["A letter is written by her.", "A letter was written by her.", "A letter is being written by her.", "A letter has been written by her."], correct: 0 },
+            { question: "Change into passive voice: 'He built the house.'", options: ["The house is built by him.", "The house was built by him.", "The house has been built by him.", "The house is being built by him."], correct: 1 },
+            { question: "Change into passive voice: 'They are playing cricket.'", options: ["Cricket is played by them.", "Cricket was played by them.", "Cricket is being played by them.", "Cricket has been played by them."], correct: 2 },
+            { question: "Change into passive voice: 'The police caught the thief.'", options: ["The thief was caught by the police.", "The thief is caught by the police.", "The thief had been caught by the police.", "The thief is being caught by the police."], correct: 0 },
+            { question: "Change into passive voice: 'Someone has stolen my watch.'", options: ["My watch was stolen.", "My watch has been stolen.", "My watch is stolen.", "My watch had been stolen."], correct: 1 },
+            // Additional English MCQs (5)
+            { question: "Choose the correct spelling:", options: ["Seperate", "Separate", "Seperate", "Seperatte"], correct: 1 },
+            { question: "The plural of 'cactus' is:", options: ["Cactuses", "Cacti", "Cactii", "Cactus"], correct: 1 },
+            { question: "Identify the adverb in the sentence: 'She sings beautifully.'", options: ["She", "sings", "beautifully", "the"], correct: 2 },
+            { question: "Which of the following is a collective noun?", options: ["Tree", "Book", "Team", "Car"], correct: 2 },
+            { question: "Complete the sentence: 'He is good ____ mathematics.'", options: ["at", "in", "on", "with"], correct: 0 },
 
-        const quizScreen = document.getElementById('quiz-screen');
-        const questionNumberElement = document.getElementById('question-number');
-        const questionTextElement = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container');
-        const nextButton = document.getElementById('next-button');
-        const timerElement = document.getElementById('timer');
+            // Pakistan Affairs (10 questions)
+            { question: "Who was the first Muslim Commander who entered India as conqueror?", options: ["Mahmud Ghazni", "Muhammad Bin Qasim", "Muhammad Ghauri", "Akbar"], correct: 1 },
+            { question: "When was the first invasion of Sultan Muhammad of Ghazni in subcontinent?", options: ["998 A.D.", "1000 A.D.", "1008 A.D.", "1010 A.D."], correct: 1 },
+            { question: "Who was the founder of the Mughal Dynasty in India?", options: ["Humayun", "Akbar", "Babur", "Shah Jahan"], correct: 2 },
+            { question: "When was the first battle of Panipat fought?", options: ["1526 A.D.", "1530 A.D.", "1539 A.D.", "1545 A.D."], correct: 0 },
+            { question: "Who was the last Mughal Emperor?", options: ["Aurangzeb", "Shah Jahan", "Bahadur Shah Zafar", "Akbar"], correct: 2 },
+            { question: "When was the East India Company established in India?", options: ["1600 A.D.", "1605 A.D.", "1615 A.D.", "1620 A.D."], correct: 0 },
+            { question: "Who was the first Ambassador of England to the Mughal court?", options: ["Sir Thomas Roe", "Captain Hawkins", "Lord Clive", "Warren Hastings"], correct: 0 },
+            { question: "When was the Battle of Plassey fought?", options: ["1757 A.D.", "1761 A.D.", "1764 A.D.", "1767 A.D."], correct: 0 },
+            { question: "Who founded the Aligarh Movement?", options: ["Syed Ahmed Khan", "Maulana Muhammad Ali Jauhar", "Muhammad Ali Jinnah", "Allama Iqbal"], correct: 0 },
+            { question: "When was the Pakistan Resolution passed?", options: ["1940", "1942", "1946", "1947"], correct: 0 },
 
-        const resultScreen = document.getElementById('result-screen');
-        const finalScoreElement = document.getElementById('final-score');
-        const userNameDisplayElement = document.getElementById('user-name-display');
+            // Current Affairs (10 questions)
+            { question: "Which country hosted the first-ever global health security summit?", options: ["USA", "Pakistan", "China", "India"], correct: 1 },
+            { question: "The first-ever Global Health Security Summit started in Pakistan from:", options: ["January 1-3, 2024", "January 10-11, 2024", "January 15-16, 2024", "January 20-21, 2024"], correct: 1 },
+            { question: "Who is the chief executive officer of the Global Alliance for Vaccines and Immunisation, Gavi?", options: ["Dr. Sania Nishtar", "Dr. Tedros Adhanom", "Dr. Seth Berkley", "Dr. Soumya Swaminathan"], correct: 0 },
+            { question: "When was the federal minister for finance and Pakistan Muslim League-Nawaz (PML-N) leader Senator Ishaq Dar appointed as caretaker prime minister?", options: ["January 2024", "August 2023", "November 2023", "December 2023"], correct: 0 },
+            { question: "Which passport has been ranked as the fourth-worst in the world against other passports?", options: ["Syrian", "Pakistani", "Iraqi", "Afghan"], correct: 1 },
+            { question: "According to the 2024 rankings released by The Henley Passport Index, Pakistani passport has been ranked ____ out of 104 countries.", options: ["100th", "101st", "102nd", "103rd"], correct: 3 },
+            { question: "General Asim Munir made a two-day official visit to which country on 8 January 2024?", options: ["Saudi Arabia", "UAE", "Bahrain", "Qatar"], correct: 2 },
+            { question: "Recently, Bahrain, King Hamad bin Isa Al Khalifa conferred which award on Chief of Army Staff (COAS) Asim Munir?", options: ["Nishan-e-Imtiaz", "Hilal-e-Imtiaz", "Military Medal Order of Bahrain First Class", "Tamgha-e-Basalat"], correct: 2 },
+            { question: "Name the Governor of Kandahar who led the Afghan side at the Pakistan-Afghanistan Joint Coordination Committee (JCC)?", options: ["Mullah Abdul Ghani Baradar", "Mullah Abdullah Akhund", "Sirajuddin Haqqani", "Mullah Yaqoob"], correct: 1 },
+            { question: "Who has become the first Pakistani female shooter to win Silver Medal (Air Pistol) at Asian Shooting Championships by securing direct Olympic Quota for Paris 2024?", options: ["Kishmala Talat", "Fatima Safdar", "Minhal Sohail", "Zainab Raza"], correct: 0 },
 
-        const messageBox = document.getElementById('message-box');
-        const messageText = document.getElementById('message-text');
-        const messageOkButton = document.getElementById('message-ok-button');
+            // Islamiyat (10 questions)
+            { question: "When did the incident of placing Hajr-e-Aswad occur?", options: ["606 A.D.", "610 A.D.", "615 A.D.", "618 A.D."], correct: 0 },
+            { question: "When was Prophethood conferred?", options: ["606 A.D.", "610 A.D.", "615 A.D.", "618 A.D."], correct: 1 },
+            { question: "When did the migration to Abyssinia take place?", options: ["610 A.D.", "614 A.D.", "615 A.D.", "616 A.D."], correct: 1 },
+            { question: "When was the boycott of Bani Hashim ended?", options: ["616 A.D.", "618 A.D.", "619 A.D.", "621 A.D."], correct: 1 },
+            { question: "When did the Journey to Taif occur?", options: ["618 A.D.", "619 A.D.", "621 A.D.", "622 A.D."], correct: 1 },
+            { question: "When did the Migration to Madina and start of Hijri calendar occur?", options: ["621 A.D.", "622 A.D.", "623 A.D.", "624 A.D."], correct: 2 },
+            { question: "When was the Foundation of Masjid Nabwi laid?", options: ["1 A.H.", "2 A.H.", "3 A.H.", "4 A.H."], correct: 0 },
+            { question: "When was the Battle of Uhad fought?", options: ["2 A.H.", "3 A.H.", "4 A.H.", "5 A.H."], correct: 1 },
+            { question: "Who was the first among men who accepted Islam?", options: ["Hazrat Ali", "Hazrat Abu Bakr", "Hazrat Umar", "Hazrat Usman"], correct: 1 },
+            { question: "Who was the first among women who accepted Islam?", options: ["Hazrat Aisha", "Hazrat Khadija", "Hazrat Fatima", "Hazrat Zainab"], correct: 1 },
 
-        // Shuffle quiz data initially
-        shuffleArray(quizData);
+            // GK (10 questions)
+            { question: "What is the capital of France?", options: ["Rome", "Berlin", "Paris", "Madrid"], correct: 2 },
+            { question: "Which currency is used in Germany?", options: ["Pound Sterling", "Euro", "Swiss Franc", "Danish Krone"], correct: 1 },
+            { question: "Which is the largest lake in Africa?", options: ["Lake Tanganyika", "Lake Malawi", "Lake Victoria", "Lake Chad"], correct: 2 },
+            { question: "Mount Everest is located in which mountain range?", options: ["Andes", "Rockies", "Himalayas", "Alps"], correct: 2 },
+            { question: "What is the capital of Italy?", options: ["Madrid", "Lisbon", "Rome", "Athens"], correct: 2 },
+            { question: "Which currency is used in Switzerland?", options: ["Euro", "Swiss Franc", "Pound Sterling", "US Dollar"], correct: 1 },
+            { question: "Which is the deepest lake in the world?", options: ["Lake Superior", "Lake Baikal", "Lake Tahoe", "Great Slave Lake"], correct: 1 },
+            { question: "K2, the second highest mountain in the world, is part of which mountain range?", options: ["Himalayas", "Karakoram", "Hindu Kush", "Pamir"], correct: 1 },
+            { question: "What is the capital of Spain?", options: ["Barcelona", "Lisbon", "Madrid", "Seville"], correct: 2 },
+            { question: "Which currency is used in Sweden?", options: ["Euro", "Swedish Krona", "Norwegian Krone", "Danish Krone"], correct: 1 },
 
-        // Function to display messages (replaces alert)
-        function showMessage(message) {
-            messageText.textContent = message;
-            messageBox.classList.remove('hidden');
-        }
+            // Cell Structure and Function (10 questions)
+            { question: "Which organelle is known as the 'powerhouse of the cell'?", options: ["Nucleus", "Mitochondria", "Ribosome", "Endoplasmic Reticulum"], correct: 1 },
+            { question: "What is the primary function of the cell membrane?", options: ["Protein synthesis", "Controlling passage of substances", "Energy production", "Genetic material storage"], correct: 1 },
+            { question: "Which of the following is found in plant cells but not animal cells?", options: ["Cell wall", "Mitochondria", "Nucleus", "Ribosomes"], correct: 0 },
+            { question: "The genetic material of the cell is contained within the:", options: ["Cytoplasm", "Mitochondria", "Nucleus", "Vacuole"], correct: 2 },
+            { question: "Which organelle is responsible for synthesizing proteins?", options: ["Golgi Apparatus", "Lysosome", "Ribosome", "Chloroplast"], correct: 2 },
+            { question: "The jelly-like substance that fills the cell and surrounds the organelles is called:", options: ["Nucleoplasm", "Cytoplasm", "Protoplasm", "Endoplasm"], correct: 1 },
+            { question: "Which type of cell lacks a true nucleus and membrane-bound organelles?", options: ["Eukaryotic cell", "Prokaryotic cell", "Animal cell", "Plant cell"], correct: 1 },
+            { question: "What is the function of lysosomes?", options: ["Energy production", "Waste breakdown and recycling", "Protein synthesis", "Lipid synthesis"], correct: 1 },
+            { question: "Which organelle modifies, sorts, and packages proteins for secretion?", options: ["Endoplasmic Reticulum", "Ribosome", "Golgi Apparatus", "Mitochondria"], correct: 2 },
+            { question: "The process by which cells obtain energy by breaking down glucose is called:", options: ["Photosynthesis", "Cellular Respiration", "Fermentation", "Transcription"], correct: 1 },
 
-        function hideMessage() {
-            messageBox.classList.add('hidden');
-        }
+            // Vitamins and their Deficiencies (10 questions)
+            { question: "Deficiency of Vitamin C causes which disease?", options: ["Rickets", "Night Blindness", "Scurvy", "Beri-Beri"], correct: 2 },
+            { question: "Which vitamin is essential for blood clotting?", options: ["Vitamin A", "Vitamin B", "Vitamin K", "Vitamin D"], correct: 2 },
+            { question: "Night blindness is caused by the deficiency of which vitamin?", options: ["Vitamin B1", "Vitamin A", "Vitamin D", "Vitamin E"], correct: 1 },
+            { question: "Rickets in children is caused by the deficiency of:", options: ["Vitamin C", "Vitamin K", "Vitamin B12", "Vitamin D"], correct: 3 },
+            { question: "Beri-Beri is a disease caused by the deficiency of:", options: ["Vitamin B1 (Thiamine)", "Vitamin B2 (Riboflavin)", "Vitamin B3 (Niacin)", "Vitamin B6 (Pyridoxine)"], correct: 0 },
+            { question: "Which vitamin is also known as Ascorbic Acid?", options: ["Vitamin A", "Vitamin B", "Vitamin C", "Vitamin D"], correct: 2 },
+            { question: "Pellagra is a disease associated with the deficiency of which vitamin?", options: ["Vitamin B1", "Vitamin B2", "Vitamin B3 (Niacin)", "Vitamin B5"], correct: 2 },
+            { question: "Which vitamin helps in the absorption of calcium and phosphorus?", options: ["Vitamin A", "Vitamin C", "Vitamin D", "Vitamin E"], correct: 2 },
+            { question: "Anemia can be caused by the deficiency of which vitamin?", options: ["Vitamin B6", "Vitamin B12", "Vitamin C", "Both Vitamin B6 and B12"], correct: 3 },
+            { question: "Which vitamin is primarily found in sunlight and fortified milk?", options: ["Vitamin A", "Vitamin B", "Vitamin C", "Vitamin D"], correct: 3 },
 
-        messageOkButton.addEventListener('click', hideMessage);
+            // Additional/Mixed GK (40 questions in previous code, taking first 10 for the 100 total)
+            { question: "Who is known as the 'Father of Modern Physics'?", options: ["Isaac Newton", "Albert Einstein", "Galileo Galilei", "Stephen Hawking"], correct: 1 },
+            { question: "Which planet is known as the 'Red Planet'?", options: ["Venus", "Mars", "Jupiter", "Saturn"], correct: 1 },
+            { question: "The largest ocean on Earth is the:", options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"], correct: 3 },
+            { question: "What is the chemical symbol for water?", options: ["CO2", "O2", "H2O", "NaCl"], correct: 2 },
+            { question: "Which country is famous for the Eiffel Tower?", options: ["Italy", "Spain", "France", "Germany"], correct: 2 },
+            { question: "The process by which plants make their own food is called:", options: ["Respiration", "Transpiration", "Photosynthesis", "Digestion"], correct: 2 },
+            { question: "Which gas do plants absorb from the atmosphere for photosynthesis?", options: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Hydrogen"], correct: 2 },
+            { question: "The longest river in the world is the:", options: ["Amazon River", "Nile River", "Yangtze River", "Mississippi River"], correct: 1 },
+            { question: "Which continent is the largest by land area?", options: ["Africa", "North America", "Asia", "Europe"], correct: 2 },
+            { question: "What is the capital city of Australia?", options: ["Sydney", "Melbourne", "Canberra", "Brisbane"], correct: 2 },
+            { question: "Who wrote the play 'Romeo and Juliet'?", options: ["Charles Dickens", "William Shakespeare", "Jane Austen", "Mark Twain"], correct: 1 },
+            { question: "What is the smallest prime number?", options: ["0", "1", "2", "3"], correct: 2 },
+            { question: "Which of these is a primary color?", options: ["Green", "Orange", "Purple", "Blue"], correct: 3 },
+            { question: "The human heart has how many chambers?", options: ["Two", "Three", "Four", "Five"], correct: 2 },
+            { question: "What is the hardest natural substance on Earth?", options: ["Gold", "Iron", "Diamond", "Quartz"], correct: 2 },
+            { question: "Which famous scientist developed the theory of relativity?", options: ["Isaac Newton", "Galileo Galilei", "Albert Einstein", "Marie Curie"], correct: 2 },
+            { question: "What is the chemical symbol for gold?", options: ["Ag", "Au", "Fe", "Cu"], correct: 1 },
+            { question: "Which country is known as the 'Land of the Rising Sun'?", options: ["China", "South Korea", "Japan", "Thailand"], correct: 2 },
+            { question: "The Great Barrier Reef is located off the coast of which country?", options: ["Brazil", "Australia", "Mexico", "Indonesia"], correct: 1 },
+            { question: "What is the capital of Canada?", options: ["Toronto", "Vancouver", "Montreal", "Ottawa"], correct: 3 },
+            { question: "Which of the following is a renewable energy source?", options: ["Coal", "Natural Gas", "Solar Power", "Petroleum"], correct: 2 },
+            { question: "What is the largest animal on Earth?", options: ["African Elephant", "Blue Whale", "Giraffe", "Polar Bear"], correct: 1 },
+            { question: "Which is the most populous country in the world?", options: ["India", "United States", "China", "Indonesia"], correct: 2 },
+            { question: "The currency of Japan is the:", options: ["Yuan", "Won", "Yen", "Rupee"], correct: 2 },
+            { question: "Which instrument is used to measure earthquakes?", options: ["Barometer", "Anemometer", "Seismograph", "Thermometer"], correct: 2 },
+            { question: "The human body has how many bones?", options: ["200", "206", "210", "212"], correct: 1 },
+            { question: "Which gas makes up the majority of Earth's atmosphere?", options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Argon"], correct: 2 },
+            { question: "What is the capital of Germany?", options: ["Munich", "Frankfurt", "Hamburg", "Berlin"], correct: 3 },
+            { question: "Which ocean is the smallest?", options: ["Indian Ocean", "Atlantic Ocean", "Arctic Ocean", "Southern Ocean"], correct: 2 },
+            { question: "The process of a liquid turning into a gas is called:", options: ["Melting", "Condensation", "Evaporation", "Freezing"], correct: 2 },
+            { question: "Who painted the Mona Lisa?", options: ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Claude Monet"], correct: 2 },
+            { question: "What is the main component of natural gas?", options: ["Propane", "Butane", "Methane", "Ethane"], correct: 2 },
+            { question: "Which country is famous for its pyramids?", options: ["Greece", "Egypt", "Mexico", "China"], correct: 1 },
+            { question: "The largest desert in the world is the:", options: ["Sahara Desert", "Gobi Desert", "Arabian Desert", "Antarctic Polar Desert"], correct: 3 },
+            { question: "What is the capital of Russia?", options: ["Saint Petersburg", "Kyiv", "Moscow", "Warsaw"], correct: 2 },
+            { question: "Which animal is known as the 'King of the Jungle'?", options: ["Tiger", "Lion", "Elephant", "Bear"], correct: 1 },
+            { question: "What is the boiling point of water in Celsius?", options: ["0°C", "50°C", "100°C", "212°C"], correct: 2 },
+            { question: "Which planet is closest to the Sun?", options: ["Venus", "Earth", "Mercury", "Mars"], correct: 2 },
+            { question: "The currency of the United Kingdom is the:", options: ["Euro", "US Dollar", "Pound Sterling", "Canadian Dollar"], correct: 2 },
+            { question: "Which organ in the human body produces insulin?", options: ["Liver", "Kidney", "Pancreas", "Stomach"], correct: 2 },
+            { question: "What is the capital of Brazil?", options: ["Rio de Janeiro", "São Paulo", "Brasília", "Buenos Aires"], correct: 2 },
+            { question: "Which gas is responsible for the green color of plants?", options: ["Oxygen", "Carbon dioxide", "Chlorophyll", "Nitrogen"], correct: 2 },
+            { question: "The largest country in the world by area is:", options: ["Canada", "China", "United States", "Russia"], correct: 3 },
+            { question: "Which of the following is a flightless bird?", options: ["Eagle", "Sparrow", "Ostrich", "Pigeon"], correct: 2 },
+            { question: "What is the chemical symbol for Oxygen?", options: ["O", "Ox", "Oxy", "Oz"], correct: 0 },
+            { question: "Which is the smallest continent?", options: ["Europe", "Australia", "Antarctica", "South America"], correct: 1 },
+            { question: "The study of living organisms is called:", options: ["Physics", "Chemistry", "Biology", "Geology"], correct: 2 },
+            { question: "What is the capital of South Africa?", options: ["Johannesburg", "Cape Town", "Pretoria", "Durban"], correct: 1 },
+            { question: "Which famous landmark is located in India?", options: ["Great Wall of China", "Eiffel Tower", "Taj Mahal", "Pyramids of Giza"], correct: 2 },
+            { question: "Which of these is a type of cloud?", options: ["Cumulus", "Tornado", "Hurricane", "Blizzard"], correct: 0 },
+            { question: "The process of burning is also known as:", options: ["Oxidation", "Reduction", "Condensation", "Evaporation"], correct: 0 },
+            { question: "What is the official language of China?", options: ["Cantonese", "Mandarin", "Hokkien", "Shanghainese"], correct: 1 },
+            { question: "Which planet is known for its prominent ring system?", options: ["Jupiter", "Saturn", "Uranus", "Neptune"], correct: 1 },
+            { question: "The largest island in the world is:", options: ["Madagascar", "Borneo", "Greenland", "New Guinea"], correct: 2 },
+            { question: "What is the capital of Egypt?", options: ["Alexandria", "Luxor", "Cairo", "Giza"], correct: 2 },
+            { question: "Which gas do humans breathe out?", options: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Hydrogen"], correct: 2 },
+            { question: "What is the unit of electric current?", options: ["Volt", "Ohm", "Ampere", "Watt"], correct: 2 },
+            { question: "The deepest point in the Earth's oceans is the:", options: ["Puerto Rico Trench", "Java Trench", "Mariana Trench", "Kermadec Trench"], correct: 2 },
+            { question: "Which continent is home to the Amazon Rainforest?", options: ["Africa", "Asia", "South America", "North America"], correct: 2 },
+            { question: "What is the capital of South Korea?", options: ["Busan", "Incheon", "Seoul", "Daegu"], correct: 2 },
+            { question: "Which of the following is a carnivorous plant?", options: ["Sunflower", "Venus Flytrap", "Rose", "Oak Tree"], correct: 1 },
+            { question: "The study of the Earth's physical structure and substance is called:", options: ["Biology", "Chemistry", "Geology", "Astronomy"], correct: 2 },
+            { question: "What is the capital of New Zealand?", options: ["Auckland", "Christchurch", "Wellington", "Queenstown"], correct: 2 },
+            { question: "Which of these is a type of rock formed from cooled lava?", options: ["Sedimentary", "Metamorphic", "Igneous", "Limestone"], correct: 2 },
+            { question: "What is the main function of red blood cells?", options: ["Fighting infection", "Clotting blood", "Transporting oxygen", "Producing antibodies"], correct: 2 },
+            { question: "The largest land animal is the:", options: ["Elephant", "Rhinoceros", "Hippopotamus", "Giraffe"], correct: 0 },
+            { question: "What is the capital of Argentina?", options: ["Santiago", "Lima", "Buenos Aires", "Bogotá"], correct: 2 },
+            { question: "Which of the following is a type of renewable energy derived from heat within the Earth?", options: ["Wind power", "Hydroelectric power", "Geothermal energy", "Biomass energy"], correct: 2 },
+            { question: "What is the chemical formula for table salt?", options: ["H2O", "CO2", "NaCl", "C6H12O6"], correct: 2 },
+            { question: "Which country is home to the Kangaroo?", options: ["South Africa", "India", "Australia", "Canada"], correct: 2 },
+            { question: "The process by which plants release water vapor into the atmosphere is called:", options: ["Photosynthesis", "Respiration", "Transpiration", "Condensation"], correct: 2 },
+            { question: "What is the capital of Mexico?", options: ["Guadalajara", "Monterrey", "Mexico City", "Cancun"], correct: 2 },
+            { question: "Which of these is a type of fish?", options: ["Dolphin", "Whale", "Shark", "Seal"], correct: 2 },
+            { question: "What is the largest organ in the human body?", options: ["Heart", "Brain", "Skin", "Liver"], correct: 2 },
+            { question: "Which famous desert is located in Africa?", options: ["Gobi Desert", "Atacama Desert", "Kalahari Desert", "Mojave Desert"], correct: 2 },
+            { question: "What is the capital of Turkey?", options: ["Istanbul", "Izmir", "Ankara", "Antalya"], correct: 2 },
+            { question: "Which of the following is a primary color of light?", options: ["Yellow", "Cyan", "Magenta", "Red"], correct: 3 },
+            { question: "The force that pulls objects towards the center of the Earth is called:", options: ["Friction", "Gravity", "Magnetism", "Tension"], correct: 1 },
+            { question: "What is the main gas that causes the greenhouse effect?", options: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Hydrogen"], correct: 2 },
+            { question: "Which country is known for the Great Wall?", options: ["India", "Japan", "China", "South Korea"], correct: 2 },
+            { question: "What is the capital of Thailand?", options: ["Chiang Mai", "Phuket", "Bangkok", "Pattaya"], correct: 2 },
+            { question: "Which of these is a type of bird?", options: ["Bat", "Penguin", "Dolphin", "Snake"], correct: 1 },
+            { question: "What is the process of converting light energy into chemical energy by plants?", options: ["Respiration", "Fermentation", "Photosynthesis", "Digestion"], correct: 2 },
+            { question: "The largest continent by population is:", options: ["Africa", "Europe", "Asia", "North America"], correct: 2 },
+            { question: "What is the capital of Spain?", options: ["Barcelona", "Lisbon", "Madrid", "Seville"], correct: 2 },
+            { question: "Which of these is a unit of measurement for length?", options: ["Kilogram", "Liter", "Meter", "Second"], correct: 2 },
+            { question: "The Earth revolves around the:", options: ["Moon", "Mars", "Sun", "Jupiter"], correct: 2 },
+            { question: "What is the capital of Sweden?", options: ["Oslo", "Stockholm", "Copenhagen", "Helsinki"], correct: 3 },
+            { question: "Which of these is a type of fruit?", options: ["Potato", "Carrot", "Apple", "Onion"], correct: 2 },
+            { question: "What is the main component of the air we breathe?", options: ["Carbon Dioxide", "Oxygen", "Nitrogen", "Hydrogen"], correct: 2 },
+            { question: "The study of the universe beyond Earth's atmosphere is called:", options: ["Geology", "Meteorology", "Astronomy", "Biology"], correct: 2 },
+            { question: "What is the capital of Portugal?", options: ["Porto", "Lisbon", "Faro", "Coimbra"], correct: 1 },
+            { question: "Which of these is a primary color in painting?", options: ["Orange", "Green", "Red", "Purple"], correct: 2 },
+            { question: "The process of water turning into ice is called:", options: ["Melting", "Freezing", "Evaporation", "Condensation"], correct: 1 },
+            { question: "What is the capital of Greece?", options: ["Thessaloniki", "Patras", "Heraklion", "Athens"], correct: 3 },
+            { question: "Which of these is a type of energy produced by the movement of air?", options: ["Solar energy", "Geothermal energy", "Wind energy", "Hydroelectric energy"], correct: 2 },
+            { question: "What is the chemical symbol for iron?", options: ["Au", "Ag", "Fe", "Cu"], correct: 2 },
+            { question: "Which country is known for its kangaroos and koalas?", options: ["New Zealand", "South Africa", "Australia", "Canada"], correct: 2 },
+            { question: "The largest land mammal is the:", options: ["African Elephant", "Giraffe", "Hippopotamus", "Rhinoceros"], correct: 0 },
+            { question: "What is the capital of Finland?", options: ["Oslo", "Stockholm", "Copenhagen", "Helsinki"], correct: 3 },
+            { question: "Which of these is a type of rock formed from the accumulation of sediments?", options: ["Igneous", "Metamorphic", "Sedimentary", "Marble"], correct: 2 },
+            { question: "What is the main function of white blood cells?", options: ["Transporting oxygen", "Fighting infection", "Clotting blood", "Producing hormones"], correct: 1 }
+        ];
 
-        // Function to shuffle an array (Fisher-Yates algorithm)
+        // Slice the original questions into categories
+        const englishQuestions = allOriginalQuestions.slice(0, 30);
+        const pakistanAffairsQuestions = allOriginalQuestions.slice(30, 40);
+        const currentAffairsQuestions = allOriginalQuestions.slice(40, 50);
+        const islamiyatQuestions = allOriginalQuestions.slice(50, 60);
+        const gkQuestions = allOriginalQuestions.slice(60, 70);
+        const cellQuestions = allOriginalQuestions.slice(70, 80);
+        const vitaminsQuestions = allOriginalQuestions.slice(80, 90);
+        // Take only the first 10 from the remaining 40 mixed questions to make it 100 total
+        const mixedGKQuestions = allOriginalQuestions.slice(90, 100); 
+
+        // Assemble the final quizQuestions array in the desired chronological order
+        const quizQuestions = [
+            ...englishQuestions.slice(0, 10), // 10 English
+            ...pakistanAffairsQuestions.slice(0, 10), // 10 Pakistan Affairs
+            ...gkQuestions.slice(0, 10), // 10 GK
+            ...englishQuestions.slice(10, 20), // 10 English
+            ...cellQuestions.slice(0, 10), // 10 Cell Structure and Function
+            ...vitaminsQuestions.slice(0, 10), // 10 Vitamins and their Deficiencies
+            ...englishQuestions.slice(20, 30), // 10 English (completes 30 English)
+            ...currentAffairsQuestions.slice(0, 10), // 10 Current Affairs
+            ...islamiyatQuestions.slice(0, 10), // 10 Islamiyat
+            ...mixedGKQuestions.slice(0, 10) // 10 Mixed GK (completes 100 total)
+        ];
+
+        // Function to shuffle an array (used for options)
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
             }
         }
 
-        // Function to shuffle options for a question
-        function shuffleOptions(options) {
-            const shuffledOptions = [...options];
-            for (let i = shuffledOptions.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
-            }
-            return shuffledOptions;
-        }
+        // Shuffle options for each question after the main quizQuestions array is assembled
+        quizQuestions.forEach(q => {
+            const originalCorrectOption = q.options[q.correct];
+            const shuffledOptions = [...q.options];
+            shuffleArray(shuffledOptions);
+            q.options = shuffledOptions;
+            q.correct = q.options.indexOf(originalCorrectOption);
+        });
 
-        // Function to start the timer
+
+        loginButton.addEventListener('click', () => {
+            const enteredId = loginIdInput.value;
+            const enteredPassword = loginPasswordInput.value;
+
+            if (enteredId === correctId && enteredPassword === correctPassword) {
+                loginSection.style.display = 'none';
+                nameEntrySection.style.display = 'block';
+            } else {
+                showMessageBox('Login Failed', 'Invalid ID or Password. Please try again.');
+            }
+        });
+
+        startQuizButton.addEventListener('click', () => {
+            const candidateName = candidateNameInput.value.trim();
+            if (candidateName === '') {
+                showMessageBox('Error', 'Please enter your name to start the quiz.');
+                return;
+            }
+            if (quizAttempted) {
+                showMessageBox('Quiz Already Attempted', 'You have already completed this quiz. You cannot restart.');
+                return;
+            }
+
+            document.getElementById('final-name').innerText = candidateName;
+            nameEntrySection.style.display = 'none';
+            quizSection.style.display = 'block';
+            quizStartedTime = Date.now();
+            startTimer();
+            loadQuestion();
+        });
+
         function startTimer() {
             timer = setInterval(() => {
                 timeLeft--;
                 const minutes = Math.floor(timeLeft / 60);
                 const seconds = timeLeft % 60;
-                timerElement.textContent = `Time Left: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                timerDisplay.textContent = `Time Left: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
                 if (timeLeft <= 0) {
                     clearInterval(timer);
@@ -828,22 +617,17 @@
             }, 1000);
         }
 
-        // Function to display the current question
-        function displayQuestion() {
-            if (currentQuestionIndex < quizData.length) {
-                const question = quizData[currentQuestionIndex];
-                questionNumberElement.textContent = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
-                questionTextElement.textContent = question.question;
-                optionsContainer.innerHTML = '';
-                nextButton.disabled = true; // Disable next button until an option is selected
+        function loadQuestion() {
+            if (currentQuestionIndex < quizQuestions.length) {
+                const question = quizQuestions[currentQuestionIndex];
+                questionText.textContent = `${currentQuestionIndex + 1}. ${question.question}`;
+                optionsContainer.innerHTML = ''; // Clear previous options
 
-                const shuffledOptions = shuffleOptions(question.options); // Shuffle options
-
-                shuffledOptions.forEach(option => {
+                question.options.forEach((option, index) => {
                     const button = document.createElement('button');
                     button.textContent = option;
-                    button.classList.add('option-button');
-                    button.addEventListener('click', () => selectOption(button, option, question.answer));
+                    button.classList.add('rounded-lg'); // Tailwind class for rounded corners
+                    button.onclick = () => checkAnswer(index, button);
                     optionsContainer.appendChild(button);
                 });
             } else {
@@ -851,95 +635,49 @@
             }
         }
 
-        // Function to handle option selection
-        function selectOption(selectedButton, selectedOption, correctAnswer) {
-            if (!quizActive || quizAttempted) return; // Prevent interaction if quiz not active or already attempted
+        function checkAnswer(selectedIndex, clickedButton) {
+            const question = quizQuestions[currentQuestionIndex];
+            const allOptionButtons = optionsContainer.querySelectorAll('button');
 
-            // Disable all options after selection
-            Array.from(optionsContainer.children).forEach(button => {
-                button.classList.add('disabled');
-                button.removeEventListener('click', () => {}); // Remove event listeners
-                button.onclick = null; // Clear inline event handlers
+            // Disable all buttons after an answer is selected
+            allOptionButtons.forEach(button => {
+                button.disabled = true;
             });
 
-            if (selectedOption === correctAnswer) {
-                selectedButton.classList.add('correct');
+            if (selectedIndex === question.correct) {
                 score++;
+                clickedButton.classList.add('correct');
             } else {
-                selectedButton.classList.add('incorrect');
-                // Find and highlight the correct answer
-                Array.from(optionsContainer.children).forEach(button => {
-                    if (button.textContent === correctAnswer) {
-                        button.classList.add('correct');
-                    }
-                });
+                clickedButton.classList.add('wrong');
+                // Highlight the correct answer in green
+                allOptionButtons[question.correct].classList.add('correct');
             }
-            nextButton.disabled = false; // Enable next button
+
+            // Move to the next question after a short delay
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizQuestions.length) {
+                    loadQuestion();
+                } else {
+                    endQuiz();
+                }
+            }, 1500); // 1.5 second delay
         }
 
-        // Function to move to the next question
-        function nextQuestion() {
-            if (!quizActive || quizAttempted) return;
-
-            currentQuestionIndex++;
-            if (currentQuestionIndex < quizData.length) {
-                displayQuestion();
-            } else {
-                endQuiz();
-            }
-        }
-
-        // Function to end the quiz
         function endQuiz() {
             clearInterval(timer);
-            quizActive = false;
+            quizEndedTime = Date.now();
             quizAttempted = true; // Mark quiz as attempted
-            quizScreen.classList.add('hidden');
-            resultScreen.classList.remove('hidden');
-            finalScoreElement.textContent = `You scored ${score} out of ${quizData.length} questions.`;
-            userNameDisplayElement.textContent = `Candidate: ${userName}`;
+
+            const totalTimeSeconds = Math.floor((quizEndedTime - quizStartedTime) / 1000);
+            const minutesTaken = Math.floor(totalTimeSeconds / 60);
+            const secondsTaken = totalTimeSeconds % 60;
+
+            quizSection.style.display = 'none';
+            resultSection.style.display = 'block';
+            scoreSpan.textContent = score;
+            timeTakenSpan.textContent = `${minutesTaken.toString().padStart(2, '0')}:${secondsTaken.toString().padStart(2, '0')}`;
         }
-
-        // Event Listeners
-
-        // Login Button
-        loginButton.addEventListener('click', () => {
-            const id = loginIdInput.value;
-            const password = loginPasswordInput.value;
-
-            if (id === '7766' && password === '6677') {
-                loginScreen.classList.add('hidden');
-                nameEntryScreen.classList.remove('hidden');
-            } else {
-                showMessage("Invalid ID or Password. Please try again.");
-                loginIdInput.value = '';
-                loginPasswordInput.value = '';
-            }
-        });
-
-        // Start Quiz Button
-        startQuizButton.addEventListener('click', () => {
-            if (quizAttempted) {
-                showMessage("Quiz has already been attempted. You cannot restart.");
-                return;
-            }
-
-            userName = candidateNameInput.value.trim();
-            if (userName === "") {
-                showMessage("Please enter your name to start the quiz.");
-                return;
-            }
-
-            nameEntryScreen.classList.add('hidden');
-            quizScreen.classList.remove('hidden');
-            quizActive = true;
-            startTimer();
-            displayQuestion();
-        });
-
-        // Next Button
-        nextButton.addEventListener('click', nextQuestion);
-
     </script>
 </body>
 </html>
