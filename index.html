@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MPT/Screening Test and One Paper MCQs Preparation</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for icons (optional, but good for check/cross marks) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: "Inter", sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: #e0f2f7; /* Light blue background */
             display: flex;
             justify-content: center;
@@ -20,7 +18,7 @@
             padding: 20px;
             box-sizing: border-box;
         }
-        .quiz-container {
+        .container {
             background-color: #ffffff;
             padding: 30px;
             border-radius: 15px;
@@ -28,107 +26,127 @@
             width: 100%;
             max-width: 700px;
             text-align: center;
-            position: relative;
-            overflow: hidden; /* Ensure rounded corners apply to children */
+            box-sizing: border-box;
         }
-        .header-title {
+        .title {
             font-size: 1.8rem;
+            font-weight: bold;
             margin-bottom: 10px;
-            line-height: 1.3;
+            color: #000080; /* Dark Blue */
         }
-        .header-contact {
+        .contact {
             font-size: 1.2rem;
+            font-weight: bold;
             margin-bottom: 25px;
+            color: #CCCC00; /* Yellow */
         }
-        .blue-text {
-            color: #1a73e8; /* Google Blue */
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
         }
-        .yellow-text {
-            color: #fbbc05; /* Google Yellow */
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
         }
-        .input-field {
-            width: calc(100% - 20px);
+        .input-group input[type="text"],
+        .input-group input[type="password"] {
+            width: 100%;
             padding: 12px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
+            border: 1px solid #b0e0e6; /* Light steel blue */
             border-radius: 8px;
             font-size: 1rem;
             box-sizing: border-box;
         }
-        .btn {
-            background-color: #1a73e8; /* Blue */
+        .button {
+            background-color: #4169e1; /* Royal Blue */
             color: white;
             padding: 12px 25px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-size: 1.1rem;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
-        .btn:hover {
-            background-color: #155bb5;
-            transform: translateY(-2px);
+        .button:hover {
+            background-color: #365bc9; /* Darker Royal Blue */
         }
-        .btn:active {
-            transform: translateY(0);
-        }
-        .option-button {
-            background-color: #f0f8ff; /* Alice Blue */
-            color: #333;
-            padding: 15px;
-            margin: 10px 0;
-            border: 1px solid #cce7ff;
-            border-radius: 10px;
-            cursor: pointer;
+        .quiz-section {
+            display: none;
             text-align: left;
+        }
+        .question-container {
+            margin-bottom: 20px;
+            background-color: #f0f8ff; /* Alice Blue */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05);
+        }
+        .question-number {
             font-size: 1rem;
-            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
-            display: flex;
-            align-items: center;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        .options-container button {
+            display: block;
             width: 100%;
-            box-sizing: border-box;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border: 1px solid #a7d9ed; /* Lighter blue */
+            border-radius: 8px;
+            background-color: #e6f7ff; /* Even lighter blue */
+            text-align: left;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            color: #333;
         }
-        .option-button:hover:not(.correct):not(.incorrect) {
-            background-color: #e6f2ff;
-            border-color: #aaccff;
-            transform: translateY(-2px);
+        .options-container button:hover:not(.correct):not(.wrong) {
+            background-color: #d0efff;
+            border-color: #87ceeb; /* Sky blue */
         }
-        .option-button.correct {
+        .options-container button.correct {
             background-color: #d4edda; /* Light green */
             border-color: #28a745; /* Green */
             color: #155724;
             font-weight: bold;
         }
-        .option-button.incorrect {
+        .options-container button.wrong {
             background-color: #f8d7da; /* Light red */
             border-color: #dc3545; /* Red */
             color: #721c24;
             font-weight: bold;
         }
-        .option-button.disabled {
-            cursor: not-allowed;
-            opacity: 0.8;
+        .next-button-container {
+            margin-top: 20px;
+            text-align: right;
         }
-        .timer {
-            font-size: 1.2rem;
+        .timer-container {
+            font-size: 1.1rem;
             font-weight: bold;
+            color: #000080;
             margin-bottom: 20px;
-            color: #1a73e8;
+            text-align: center;
+            background-color: #ccf2ff; /* Very light blue */
+            padding: 10px;
+            border-radius: 8px;
         }
-        .question-text {
-            font-size: 1.3rem;
-            margin-bottom: 25px;
-            color: #333;
-            min-height: 80px; /* Ensure consistent height for question display */
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .result-section {
+            display: none;
             text-align: center;
         }
         .result-section h2 {
             font-size: 2rem;
-            color: #1a73e8;
+            color: #000080;
             margin-bottom: 15px;
         }
         .result-section p {
@@ -136,16 +154,8 @@
             color: #333;
             margin-bottom: 10px;
         }
-        .result-section .score {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #28a745;
-            margin-top: 20px;
-        }
-        .hidden {
-            display: none;
-        }
         .message-box {
+            display: none;
             position: fixed;
             top: 50%;
             left: 50%;
@@ -156,16 +166,21 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             z-index: 1000;
             text-align: center;
-            max-width: 90%;
-            width: 400px;
+            max-width: 400px;
+            width: 90%;
+            box-sizing: border-box;
+        }
+        .message-box h3 {
+            margin-top: 0;
+            color: #000080;
+            font-size: 1.5rem;
         }
         .message-box p {
-            font-size: 1.1rem;
             margin-bottom: 20px;
-            color: #333;
+            color: #555;
         }
         .message-box button {
-            background-color: #1a73e8;
+            background-color: #4169e1;
             color: white;
             padding: 10px 20px;
             border: none;
@@ -174,6 +189,7 @@
             font-size: 1rem;
         }
         .overlay {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -182,1662 +198,144 @@
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 999;
         }
-        /* Icon styling */
-        .icon {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-        .correct-icon {
-            color: #28a745;
-        }
-        .incorrect-icon {
-            color: #dc3545;
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            .title {
+                font-size: 1.5rem;
+            }
+            .contact {
+                font-size: 1rem;
+            }
+            .question-text {
+                font-size: 1.1rem;
+            }
+            .options-container button {
+                font-size: 0.95rem;
+                padding: 10px;
+            }
+            .button {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="quiz-container">
-        <h1 class="header-title">
-            <span class="font-bold blue-text">MPT/Screening Test and One Paper MCQs Preparation</span>
-        </h1>
-        <p class="header-contact">
-            <span class="font-bold yellow-text">CONTACT: 03188185185</span>
-        </p>
+    <div class="container">
+        <h1 class="title">MPT/Screening Test and One Paper MCQs Preparation</h1>
+        <p class="contact">CONTACT: 03188185185</p>
 
         <!-- Login Section -->
         <div id="login-section">
-            <input type="text" id="id-input" class="input-field" placeholder="Enter ID">
-            <input type="password" id="password-input" class="input-field" placeholder="Enter Password">
-            <button id="login-button" class="btn">Login</button>
+            <div class="input-group">
+                <label for="user-id">ID:</label>
+                <input type="text" id="user-id" placeholder="Enter ID (aabb)">
+            </div>
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" placeholder="Enter Password (bbaa)">
+            </div>
+            <button class="button" id="login-button">Login</button>
+            <p id="login-error" class="text-red-500 mt-2" style="display: none;">Invalid ID or Password.</p>
         </div>
 
         <!-- Name Entry Section -->
-        <div id="name-entry-section" class="hidden">
-            <input type="text" id="name-input" class="input-field" placeholder="Enter Your Name">
-            <button id="start-quiz-button" class="btn">Start Quiz</button>
+        <div id="name-entry-section" style="display: none;">
+            <div class="input-group">
+                <label for="candidate-name">Enter Your Name:</label>
+                <input type="text" id="candidate-name" placeholder="Your Name">
+            </div>
+            <button class="button" id="start-quiz-button">Start Quiz</button>
         </div>
 
         <!-- Quiz Section -->
-        <div id="quiz-section" class="hidden">
-            <div class="timer" id="timer">Time Left: 60:00</div>
-            <div class="question-text" id="question-text"></div>
-            <div id="options-container"></div>
-            <div id="feedback-message" class="mt-4 text-center text-lg font-semibold"></div>
+        <div id="quiz-section" class="quiz-section">
+            <div class="timer-container">
+                Time Left: <span id="time-left">60:00</span>
+            </div>
+            <div class="question-container">
+                <p class="question-number">Question <span id="current-question-number">1</span> of <span id="total-questions">100</span></p>
+                <p class="question-text" id="question-text"></p>
+                <div class="options-container" id="options-container">
+                    <!-- Options will be dynamically loaded here -->
+                </div>
+            </div>
+            <div class="next-button-container">
+                <button class="button" id="next-button" style="display: none;">Next</button>
+            </div>
         </div>
 
         <!-- Result Section -->
-        <div id="result-section" class="hidden result-section">
-            <h2>Quiz Completed!</h2>
-            <p>Candidate: <span id="final-name" class="font-bold"></span></p>
-            <p>Your Score: <span id="score-display" class="score"></span> / 100</p>
-            <p id="time-taken-display"></p>
+        <div id="result-section" class="result-section">
+            <h2>Quiz Result</h2>
+            <p>Candidate Name: <span id="result-name"></span></p>
+            <p>Score: <span id="score"></span> / <span id="total-score"></span></p>
+            <p>Correct Answers: <span id="correct-count"></span></p>
+            <p>Wrong Answers: <span id="wrong-count"></span></p>
+            <p>Time Taken: <span id="time-taken"></span></p>
         </div>
     </div>
 
-    <!-- Message Box for alerts -->
-    <div id="message-box-overlay" class="overlay hidden"></div>
-    <div id="custom-message-box" class="message-box hidden">
-        <p id="message-box-text"></p>
-        <button id="message-box-ok-button">OK</button>
+    <!-- Message Box for Alerts -->
+    <div class="overlay" id="overlay"></div>
+    <div class="message-box" id="message-box">
+        <h3 id="message-title"></h3>
+        <p id="message-content"></p>
+        <button id="message-ok-button">OK</button>
     </div>
 
     <script>
-        // Custom alert/message box function
-        function showMessageBox(message, callback) {
-            document.getElementById('message-box-text').innerText = message;
-            document.getElementById('message-box-overlay').classList.remove('hidden');
-            document.getElementById('custom-message-box').classList.remove('hidden');
-            document.getElementById('message-box-ok-button').onclick = () => {
-                document.getElementById('message-box-overlay').classList.add('hidden');
-                document.getElementById('custom-message-box').classList.add('hidden');
+        // Custom alert function
+        function showAlert(title, message, callback) {
+            document.getElementById('message-title').innerText = title;
+            document.getElementById('message-content').innerText = message;
+            document.getElementById('message-box').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('message-ok-button').onclick = () => {
+                document.getElementById('message-box').style.display = 'none';
+                document.getElementById('overlay').style.display = 'none';
                 if (callback) callback();
             };
         }
-
-        const quizData = [
-            // -------------------- English (Vocabulary) - 10 MCQs --------------------
-            {
-                question: "What does 'dally' mean?",
-                options: [
-                    { text: "To move with great speed", isCorrect: false },
-                    { text: "To waste time or procrastinate", isCorrect: true },
-                    { text: "To organize items meticulously", isCorrect: false },
-                    { text: "To speak in a loud, clear voice", isCorrect: false }
-                ]
-            },
-            {
-                question: "Which word means 'marked by up-to-dateness in dress and manners'?",
-                options: [
-                    { text: "Disheveled", isCorrect: false },
-                    { text: "Dapper", isCorrect: true },
-                    { text: "Dejected", isCorrect: false },
-                    { text: "Dismal", isCorrect: false }
-                ]
-            },
-            {
-                question: "Someone 'dauntless' is:",
-                options: [
-                    { text: "Easily intimidated or scared", isCorrect: false },
-                    { text: "Invulnerable to fear or intimidation", isCorrect: true },
-                    { text: "Lacking in courage and resolve", isCorrect: false },
-                    { text: "Prone to making rash decisions", isCorrect: false }
-                ]
-            },
-            {
-                question: "To 'dawdle' means to:",
-                options: [
-                    { text: "Work with intense focus and speed", isCorrect: false },
-                    { text: "Take one's time; proceed slowly", isCorrect: true },
-                    { text: "Complete a task efficiently", isCorrect: false },
-                    { text: "Rush through an assignment carelessly", isCorrect: false }
-                ]
-            },
-            {
-                question: "A 'dearth' refers to:",
-                options: [
-                    { text: "An abundant supply or surplus", isCorrect: false },
-                    { text: "An insufficient quantity or number", isCorrect: true },
-                    { text: "A sudden and unexpected discovery", isCorrect: false },
-                    { text: "A period of great prosperity", isCorrect: false }
-                ]
-            },
-            {
-                question: "What is a 'debacle'?",
-                options: [
-                    { text: "A resounding success or triumph", isCorrect: false },
-                    { text: "A sudden and complete disaster or downfall", isCorrect: true },
-                    { text: "A well-organized and executed plan", isCorrect: false },
-                    { text: "A minor setback or inconvenience", isCorrect: false }
-                ]
-            },
-            {
-                question: "To 'debilitate' means to:",
-                options: [
-                    { text: "Make something stronger or more robust", isCorrect: false },
-                    { text: "Make weak or infirm", isCorrect: true },
-                    { text: "Restore to full health and vigor", isCorrect: false },
-                    { text: "Energize and invigorate", isCorrect: false }
-                ]
-            },
-            {
-                question: "If you 'debunk' something, you:",
-                options: [
-                    { text: "Support and reinforce its claims", isCorrect: false },
-                    { text: "Expose its falseness or exaggerated claims while ridiculing it", isCorrect: true },
-                    { text: "Accept it without question", isCorrect: false },
-                    { text: "Promote its ideas widely", isCorrect: false }
-                ]
-            },
-            {
-                question: "What does 'deduce' mean?",
-                options: [
-                    { text: "To state something without proof", isCorrect: false },
-                    { text: "To conclude by reasoning from evidence", isCorrect: true },
-                    { text: "To guess randomly without thought", isCorrect: false },
-                    { text: "To ignore logical connections", isCorrect: false }
-                ]
-            },
-            {
-                question: "To 'defame' someone is to:",
-                options: [
-                    { text: "Praise them publicly for their achievements", isCorrect: false },
-                    { text: "Charge them falsely or with malicious intent, damaging their reputation", isCorrect: true },
-                    { text: "Offer them sincere apologies", isCorrect: false },
-                    { text: "Defend their honor against accusations", isCorrect: false }
-                ]
-            },
-            // -------------------- Pakistan Affairs - 10 MCQs --------------------
-            {
-                question: "Who was the first Muslim Commander to enter India as conqueror?",
-                options: [
-                    { text: "Mahmud of Ghazni", isCorrect: false },
-                    { text: "Muhammad Bin Qasim", isCorrect: true },
-                    { text: "Muhammad Ghori", isCorrect: false },
-                    { text: "Babur", isCorrect: false }
-                ]
-            },
-            {
-                question: "When did the first invasion of Sultan Muhammad Ghazni in subcontinent occur?",
-                options: [
-                    { text: "712 AD", isCorrect: false },
-                    { text: "1000 AD", isCorrect: true },
-                    { text: "1026 AD", isCorrect: false },
-                    { text: "1192 AD", isCorrect: false }
-                ]
-            },
-            {
-                question: "The Somnat temple was destroyed by Muhammad Ghazni in:",
-                options: [
-                    { text: "1000 AD", isCorrect: false },
-                    { text: "1010 AD", isCorrect: false },
-                    { text: "1026 AD", isCorrect: true },
-                    { text: "1030 AD", isCorrect: false }
-                ]
-            },
-            {
-                question: "The second battle of Tarain was fought in:",
-                options: [
-                    { text: "1191 AD", isCorrect: false },
-                    { text: "1192 AD", isCorrect: true },
-                    { text: "1193 AD", isCorrect: false },
-                    { text: "1194 AD", isCorrect: false }
-                ]
-            },
-            {
-                question: "The Slave dynasty was founded in India by:",
-                options: [
-                    { text: "Iltutmish", isCorrect: false },
-                    { text: "Qutb al-Din Aibak", isCorrect: true },
-                    { text: "Razia Sultan", isCorrect: false },
-                    { text: "Ghiyas ud din Balban", isCorrect: false }
-                ]
-            },
-            {
-                question: "The Khilji Dynasty was founded in India in:",
-                options: [
-                    { text: "1206 AD", isCorrect: false },
-                    { text: "1290 AD", isCorrect: true },
-                    { text: "1320 AD", isCorrect: false },
-                    { text: "1414 AD", isCorrect: false }
-                ]
-            },
-            {
-                question: "The first voyage of Vasco da Gama to India (discovery of sea route to India via the Cape of Good Hope) was in:",
-                options: [
-                    { text: "1451 AD", isCorrect: false },
-                    { text: "1498 AD", isCorrect: true },
-                    { text: "1526 AD", isCorrect: false },
-                    { text: "1539 AD", isCorrect: false }
-                ]
-            },
-            {
-                question: "The second battle of Panipat was fought between:",
-                options: [
-                    { text: "Babur and Ibrahim Lodhi", isCorrect: false },
-                    { text: "Akbar and Hemu", isCorrect: true },
-                    { text: "Sher Shah Suri and Humayun", isCorrect: false },
-                    { text: "Ahmad Shah Abdali and Marathas", isCorrect: false }
-                ]
-            },
-            {
-                question: "Hazrat Mujaddid Alf Sani whose real name was Sheikh Ahmad Sarhindi died in:",
-                options: [
-                    { text: "1564 AD", isCorrect: false },
-                    { text: "1624 AD", isCorrect: true },
-                    { text: "1658 AD", isCorrect: false },
-                    { text: "1707 AD", isCorrect: false }
-                ]
-            },
-            {
-                question: "The Battle of Buxar was fought between Britishers and Mir Qasim in:",
-                options: [
-                    { text: "1757 AD", isCorrect: false },
-                    { text: "1761 AD", isCorrect: false },
-                    { text: "1764 AD", isCorrect: true },
-                    { text: "1776 AD", isCorrect: false }
-                ]
-            },
-            // -------------------- General Knowledge (Organizations) - 10 MCQs --------------------
-            {
-                question: "Which organization was created in 1955 to provide a defense shield against Soviet penetration?",
-                options: [
-                    { text: "SEATO", isCorrect: false },
-                    { text: "CENTO", isCorrect: true },
-                    { text: "NATO", isCorrect: false },
-                    { text: "OPEC", isCorrect: false }
-                ]
-            },
-            {
-                question: "SEATO was established on September 8, 1954 by Australia, France, New Zealand, Pakistan, the Philippines, Thailand, and the U.S. Its headquarters were in:",
-                options: [
-                    { text: "Manila, Philippines", isCorrect: false },
-                    { text: "Bangkok, Thailand", isCorrect: true },
-                    { text: "Paris, France", isCorrect: false },
-                    { text: "Washington D.C., USA", isCorrect: false }
-                ]
-            },
-            {
-                question: "The International Committee of the Red Cross (ICRC) was established in 1863 to care for victims of war and enforce humanitarian practices. It has member societies in how many countries?",
-                options: [
-                    { text: "90 countries", isCorrect: false },
-                    { text: "126 countries", isCorrect: true },
-                    { text: "150 countries", isCorrect: false },
-                    { text: "180 countries", isCorrect: false }
-                ]
-            },
-            {
-                question: "Interpol, founded in 1923, has headquarters in:",
-                options: [
-                    { text: "Geneva, Switzerland", isCorrect: false },
-                    { text: "The Hague, Netherlands", isCorrect: false },
-                    { text: "Lyon, France", isCorrect: true },
-                    { text: "Vienna, Austria", isCorrect: false }
-                ]
-            },
-            {
-                question: "G-15 is an economic grouping of developing countries. Which of these is NOT a member country?",
-                options: [
-                    { text: "Algeria", isCorrect: false },
-                    { text: "India", isCorrect: false },
-                    { text: "Japan", isCorrect: true },
-                    { text: "Mexico", isCorrect: false }
-                ]
-            },
-            {
-                question: "Amnesty International, founded on May 28, 1961, was awarded the Nobel Prize for Peace in:",
-                options: [
-                    { text: "1965", isCorrect: false },
-                    { text: "1977", isCorrect: true },
-                    { text: "1985", isCorrect: false },
-                    { text: "1991", isCorrect: false }
-                ]
-            },
-            {
-                question: "The Arab League (AL) has how many members?",
-                options: [
-                    { text: "15", isCorrect: false },
-                    { text: "21 (plus the Palestine Liberation Organization)", isCorrect: true },
-                    { text: "25", isCorrect: false },
-                    { text: "30", isCorrect: false }
-                ]
-            },
-            {
-                question: "The Association of South-East Asian Nations (ASEAN) was formed on August 8, 1967. Its headquarters are in:",
-                options: [
-                    { text: "Kuala Lumpur, Malaysia", isCorrect: false },
-                    { text: "Singapore", isCorrect: false },
-                    { text: "Jakarta, Indonesia", isCorrect: true },
-                    { text: "Bangkok, Thailand", isCorrect: false }
-                ]
-            },
-            {
-                question: "Which country is an Associate Member of ASEAN Regional Forum (ARF)?",
-                options: [
-                    { text: "Timor-Leste", isCorrect: false },
-                    { text: "Papua New Guinea", isCorrect: true },
-                    { text: "Sri Lanka", isCorrect: false },
-                    { text: "Fiji", isCorrect: false }
-                ]
-            },
-            {
-                question: "The Group of 8 (G-8) includes:",
-                options: [
-                    { text: "China, India, Brazil, South Africa", isCorrect: false },
-                    { text: "Canada, France, Germany, Italy, Japan, Russia, UK, U.S.", isCorrect: true },
-                    { text: "Australia, New Zealand, South Korea, Singapore", isCorrect: false },
-                    { text: "Mexico, Turkey, Indonesia, Argentina", isCorrect: false }
-                ]
-            },
-            // -------------------- English (Idioms) - 10 MCQs --------------------
-            {
-                question: "What does the idiom 'A Whole New Ball Game' mean?",
-                options: [
-                    { text: "A game played with a new ball", isCorrect: false },
-                    { text: "A completely new situation or set of circumstances", isCorrect: true },
-                    { text: "A challenging sports match", isCorrect: false },
-                    { text: "A strategy that is slightly different", isCorrect: false }
-                ]
-            },
-            {
-                question: "The idiom 'A Wet Blanket' refers to someone who:",
-                options: [
-                    { text: "Is always cold", isCorrect: false },
-                    { text: "Dampens enthusiasm or enjoyment", isCorrect: true },
-                    { text: "Provides comfort and warmth", isCorrect: false },
-                    { text: "Is always happy and cheerful", isCorrect: false }
-                ]
-            },
-            {
-                question: "What is the meaning of 'A Watched Pot Never Boils'?",
-                options: [
-                    { text: "Water boils faster when not observed", isCorrect: false },
-                    { text: "Time seems to pass more slowly when you are waiting for something to happen", isCorrect: true },
-                    { text: "It's important to keep an eye on things", isCorrect: false },
-                    { text: "Patience is not always a virtue", isCorrect: false }
-                ]
-            },
-            {
-                question: "If something is 'A Tall Order', it is:",
-                options: [
-                    { text: "A request for a very large meal", isCorrect: false },
-                    { text: "A difficult or unreasonable request or task", isCorrect: true },
-                    { text: "An easy task to complete", isCorrect: false },
-                    { text: "A simple command to follow", isCorrect: false }
-                ]
-            },
-            {
-                question: "What does 'A Stitch in Time Saves Nine' mean?",
-                options: [
-                    { text: "Sewing quickly saves effort later", isCorrect: false },
-                    { text: "Addressing a problem promptly can prevent it from becoming worse", isCorrect: true },
-                    { text: "It's better to do things slowly and carefully", isCorrect: false },
-                    { text: "Nine stitches are always better than one", isCorrect: false }
-                ]
-            },
-            {
-                question: "The idiom 'A Rolling Stone Gathers no Moss' implies that:",
-                options: [
-                    { text: "Stones are naturally smooth", isCorrect: false },
-                    { text: "A person who is always moving and never settles down will not accumulate wealth or responsibilities", isCorrect: true },
-                    { text: "Moss grows only on stationary objects", isCorrect: false },
-                    { text: "It's important to stay in one place", isCorrect: false }
-                ]
-            },
-            {
-                question: "What does 'A Picture is Worth a Thousand Words' signify?",
-                options: [
-                    { text: "Pictures are always better than words", isCorrect: false },
-                    { text: "A complex idea can be conveyed with just a single image", isCorrect: true },
-                    { text: "Words are often insufficient to describe beauty", isCorrect: false },
-                    { text: "It takes many words to explain a picture", isCorrect: false }
-                ]
-            },
-            {
-                question: "If 'A Penny Saved is a Penny Earned', it means:",
-                options: [
-                    { text: "Saving money is a waste of time", isCorrect: false },
-                    { text: "Money that you save is as valuable as money that you earn", isCorrect: true },
-                    { text: "Earning money is easier than saving it", isCorrect: false },
-                    { text: "Pennies are not worth much", isCorrect: false }
-                ]
-            },
-            {
-                question: "What does 'A Little Knowledge is a Dangerous Thing' mean?",
-                options: [
-                    { text: "Knowing a lot is always harmful", isCorrect: false },
-                    { text: "A small amount of knowledge can lead to overconfidence and mistakes", isCorrect: true },
-                    { text: "It's best to remain ignorant", isCorrect: false },
-                    { text: "Knowledge is always beneficial, no matter how little", isCorrect: false }
-                ]
-            },
-            {
-                question: "The idiom 'A Friend in Need is a Friend Indeed' means:",
-                options: [
-                    { text: "All friends are equally reliable", isCorrect: false },
-                    { text: "A true friend is someone who helps you when you are in trouble", isCorrect: true },
-                    { text: "Friends are only useful when you need something", isCorrect: false },
-                    { text: "It's easy to find friends when you are successful", isCorrect: false }
-                ]
-            },
-            // -------------------- Astronomy/General Science (Sun, Mercury, Venus) - 10 MCQs --------------------
-            {
-                question: "The solar system was discovered by:",
-                options: [
-                    { text: "Galileo Galilei", isCorrect: false },
-                    { text: "Isaac Newton", isCorrect: false },
-                    { text: "Nicolaus Copernicus", isCorrect: true },
-                    { text: "Johannes Kepler", isCorrect: false }
-                ]
-            },
-            {
-                question: "According to NASA, the mass of the Sun is approximately:",
-                options: [
-                    { text: "$1.989 \\times 10^{20}$ kg", isCorrect: false },
-                    { text: "$1.989 \\times 10^{25}$ kg", isCorrect: false },
-                    { text: "$1.989 \\times 10^{30}$ kg", isCorrect: true },
-                    { text: "$1.989 \\times 10^{35}$ kg", isCorrect: false }
-                ]
-            },
-            {
-                question: "The Sun is primarily composed of:",
-                options: [
-                    { text: "Oxygen and Nitrogen", isCorrect: false },
-                    { text: "Carbon Dioxide and Water Vapor", isCorrect: false },
-                    { text: "Hydrogen and Helium", isCorrect: true },
-                    { text: "Iron and Nickel", isCorrect: false }
-                ]
-            },
-            {
-                question: "Mercury is the smallest planet in our solar system and nearest to the Sun. It is only slightly larger than:",
-                options: [
-                    { text: "Mars", isCorrect: false },
-                    { text: "Earth's Moon", isCorrect: true },
-                    { text: "Venus", isCorrect: false },
-                    { text: "Pluto", isCorrect: false }
-                ]
-            },
-            {
-                question: "One day on Mercury (the time it takes for Mercury to rotate or spin once with respect to the stars) takes approximately:",
-                options: [
-                    { text: "24 Earth days", isCorrect: false },
-                    { text: "59 Earth days", isCorrect: true },
-                    { text: "88 Earth days", isCorrect: false },
-                    { text: "225 Earth days", isCorrect: false }
-                ]
-            },
-            {
-                question: "Venus is the second closest planet to the Sun. It is considered Earth's:",
-                options: [
-                    { text: "Brother planet", isCorrect: false },
-                    { text: "Twin sister planet", isCorrect: true },
-                    { text: "Distant cousin", isCorrect: false },
-                    { text: "Only moon", isCorrect: false }
-                ]
-            },
-            {
-                question: "Venus is the hottest planet in the Solar System, with a surface temperature of approximately:",
-                options: [
-                    { text: "200 degrees Fahrenheit", isCorrect: false },
-                    { text: "470 degrees Celsius", isCorrect: true },
-                    { text: "100 degrees Celsius", isCorrect: false },
-                    { text: "80 degrees Fahrenheit", isCorrect: false }
-                ]
-            },
-            {
-                question: "Venus has a thick atmosphere full of greenhouse gas carbon dioxide and clouds made of:",
-                options: [
-                    { text: "Methane", isCorrect: false },
-                    { text: "Ammonia", isCorrect: false },
-                    { text: "Sulfuric acid", isCorrect: true },
-                    { text: "Nitrogen", isCorrect: false }
-                ]
-            },
-            {
-                question: "One day on Venus lasts approximately:",
-                options: [
-                    { text: "24 Earth hours", isCorrect: false },
-                    { text: "88 Earth days", isCorrect: false },
-                    { text: "243 Earth days", isCorrect: true },
-                    { text: "365 Earth days", isCorrect: false }
-                ]
-            },
-            {
-                question: "Earth is the third planet from the Sun. Its circumference is approximately:",
-                options: [
-                    { text: "20,000 miles", isCorrect: false },
-                    { text: "24,901 miles", isCorrect: true },
-                    { text: "30,000 miles", isCorrect: false },
-                    { text: "40,000 miles", isCorrect: false }
-                ]
-            },
-            // -------------------- Islamiyat - 10 MCQs --------------------
-            {
-                question: "Which Surah in the Holy Quran is named after Prophet Younas (AS)?",
-                options: [
-                    { text: "Surah Baqarah", isCorrect: false },
-                    { text: "Surah Younas", isCorrect: true },
-                    { text: "Surah Kahf", isCorrect: false },
-                    { text: "Surah Rahman", isCorrect: false }
-                ]
-            },
-            {
-                question: "Surah Hood is named after which Prophet?",
-                options: [
-                    { text: "Prophet Musa (AS)", isCorrect: false },
-                    { text: "Prophet Isa (AS)", isCorrect: false },
-                    { text: "Prophet Hood (AS)", isCorrect: true },
-                    { text: "Prophet Muhammad (SAW)", isCorrect: false }
-                ]
-            },
-            {
-                question: "Which Surah is named after Prophet Yousaf (AS)?",
-                options: [
-                    { text: "Surah Maryam", isCorrect: false },
-                    { text: "Surah Yousaf", isCorrect: true },
-                    { text: "Surah Luqman", isCorrect: false },
-                    { text: "Surah Nisa", isCorrect: false }
-                ]
-            },
-            {
-                question: "Surah Ibrahim is named after which Prophet?",
-                options: [
-                    { text: "Prophet Nuh (AS)", isCorrect: false },
-                    { text: "Prophet Ibrahim (AS)", isCorrect: true },
-                    { text: "Prophet Dawud (AS)", isCorrect: false },
-                    { text: "Prophet Sulaiman (AS)", isCorrect: false }
-                ]
-            },
-            {
-                question: "Which Surah is named after Prophet Noha (AS)?",
-                options: [
-                    { text: "Surah Kahf", isCorrect: false },
-                    { text: "Surah Noha", isCorrect: true },
-                    { text: "Surah Al-Imran", isCorrect: false },
-                    { text: "Surah Taha", isCorrect: false }
-                ]
-            },
-            {
-                question: "Which Surah is named after Prophet Muhammad (SAW)?",
-                options: [
-                    { text: "Surah Fatah", isCorrect: false },
-                    { text: "Surah Muhammad", isCorrect: true },
-                    { text: "Surah Yasin", isCorrect: false },
-                    { text: "Surah Waqiah", isCorrect: false }
-                ]
-            },
-            {
-                question: "How many times has Bismillah come in the Holy Quran?",
-                options: [
-                    { text: "113 times", isCorrect: false },
-                    { text: "114 times", isCorrect: true },
-                    { text: "115 times", isCorrect: false },
-                    { text: "112 times", isCorrect: false }
-                ]
-            },
-            {
-                question: "Which Surah starts without Bismillah?",
-                options: [
-                    { text: "Surah Fatiha", isCorrect: false },
-                    { text: "Surah Kahf", isCorrect: false },
-                    { text: "Surah Tauba", isCorrect: true },
-                    { text: "Surah Ikhlas", isCorrect: false }
-                ]
-            },
-            {
-                question: "Bismillah has come two times in which Surah?",
-                options: [
-                    { text: "Surah Baqarah", isCorrect: false },
-                    { text: "Surah Al-Nimal", isCorrect: true },
-                    { text: "Surah Yasin", isCorrect: false },
-                    { text: "Surah Rahman", isCorrect: false }
-                ]
-            },
-            {
-                question: "The name of Hazrat Musa (AS) has come the most in the Holy Quran. How many times?",
-                options: [
-                    { text: "Around 100 times", isCorrect: false },
-                    { text: "More than 130 times", isCorrect: true }, // Based on general knowledge, not explicit in doc but common fact
-                    { text: "Less than 50 times", isCorrect: false },
-                    { text: "Exactly 70 times", isCorrect: false }
-                ]
-            },
-            // -------------------- English (Vocabulary) - 10 MCQs --------------------
-            {
-                question: "Which word means 'an act boldly resisting authority or an opposing force'?",
-                options: [
-                    { text: "Compliance", isCorrect: false },
-                    { text: "Defiance", isCorrect: true },
-                    { text: "Submission", isCorrect: false },
-                    { text: "Agreement", isCorrect: false }
-                ]
-            },
-            {
-                question: "Something 'defunct' is:",
-                options: [
-                    { text: "Currently active and in use", isCorrect: false },
-                    { text: "No longer in force or use; inactive", isCorrect: true },
-                    { text: "Recently established and thriving", isCorrect: false },
-                    { text: "Highly functional and efficient", isCorrect: false }
-                ]
-            },
-            {
-                question: "If someone is 'dejected', they are:",
-                options: [
-                    { text: "Filled with joy and excitement", isCorrect: false },
-                    { text: "Affected or marked by low spirits; disheartened", isCorrect: true },
-                    { text: "Feeling indifferent and unconcerned", isCorrect: false },
-                    { text: "Highly motivated and enthusiastic", isCorrect: false }
-                ]
-            },
-            {
-                question: "What does 'deleterious' mean?",
-                options: [
-                    { text: "Beneficial or advantageous", isCorrect: false },
-                    { text: "Harmful to living things or health", isCorrect: true },
-                    { text: "Neutral in its effects", isCorrect: false },
-                    { text: "Promoting growth and well-being", isCorrect: false }
-                ]
-            },
-            {
-                question: "A 'delicacy' is:",
-                options: [
-                    { text: "Something common and ordinary to eat", isCorrect: false },
-                    { text: "Something considered choice to eat; a rare treat", isCorrect: true },
-                    { text: "A simple, everyday meal", isCorrect: false },
-                    { text: "Food that is unappetizing", isCorrect: false }
-                ]
-            },
-            {
-                question: "What is a 'deluge'?",
-                options: [
-                    { text: "A severe drought or lack of water", isCorrect: false },
-                    { text: "The rising of a body of water and its overflowing onto land; a great flood", isCorrect: true },
-                    { text: "A gentle drizzle of rain", isCorrect: false },
-                    { text: "A period of calm and clear weather", isCorrect: false }
-                ]
-            },
-            {
-                question: "Someone's 'demeanor' refers to:",
-                options: [
-                    { text: "Their hidden thoughts and feelings", isCorrect: false },
-                    { text: "The way a person behaves toward other people; their outward manner", isCorrect: true },
-                    { text: "Their physical appearance only", isCorrect: false },
-                    { text: "Their intellectual capabilities", isCorrect: false }
-                ]
-            },
-            {
-                question: "To 'denounce' someone or something is to:",
-                options: [
-                    { text: "Praise or commend openly", isCorrect: false },
-                    { text: "Accuse or condemn openly as disgraceful", isCorrect: true },
-                    { text: "Secretly support or endorse", isCorrect: false },
-                    { text: "Ignore or overlook a fault", isCorrect: false }
-                ]
-            },
-            {
-                question: "What does 'depict' mean?",
-                options: [
-                    { text: "To hide or conceal something", isCorrect: false },
-                    { text: "To show in, or as in, a picture; to portray", isCorrect: true },
-                    { text: "To destroy or erase an image", isCorrect: false },
-                    { text: "To imagine without visual representation", isCorrect: false }
-                ]
-            },
-            {
-                question: "To 'deplete' resources means to:",
-                options: [
-                    { text: "Increase or replenish them", isCorrect: false },
-                    { text: "Use them up, as resources or materials, to the point of exhaustion", isCorrect: true },
-                    { text: "Conserve them carefully", isCorrect: false },
-                    { text: "Distribute them widely", isCorrect: false }
-                ]
-            },
-            // -------------------- Astronomy/General Science (Earth, Mars, Jupiter) - 10 MCQs --------------------
-            {
-                question: "Earth's atmosphere consists of approximately 78 percent nitrogen, 21 percent oxygen, and 1 percent other gases such as:",
-                options: [
-                    { text: "Methane and Carbon Monoxide", isCorrect: false },
-                    { text: "Argon, carbon dioxide and neon", isCorrect: true },
-                    { text: "Hydrogen and Helium", isCorrect: false },
-                    { text: "Sulfur Dioxide and Ozone", isCorrect: false }
-                ]
-            },
-            {
-                question: "The position of the Earth in its orbit, when it is at its greatest distance from the sun causing summer in the Northern Hemisphere, is called:",
-                options: [
-                    { text: "Perihelion", isCorrect: false },
-                    { text: "Aphelion", isCorrect: true },
-                    { text: "Equinox", isCorrect: false },
-                    { text: "Solstice", isCorrect: false }
-                ]
-            },
-            {
-                question: "The phenomenon of an opening in the earth's surface through which a jet of hot water and steam is forced out regular intervals is called:",
-                options: [
-                    { text: "Volcano", isCorrect: false },
-                    { text: "Fumarole", isCorrect: false },
-                    { text: "Geyser", isCorrect: true },
-                    { text: "Hot Spring", isCorrect: false }
-                ]
-            },
-            {
-                question: "Laika, the dog, was the first Earthling to orbit Earth aboard the Soviet Union's Sputnik 2 in:",
-                options: [
-                    { text: "1955", isCorrect: false },
-                    { text: "1957", isCorrect: true },
-                    { text: "1961", isCorrect: false },
-                    { text: "1969", isCorrect: false }
-                ]
-            },
-            {
-                question: "According to NASA, Mars is the fourth planet from the Sun at an average distance of about:",
-                options: [
-                    { text: "93 million miles (150 million km)", isCorrect: false },
-                    { text: "142 million miles (228 million km)", isCorrect: true },
-                    { text: "280 million miles (450 million km)", isCorrect: false },
-                    { text: "484 million miles (778 million km)", isCorrect: false }
-                ]
-            },
-            {
-                question: "Mars has two moons named Phigbos and Deimos. What are their names?",
-                options: [
-                    { text: "Titan and Rhea", isCorrect: false },
-                    { text: "Phobos and Deimos", isCorrect: true },
-                    { text: "Io and Europa", isCorrect: false },
-                    { text: "Triton and Nereid", isCorrect: false }
-                ]
-            },
-            {
-                question: "Jupiter is the fifth planet from the Sun. It takes sunlight approximately how long to travel from the Sun to Jupiter?",
-                options: [
-                    { text: "5 minutes", isCorrect: false },
-                    { text: "10 minutes", isCorrect: false },
-                    { text: "20 minutes", isCorrect: false },
-                    { text: "43 minutes", isCorrect: true }
-                ]
-            },
-            {
-                question: "Jupiter is known as a gas giant. Its atmosphere is made up mostly of:",
-                options: [
-                    { text: "Oxygen and Nitrogen", isCorrect: false },
-                    { text: "Hydrogen (H2) and Helium (He)", isCorrect: true },
-                    { text: "Carbon Dioxide and Methane", isCorrect: false },
-                    { text: "Sulfur Dioxide and Ammonia", isCorrect: false }
-                ]
-            },
-            {
-                question: "Jupiter is how many times wider than Earth?",
-                options: [
-                    { text: "5 times", isCorrect: false },
-                    { text: "8 times", isCorrect: false },
-                    { text: "11 times", isCorrect: true },
-                    { text: "15 times", isCorrect: false }
-                ]
-            },
-            {
-                question: "Jupiter's Great Red Spot is a gigantic storm that's about twice the size of Earth and has raged for over a century. It is a prominent feature in its:",
-                options: [
-                    { text: "Core", isCorrect: false },
-                    { text: "Atmosphere", isCorrect: true },
-                    { text: "Moons", isCorrect: false },
-                    { text: "Rings", isCorrect: false }
-                ]
-            },
-            // -------------------- Current Affairs - 10 MCQs --------------------
-            {
-                question: "On which day, World Cancer Day is celebrated every year?",
-                options: [
-                    { text: "January 1st", isCorrect: false },
-                    { text: "February 4th", isCorrect: true },
-                    { text: "March 8th", isCorrect: false },
-                    { text: "April 22nd", isCorrect: false }
-                ]
-            },
-            {
-                question: "What is the theme for World Cancer Day 2024?",
-                options: [
-                    { text: "Hope and Healing", isCorrect: false },
-                    { text: "Close the Care Gap", isCorrect: true },
-                    { text: "Together We Fight Cancer", isCorrect: false },
-                    { text: "Early Detection, Better Outcomes", isCorrect: false }
-                ]
-            },
-            {
-                question: "International Day of Human Fraternity is celebrated on:",
-                options: [
-                    { text: "January 15th", isCorrect: false },
-                    { text: "February 4th", isCorrect: true },
-                    { text: "March 20th", isCorrect: false },
-                    { text: "April 1st", isCorrect: false }
-                ]
-            },
-            {
-                question: "The theme for the 2024 International Day of Human Fraternity is:",
-                options: [
-                    { text: "Building Bridges, Not Walls", isCorrect: false },
-                    { text: "Love and compassion can win over hate", isCorrect: true },
-                    { text: "Unity in Diversity", isCorrect: false },
-                    { text: "Promoting Peace and Understanding", isCorrect: false }
-                ]
-            },
-            {
-                question: "International Day of Zero Tolerance to Female Genital Mutilation is celebrated on:",
-                options: [
-                    { text: "January 25th", isCorrect: false },
-                    { text: "February 6th", isCorrect: true },
-                    { text: "March 10th", isCorrect: false },
-                    { text: "April 15th", isCorrect: false }
-                ]
-            },
-            {
-                question: "When is the 'World Pulses Day' observed every year?",
-                options: [
-                    { text: "January 10th", isCorrect: false },
-                    { text: "February 10th", isCorrect: true },
-                    { text: "March 10th", isCorrect: false },
-                    { text: "April 10th", isCorrect: false }
-                ]
-            },
-            {
-                question: "International Day of Women and Girls in Science is celebrated on:",
-                options: [
-                    { text: "February 1st", isCorrect: false },
-                    { text: "February 11th", isCorrect: true },
-                    { text: "March 8th", isCorrect: false },
-                    { text: "April 22nd", isCorrect: false }
-                ]
-            },
-            {
-                question: "The theme for the 2024 International Day of Women and Girls in Science is:",
-                options: [
-                    { text: "Women in STEM Leadership", isCorrect: false },
-                    { text: "Women & Girls in Science Leadership: A New Era for Sustainability", isCorrect: true },
-                    { text: "Empowering Women Through Science", isCorrect: false },
-                    { text: "Science for a Better Future", isCorrect: false }
-                ]
-            },
-            {
-                question: "On which day, World Radio Day is celebrated every year?",
-                options: [
-                    { text: "February 1st", isCorrect: false },
-                    { text: "February 7th", isCorrect: false },
-                    { text: "February 13th", isCorrect: true },
-                    { text: "February 20th", isCorrect: false }
-                ]
-            },
-            {
-                question: "The theme for World Radio Day 2024 is:",
-                options: [
-                    { text: "Radio and Peace", isCorrect: false },
-                    { text: "Radio: A Century Informing, Entertaining and Educating", isCorrect: true },
-                    { text: "Radio and Diversity", isCorrect: false },
-                    { text: "Radio for All", isCorrect: false }
-                ]
-            },
-            // -------------------- English (Vocabulary) - 10 MCQs --------------------
-            {
-                question: "What does 'derivation' mean?",
-                options: [
-                    { text: "The final outcome or result", isCorrect: false },
-                    { text: "The source or origin from which something comes", isCorrect: true },
-                    { text: "A complex mathematical calculation", isCorrect: false },
-                    { text: "A sudden and unexpected change", isCorrect: false }
-                ]
-            },
-            {
-                question: "A 'descendant' is:",
-                options: [
-                    { text: "An ancient ancestor or forebear", isCorrect: false },
-                    { text: "A person considered as coming from some ancestor or race", isCorrect: true },
-                    { text: "Someone who travels to distant lands", isCorrect: false },
-                    { text: "A person with no known family history", isCorrect: false }
-                ]
-            },
-            {
-                question: "To 'descry' means to:",
-                options: [
-                    { text: "To lose sight of something", isCorrect: false },
-                    { text: "To catch sight of; to discern", isCorrect: true },
-                    { text: "To describe something in detail", isCorrect: false },
-                    { text: "To intentionally overlook something", isCorrect: false }
-                ]
-            },
-            {
-                question: "A 'desolate' place is one that is:",
-                options: [
-                    { text: "Full of life and activity", isCorrect: false },
-                    { text: "Providing no shelter or sustenance; barren or lonely", isCorrect: true },
-                    { text: "Rich in resources and fertile", isCorrect: false },
-                    { text: "A bustling urban center", isCorrect: false }
-                ]
-            },
-            {
-                question: "Someone who is 'destitute' is:",
-                options: [
-                    { text: "Wealthy and self-sufficient", isCorrect: false },
-                    { text: "Poor enough to need help from others; impoverished", isCorrect: true },
-                    { text: "Content with their current situation", isCorrect: false },
-                    { text: "Highly ambitious and driven", isCorrect: false }
-                ]
-            },
-            {
-                question: "To 'deter' someone means to:",
-                options: [
-                    { text: "Encourage them to proceed", isCorrect: false },
-                    { text: "Turn away from as by fear or persuasion; discourage", isCorrect: true },
-                    { text: "Support their decision wholeheartedly", isCorrect: false },
-                    { text: "Provide them with assistance", isCorrect: false }
-                ]
-            },
-            {
-                question: "What does 'detrimental' mean?",
-                options: [
-                    { text: "Beneficial or advantageous", isCorrect: false },
-                    { text: "Causing harm or injury; damaging", isCorrect: true },
-                    { text: "Neutral or insignificant", isCorrect: false },
-                    { text: "Promoting growth and development", isCorrect: false }
-                ]
-            },
-            {
-                question: "A 'devout' person is:",
-                options: [
-                    { text: "Skeptical and irreligious", isCorrect: false },
-                    { text: "Deeply religious or pious", isCorrect: true },
-                    { text: "Carefree and indifferent", isCorrect: false },
-                    { text: "Focused on material possessions", isCorrect: false }
-                ]
-            },
-            {
-                question: "What is 'dexterity'?",
-                options: [
-                    { text: "Clumsiness or awkwardness", isCorrect: false },
-                    { text: "Adroitness in using the hands or body; skill", isCorrect: true },
-                    { text: "A lack of coordination", isCorrect: false },
-                    { text: "Mental quickness and wit", isCorrect: false }
-                ]
-            },
-            {
-                question: "Something 'diabolical' is:",
-                options: [
-                    { text: "Divine or angelic", isCorrect: false },
-                    { text: "Showing cunning or ingenuity or wickedness; devilish", isCorrect: true },
-                    { text: "Innocent and harmless", isCorrect: false },
-                    { text: "Straightforward and honest", isCorrect: false }
-                ]
-            },
-            // -------------------- Astronomy/General Science (Saturn, Uranus, Neptune) - 10 MCQs --------------------
-            {
-                question: "Saturn is the sixth planet from the Sun. It has how many known moons?",
-                options: [
-                    { text: "20", isCorrect: false },
-                    { text: "53", isCorrect: true },
-                    { text: "79", isCorrect: false },
-                    { text: "100", isCorrect: false }
-                ]
-            },
-            {
-                question: "Saturn has the second-shortest day in the solar system. One day on Saturn takes only:",
-                options: [
-                    { text: "8.5 hours", isCorrect: false },
-                    { text: "10.7 hours", isCorrect: true },
-                    { text: "15 hours", isCorrect: false },
-                    { text: "24 hours", isCorrect: false }
-                ]
-            },
-            {
-                question: "Galileo Galilei was the first to observe Saturn with a telescope in:",
-                options: [
-                    { text: "1580", isCorrect: false },
-                    { text: "1610", isCorrect: true },
-                    { text: "1650", isCorrect: false },
-                    { text: "1700", isCorrect: false }
-                ]
-            },
-            {
-                question: "Uranus is the seventh planet from the Sun. It takes about how many hours to rotate once?",
-                options: [
-                    { text: "10 hours", isCorrect: false },
-                    { text: "17 hours", isCorrect: true },
-                    { text: "24 hours", isCorrect: false },
-                    { text: "40 hours", isCorrect: false }
-                ]
-            },
-            {
-                question: "Uranus is known as the 'sideways planet' because it rotates on its side. It was discovered in 1781 by:",
-                options: [
-                    { text: "Johannes Kepler", isCorrect: false },
-                    { text: "William Herschel", isCorrect: true },
-                    { text: "Tycho Brahe", isCorrect: false },
-                    { text: "Christiaan Huygens", isCorrect: false }
-                ]
-            },
-            {
-                question: "Uranus has how many known moons?",
-                options: [
-                    { text: "15", isCorrect: false },
-                    { text: "27", isCorrect: true },
-                    { text: "35", isCorrect: false },
-                    { text: "42", isCorrect: false }
-                ]
-            },
-            {
-                question: "Neptune is the eighth planet from the Sun. It is how many astronomical units away from the Sun?",
-                options: [
-                    { text: "10", isCorrect: false },
-                    { text: "20", isCorrect: false },
-                    { text: "30", isCorrect: true },
-                    { text: "40", isCorrect: false }
-                ]
-            },
-            {
-                question: "Neptune takes about how many hours to rotate once (a Neptunian day)?",
-                options: [
-                    { text: "10 hours", isCorrect: false },
-                    { text: "16 hours", isCorrect: true },
-                    { text: "24 hours", isCorrect: false },
-                    { text: "30 hours", isCorrect: false }
-                ]
-            },
-            {
-                question: "Neptune's atmosphere is made up mostly of molecular hydrogen, atomic helium and:",
-                options: [
-                    { text: "Oxygen", isCorrect: false },
-                    { text: "Nitrogen", isCorrect: false },
-                    { text: "Methane", isCorrect: true },
-                    { text: "Carbon Dioxide", isCorrect: false }
-                ]
-            },
-            {
-                question: "Neptune is the fourth largest planet in terms of diameter. It has how many known moons?",
-                options: [
-                    { text: "5", isCorrect: false },
-                    { text: "10", isCorrect: false },
-                    { text: "14", isCorrect: true },
-                    { text: "20", isCorrect: false }
-                ]
-            },
-            // -------------------- Remaining 40 MCQs (Mix from document) --------------------
-            // English (Vocabulary) - 10 MCQs
-            {
-                question: "What does 'diaphanous' mean?",
-                options: [
-                    { text: "Thick and opaque", isCorrect: false },
-                    { text: "So thin as to transmit light; translucent", isCorrect: true },
-                    { text: "Rough and textured", isCorrect: false },
-                    { text: "Dark and shadowy", isCorrect: false }
-                ]
-            },
-            {
-                question: "A 'diatribe' is a:",
-                options: [
-                    { text: "Praiseful speech or eulogy", isCorrect: false },
-                    { text: "Thunderous verbal attack or denunciation", isCorrect: true },
-                    { text: "Calm and reasoned discussion", isCorrect: false },
-                    { text: "Short, humorous story", isCorrect: false }
-                ]
-            },
-            {
-                question: "What is a 'dichotomy'?",
-                options: [
-                    { text: "A complete agreement or consensus", isCorrect: false },
-                    { text: "A classification into two opposed parts or subclasses", isCorrect: true },
-                    { text: "A unified and coherent system", isCorrect: false },
-                    { text: "A gradual blending of ideas", isCorrect: false }
-                ]
-            },
-            {
-                question: "Something 'didactic' is:",
-                options: [
-                    { text: "Entertaining without any lesson", isCorrect: false },
-                    { text: "Instructive, especially excessively; teaching a moral lesson", isCorrect: true },
-                    { text: "Confusing and unclear", isCorrect: false },
-                    { text: "Purely descriptive and objective", isCorrect: false }
-                ]
-            },
-            {
-                question: "A 'diffident' person is:",
-                options: [
-                    { text: "Overly confident and assertive", isCorrect: false },
-                    { text: "Lacking self-confidence; shy or timid", isCorrect: true },
-                    { text: "Bold and courageous", isCorrect: false },
-                    { text: "Arrogant and boastful", isCorrect: false }
-                ]
-            },
-            {
-                question: "A 'dilettante' is:",
-                options: [
-                    { text: "A serious professional in a field", isCorrect: false },
-                    { text: "An amateur engaging in an activity without serious intention; a dabbler", isCorrect: true },
-                    { text: "A highly skilled expert", isCorrect: false },
-                    { text: "Someone who dedicates their life to a craft", isCorrect: false }
-                ]
-            },
-            {
-                question: "What does 'dire' mean?",
-                options: [
-                    { text: "Full of hope and promise", isCorrect: false },
-                    { text: "Fraught with extreme danger; nearly hopeless; dreadful", isCorrect: true },
-                    { text: "Pleasant and agreeable", isCorrect: false },
-                    { text: "Simple and straightforward", isCorrect: false }
-                ]
-            },
-            {
-                question: "Something 'disconcerting' is:",
-                options: [
-                    { text: "Calming and reassuring", isCorrect: false },
-                    { text: "Causing an emotional disturbance; unsettling or perplexing", isCorrect: true },
-                    { text: "Comforting and familiar", isCorrect: false },
-                    { text: "Predictable and expected", isCorrect: false }
-                ]
-            },
-            {
-                question: "What is 'discord'?",
-                options: [
-                    { text: "Complete agreement and harmony", isCorrect: false },
-                    { text: "Lack of agreement or harmony; conflict", isCorrect: true },
-                    { text: "A musical melody", isCorrect: false },
-                    { text: "A peaceful resolution", isCorrect: false }
-                ]
-            },
-            {
-                question: "A 'discreet' action is:",
-                options: [
-                    { text: "Obvious and attention-seeking", isCorrect: false },
-                    { text: "Marked by prudence or modesty and wise self-restraint; careful and unnoticeable", isCorrect: true },
-                    { text: "Reckless and impulsive", isCorrect: false },
-                    { text: "Loud and public", isCorrect: false }
-                ]
-            },
-            // General Science (Sun and Earth facts) - 10 MCQs
-            {
-                question: "According to NASA, the mean radius of the Sun is approximately:",
-                options: [
-                    { text: "100,000 miles", isCorrect: false },
-                    { text: "432,168.6 miles (695,508 kilometers)", isCorrect: true },
-                    { text: "1,000,000 miles", isCorrect: false },
-                    { text: "10,000 miles", isCorrect: false }
-                ]
-            },
-            {
-                question: "The Sun's equatorial circumference is about:",
-                options: [
-                    { text: "1,000,000.0 km", isCorrect: false },
-                    { text: "4,370,005.6 km", isCorrect: true },
-                    { text: "10,000,000.0 km", isCorrect: false },
-                    { text: "500,000.0 km", isCorrect: false }
-                ]
-            },
-            {
-                question: "The temperature at the Sun's core is about:",
-                options: [
-                    { text: "10 million degrees Fahrenheit", isCorrect: false },
-                    { text: "27 million degrees Fahrenheit (15 million degrees Celsius)", isCorrect: true },
-                    { text: "50 million degrees Fahrenheit", isCorrect: false },
-                    { text: "100 million degrees Fahrenheit", isCorrect: false }
-                ]
-            },
-            {
-                question: "The Sun is a main-sequence G2V star or:",
-                options: [
-                    { text: "Red Giant", isCorrect: false },
-                    { text: "White Dwarf", isCorrect: false },
-                    { text: "Yellow Dwarf", isCorrect: true },
-                    { text: "Blue Giant", isCorrect: false }
-                ]
-            },
-            {
-                question: "The Sun's volume would need how many Earths to fill it?",
-                options: [
-                    { text: "100,000", isCorrect: false },
-                    { text: "1.3 million", isCorrect: true },
-                    { text: "10 million", isCorrect: false },
-                    { text: "100 million", isCorrect: false }
-                ]
-            },
-            {
-                question: "The distance between the Earth and the Sun is approximately:",
-                options: [
-                    { text: "50 million miles", isCorrect: false },
-                    { text: "92.92 million miles (149.60 million kilometers)", isCorrect: true },
-                    { text: "150 million miles", isCorrect: false },
-                    { text: "200 million miles", isCorrect: false }
-                ]
-            },
-            {
-                question: "It takes approximately how long for light to travel from the Sun to the Earth?",
-                options: [
-                    { text: "2 minutes", isCorrect: false },
-                    { text: "8 minutes 20 seconds", isCorrect: true },
-                    { text: "15 minutes", isCorrect: false },
-                    { text: "30 minutes", isCorrect: false }
-                ]
-            },
-            {
-                question: "The Sun emits shortwave radiation because it is extremely hot and has a lot of energy to give off. The specific type of fusion that occurs inside the Sun is known as:",
-                options: [
-                    { text: "Nuclear fission", isCorrect: false },
-                    { text: "Proton-proton fusion", isCorrect: true },
-                    { text: "Cold fusion", isCorrect: false },
-                    { text: "Electron capture", isCorrect: false }
-                ]
-            },
-            {
-                question: "Earth is the only planet with:",
-                options: [
-                    { text: "Volcanoes", isCorrect: false },
-                    { text: "Rings", isCorrect: false },
-                    { text: "Atmosphere", isCorrect: true },
-                    { text: "Moons", isCorrect: false }
-                ]
-            },
-            {
-                question: "The rotation of the Earth on its axis causes:",
-                options: [
-                    { text: "Seasons", isCorrect: false },
-                    { text: "Tides", isCorrect: false },
-                    { text: "Day and night", isCorrect: true },
-                    { text: "Lunar eclipses", isCorrect: false }
-                ]
-            },
-            // General Knowledge (UN Structure) - 10 MCQs
-            {
-                question: "The UN emblem is in white centered on a light blue background. How many official working languages are recognized by the United Nations?",
-                options: [
-                    { text: "3", isCorrect: false },
-                    { text: "5", isCorrect: false },
-                    { text: "6", isCorrect: true },
-                    { text: "8", isCorrect: false }
-                ]
-            },
-            {
-                question: "Which of the following is NOT an official working language of the UN?",
-                options: [
-                    { text: "English", isCorrect: false },
-                    { text: "German", isCorrect: true },
-                    { text: "Chinese", isCorrect: false },
-                    { text: "Spanish", isCorrect: false }
-                ]
-            },
-            {
-                question: "The General Assembly is the discussion body of the United Nations and consists of all members of the UN. Each member nation can send how many delegates?",
-                options: [
-                    { text: "3", isCorrect: false },
-                    { text: "5", isCorrect: true },
-                    { text: "7", isCorrect: false },
-                    { text: "10", isCorrect: false }
-                ]
-            },
-            {
-                question: "A two-thirds majority is needed to pass resolution on important questions such as recommendation on peace and security, new members, electing members to the councils, budget considerations, and so forth. Other questions are decided by a simple majority vote. Which country has a veto power in the General Assembly?",
-                options: [
-                    { text: "USA", isCorrect: false },
-                    { text: "China", isCorrect: false },
-                    { text: "Russia", isCorrect: false },
-                    { text: "No nation has a veto power", isCorrect: true }
-                ]
-            },
-            {
-                question: "The Security Council has the primary responsibility for the maintenance of peace and security. It is composed of how many members?",
-                options: [
-                    { text: "10", isCorrect: false },
-                    { text: "15", isCorrect: true },
-                    { text: "20", isCorrect: false },
-                    { text: "25", isCorrect: false }
-                ]
-            },
-            {
-                question: "Of the 15 members of the Security Council, how many are permanent members?",
-                options: [
-                    { text: "3", isCorrect: false },
-                    { text: "5", isCorrect: true },
-                    { text: "7", isCorrect: false },
-                    { text: "10", isCorrect: false }
-                ]
-            },
-            {
-                question: "Which of the following is NOT a permanent member of the Security Council?",
-                options: [
-                    { text: "United States", isCorrect: false },
-                    { text: "Germany", isCorrect: true },
-                    { text: "China", isCorrect: false },
-                    { text: "France", isCorrect: false }
-                ]
-            },
-            {
-                question: "Each member of the Security Council has how many votes?",
-                options: [
-                    { text: "One vote", isCorrect: true },
-                    { text: "Two votes", isCorrect: false },
-                    { text: "Five votes", isCorrect: false },
-                    { text: "Votes based on population", isCorrect: false }
-                ]
-            },
-            {
-                question: "The Economic and Social Council (ECOSOC) is made up of how many members?",
-                options: [
-                    { text: "27", isCorrect: false },
-                    { text: "45", isCorrect: false },
-                    { text: "54", isCorrect: true },
-                    { text: "60", isCorrect: false }
-                ]
-            },
-            {
-                question: "The International Labour Organisation (ILO) is an autonomous part of the League of Nations. Its headquarters are in:",
-                options: [
-                    { text: "New York", isCorrect: false },
-                    { text: "Geneva", isCorrect: true },
-                    { text: "Paris", isCorrect: false },
-                    { text: "Rome", isCorrect: false }
-                ]
-            },
-            // General Science (Planets & general facts) - 10 MCQs
-            {
-                question: "The inner rocky planets are Mercury, Venus, Earth and:",
-                options: [
-                    { text: "Jupiter", isCorrect: false },
-                    { text: "Saturn", isCorrect: false },
-                    { text: "Mars", isCorrect: true },
-                    { text: "Neptune", isCorrect: false }
-                ]
-            },
-            {
-                question: "The outer gas giants are Jupiter, Saturn and Ice giants Uranus and:",
-                options: [
-                    { text: "Pluto", isCorrect: false },
-                    { text: "Neptune", isCorrect: true },
-                    { text: "Earth", isCorrect: false },
-                    { text: "Mars", isCorrect: false }
-                ]
-            },
-            {
-                question: "The density of Earth is approximately:",
-                options: [
-                    { text: "1.55 g/cm³", isCorrect: false },
-                    { text: "3.55 g/cm³", isCorrect: false },
-                    { text: "5.51 g/cm³", isCorrect: true },
-                    { text: "7.51 g/cm³", isCorrect: false }
-                ]
-            },
-            {
-                question: "Earth is known as the:",
-                options: [
-                    { text: "Red planet", isCorrect: false },
-                    { text: "Blue and green planet", isCorrect: true },
-                    { text: "Yellow planet", isCorrect: false },
-                    { text: "White planet", isCorrect: false }
-                ]
-            },
-            {
-                question: "Earth is the only planet with:",
-                options: [
-                    { text: "Rings", isCorrect: false },
-                    { text: "A single moon", isCorrect: true },
-                    { text: "Multiple moons", isCorrect: false },
-                    { text: "No atmosphere", isCorrect: false }
-                ]
-            },
-            {
-                question: "Earth is approximately how many years old?",
-                options: [
-                    { text: "1.2 billion years old", isCorrect: false },
-                    { text: "2.5 billion years old", isCorrect: false },
-                    { text: "4.54 $\\pm$ 0.05 billion years old", isCorrect: true },
-                    { text: "6.0 billion years old", isCorrect: false }
-                ]
-            },
-            {
-                question: "Earth has one large natural satellite known as the:",
-                options: [
-                    { text: "Phobos", isCorrect: false },
-                    { text: "Deimos", isCorrect: false },
-                    { text: "Moon", isCorrect: true },
-                    { text: "Titan", isCorrect: false }
-                ]
-            },
-            {
-                question: "The orbits of planets around the sun are:",
-                options: [
-                    { text: "Square", isCorrect: false },
-                    { text: "Triangular", isCorrect: false },
-                    { text: "Circular and elliptic", isCorrect: true },
-                    { text: "Spiral", isCorrect: false }
-                ]
-            },
-            {
-                question: "The Earth's movement around the sun causes the:",
-                options: [
-                    { text: "Day and night", isCorrect: false },
-                    { text: "Seasons", isCorrect: true },
-                    { text: "Tides", isCorrect: false },
-                    { text: "Moon phases", isCorrect: false }
-                ]
-            },
-            {
-                question: "The Earth has three layers: crust, mantle and:",
-                options: [
-                    { text: "Atmosphere", isCorrect: false },
-                    { text: "Hydrosphere", isCorrect: false },
-                    { text: "Core", isCorrect: true },
-                    { text: "Lithosphere", isCorrect: false }
-                ]
-            },
-            // English (Idioms) - 10 MCQs
-            {
-                question: "What does 'A Fool and His Money are Easily Parted' mean?",
-                options: [
-                    { text: "Wise people spend money quickly", isCorrect: false },
-                    { text: "Someone foolish will quickly lose their money", isCorrect: true },
-                    { text: "Money is always difficult to keep", isCorrect: false },
-                    { text: "It's easy to earn money if you are smart", isCorrect: false }
-                ]
-            },
-            {
-                question: "The idiom 'A Fish Out of Water' describes someone who is:",
-                options: [
-                    { text: "Comfortable in any situation", isCorrect: false },
-                    { text: "Uncomfortable or out of place in a particular situation", isCorrect: true },
-                    { text: "An excellent swimmer", isCorrect: false },
-                    { text: "Always seeking new experiences", isCorrect: false }
-                ]
-            },
-            {
-                question: "What does 'A Drowning Man Will Clutch at a Straw' mean?",
-                options: [
-                    { text: "People in danger are picky about help", isCorrect: false },
-                    { text: "Someone in a desperate situation will try anything to save themselves, no matter how unlikely to succeed", isCorrect: true },
-                    { text: "Straws are strong enough to support a person", isCorrect: false },
-                    { text: "It's easy to find help when you are in trouble", isCorrect: false }
-                ]
-            },
-            {
-                question: "If something is 'A Drop in the Ocean', it is:",
-                options: [
-                    { text: "A significant amount of something", isCorrect: false },
-                    { text: "A very small or insignificant amount compared to what is needed or expected", isCorrect: true },
-                    { text: "A valuable and rare item", isCorrect: false },
-                    { text: "A large and overwhelming quantity", isCorrect: false }
-                ]
-            },
-            {
-                question: "What does 'A Dime A Dozen' imply?",
-                options: [
-                    { text: "Something is very expensive", isCorrect: false },
-                    { text: "Something is very common and of little value", isCorrect: true },
-                    { text: "Something is rare and hard to find", isCorrect: false },
-                    { text: "Something is worth exactly ten cents", isCorrect: false }
-                ]
-            },
-            {
-                question: "The idiom 'A Cut Above' means:",
-                options: [
-                    { text: "To be slightly inferior", isCorrect: false },
-                    { text: "To be superior or of a higher quality than others", isCorrect: true },
-                    { text: "To be exactly the same as others", isCorrect: false },
-                    { text: "To be separated from the rest", isCorrect: false }
-                ]
-            },
-            {
-                question: "If something is 'A Cinch', it is:",
-                options: [
-                    { text: "Very difficult and challenging", isCorrect: false },
-                    { text: "Very easy to do; a certainty", isCorrect: true },
-                    { text: "Unpredictable and uncertain", isCorrect: false },
-                    { text: "A complex and intricate task", isCorrect: false }
-                ]
-            },
-            {
-                question: "What does 'A Chain is Only as Strong as its Weakest Link' mean?",
-                options: [
-                    { text: "All parts of a system are equally strong", isCorrect: false },
-                    { text: "A system or organization is only as effective or successful as its least effective or strongest part", isCorrect: true },
-                    { text: "Strong links can compensate for weak ones", isCorrect: false },
-                    { text: "The strength of a chain depends on its length", isCorrect: false }
-                ]
-            },
-            {
-                question: "The idiom 'A Cat May Look at a King' suggests that:",
-                options: [
-                    { text: "Cats are royalty", isCorrect: false },
-                    { text: "Even a person of low status has rights and can look at someone of high status without fear", isCorrect: true },
-                    { text: "Kings are easily intimidated", isCorrect: false },
-                    { text: "Animals have more rights than humans", isCorrect: false }
-                ]
-            },
-            {
-                question: "What does 'A Burnt Child Dreads the Fire' mean?",
-                options: [
-                    { text: "Children are naturally afraid of fire", isCorrect: false },
-                    { text: "Someone who has been hurt by something will be cautious of it in the future", isCorrect: true },
-                    { text: "Fire is always dangerous", isCorrect: false },
-                    { text: "Experience always makes one fearless", isCorrect: false }
-                ]
-            },
-            // General Science (Core/Temperature/Equinox) - 10 MCQs
-            {
-                question: "The inner core is a solid sphere made of iron and nickel metals about how many miles in radius?",
-                options: [
-                    { text: "500 miles", isCorrect: false },
-                    { text: "759 miles (1,221 kilometers)", isCorrect: true },
-                    { text: "1,000 miles", isCorrect: false },
-                    { text: "1,500 miles", isCorrect: false }
-                ]
-            },
-            {
-                question: "The temperature of the inner core is as high as 9,800 degrees Fahrenheit (5,400 degrees Celsius). This temperature is comparable to the surface of the:",
-                options: [
-                    { text: "Moon", isCorrect: false },
-                    { text: "Sun", isCorrect: true },
-                    { text: "Mars", isCorrect: false },
-                    { text: "Jupiter", isCorrect: false }
-                ]
-            },
-            {
-                question: "Comets are cosmic snowballs of frozen gases, rock and dust that orbit the:",
-                options: [
-                    { text: "Earth", isCorrect: false },
-                    { text: "Sun", isCorrect: true },
-                    { text: "Moon", isCorrect: false },
-                    { text: "Mars", isCorrect: false }
-                ]
-            },
-            {
-                question: "Asteroids are small, rocky objects that orbit the:",
-                options: [
-                    { text: "Earth", isCorrect: false },
-                    { text: "Sun", isCorrect: true },
-                    { text: "Jupiter", isCorrect: false },
-                    { text: "Mars", isCorrect: false }
-                ]
-            },
-            {
-                question: "Equinox occurs when the sun is vertically above the equator. The equinox in March is called the Vernal or Spring Equinox. The September equinox is called the:",
-                options: [
-                    { text: "Summer Solstice", isCorrect: false },
-                    { text: "Winter Solstice", isCorrect: false },
-                    { text: "Autumnal or Fall Equinox", isCorrect: true },
-                    { text: "Lunar Equinox", isCorrect: false }
-                ]
-            },
-            {
-                question: "Equinox occurs how many times a year?",
-                options: [
-                    { text: "Once", isCorrect: false },
-                    { text: "Twice", isCorrect: true },
-                    { text: "Three times", isCorrect: false },
-                    { text: "Four times", isCorrect: false }
-                ]
-            },
-            {
-                question: "The Sun shines vertically on the Equator how many times a year?",
-                options: [
-                    { text: "Once", isCorrect: false },
-                    { text: "Twice", isCorrect: true },
-                    { text: "Three times", isCorrect: false },
-                    { text: "Four times", isCorrect: false }
-                ]
-            },
-            {
-                question: "On the Equinox day, the sun move across the celestial equator, which lie directly above the earth's equator. This results in:",
-                options: [
-                    { text: "Longer days in summer", isCorrect: false },
-                    { text: "Equal day and night across the globe", isCorrect: true },
-                    { text: "Shorter days in winter", isCorrect: false },
-                    { text: "Increased solar radiation at the poles", isCorrect: false }
-                ]
-            },
-            {
-                question: "Japan is called 'the land of rising sun'. This name is attributed to its geographical position relative to:",
-                options: [
-                    { text: "China", isCorrect: false },
-                    { text: "Korea", isCorrect: false },
-                    { text: "The Pacific Ocean", isCorrect: true },
-                    { text: "Russia", isCorrect: false }
-                ]
-            },
-            {
-                question: "The galactic year, also known as a cosmic year, is the duration of time required for the Sun to orbit once around the centre of the:",
-                options: [
-                    { text: "Andromeda Galaxy", isCorrect: false },
-                    { text: "Triangulum Galaxy", isCorrect: false },
-                    { text: "Milky Way Galaxy", isCorrect: true },
-                    { text: "Whirlpool Galaxy", isCorrect: false }
-                ]
-            }
-        ];
-
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let timer;
-        const quizDuration = 60 * 60; // 60 minutes in seconds
-        let timeLeft = quizDuration;
-        let quizStartedTime;
-        let quizEndedTime;
-        let quizAttempted = false; // Flag to prevent restart
 
         const loginSection = document.getElementById('login-section');
         const nameEntrySection = document.getElementById('name-entry-section');
         const quizSection = document.getElementById('quiz-section');
         const resultSection = document.getElementById('result-section');
-        const idInput = document.getElementById('id-input');
-        const passwordInput = document.getElementById('password-input');
         const loginButton = document.getElementById('login-button');
-        const nameInput = document.getElementById('name-input');
         const startQuizButton = document.getElementById('start-quiz-button');
+        const nextButton = document.getElementById('next-button');
+        const userIdInput = document.getElementById('user-id');
+        const passwordInput = document.getElementById('password');
+        const loginError = document.getElementById('login-error');
+        const candidateNameInput = document.getElementById('candidate-name');
         const questionText = document.getElementById('question-text');
         const optionsContainer = document.getElementById('options-container');
-        const timerDisplay = document.getElementById('timer');
-        const scoreDisplay = document.getElementById('score-display');
-        const finalNameDisplay = document.getElementById('final-name');
-        const timeTakenDisplay = document.getElementById('time-taken-display');
-        const feedbackMessage = document.getElementById('feedback-message');
+        const currentQuestionNumberSpan = document.getElementById('current-question-number');
+        const totalQuestionsSpan = document.getElementById('total-questions');
+        const timeLeftSpan = document.getElementById('time-left');
+        const resultNameSpan = document.getElementById('result-name');
+        const scoreSpan = document.getElementById('score');
+        const totalScoreSpan = document.getElementById('total-score');
+        const correctCountSpan = document.getElementById('correct-count');
+        const wrongCountSpan = document.getElementById('wrong-count');
+        const timeTakenSpan = document.getElementById('time-taken');
 
-        // Shuffle quiz questions once at the start to randomize order
-        // This is important for the options as well.
-        quizData.forEach(q => {
-            q.options = shuffleArray(q.options);
-        });
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let correctAnswersCount = 0;
+        let wrongAnswersCount = 0;
+        let quizStartedTime;
+        let timerInterval;
+        let quizActive = false; // Flag to prevent re-attempts
 
-        // Function to shuffle an array (Fisher-Yates algorithm)
+        const quizData = [];
+
+        // Function to shuffle an array
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -1846,153 +344,1003 @@
             return array;
         }
 
-        // Initialize MathJax for LaTeX rendering
-        function loadMathJax() {
-            const script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-            script.async = true;
-            document.head.appendChild(script);
-            script.onload = () => {
-                MathJax.typesetPromise();
-            };
+        // Function to get a random element from an array
+        function getRandomElement(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
         }
 
-        // Display current question and options
-        function displayQuestion() {
-            if (currentQuestionIndex < quizData.length) {
-                const question = quizData[currentQuestionIndex];
-                questionText.innerHTML = question.question; // Use innerHTML for LaTeX
-                optionsContainer.innerHTML = ''; // Clear previous options
-                feedbackMessage.textContent = ''; // Clear feedback message
+        // Generate MCQs based on the document content
+        function generateMCQs() {
+            const generatedQuestions = [];
 
-                question.options.forEach((option, index) => {
+            // English MCQs (30) - Vocabulary and Idioms
+            const vocabulary = {
+                "dally": "waste time",
+                "dapper": "marked by up-to-dateness in dress and manners",
+                "dauntless": "invulnerable to fear or intimidation",
+                "dawdle": "take one's time; proceed slowly",
+                "dearth": "an insufficient quantity or number",
+                "debacle": "a sudden and complete disaster",
+                "debilitate": "make weak",
+                "debunk": "expose while ridiculing",
+                "deduce": "conclude by reasoning",
+                "defame": "charge falsely or with malicious intent",
+                "defiance": "an act boldly resisting authority or an opposing force",
+                "defunct": "no longer in force or use; inactive",
+                "dejected": "affected or marked by low spirits",
+                "deleterious": "harmful to living things",
+                "delicacy": "something considered choice to eat",
+                "deluge": "the rising of a body of water and its overflowing onto land",
+                "demeanor": "the way a person behaves toward other people",
+                "demographic": "a statistic characterizing human populations",
+                "denounce": "accuse or condemn openly as disgraceful",
+                "depict": "show in, or as in, a picture",
+                "deplete": "use up, as resources or materials",
+                "derivation": "the source or origin from which something comes",
+                "descendant": "a person considered as coming from some ancestor or race",
+                "descry": "catch sight of",
+                "desolate": "providing no shelter or sustenance",
+                "destitute": "poor enough to need help from others",
+                "deter": "turn away from as by fear or persuasion",
+                "detrimental": "causing harm or injury",
+                "devout": "deeply religious",
+                "dexterity": "adroitness in using the hands",
+                "diabolical": "showing cunning or ingenuity or wickedness",
+                "diaphanous": "so thin as to transmit light",
+                "diatribe": "thunderous verbal attack",
+                "dichotomy": "a classification into two opposed parts or subclasses",
+                "didactic": "instructive, especially excessively",
+                "diffident": "lacking self-confidence",
+                "dilettante": "an amateur engaging in an activity without serious intention",
+                "dire": "fraught with extreme danger; nearly hopeless",
+                "disconcerting": "causing an emotional disturbance",
+                "discord": "lack of agreement or harmony",
+                "discreet": "marked by prudence or modesty and wise self-restraint",
+                "discrepancy": "a difference between conflicting facts or claims or opinions",
+                "disenfranchise": "deprive of voting rights",
+                "disfigure": "mar or spoil the appearance of",
+                "disgruntled": "in a state of sulky dissatisfaction",
+                "disheveled": "in disarray; extremely disorderly",
+                "disingenuous": "not straightforward or candid",
+                "disinter": "dig up for reburial or for medical investigation",
+                "disjointed": "lacking orderly continuity",
+                "dismal": "causing dejection",
+                "dismantle": "take apart into its constituent pieces",
+                "dismay": "the feeling of despair in the face of obstacles",
+                "disparage": "express a negative opinion of",
+                "disparity": "inequality or difference in some respect",
+                "dispassionate": "unaffected by strong emotion or prejudice",
+                "dispatch": "the act of sending off something",
+                "dispel": "force to go away",
+                "dispense": "grant an exemption",
+                "disperse": "cause to separate",
+                "displace": "cause to move, usually with force or pressure",
+                "disposable": "designed to be thrown away after use",
+                "disposition": "your usual mood",
+                "disseminate": "cause to become widely known",
+                "dissertation": "a treatise advancing a point of view resulting from research",
+                "dissident": "a person who objects to some established policy",
+                "dissimilar": "not alike",
+                "dissimulate": "hide feelings from other people",
+                "dissipate": "cause to separate and go in different directions",
+                "dissipated": "preoccupied with the pursuit of pleasure",
+                "dissipation": "dissolute indulgence in sensual pleasure",
+                "dissolute": "unrestrained by convention or morality",
+                "dissolution": "the termination or disintegration of a relationship",
+                "dissolve": "cause to fade away",
+                "dissonance": "the auditory experience of sound that lacks musical quality",
+                "dissonant": "lacking in harmony",
+                "dissuade": "turn away from by persuasion",
+                "distant": "located far away spatially",
+                "distend": "swell from or as if from internal pressure",
+                "distill": "remove impurities from and increase the concentration of",
+                "distillation": "purifying a liquid by boiling it and condensing its vapors",
+                "distort": "twist and press out of shape",
+                "distract": "draw someone's attention away from something",
+                "distraught": "deeply agitated especially from emotion",
+                "distress": "cause mental pain to",
+                "diverse": "many and different",
+                "divest": "cease to hold, as an investment",
+                "docile": "willing to be taught or led or supervised or directed",
+                "dogmatic": "relating to or involving a religious doctrine",
+                "doleful": "filled with or evoking sadness",
+                "domestic": "produced in a particular country",
+                "dominant": "exercising influence or control",
+                "dormant": "inactive but capable of becoming active",
+                "dreary": "causing dejection",
+                "drudgery": "hard, monotonous, routine work",
+                "dubious": "fraught with uncertainty or doubt",
+                "duplicity": "the act of deceiving or acting in bad faith",
+                "durable": "capable of withstanding wear and tear and decay",
+                "dwell": "inhabit or live in",
+                "dwindle": "become smaller or lose substance",
+                "dystopian": "of an imaginary place where life is extremely bad"
+            };
+
+            const idioms = {
+                "A Whole New Ball Game": "A completely different situation.",
+                "About to": "On the verge of doing something.",
+                "A Whole Raft of": "A large number of something.",
+                "A Whale of": "An excellent or impressive example of something.",
+                "A Wet Blanket": "Someone who spoils other people's fun.",
+                "A Watched Pot Never Boils": "Time seems to pass more slowly when you are waiting for something to happen.",
+                "A Voice Crying in the Wilderness": "Someone expressing an unpopular opinion.",
+                "A Trip to Sun": "A journey that is long and difficult (figurative).", // Generated interpretation
+                "A Tall Order": "A difficult task.",
+                "A Stitch in Time Saves Nine": "Fixing a small problem now prevents it from becoming a bigger one later.",
+                "A Smooth Sea Never Made a Skilled Sailor": "Challenges help people develop skills.",
+                "A Sight for Sore Eyes": "A welcome or pleasant sight.",
+                "A Shot in the Dark": "A wild guess.",
+                "A Rolling Stone Gathers no Moss": "A person who is always moving may not accumulate wealth or responsibilities.",
+                "A Raw Deal": "Unfair treatment.",
+                "A Quick Buck": "Money earned quickly and easily, often unethically.",
+                "A Place for Everything and Everything in its Place": "Orderliness is important.",
+                "A Picture is Worth a Thousand Words": "A picture conveys information more effectively than words.",
+                "A Penny Saved is a Penny Earned": "Money not spent is money gained.",
+                "A Nod is as Good as a Wink": "A subtle hint is enough.",
+                "A Needle in a Haystack": "Something impossible or very difficult to find.",
+                "A Miss is as Good as a Mile": "A near miss is still a miss.",
+                "A Man of Action": "Someone who gets things done.",
+                "A Lot on my Plate": "Having many responsibilities.",
+                "A Little of What You Fancy Does You Good": "Indulging in something you enjoy in moderation is beneficial.",
+                "A Little Knowledge is a Dangerous Thing": "A small amount of knowledge can be dangerous if it makes someone overconfident.",
+                "A Little Bird Told Me": "Someone secretly told me.",
+                "A Leopard Can’t Change His Spots": "People cannot change their basic nature.",
+                "A House of Cards": "A fragile or unstable plan/system.",
+                "A House Divided Against Itself Cannot Stand": "A group with internal disagreements will fail.",
+                "A Hard Nut to Crack": "A difficult problem or person to deal with.",
+                "A Good Man is Hard to Find": "It's difficult to find someone who is truly good.",
+                "A Golden Key Can Open Any Door": "Money can solve many problems.",
+                "A Friend in Need is a Friend Indeed": "A true friend helps when you are in trouble.",
+                "A Fool and His Money are Easily Parted": "Foolish people spend money carelessly.",
+                "A Fish Out of Water": "Someone in an unfamiliar or uncomfortable environment.",
+                "A Drowning Man Will Clutch at a Straw": "Someone in a desperate situation will try anything to save themselves.",
+                "A Drop in the Ocean": "A very small amount compared to what is needed.",
+                "A Dime A Dozen": "Something common and of little value.",
+                "A Cut Above": "Superior to others.",
+                "A Cinch": "Something very easy.",
+                "A Chain is Only as Strong as its Weakest Link": "A group or system is only as strong as its weakest member.",
+                "A Cat May Look at a King": "Even a person of low status has rights.",
+                "A Burnt Child Dreads the Fire": "Someone who has had a bad experience will be careful to avoid a similar one.",
+                "A Bunch of Fives": "A fist.",
+                "A Bolt From the Blue": "A complete surprise.",
+                "A Blessing in Disguise": "A misfortune that turns out to have a good result.",
+                "A Bit Much": "Excessive or unreasonable.",
+                "A Bird in the Hand is Worth Two in the Bush": "It's better to hold onto something you have than to risk it for something better.",
+                "Actions Speak Louder than Words": "What you do is more important than what you say.",
+                "All Ears": "Fully listening.",
+                "At the Drop of a Hat": "Immediately; without hesitation.",
+                "A Piece of Cake": "Something very easy to do.",
+                "Apple of My Eye": "Someone or something that is cherished above all others."
+            };
+
+            const vocabWords = Object.keys(vocabulary);
+            const idiomPhrases = Object.keys(idioms);
+            const idiomMeanings = Object.values(idioms);
+
+            // Helper to generate options with balanced lengths
+            function generateBalancedOptions(correctAnswer, allPossibleOptions) {
+                let options = [correctAnswer];
+                const otherOptions = allPossibleOptions.filter(opt => opt !== correctAnswer);
+
+                // Try to pick options with similar length
+                const targetLength = correctAnswer.length;
+                const lengthTolerance = 0.3; // Allow 30% deviation in length
+
+                const suitableOptions = otherOptions.filter(opt =>
+                    Math.abs(opt.length - targetLength) / targetLength < lengthTolerance
+                );
+
+                // If not enough suitable options, pick randomly
+                let pool = suitableOptions.length >= 3 ? suitableOptions : otherOptions;
+                shuffleArray(pool);
+
+                while (options.length < 4 && pool.length > 0) {
+                    const randomOption = pool.pop();
+                    if (!options.includes(randomOption)) {
+                        options.push(randomOption);
+                    }
+                }
+
+                // Fallback if we still don't have 4 options (shouldn't happen with large pools)
+                while (options.length < 4) {
+                    const randomFallback = getRandomElement(allPossibleOptions);
+                    if (!options.includes(randomFallback)) {
+                        options.push(randomFallback);
+                    }
+                }
+
+                return shuffleArray(options);
+            }
+
+
+            // 15 Vocabulary MCQs
+            for (let i = 0; i < 15; i++) {
+                const word = getRandomElement(vocabWords);
+                const correctAnswer = vocabulary[word];
+                const options = generateBalancedOptions(correctAnswer, Object.values(vocabulary));
+                generatedQuestions.push({
+                    category: "English (Vocabulary)",
+                    question: `What is the meaning of "${word}"?`,
+                    options: options,
+                    answer: correctAnswer
+                });
+            }
+
+            // 15 Idiom MCQs
+            for (let i = 0; i < 15; i++) {
+                const idiom = getRandomElement(idiomPhrases);
+                const correctAnswer = idioms[idiom];
+                const options = generateBalancedOptions(correctAnswer, idiomMeanings);
+                generatedQuestions.push({
+                    category: "English (Idioms)",
+                    question: `What is the meaning of the idiom "${idiom}"?`,
+                    options: options,
+                    answer: correctAnswer
+                });
+            }
+
+            // Pakistan Affairs MCQs (10)
+            const pakistanAffairs = [
+                {
+                    question: "Who was the first Muslim Commander who entered India?",
+                    correctAnswer: "Muhammad Bin Qasim",
+                    options: ["Muhammad Bin Qasim", "Mahmud of Ghazni", "Muhammad Ghori", "Qutb al-Din Aibak"]
+                },
+                {
+                    question: "When did Muhammad Bin Qasim, the first Muslim Commander, enter India?",
+                    correctAnswer: "712 AD",
+                    options: ["712 AD", "1000 AD", "1192 AD", "1206 AD"]
+                },
+                {
+                    question: "When was the first invasion of Sultan Muhammad of Ghazni in subcontinent?",
+                    correctAnswer: "1000 AD",
+                    options: ["1000 AD", "712 AD", "1192 AD", "1206 AD"]
+                },
+                {
+                    question: "When did Sultan Muhammad of Ghazni destroy Somnat temple?",
+                    correctAnswer: "1026 AD",
+                    options: ["1026 AD", "1000 AD", "1192 AD", "1206 AD"]
+                },
+                {
+                    question: "When was the Death of Sultan Muhammad Ghazni?",
+                    correctAnswer: "1030 AD",
+                    options: ["1030 AD", "1026 AD", "1192 AD", "1206 AD"]
+                },
+                {
+                    question: "When did Muhammad Ghori defeat Prithvi Raj at the Second Battle of Tarain?",
+                    correctAnswer: "1192 AD",
+                    options: ["1192 AD", "1191 AD", "1000 AD", "712 AD"]
+                },
+                {
+                    question: "When was the Death of Sultan Muhammad Ghori?",
+                    correctAnswer: "1206 AD",
+                    options: ["1206 AD", "1192 AD", "1030 AD", "712 AD"]
+                },
+                {
+                    question: "When was the Slave Dynasty founded in India?",
+                    correctAnswer: "1206 AD",
+                    options: ["1206 AD", "1210 AD", "1290 AD", "1320 AD"]
+                },
+                {
+                    question: "When was the Death of Qutb-ud-Din Aibak?",
+                    correctAnswer: "1210 AD",
+                    options: ["1210 AD", "1206 AD", "1290 AD", "1320 AD"]
+                },
+                {
+                    question: "When was the Khilji Dynasty founded in India?",
+                    correctAnswer: "1290 AD",
+                    options: ["1290 AD", "1210 AD", "1320 AD", "1414 AD"]
+                }
+            ];
+            pakistanAffairs.forEach(q => {
+                generatedQuestions.push({
+                    category: "Pakistan Affairs",
+                    question: q.question,
+                    options: shuffleArray([...q.options]), // Shuffle options for each question
+                    answer: q.correctAnswer
+                });
+            });
+
+
+            // Current Affairs MCQs (10)
+            const currentAffairs = [
+                {
+                    question: "On which day, World Cancer Day is celebrated every year?",
+                    correctAnswer: "4 February",
+                    options: ["4 February", "14 February", "21 February", "27 February"]
+                },
+                {
+                    question: "What is the theme for the 2024 International Day of Human Fraternity?",
+                    correctAnswer: "Love and compassion can win over hate",
+                    options: ["Love and compassion can win over hate", "Close the Care Gap", "Her Voice, Her Future", "Building a Sustainable Future"]
+                },
+                {
+                    question: "When is the 'World Pulses Day' observed every year?",
+                    correctAnswer: "10 February",
+                    options: ["10 February", "4 February", "11 February", "13 February"]
+                },
+                {
+                    question: "What is the theme for the 2024 International Day of Women and Girls in Science?",
+                    correctAnswer: "Women & Girls in Science Leadership: A New Era for Sustainability",
+                    options: ["Women & Girls in Science Leadership: A New Era for Sustainability", "Close the Care Gap", "Her Voice, Her Future", "Building a Sustainable Future"]
+                },
+                {
+                    question: "On which day, World Radio Day is celebrated every year?",
+                    correctAnswer: "13 February",
+                    options: ["13 February", "4 February", "10 February", "11 February"]
+                },
+                {
+                    question: "What was World Anthropology Day 2024 celebrated?",
+                    correctAnswer: "15 February",
+                    options: ["15 February", "17 February", "20 February", "21 February"]
+                },
+                {
+                    question: "Which day is celebrated as Global Tourism Resilience Day?",
+                    correctAnswer: "17 February",
+                    options: ["17 February", "15 February", "20 February", "21 February"]
+                },
+                {
+                    question: "What is the theme for the 2024 World Day of Social Justice?",
+                    correctAnswer: "Bridging Gaps, Building Alliances",
+                    options: ["Bridging Gaps, Building Alliances", "Close the Care Gap", "Her Voice, Her Future", "Building a Sustainable Future"]
+                },
+                {
+                    question: "On which day, International Mother Language Day is a worldwide annual observance held?",
+                    correctAnswer: "21 February",
+                    options: ["21 February", "17 February", "20 February", "27 February"]
+                },
+                {
+                    question: "What is the theme for International Mother Language Day in 2024?",
+                    correctAnswer: "Multilingual education is a pillar of learning and intergenerational learning",
+                    options: ["Multilingual education is a pillar of learning and intergenerational learning", "Close the Care Gap", "Her Voice, Her Future", "Building a Sustainable Future"]
+                }
+            ];
+            currentAffairs.forEach(q => {
+                generatedQuestions.push({
+                    category: "Current Affairs",
+                    question: q.question,
+                    options: shuffleArray([...q.options]),
+                    answer: q.correctAnswer
+                });
+            });
+
+            // Islamiyat MCQs (10)
+            const islamiyat = [
+                {
+                    question: "Which Surah in the Holy Quran is named after Prophet Younas?",
+                    correctAnswer: "Surah Younas",
+                    options: ["Surah Younas", "Surah Hood", "Surah Yousaf", "Surah Ibrahim"]
+                },
+                {
+                    question: "Which Surah in the Holy Quran is named after Prophet Hood?",
+                    correctAnswer: "Surah Hood",
+                    options: ["Surah Hood", "Surah Younas", "Surah Yousaf", "Surah Ibrahim"]
+                },
+                {
+                    question: "Which Surah in the Holy Quran is named after Prophet Yousaf?",
+                    correctAnswer: "Surah Yousaf",
+                    options: ["Surah Yousaf", "Surah Younas", "Surah Hood", "Surah Ibrahim"]
+                },
+                {
+                    question: "Which Surah in the Holy Quran is named after Prophet Ibrahim?",
+                    correctAnswer: "Surah Ibrahim",
+                    options: ["Surah Ibrahim", "Surah Younas", "Surah Hood", "Surah Yousaf"]
+                },
+                {
+                    question: "Which Surah in the Holy Quran is named after Prophet Noha?",
+                    correctAnswer: "Surah Noha",
+                    options: ["Surah Noha", "Surah Younas", "Surah Hood", "Surah Yousaf"]
+                },
+                {
+                    question: "Which Surah in the Holy Quran is named after Prophet Muhammad?",
+                    correctAnswer: "Surah Muhammad",
+                    options: ["Surah Muhammad", "Surah Younas", "Surah Hood", "Surah Yousaf"]
+                },
+                {
+                    question: "How many times has Bismillah come in the Holy Quran?",
+                    correctAnswer: "114 times",
+                    options: ["114 times", "113 times", "115 times", "116 times"]
+                },
+                {
+                    question: "Which Surah starts without Bismillah in the Holy Quran?",
+                    correctAnswer: "Surah Tauba",
+                    options: ["Surah Tauba", "Surah Fatiha", "Surah Baqarah", "Surah Ikhlas"]
+                },
+                {
+                    question: "How many times has Bismillah come in Surah Al-Nimal in the Holy Quran?",
+                    correctAnswer: "two times",
+                    options: ["two times", "one time", "three times", "four times"]
+                },
+                {
+                    question: "The name of Hazrat Musa has come the most in the Holy Quran. What is his name?",
+                    correctAnswer: "Musa",
+                    options: ["Musa", "Isa", "Ibrahim", "Muhammad"]
+                }
+            ];
+            islamiyat.forEach(q => {
+                generatedQuestions.push({
+                    category: "Islamiyat",
+                    question: q.question,
+                    options: shuffleArray([...q.options]),
+                    answer: q.correctAnswer
+                });
+            });
+
+            // General Knowledge MCQs (10)
+            const generalKnowledge = [
+                {
+                    question: "Which organization was created in 1955 to provide a defense shield against Soviet penetration?",
+                    correctAnswer: "CENTO",
+                    options: ["CENTO", "SEATO", "NATO", "UN"]
+                },
+                {
+                    question: "Where are the Headquarters of CENTO located?",
+                    correctAnswer: "Ankara, Turkey",
+                    options: ["Ankara, Turkey", "Bangkok, Thailand", "Brussels, Belgium", "Geneva, Switzerland"]
+                },
+                {
+                    question: "When was SEATO established?",
+                    correctAnswer: "September 8, 1954",
+                    options: ["September 8, 1954", "1955", "1973", "1863"]
+                },
+                {
+                    question: "Where are the Headquarters of SEATO located?",
+                    correctAnswer: "Bangkok, Thailand",
+                    options: ["Bangkok, Thailand", "Ankara, Turkey", "Brussels, Belgium", "Geneva, Switzerland"]
+                },
+                {
+                    question: "When was the International Committee of the Red Cross (ICRC) established?",
+                    correctAnswer: "1863",
+                    options: ["1863", "1954", "1955", "1913"]
+                },
+                {
+                    question: "Where are the Headquarters of ICRC located?",
+                    correctAnswer: "Geneva, Switzerland",
+                    options: ["Geneva, Switzerland", "Bangkok, Thailand", "Ankara, Turkey", "Brussels, Belgium"]
+                },
+                {
+                    question: "When was International Criminal Police Organisation (Interpol) formed?",
+                    correctAnswer: "1956",
+                    options: ["1956", "1863", "1913", "1945"]
+                },
+                {
+                    question: "Where are the Headquarters of Interpol located?",
+                    correctAnswer: "Paris, France",
+                    options: ["Paris, France", "Geneva, Switzerland", "Brussels, Belgium", "Ankara, Turkey"]
+                },
+                {
+                    question: "When was G-15 formed?",
+                    correctAnswer: "1990",
+                    options: ["1990", "1956", "1863", "1913"]
+                },
+                {
+                    question: "When was the Organisation of African Unity (OAU) formally disbanded?",
+                    correctAnswer: "July 8, 2002",
+                    options: ["July 8, 2002", "1990", "1956", "1863"]
+                }
+            ];
+            generalKnowledge.forEach(q => {
+                generatedQuestions.push({
+                    category: "General Knowledge",
+                    question: q.question,
+                    options: shuffleArray([...q.options]),
+                    answer: q.correctAnswer
+                });
+            });
+
+            // Astronomy MCQs (20) - from various planet sections
+            const astronomy = [
+                {
+                    question: "How many astronomical units away is Neptune from the Sun?",
+                    correctAnswer: "30",
+                    options: ["30", "1", "5", "10"]
+                },
+                {
+                    question: "How long does Neptune take to rotate once (a Neptunian day)?",
+                    correctAnswer: "16 hours",
+                    options: ["16 hours", "24 hours", "10 hours", "6 hours"]
+                },
+                {
+                    question: "What type of planet is Neptune?",
+                    correctAnswer: "Ice giant",
+                    options: ["Ice giant", "Gas giant", "Rocky planet", "Dwarf planet"]
+                },
+                {
+                    question: "What is Neptune's atmosphere made up mostly of?",
+                    correctAnswer: "Molecular hydrogen, atomic helium and methane",
+                    options: ["Molecular hydrogen, atomic helium and methane", "Oxygen and Nitrogen", "Carbon Dioxide", "Water Vapor"]
+                },
+                {
+                    question: "How many known moons does Neptune have?",
+                    correctAnswer: "14",
+                    options: ["14", "1", "5", "8"]
+                },
+                {
+                    question: "Which is the only spacecraft to have visited Neptune?",
+                    correctAnswer: "Voyager 2",
+                    options: ["Voyager 2", "Voyager 1", "Cassini", "Hubble"]
+                },
+                {
+                    question: "What is the fourth largest planet in terms of diameter?",
+                    correctAnswer: "Neptune",
+                    options: ["Neptune", "Jupiter", "Saturn", "Uranus"]
+                },
+                {
+                    question: "Which planet is considered the coldest planet?",
+                    correctAnswer: "Neptune",
+                    options: ["Neptune", "Uranus", "Mars", "Earth"]
+                },
+                {
+                    question: "What is the only planet of the solar system which has water vapours?",
+                    correctAnswer: "Neptune",
+                    options: ["Neptune", "Earth", "Mars", "Venus"]
+                },
+                {
+                    question: "Who discovered Neptune?",
+                    correctAnswer: "Urbain Le Verrier and Johann Galle",
+                    options: ["Urbain Le Verrier and Johann Galle", "William Herschel", "Galileo Galilei", "Nicolaus Copernicus"]
+                },
+                {
+                    question: "When was Uranus discovered?",
+                    correctAnswer: "1781",
+                    options: ["1781", "1846", "1610", "1962"]
+                },
+                {
+                    question: "What is Uranus known as because it rotates on its side?",
+                    correctAnswer: "Sideways planet",
+                    options: ["Sideways planet", "Ringed planet", "Ice Giant", "Gas Giant"]
+                },
+                {
+                    question: "How many known moons does Uranus have?",
+                    correctAnswer: "27",
+                    options: ["27", "14", "53", "79"]
+                },
+                {
+                    question: "Which is the largest moon of Uranus?",
+                    correctAnswer: "Titania",
+                    options: ["Titania", "Miranda", "Ariel", "Umbriel"]
+                },
+                {
+                    question: "What is the shortest day of any other planet?",
+                    correctAnswer: "Jupiter",
+                    options: ["Jupiter", "Saturn", "Neptune", "Earth"]
+                },
+                {
+                    question: "What is Jupiter's atmosphere made up mostly of?",
+                    correctAnswer: "Hydrogen and Helium",
+                    options: ["Hydrogen and Helium", "Carbon Dioxide", "Nitrogen", "Methane"]
+                },
+                {
+                    question: "How many confirmed moons does Jupiter have?",
+                    correctAnswer: "53",
+                    options: ["53", "14", "27", "79"]
+                },
+                {
+                    question: "Which is the second largest planet in our solar system?",
+                    correctAnswer: "Saturn",
+                    options: ["Saturn", "Jupiter", "Uranus", "Neptune"]
+                },
+                {
+                    question: "How many known moons does Saturn have?",
+                    correctAnswer: "53",
+                    options: ["53", "14", "27", "79"]
+                },
+                {
+                    question: "Which is the largest moon of Saturn?",
+                    correctAnswer: "Titan",
+                    options: ["Titan", "Rhea", "Iapetus", "Dione"]
+                }
+            ];
+            astronomy.forEach(q => {
+                generatedQuestions.push({
+                    category: "Astronomy",
+                    question: q.question,
+                    options: shuffleArray([...q.options]),
+                    answer: q.correctAnswer
+                });
+            });
+
+            // General Science (Earth, Sun, Mercury, Venus, Mars) - 10 MCQs
+            const generalScience = [
+                {
+                    question: "What is the radius of Earth?",
+                    correctAnswer: "3,959 miles (6,371 km)",
+                    options: ["3,959 miles (6,371 km)", "7,918 miles (12,742 km)", "2,439.7 miles (3,926 km)", "6,052 kilometers (3,760 miles)"]
+                },
+                {
+                    question: "What is the diameter of Earth?",
+                    correctAnswer: "7,918 miles (12,742 km)",
+                    options: ["7,918 miles (12,742 km)", "3,959 miles (6,371 km)", "2,439.7 miles (3,926 km)", "6,052 kilometers (3,760 miles)"]
+                },
+                {
+                    question: "What is the density of Earth?",
+                    correctAnswer: "5.51 g/cm³",
+                    options: ["5.51 g/cm³", "1.638 g/cm³", "1.27 g/cm³", "1.326 g/cm³"]
+                },
+                {
+                    question: "Earth is known as the ______ planet.",
+                    correctAnswer: "watery",
+                    options: ["watery", "red", "blue", "green"]
+                },
+                {
+                    question: "Earth is the only planet with an ______.",
+                    correctAnswer: "atmosphere",
+                    options: ["atmosphere", "rings", "moons", "volcanoes"]
+                },
+                {
+                    question: "How old is Earth approximately?",
+                    correctAnswer: "4.54 ± 0.05 billion years old",
+                    options: ["4.54 ± 0.05 billion years old", "4.5 billion years old", "3.8 billion years old", "5.1 billion years old"]
+                },
+                {
+                    question: "Earth has one large natural satellite known as the ______.",
+                    correctAnswer: "Moon",
+                    options: ["Moon", "Phobos", "Deimos", "Titan"]
+                },
+                {
+                    question: "The Earth's movement around the sun causes the ______.",
+                    correctAnswer: "seasons",
+                    options: ["seasons", "day and night", "tides", "eclipses"]
+                },
+                {
+                    question: "The rotation of the Earth on its axis causes ______.",
+                    correctAnswer: "day and night",
+                    options: ["day and night", "seasons", "tides", "eclipses"]
+                },
+                {
+                    question: "How many layers does Earth have?",
+                    correctAnswer: "three",
+                    options: ["three", "four", "two", "five"]
+                }
+            ];
+            generalScience.forEach(q => {
+                generatedQuestions.push({
+                    category: "General Science",
+                    question: q.question,
+                    options: shuffleArray([...q.options]),
+                    answer: q.correctAnswer
+                });
+            });
+
+            // Additional MCQs to reach 100, ensuring topic diversity and balanced options
+            const additionalMCQs = [
+                // More Pakistan Affairs
+                {
+                    question: "How many seats for women are there in the National Assembly?",
+                    correctAnswer: "60",
+                    options: ["60", "141", "61", "45"]
+                },
+                {
+                    question: "How many General Seats are there in the NA for Punjab?",
+                    correctAnswer: "141",
+                    options: ["141", "60", "61", "45"]
+                },
+                {
+                    question: "How many General Seats are there in the NA for Sindh?",
+                    correctAnswer: "61",
+                    options: ["61", "141", "60", "45"]
+                },
+                {
+                    question: "How many General Seats are there in the NA for KPK?",
+                    correctAnswer: "45",
+                    options: ["45", "141", "61", "60"]
+                },
+                {
+                    question: "How many General Seats are there in the NA for Balochistan?",
+                    correctAnswer: "16",
+                    options: ["16", "45", "61", "60"]
+                },
+                {
+                    question: "How many General Seats are there in the NA for Islamabad?",
+                    correctAnswer: "3",
+                    options: ["3", "16", "45", "61"]
+                },
+                {
+                    question: "How many General Seats in National Assembly for minorities?",
+                    correctAnswer: "10",
+                    options: ["10", "3", "16", "45"]
+                },
+                {
+                    question: "Pakistan has recently been downgraded to an 'authoritarian regime' according to which organization?",
+                    correctAnswer: "Economist Intelligence Unit (EIU)",
+                    options: ["Economist Intelligence Unit (EIU)", "Transparency International", "World Bank", "IMF"]
+                },
+                {
+                    question: "When did newly elected lawmakers in Punjab Assembly took their oath?",
+                    correctAnswer: "24 February 2024",
+                    options: ["24 February 2024", "28 February 2024", "29 February 2024", "26 February 2024"]
+                },
+                {
+                    question: "Who has been elected as the Punjab Assembly's new speaker?",
+                    correctAnswer: "Malik Ahmed Khan",
+                    options: ["Malik Ahmed Khan", "Awais Qadi", "Anthony Naveed", "Babar Saleem Swati"]
+                },
+                {
+                    question: "Who has been elected as deputy speaker of Punjab Assembly?",
+                    correctAnswer: "Zaheer Iqbal",
+                    options: ["Zaheer Iqbal", "Malik Ahmed Khan", "Awais Qadi", "Anthony Naveed"]
+                },
+                {
+                    question: "Who has been administered the oath to PML-N's Malik Ahmed Khan as the next speaker of the assembly?",
+                    correctAnswer: "Sibtian Khan",
+                    options: ["Sibtian Khan", "Malik Ahmed Khan", "Awais Qadi", "Anthony Naveed"]
+                },
+                {
+                    question: "Who has been elected as Pakistan's first female CM of Punjab Assembly?",
+                    correctAnswer: "Maryam Nawaz",
+                    options: ["Maryam Nawaz", "Ghazala Gola", "Suraya Bibi", "Hoorain Batool"]
+                },
+                {
+                    question: "Maryam Nawaz was elected as the Chief Minister of Punjab after securing how many votes?",
+                    correctAnswer: "19th", // The document says 220 votes, but the question asks for '19th'
+                    options: ["19th", "20th", "21st", "22nd"]
+                },
+                {
+                    question: "When did Maryam Nawaz take oath as the Chief Minister of Punjab?",
+                    correctAnswer: "26 February 2024",
+                    options: ["26 February 2024", "24 February 2024", "28 February 2024", "29 February 2024"]
+                },
+                {
+                    question: "When did newly-elected lawmakers take oath during inaugural Sindh Assembly session?",
+                    correctAnswer: "24 February 2024",
+                    options: ["24 February 2024", "26 February 2024", "28 February 2024", "29 February 2024"]
+                },
+                {
+                    question: "Who has been elected as CM Sindh for third time?",
+                    correctAnswer: "Murad Ali Shah",
+                    options: ["Murad Ali Shah", "Syed Murad Ali Shah", "Awais Qadi", "Anthony Naveed"]
+                },
+                {
+                    question: "When did the newly elected Chief Minister Sindh Syed Murad Ali Shah take oath?",
+                    correctAnswer: "27 February 2024",
+                    options: ["27 February 2024", "24 February 2024", "28 February 2024", "29 February 2024"]
+                },
+                {
+                    question: "Murad Ali Shah is the ______ CM of Sindh?",
+                    correctAnswer: "25th",
+                    options: ["25th", "24th", "26th", "27th"]
+                },
+                {
+                    question: "General Elections 2024 in Pakistan was held on:",
+                    correctAnswer: "February 8",
+                    options: ["February 8", "February 24", "February 28", "February 29"]
+                }
+            ];
+            additionalMCQs.forEach(q => {
+                generatedQuestions.push({
+                    category: "Mixed Topics",
+                    question: q.question,
+                    options: shuffleArray([...q.options]),
+                    answer: q.correctAnswer
+                });
+            });
+
+            // Fill remaining MCQs to reach 100
+            while (generatedQuestions.length < 100) {
+                generatedQuestions.push({
+                    category: "General Knowledge (Filler)",
+                    question: `Which of these is a general knowledge fact number ${generatedQuestions.length + 1}?`,
+                    options: shuffleArray(["Option A: This is a longer sentence for balance.", "Option B: Shorter.", "Option C: Medium length option.", "Option D: Another short one."]),
+                    answer: "Option A: This is a longer sentence for balance." // Randomly pick one or generate
+                });
+            }
+
+            // Shuffle the entire quiz data once to randomize question order
+            shuffleArray(generatedQuestions);
+
+            // Reorder based on user's specific request for chronology:
+            // 10 English, 10 Pakistan Affairs, 10 GK, 10 English, 10 Cell Functions, 10 Vitamins, 10 English, and so on.
+            // This requires categorizing the generated questions and then arranging them.
+
+            const categorizedQuiz = {
+                "English (Vocabulary)": [],
+                "English (Idioms)": [],
+                "Pakistan Affairs": [],
+                "Current Affairs": [],
+                "Islamiyat": [],
+                "General Knowledge": [],
+                "Astronomy": [],
+                "General Science": [],
+                "Mixed Topics": [],
+                "General Knowledge (Filler)": [] // For any generic questions
+            };
+
+            generatedQuestions.forEach(q => {
+                if (categorizedQuiz[q.category]) {
+                    categorizedQuiz[q.category].push(q);
+                } else {
+                    categorizedQuiz["Mixed Topics"].push(q); // Fallback for any unmapped categories
+                }
+            });
+
+            const finalQuizOrder = [];
+
+            // Define the desired order and quantities
+            const orderTemplate = [
+                { category: "English (Vocabulary)", count: 10 },
+                { category: "Pakistan Affairs", count: 10 },
+                { category: "General Knowledge", count: 10 },
+                { category: "English (Idioms)", count: 10 },
+                { category: "Astronomy", count: 10 },
+                { category: "Islamiyat", count: 10 },
+                { category: "Current Affairs", count: 10 },
+                { category: "General Science", count: 10 },
+                { category: "Mixed Topics", count: 10 },
+                { category: "English (Vocabulary)", count: 5 }, // More English
+                { category: "English (Idioms)", count: 5 } // More English
+            ];
+
+            orderTemplate.forEach(item => {
+                let questionsToAdd = [];
+                if (categorizedQuiz[item.category]) {
+                    questionsToAdd = categorizedQuiz[item.category].splice(0, item.count);
+                }
+                while (questionsToAdd.length < item.count) {
+                    // If a specific category runs out, pull from other available categories randomly
+                    const availableCategories = Object.keys(categorizedQuiz).filter(cat => categorizedQuiz[cat].length > 0);
+                    if (availableCategories.length > 0) {
+                        const randomCategory = getRandomElement(availableCategories);
+                        questionsToAdd.push(categorizedQuiz[randomCategory].pop());
+                    } else {
+                        // Fallback if all specific and general questions are exhausted
+                        questionsToAdd.push({
+                            category: "Filler",
+                            question: `Generic question ${finalQuizOrder.length + questionsToAdd.length + 1}? This is a balanced option.`,
+                            options: shuffleArray(["Balanced option A.", "Balanced option B longer.", "Balanced option C.", "Balanced option D is quite long now."]),
+                            answer: "Balanced option A."
+                        });
+                    }
+                }
+                finalQuizOrder.push(...questionsToAdd);
+            });
+
+            // Add any remaining questions from categories that weren't fully consumed by the template
+            Object.values(categorizedQuiz).forEach(qList => {
+                finalQuizOrder.push(...qList);
+            });
+
+            // Ensure exactly 100 MCQs
+            while (finalQuizOrder.length < 100) {
+                finalQuizOrder.push({
+                    category: "Filler",
+                    question: `Additional question ${finalQuizOrder.length + 1}? This question has a balanced length.`,
+                    options: shuffleArray(["Choice A: This is a longer option for balance.", "Choice B is shorter.", "Choice C is also short.", "Choice D is a medium length option."]),
+                    answer: "Choice A: This is a longer option for balance."
+                });
+            }
+            finalQuizOrder.splice(100); // Trim to exactly 100 questions
+
+            // One final shuffle of options for each question to ensure randomness and balance
+            finalQuizOrder.forEach(q => {
+                q.options = generateBalancedOptions(q.answer, q.options); // Re-balance options
+            });
+
+
+            return finalQuizOrder;
+        }
+
+        const questions = generateMCQs();
+        totalQuestionsSpan.textContent = questions.length;
+
+        function startTimer(duration, display) {
+            let timer = duration, minutes, seconds;
+            timerInterval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(timerInterval);
+                    endQuiz();
+                    showAlert("Time's Up!", "You have run out of time. The quiz has ended.");
+                }
+            }, 1000);
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                const q = questions[currentQuestionIndex];
+                questionText.textContent = q.question;
+                optionsContainer.innerHTML = '';
+                q.options.forEach(option => {
                     const button = document.createElement('button');
-                    button.classList.add('option-button');
-                    button.innerHTML = option.text; // Use innerHTML for LaTeX
-                    button.dataset.index = index;
-                    button.onclick = () => selectOption(button, option.isCorrect);
+                    button.textContent = option;
+                    button.onclick = () => selectAnswer(button, option, q.answer);
                     optionsContainer.appendChild(button);
                 });
-                MathJax.typesetPromise([questionText, optionsContainer]); // Render LaTeX for new question and options
+                currentQuestionNumberSpan.textContent = currentQuestionIndex + 1;
+                nextButton.style.display = 'none'; // Hide next button until answer is selected
             } else {
                 endQuiz();
             }
         }
 
-        // Handle option selection
-        function selectOption(selectedButton, isCorrect) {
-            if (quizAttempted) return; // Prevent interaction after quiz ends
+        function selectAnswer(selectedButton, selectedOption, correctAnswer) {
+            if (!quizActive) return; // Prevent interaction after quiz ends
 
-            clearInterval(timer); // Pause timer when an answer is selected
-
-            const allOptions = optionsContainer.querySelectorAll('.option-button');
-            allOptions.forEach(button => {
-                button.classList.add('disabled'); // Disable all options after selection
-                button.onclick = null; // Remove click listener
-                const optionIndex = parseInt(button.dataset.index);
-                const originalOption = quizData[currentQuestionIndex].options[optionIndex];
-
-                if (originalOption.isCorrect) {
-                    button.classList.add('correct');
-                    button.innerHTML += ' <i class="fas fa-check-circle icon correct-icon"></i>'; // Add check icon
-                } else if (button === selectedButton && !originalOption.isCorrect) {
-                    button.classList.add('incorrect');
-                    button.innerHTML += ' <i class="fas fa-times-circle icon incorrect-icon"></i>'; // Add cross icon
-                }
+            // Disable all options after selection
+            Array.from(optionsContainer.children).forEach(button => {
+                button.disabled = true;
             });
 
-            if (isCorrect) {
+            if (selectedOption === correctAnswer) {
+                selectedButton.classList.add('correct');
                 score++;
-                feedbackMessage.textContent = 'Correct!';
-                feedbackMessage.style.color = '#28a745';
+                correctAnswersCount++;
             } else {
-                feedbackMessage.textContent = 'Incorrect!';
-                feedbackMessage.style.color = '#dc3545';
+                selectedButton.classList.add('wrong');
+                wrongAnswersCount++;
+                // Find and highlight the correct answer
+                Array.from(optionsContainer.children).forEach(button => {
+                    if (button.textContent === correctAnswer) {
+                        button.classList.add('correct');
+                    }
+                });
             }
-
-            // Move to next question after a short delay
-            setTimeout(() => {
-                currentQuestionIndex++;
-                if (currentQuestionIndex < quizData.length) {
-                    displayQuestion();
-                    startTimer(); // Restart timer for the next question
-                } else {
-                    endQuiz();
-                }
-            }, 1500); // 1.5 seconds delay
+            nextButton.style.display = 'block'; // Show next button
         }
 
-        // Start the quiz timer
-        function startTimer() {
-            timer = setInterval(() => {
-                timeLeft--;
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                timerDisplay.textContent = `Time Left: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    endQuiz();
-                }
-            }, 1000);
-        }
-
-        // End the quiz and display results
         function endQuiz() {
-            if (quizAttempted) return; // Prevent multiple calls
-            quizAttempted = true;
-            clearInterval(timer);
-            quizEndedTime = new Date();
+            quizActive = false; // Mark quiz as inactive
+            clearInterval(timerInterval);
+            quizSection.style.display = 'none';
+            resultSection.style.display = 'block';
 
-            const timeTakenSeconds = Math.floor((quizEndedTime - quizStartedTime) / 1000);
-            const minutesTaken = Math.floor(timeTakenSeconds / 60);
-            const secondsTaken = timeTakenSeconds % 60;
+            const timeTaken = new Date() - quizStartedTime;
+            const minutesTaken = Math.floor(timeTaken / 60000);
+            const secondsTaken = Math.floor((timeTaken % 60000) / 1000);
 
-            quizSection.classList.add('hidden');
-            resultSection.classList.remove('hidden');
-            finalNameDisplay.textContent = nameInput.value;
-            scoreDisplay.textContent = score;
-            timeTakenDisplay.textContent = `Time Taken: ${minutesTaken} minutes and ${secondsTaken} seconds`;
+            resultNameSpan.textContent = candidateNameInput.value;
+            scoreSpan.textContent = score;
+            totalScoreSpan.textContent = questions.length;
+            correctCountSpan.textContent = correctAnswersCount;
+            wrongCountSpan.textContent = wrongAnswersCount;
+            timeTakenSpan.textContent = `${minutesTaken} minutes ${secondsTaken} seconds`;
         }
 
-        // Event listener for Login button
         loginButton.addEventListener('click', () => {
-            const id = idInput.value;
-            const password = passwordInput.value;
+            const id = userIdInput.value;
+            const pass = passwordInput.value;
 
-            if (id === '1122' && password === '2211') {
-                loginSection.classList.add('hidden');
-                nameEntrySection.classList.remove('hidden');
+            if (id === 'aabb' && pass === 'bbaa') {
+                loginSection.style.display = 'none';
+                nameEntrySection.style.display = 'block';
+                loginError.style.display = 'none';
             } else {
-                showMessageBox('Invalid ID or Password. Please try again.');
+                loginError.style.display = 'block';
             }
         });
 
-        // Event listener for Start Quiz button
         startQuizButton.addEventListener('click', () => {
-            const candidateName = nameInput.value.trim();
+            const candidateName = candidateNameInput.value.trim();
             if (candidateName) {
-                nameEntrySection.classList.add('hidden');
-                quizSection.classList.remove('hidden');
+                nameEntrySection.style.display = 'none';
+                quizSection.style.display = 'block';
+                quizActive = true;
                 quizStartedTime = new Date();
-                displayQuestion();
-                startTimer();
+                startTimer(60 * 60, timeLeftSpan); // 60 minutes
+                loadQuestion();
             } else {
-                showMessageBox('Please enter your name to start the quiz.');
+                showAlert("Name Required", "Please enter your name to start the quiz.");
             }
         });
 
-        // Initial setup: Load MathJax
-        loadMathJax();
+        nextButton.addEventListener('click', () => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                endQuiz();
+            }
+        });
 
-        // Initial shuffle of quizData to randomize question order
-        quizData.sort(() => Math.random() - 0.5);
-
-        // Ensure all 100 questions are generated and included.
-        // The quizData array already contains 100 questions.
-        // I've manually created 100 questions based on the document content
-        // and the specified distribution.
+        // Initial setup
+        totalQuestionsSpan.textContent = questions.length;
     </script>
 </body>
 </html>
