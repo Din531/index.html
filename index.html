@@ -3,1344 +3,858 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MPT/Screening Test and One Paper MCQs Preparation</title>
+    <title>Precis Paper Preparation Quiz</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #e0f2f7; /* Light blue background */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
+            background-color: #f0f4f8; /* Light blue-gray background */
         }
         .container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 700px;
-            text-align: center;
-            box-sizing: border-box;
+            max-width: 900px;
+            margin: auto;
+            padding: 1rem;
         }
-        .title {
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #000080; /* Dark Blue */
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            animation: fadeIn 0.5s ease-in-out;
         }
-        .contact {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 25px;
-            color: #CCCC00; /* Yellow */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .input-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #333;
-        }
-        .input-group input[type="text"],
-        .input-group input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #b0e0e6; /* Light steel blue */
-            border-radius: 8px;
-            font-size: 1rem;
-            box-sizing: border-box;
-        }
-        .button {
-            background-color: #4169e1; /* Royal Blue */
+        .blue-gradient {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
             color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.1rem;
+        }
+        .blue-gradient:hover {
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+        }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
             font-weight: bold;
-            transition: background-color 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease-in-out;
         }
-        .button:hover {
-            background-color: #365bc9; /* Darker Royal Blue */
-        }
-        .quiz-section {
-            display: none;
+        .option-btn {
+            background-color: #e2e8f0;
+            border: 2px solid transparent;
             text-align: left;
-        }
-        .question-container {
-            margin-bottom: 20px;
-            background-color: #f0f8ff; /* Alice Blue */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05);
-        }
-        .question-number {
-            font-size: 1rem;
-            color: #555;
-            margin-bottom: 10px;
-        }
-        .question-text {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #2c3e50;
-        }
-        .options-container button {
-            display: block;
-            width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            border: 1px solid #a7d9ed; /* Lighter blue */
-            border-radius: 8px;
-            background-color: #e6f7ff; /* Even lighter blue */
-            text-align: left;
+            transition: all 0.2s ease-in-out;
             cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.2s ease, border-color 0.2s ease;
-            color: #333;
         }
-        .options-container button:hover:not(.correct):not(.wrong) {
-            background-color: #d0efff;
-            border-color: #87ceeb; /* Sky blue */
+        .option-btn:not(.disabled-option):hover {
+            background-color: #d1d5db;
         }
-        .options-container button.correct {
-            background-color: #d4edda; /* Light green */
-            border-color: #28a745; /* Green */
-            color: #155724;
-            font-weight: bold;
+        .disabled-option {
+            pointer-events: none;
+            cursor: not-allowed;
+            opacity: 0.8;
         }
-        .options-container button.wrong {
-            background-color: #f8d7da; /* Light red */
-            border-color: #dc3545; /* Red */
-            color: #721c24;
-            font-weight: bold;
-        }
-        .next-button-container {
-            margin-top: 20px;
-            text-align: right;
-        }
-        .timer-container {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #000080;
-            margin-bottom: 20px;
-            text-align: center;
-            background-color: #ccf2ff; /* Very light blue */
-            padding: 10px;
-            border-radius: 8px;
-        }
-        .result-section {
-            display: none;
-            text-align: center;
-        }
-        .result-section h2 {
-            font-size: 2rem;
-            color: #000080;
-            margin-bottom: 15px;
-        }
-        .result-section p {
-            font-size: 1.2rem;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        .message-box {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
-            box-sizing: border-box;
-        }
-        .message-box h3 {
-            margin-top: 0;
-            color: #000080;
-            font-size: 1.5rem;
-        }
-        .message-box p {
-            margin-bottom: 20px;
-            color: #555;
-        }
-        .message-box button {
-            background-color: #4169e1;
+        .correct-option {
+            background-color: #10b981; /* Green */
             color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
         }
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
+        .wrong-option {
+            background-color: #ef4444; /* Red */
+            color: white;
+        }
+        .timer-glow {
+            animation: pulse-red 2s infinite;
+        }
+        @keyframes pulse-red {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+        }
+        .input-field {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db;
             width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
+            transition: border-color 0.2s;
         }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-            .title {
-                font-size: 1.5rem;
-            }
-            .contact {
-                font-size: 1rem;
-            }
-            .question-text {
-                font-size: 1.1rem;
-            }
-            .options-container button {
-                font-size: 0.95rem;
-                padding: 10px;
-            }
-            .button {
-                padding: 10px 20px;
-                font-size: 1rem;
-            }
+        .input-field:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1 class="title">MPT/Screening Test and One Paper MCQs Preparation</h1>
-        <p class="contact">CONTACT: 03188185185</p>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
 
-        <!-- Login Section -->
-        <div id="login-section">
-            <div class="input-group">
-                <label for="user-id">ID:</label>
-                <input type="text" id="user-id" placeholder="Enter ID (aabb)">
-            </div>
-            <div class="input-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" placeholder="Enter Password (bbaa)">
-            </div>
-            <button class="button" id="login-button">Login</button>
-            <p id="login-error" class="text-red-500 mt-2" style="display: none;">Invalid ID or Password.</p>
-        </div>
+    <div class="container text-center">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-2 leading-tight">
+            <span class="text-blue-600">Precis Paper</span>
+            <span class="text-yellow-500">Preparation</span>
+        </h1>
+        <p class="text-lg md:text-xl font-bold mb-8">
+            <span class="text-blue-600">CONTACT: </span>
+            <span class="text-yellow-500">03188185185</span>
+        </p>
 
-        <!-- Name Entry Section -->
-        <div id="name-entry-section" style="display: none;">
-            <div class="input-group">
-                <label for="candidate-name">Enter Your Name:</label>
-                <input type="text" id="candidate-name" placeholder="Your Name">
+        <!-- Main Card -->
+        <div id="main-card" class="card">
+            <!-- Login Screen -->
+            <div id="login-screen" class="space-y-6">
+                <h2 class="text-2xl font-bold text-gray-800">Login</h2>
+                <div class="space-y-4">
+                    <input type="text" id="id-input" placeholder="ID" class="input-field">
+                    <input type="password" id="password-input" placeholder="Password" class="input-field">
+                </div>
+                <button id="login-btn" class="blue-gradient btn w-full">Login</button>
+                <p id="login-error" class="text-red-500 hidden">Invalid ID or Password.</p>
             </div>
-            <button class="button" id="start-quiz-button">Start Quiz</button>
-        </div>
 
-        <!-- Quiz Section -->
-        <div id="quiz-section" class="quiz-section">
-            <div class="timer-container">
-                Time Left: <span id="time-left">60:00</span>
+            <!-- Name Entry Screen -->
+            <div id="name-entry-screen" class="space-y-6 hidden">
+                <h2 class="text-2xl font-bold text-gray-800">Enter Your Name</h2>
+                <input type="text" id="name-input" placeholder="Your Name" class="input-field">
+                <button id="start-btn" class="blue-gradient btn w-full">Start Quiz</button>
             </div>
-            <div class="question-container">
-                <p class="question-number">Question <span id="current-question-number">1</span> of <span id="total-questions">100</span></p>
-                <p class="question-text" id="question-text"></p>
-                <div class="options-container" id="options-container">
-                    <!-- Options will be dynamically loaded here -->
+
+            <!-- Quiz Screen -->
+            <div id="quiz-screen" class="space-y-6 hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <div class="text-lg font-semibold text-gray-700">
+                        Question <span id="current-question">1</span> of 50
+                    </div>
+                    <div id="timer" class="text-xl font-bold text-blue-600">
+                        15:00
+                    </div>
+                </div>
+
+                <div class="space-y-6 text-left">
+                    <p id="question-text" class="text-2xl font-bold text-gray-800"></p>
+                    <div id="options-container" class="space-y-4">
+                        <!-- Options will be dynamically inserted here -->
+                    </div>
+                </div>
+
+                <div class="flex justify-center mt-8">
+                    <button id="next-btn" class="blue-gradient btn hidden">Next</button>
                 </div>
             </div>
-            <div class="next-button-container">
-                <button class="button" id="next-button" style="display: none;">Next</button>
+
+            <!-- Result Screen -->
+            <div id="result-screen" class="space-y-6 hidden text-center">
+                <h2 class="text-3xl font-bold text-gray-800">Quiz Completed!</h2>
+                <p class="text-xl text-gray-700">
+                    Congratulations, <span id="candidate-name" class="font-bold"></span>!
+                </p>
+                <p class="text-4xl font-extrabold text-blue-600">
+                    Your Score: <span id="final-score">0</span> / 50
+                </p>
             </div>
         </div>
-
-        <!-- Result Section -->
-        <div id="result-section" class="result-section">
-            <h2>Quiz Result</h2>
-            <p>Candidate Name: <span id="result-name"></span></p>
-            <p>Score: <span id="score"></span> / <span id="total-score"></span></p>
-            <p>Correct Answers: <span id="correct-count"></span></p>
-            <p>Wrong Answers: <span id="wrong-count"></span></p>
-            <p>Time Taken: <span id="time-taken"></span></p>
-        </div>
     </div>
-
-    <!-- Message Box for Alerts -->
-    <div class="overlay" id="overlay"></div>
-    <div class="message-box" id="message-box">
-        <h3 id="message-title"></h3>
-        <p id="message-content"></p>
-        <button id="message-ok-button">OK</button>
-    </div>
-
+    
     <script>
-        // Custom alert function
-        function showAlert(title, message, callback) {
-            document.getElementById('message-title').innerText = title;
-            document.getElementById('message-content').innerText = message;
-            document.getElementById('message-box').style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
-            document.getElementById('message-ok-button').onclick = () => {
-                document.getElementById('message-box').style.display = 'none';
-                document.getElementById('overlay').style.display = 'none';
-                if (callback) callback();
+        document.addEventListener('DOMContentLoaded', () => {
+            const quizData = [
+                // 10 Idioms of alphabet 'B'
+                {
+                    question: "What is the meaning of the idiom 'Back to the Drawing Board'?",
+                    options: [
+                        "To be very skillful at drawing and painting.",
+                        "To return to an old, familiar place.",
+                        "To start a task all over again because it didn’t work out on the first attempt.",
+                        "To work on a difficult problem late into the night."
+                    ],
+                    answer: "To start a task all over again because it didn’t work out on the first attempt.",
+                    topic: "Idioms"
+                },
+                {
+                    question: "What does it mean to be 'Between a Rock and a Hard Place'?",
+                    options: [
+                        "To be physically trapped between two large objects.",
+                        "To be in a difficult situation with no easy choices.",
+                        "To have a very strong and unyielding personality.",
+                        "To be a very skilled rock climber and mountaineer."
+                    ],
+                    answer: "To be in a difficult situation with no easy choices.",
+                    topic: "Idioms"
+                },
+                {
+                    question: "If you 'Bite the Bullet,' what are you doing?",
+                    options: [
+                        "Showing great courage in a fight or war.",
+                        "To speak your mind, no matter the consequences.",
+                        "To bravely face a difficult or unpleasant situation.",
+                        "To take on a task that is too much for you to handle alone."
+                    ],
+                    answer: "To bravely face a difficult or unpleasant situation.",
+                    topic: "Idioms"
+                },
+                {
+                    question: "What does the idiom 'Bite Off More Than You Can Chew' mean?",
+                    options: [
+                        "To eat a very large meal.",
+                        "To try and take on a task that is too big or difficult.",
+                        "To talk too much and not listen to others.",
+                        "To have a lot of money and spend it foolishly."
+                    ],
+                    answer: "To try and take on a task that is too big or difficult.",
+                    topic: "Idioms"
+                },
+                {
+                    question: "What is the meaning of 'Bury the Hatchet'?",
+                    options: [
+                        "To hide a valuable possession in the ground.",
+                        "To put an end to an old argument or conflict and make peace.",
+                        "To become angry and aggressive towards someone.",
+                        "To give up on a project that is not working."
+                    ],
+                    answer: "To put an end to an old argument or conflict and make peace.",
+                    topic: "Idioms"
+                },
+                {
+                    question: "When someone is 'Beating Around the Bush,' they are...",
+                    options: [
+                        "Trying to find something that is lost.",
+                        "Avoiding the main topic or not speaking directly about an important issue.",
+                        "Hitting a bush with a stick repeatedly.",
+                        "Preparing a surprise for someone."
+                    ],
+                    answer: "Avoiding the main topic or not speaking directly about an important issue.",
+                    topic: "Idioms"
+                },
+                {
+                    question: "What does it mean to 'Burn the Midnight Oil'?",
+                    options: [
+                        "To stay up very late working or studying for something important.",
+                        "To waste money on unnecessary things.",
+                        "To start a fire in the middle of the night.",
+                        "To be very upset and angry about something that has happened."
+                    ],
+                    answer: "To stay up very late working or studying for something important.",
+                    topic: "Idioms"
+                },
+                {
+                    question: "To 'Break a Leg' is another way of saying...",
+                    options: [
+                        "Be careful, you might get hurt.",
+                        "You should not perform.",
+                        "Good luck, especially before a performance or event.",
+                        "I am happy for your failure."
+                    ],
+                    answer: "Good luck, especially before a performance or event.",
+                    topic: "Idioms"
+                },
+                {
+                    question: "What is the meaning of the idiom 'Blow One’s Own Trumpet'?",
+                    options: [
+                        "To play a musical instrument very loudly.",
+                        "To complain a lot about a situation.",
+                        "To boast or brag about one’s own abilities and accomplishments.",
+                        "To give a very loud and boisterous speech."
+                    ],
+                    answer: "To boast or brag about one’s own abilities and accomplishments.",
+                    topic: "Idioms"
+                },
+                {
+                    question: "What is the meaning of the idiom 'Backing and Filling'?",
+                    options: [
+                        "To move a car forward and backward in a small space.",
+                        "To delay a decision by arguing about minor details or making small changes.",
+                        "To support a person or group in a difficult situation.",
+                        "To repeatedly try to complete a task without making progress."
+                    ],
+                    answer: "To delay a decision by arguing about minor details or making small changes.",
+                    topic: "Idioms"
+                },
+                // 10 Vocabulary of alphabet 'E' (5 synonyms, 5 antonyms)
+                {
+                    question: "What is a synonym for 'Ebullient'?",
+                    options: [
+                        "Sad and somber",
+                        "Full of cheer, energetic, and enthusiastic",
+                        "Calm and tranquil",
+                        "Quiet and reserved"
+                    ],
+                    answer: "Full of cheer, energetic, and enthusiastic",
+                    topic: "Vocabulary"
+                },
+                {
+                    question: "What is a synonym for 'Eminent'?",
+                    options: [
+                        "Famous, respected, or important in a particular field",
+                        "Weak and unhealthy",
+                        "New and inexperienced",
+                        "Small and insignificant"
+                    ],
+                    answer: "Famous, respected, or important in a particular field",
+                    topic: "Vocabulary"
+                },
+                {
+                    question: "What is a synonym for 'Exonerate'?",
+                    options: [
+                        "To accuse someone of a crime",
+                        "To prove that someone is innocent of a wrongdoing",
+                        "To force someone to take on a responsibility",
+                        "To make an already bad situation much worse"
+                    ],
+                    answer: "To prove that someone is innocent of a wrongdoing",
+                    topic: "Vocabulary"
+                },
+                {
+                    question: "What is a synonym for 'Exacerbate'?",
+                    options: [
+                        "To make an already bad situation much worse or more severe.",
+                        "To make a difficult situation better and more manageable.",
+                        "To give an apology for an action.",
+                        "To show a person something for the very first time."
+                    ],
+                    answer: "To make an already bad situation much worse or more severe.",
+                    topic: "Vocabulary"
+                },
+                {
+                    question: "What is a synonym for 'Equivocate'?",
+                    options: [
+                        "To speak in a way that is clear, direct, and easy to understand.",
+                        "To be firm and unyielding in one's opinions.",
+                        "To confess one’s deepest secrets to someone else.",
+                        "To speak in a vague or unclear way to avoid giving a direct answer."
+                    ],
+                    answer: "To speak in a vague or unclear way to avoid giving a direct answer.",
+                    topic: "Vocabulary"
+                },
+                {
+                    question: "Which of the following is an antonym for 'Eccentric'?",
+                    options: [
+                        "Normal or conventional",
+                        "Behaving in a strange or unusual way",
+                        "Full of cheer and enthusiasm",
+                        "Having great knowledge or learning"
+                    ],
+                    answer: "Normal or conventional",
+                    topic: "Vocabulary"
+                },
+                {
+                    question: "Which of the following is an antonym for 'Efficacy'?",
+                    options: [
+                        "The ability to produce an intended result",
+                        "The power to influence a situation for the better.",
+                        "The lack of power to produce a desired effect",
+                        "The quality of being very effective"
+                    ],
+                    answer: "The lack of power to produce a desired effect",
+                    topic: "Vocabulary"
+                },
+                {
+                    question: "Which of the following is an antonym for 'Ephemeral'?",
+                    options: [
+                        "Lasting for a very long time",
+                        "Lasting for only a very short time",
+                        "Easy to forget and not memorable",
+                        "Something that is not practical or true"
+                    ],
+                    answer: "Lasting for a very long time",
+                    topic: "Vocabulary"
+                },
+                {
+                    question: "Which of the following is an antonym for 'Exacting'?",
+                    options: [
+                        "To demand a lot of care, effort, and attention.",
+                        "Simple, easy, and not requiring much effort or attention to detail.",
+                        "To be very accurate and precise in your work.",
+                        "To confess one's deepest secrets to a person."
+                    ],
+                    answer: "Simple, easy, and not requiring much effort or attention to detail.",
+                    topic: "Vocabulary"
+                },
+                {
+                    question: "Which of the following is an antonym for 'Exigent'?",
+                    options: [
+                        "Urgent and demanding immediate attention.",
+                        "Not urgent, and not requiring immediate action or attention.",
+                        "Important and significant for a particular situation.",
+                        "A difficult task given right after one has assumed new responsibilities."
+                    ],
+                    answer: "Not urgent, and not requiring immediate action or attention.",
+                    topic: "Vocabulary"
+                },
+                // 10 Punctuations
+                {
+                    question: "Choose the sentence with the correct punctuation.",
+                    options: [
+                        "The children were playing, running, and shouting.",
+                        "The children were playing running and shouting.",
+                        "The children were playing, running and shouting",
+                        "The children were playing; running; and shouting."
+                    ],
+                    answer: "The children were playing, running, and shouting.",
+                    topic: "Punctuation"
+                },
+                {
+                    question: "Select the sentence where the comma is used correctly.",
+                    options: [
+                        "I went to the store, and I bought some milk.",
+                        "I went to the store and I bought some milk.",
+                        "I went, to the store and I bought some milk.",
+                        "I went to the store, and, I bought some milk."
+                    ],
+                    answer: "I went to the store, and I bought some milk.",
+                    topic: "Punctuation"
+                },
+                {
+                    question: "Where should an apostrophe be placed in the sentence: 'The students essays were excellent.'",
+                    options: [
+                        "The student's essays were excellent.",
+                        "The students' essays were excellent.",
+                        "The student's' essays were excellent.",
+                        "The students's essays were excellent."
+                    ],
+                    answer: "The students' essays were excellent.",
+                    topic: "Punctuation"
+                },
+                {
+                    question: "Which of the following sentences uses a semicolon correctly?",
+                    options: [
+                        "He loved chocolate; he ate it every day.",
+                        "He loved chocolate; and he ate it every day.",
+                        "He loved chocolate; but he ate it every day.",
+                        "He loved chocolate; however, he ate it every day."
+                    ],
+                    answer: "He loved chocolate; he ate it every day.",
+                    topic: "Punctuation"
+                },
+                {
+                    question: "Which sentence uses quotation marks correctly?",
+                    options: [
+                        "She asked, 'Are you coming to the party'?",
+                        "She asked, 'Are you coming to the party?'",
+                        "She asked, 'Are you coming to the party?'",
+                        "She asked, 'Are you coming to the party?'."
+                    ],
+                    answer: "She asked, 'Are you coming to the party?'",
+                    topic: "Punctuation"
+                },
+                {
+                    question: "The correct placement of a question mark is in which sentence?",
+                    options: [
+                        "Did she ask if I was ready?",
+                        "Did she ask if I was ready.",
+                        "Did she ask 'if I was ready'?",
+                        "Did she ask if I was ready?!"
+                    ],
+                    answer: "Did she ask if I was ready?",
+                    topic: "Punctuation"
+                },
+                {
+                    question: "Which sentence correctly uses an exclamation mark?",
+                    options: [
+                        "Oh no, I forgot my wallet.",
+                        "Oh no! I forgot my wallet!",
+                        "Oh no! I forgot my wallet.",
+                        "Oh no, I forgot my wallet!!"
+                    ],
+                    answer: "Oh no! I forgot my wallet.",
+                    topic: "Punctuation"
+                },
+                {
+                    question: "Identify the sentence with the correct use of a hyphen.",
+                    options: [
+                        "He is a well-known author.",
+                        "He is a well known author.",
+                        "He is a well known-author.",
+                        "He is a well known- author."
+                    ],
+                    answer: "He is a well-known author.",
+                    topic: "Punctuation"
+                },
+                {
+                    question: "Which of these sentences uses a colon correctly?",
+                    options: [
+                        "I need to buy the following: milk, eggs, and bread.",
+                        "I need to buy: the following milk, eggs, and bread.",
+                        "I need to buy the following milk, eggs, and bread.",
+                        "I need to buy: milk, eggs, and bread."
+                    ],
+                    answer: "I need to buy the following: milk, eggs, and bread.",
+                    topic: "Punctuation"
+                },
+                {
+                    question: "Choose the correct use of commas with an introductory phrase.",
+                    options: [
+                        "After the movie, we went out to dinner.",
+                        "After the movie we went out to dinner.",
+                        "After, the movie we went out to dinner.",
+                        "After the movie we, went out to dinner."
+                    ],
+                    answer: "After the movie, we went out to dinner.",
+                    topic: "Punctuation"
+                },
+                // 10 Active and Passive Voice
+                {
+                    question: "Change the sentence to Passive Voice: 'The cat chased the mouse.'",
+                    options: [
+                        "The cat was chased by the mouse.",
+                        "The mouse chased the cat.",
+                        "The mouse was chased by the cat.",
+                        "The mouse is being chased by the cat."
+                    ],
+                    answer: "The mouse was chased by the cat.",
+                    topic: "Voice"
+                },
+                {
+                    question: "Change the sentence to Active Voice: 'The song was sung by the children.'",
+                    options: [
+                        "The song sang the children.",
+                        "The children sang the song.",
+                        "The children have sung the song.",
+                        "The children are singing the song."
+                    ],
+                    answer: "The children sang the song.",
+                    topic: "Voice"
+                },
+                {
+                    question: "Convert to Passive Voice: 'They will build a new bridge.'",
+                    options: [
+                        "A new bridge will be built by them.",
+                        "A new bridge will build them.",
+                        "They are building a new bridge.",
+                        "A new bridge will have been built."
+                    ],
+                    answer: "A new bridge will be built by them.",
+                    topic: "Voice"
+                },
+                {
+                    question: "Convert to Active Voice: 'The book is being read by her.'",
+                    options: [
+                        "She read the book.",
+                        "She is reading the book.",
+                        "The book has been read by her.",
+                        "She will read the book."
+                    ],
+                    answer: "She is reading the book.",
+                    topic: "Voice"
+                },
+                {
+                    question: "Change to Passive Voice: 'The teacher praised the students.'",
+                    options: [
+                        "The teacher was praised by the students.",
+                        "The students were praised by the teacher.",
+                        "The students praised the teacher.",
+                        "The students are being praised by the teacher."
+                    ],
+                    answer: "The students were praised by the teacher.",
+                    topic: "Voice"
+                },
+                {
+                    question: "Change to Active Voice: 'A letter was written by him.'",
+                    options: [
+                        "He writes a letter.",
+                        "He was writing a letter.",
+                        "He wrote a letter.",
+                        "A letter is written by him."
+                    ],
+                    answer: "He wrote a letter.",
+                    topic: "Voice"
+                },
+                {
+                    question: "Convert to Passive Voice: 'Someone stole my car.'",
+                    options: [
+                        "My car was stolen by someone.",
+                        "Someone was stealing my car.",
+                        "My car is being stolen by someone.",
+                        "My car had been stolen by someone."
+                    ],
+                    answer: "My car was stolen by someone.",
+                    topic: "Voice"
+                },
+                {
+                    question: "Convert to Active Voice: 'The house will be cleaned by me.'",
+                    options: [
+                        "I clean the house.",
+                        "I will clean the house.",
+                        "I am cleaning the house.",
+                        "I had cleaned the house."
+                    ],
+                    answer: "I will clean the house.",
+                    topic: "Voice"
+                },
+                {
+                    question: "Change to Passive Voice: 'She has painted the portrait.'",
+                    options: [
+                        "The portrait has been painted by her.",
+                        "The portrait was painted by her.",
+                        "The portrait is painted by her.",
+                        "She had painted the portrait."
+                    ],
+                    answer: "The portrait has been painted by her.",
+                    topic: "Voice"
+                },
+                {
+                    question: "Change to Active Voice: 'The report was finished by the team.'",
+                    options: [
+                        "The team will finish the report.",
+                        "The team finished the report.",
+                        "The report is finished by the team.",
+                        "The team is finishing the report."
+                    ],
+                    answer: "The team finished the report.",
+                    topic: "Voice"
+                },
+                // 10 Direct and Indirect
+                {
+                    question: "Change to Indirect Speech: 'He said, 'I am going to school.''",
+                    options: [
+                        "He said that he was going to school.",
+                        "He said that I am going to school.",
+                        "He said that he will go to school.",
+                        "He said that he had been going to school."
+                    ],
+                    answer: "He said that he was going to school.",
+                    topic: "Speech"
+                },
+                {
+                    question: "Change to Direct Speech: 'She said that she had finished her work.'",
+                    options: [
+                        "She said, 'I finished my work.'",
+                        "She said, 'I have finished my work.'",
+                        "She said, 'I was finishing my work.'",
+                        "She said, 'I will finish my work.'"
+                    ],
+                    answer: "She said, 'I have finished my work.'",
+                    topic: "Speech"
+                },
+                {
+                    question: "Change to Indirect Speech: 'He said, 'The sun rises in the east.''",
+                    options: [
+                        "He said that the sun rose in the east.",
+                        "He said that the sun rises in the east.",
+                        "He said the sun will rise in the east.",
+                        "He said that the sun had risen in the east."
+                    ],
+                    answer: "He said that the sun rises in the east.",
+                    topic: "Speech"
+                },
+                {
+                    question: "Change to Direct Speech: 'He asked me where I lived.'",
+                    options: [
+                        "He said, 'Where I live?'",
+                        "He said, 'Where do you live?'",
+                        "He asked, 'Where are you living?'",
+                        "He asked, 'Where did you live?'"
+                    ],
+                    answer: "He said, 'Where do you live?'",
+                    topic: "Speech"
+                },
+                {
+                    question: "Change to Indirect Speech: 'She said, 'We are having dinner.''",
+                    options: [
+                        "She said that they were having dinner.",
+                        "She said that we were having dinner.",
+                        "She said that they had dinner.",
+                        "She said that we have dinner."
+                    ],
+                    answer: "She said that they were having dinner.",
+                    topic: "Speech"
+                },
+                {
+                    question: "Change to Direct Speech: 'He told me to open the door.'",
+                    options: [
+                        "He said to me, 'You open the door.'",
+                        "He said to me, 'Open the door.'",
+                        "He said to me, 'I will open the door.'",
+                        "He said to me, 'Did you open the door?'"
+                    ],
+                    answer: "He said to me, 'Open the door.'",
+                    topic: "Speech"
+                },
+                {
+                    question: "Change to Indirect Speech: 'He said, 'I have finished my homework.''",
+                    options: [
+                        "He said that he has finished his homework.",
+                        "He said that he will finish his homework.",
+                        "He said that he had finished his homework.",
+                        "He said that he finished his homework."
+                    ],
+                    answer: "He said that he had finished his homework.",
+                    topic: "Speech"
+                },
+                {
+                    question: "Change to Direct Speech: 'The teacher asked the student if he was ready for the exam.'",
+                    options: [
+                        "The teacher said to the student, 'Are you ready for the exam?'",
+                        "The teacher said, 'Was he ready for the exam?'",
+                        "The teacher said, 'He is ready for the exam.'",
+                        "The teacher asked, 'If you are ready for the exam.'"
+                    ],
+                    answer: "The teacher said to the student, 'Are you ready for the exam?'",
+                    topic: "Speech"
+                },
+                {
+                    question: "Change to Indirect Speech: 'She said, 'It may rain tomorrow.''",
+                    options: [
+                        "She said that it might rain tomorrow.",
+                        "She said that it might rain the next day.",
+                        "She said that it may rain the next day.",
+                        "She said that it will rain tomorrow."
+                    ],
+                    answer: "She said that it might rain the next day.",
+                    topic: "Speech"
+                },
+                {
+                    question: "Change to Direct Speech: 'He told me that he would help me.'",
+                    options: [
+                        "He said to me, 'I would help you.'",
+                        "He said to me, 'I will help you.'",
+                        "He said to me, 'He would help me.'",
+                        "He said to me, 'He will help me.'"
+                    ],
+                    answer: "He said to me, 'I will help you.'",
+                    topic: "Speech"
+                }
+            ];
+
+            const loginScreen = document.getElementById('login-screen');
+            const nameEntryScreen = document.getElementById('name-entry-screen');
+            const quizScreen = document.getElementById('quiz-screen');
+            const resultScreen = document.getElementById('result-screen');
+
+            const loginBtn = document.getElementById('login-btn');
+            const idInput = document.getElementById('id-input');
+            const passwordInput = document.getElementById('password-input');
+            const loginError = document.getElementById('login-error');
+
+            const nameInput = document.getElementById('name-input');
+            const startBtn = document.getElementById('start-btn');
+            const candidateNameSpan = document.getElementById('candidate-name');
+
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const nextBtn = document.getElementById('next-btn');
+
+            const currentQuestionSpan = document.getElementById('current-question');
+            const finalScoreSpan = document.getElementById('final-score');
+
+            const timerDisplay = document.getElementById('timer');
+
+            let currentQuestionIndex = 0;
+            let score = 0;
+            let timeLeft = 15 * 60; // 15 minutes in seconds
+            let timer;
+            let questions = [];
+
+            const showScreen = (screenId) => {
+                const screens = [loginScreen, nameEntryScreen, quizScreen, resultScreen];
+                screens.forEach(screen => {
+                    screen.classList.add('hidden');
+                });
+                document.getElementById(screenId).classList.remove('hidden');
             };
-        }
 
-        const loginSection = document.getElementById('login-section');
-        const nameEntrySection = document.getElementById('name-entry-section');
-        const quizSection = document.getElementById('quiz-section');
-        const resultSection = document.getElementById('result-section');
-        const loginButton = document.getElementById('login-button');
-        const startQuizButton = document.getElementById('start-quiz-button');
-        const nextButton = document.getElementById('next-button');
-        const userIdInput = document.getElementById('user-id');
-        const passwordInput = document.getElementById('password');
-        const loginError = document.getElementById('login-error');
-        const candidateNameInput = document.getElementById('candidate-name');
-        const questionText = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container');
-        const currentQuestionNumberSpan = document.getElementById('current-question-number');
-        const totalQuestionsSpan = document.getElementById('total-questions');
-        const timeLeftSpan = document.getElementById('time-left');
-        const resultNameSpan = document.getElementById('result-name');
-        const scoreSpan = document.getElementById('score');
-        const totalScoreSpan = document.getElementById('total-score');
-        const correctCountSpan = document.getElementById('correct-count');
-        const wrongCountSpan = document.getElementById('wrong-count');
-        const timeTakenSpan = document.getElementById('time-taken');
-
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let correctAnswersCount = 0;
-        let wrongAnswersCount = 0;
-        let quizStartedTime;
-        let timerInterval;
-        let quizActive = false; // Flag to prevent re-attempts
-
-        const quizData = [];
-
-        // Function to shuffle an array
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        // Function to get a random element from an array
-        function getRandomElement(arr) {
-            return arr[Math.floor(Math.random() * arr.length)];
-        }
-
-        // Generate MCQs based on the document content
-        function generateMCQs() {
-            const generatedQuestions = [];
-
-            // English MCQs (30) - Vocabulary and Idioms
-            const vocabulary = {
-                "dally": "waste time",
-                "dapper": "marked by up-to-dateness in dress and manners",
-                "dauntless": "invulnerable to fear or intimidation",
-                "dawdle": "take one's time; proceed slowly",
-                "dearth": "an insufficient quantity or number",
-                "debacle": "a sudden and complete disaster",
-                "debilitate": "make weak",
-                "debunk": "expose while ridiculing",
-                "deduce": "conclude by reasoning",
-                "defame": "charge falsely or with malicious intent",
-                "defiance": "an act boldly resisting authority or an opposing force",
-                "defunct": "no longer in force or use; inactive",
-                "dejected": "affected or marked by low spirits",
-                "deleterious": "harmful to living things",
-                "delicacy": "something considered choice to eat",
-                "deluge": "the rising of a body of water and its overflowing onto land",
-                "demeanor": "the way a person behaves toward other people",
-                "demographic": "a statistic characterizing human populations",
-                "denounce": "accuse or condemn openly as disgraceful",
-                "depict": "show in, or as in, a picture",
-                "deplete": "use up, as resources or materials",
-                "derivation": "the source or origin from which something comes",
-                "descendant": "a person considered as coming from some ancestor or race",
-                "descry": "catch sight of",
-                "desolate": "providing no shelter or sustenance",
-                "destitute": "poor enough to need help from others",
-                "deter": "turn away from as by fear or persuasion",
-                "detrimental": "causing harm or injury",
-                "devout": "deeply religious",
-                "dexterity": "adroitness in using the hands",
-                "diabolical": "showing cunning or ingenuity or wickedness",
-                "diaphanous": "so thin as to transmit light",
-                "diatribe": "thunderous verbal attack",
-                "dichotomy": "a classification into two opposed parts or subclasses",
-                "didactic": "instructive, especially excessively",
-                "diffident": "lacking self-confidence",
-                "dilettante": "an amateur engaging in an activity without serious intention",
-                "dire": "fraught with extreme danger; nearly hopeless",
-                "disconcerting": "causing an emotional disturbance",
-                "discord": "lack of agreement or harmony",
-                "discreet": "marked by prudence or modesty and wise self-restraint",
-                "discrepancy": "a difference between conflicting facts or claims or opinions",
-                "disenfranchise": "deprive of voting rights",
-                "disfigure": "mar or spoil the appearance of",
-                "disgruntled": "in a state of sulky dissatisfaction",
-                "disheveled": "in disarray; extremely disorderly",
-                "disingenuous": "not straightforward or candid",
-                "disinter": "dig up for reburial or for medical investigation",
-                "disjointed": "lacking orderly continuity",
-                "dismal": "causing dejection",
-                "dismantle": "take apart into its constituent pieces",
-                "dismay": "the feeling of despair in the face of obstacles",
-                "disparage": "express a negative opinion of",
-                "disparity": "inequality or difference in some respect",
-                "dispassionate": "unaffected by strong emotion or prejudice",
-                "dispatch": "the act of sending off something",
-                "dispel": "force to go away",
-                "dispense": "grant an exemption",
-                "disperse": "cause to separate",
-                "displace": "cause to move, usually with force or pressure",
-                "disposable": "designed to be thrown away after use",
-                "disposition": "your usual mood",
-                "disseminate": "cause to become widely known",
-                "dissertation": "a treatise advancing a point of view resulting from research",
-                "dissident": "a person who objects to some established policy",
-                "dissimilar": "not alike",
-                "dissimulate": "hide feelings from other people",
-                "dissipate": "cause to separate and go in different directions",
-                "dissipated": "preoccupied with the pursuit of pleasure",
-                "dissipation": "dissolute indulgence in sensual pleasure",
-                "dissolute": "unrestrained by convention or morality",
-                "dissolution": "the termination or disintegration of a relationship",
-                "dissolve": "cause to fade away",
-                "dissonance": "the auditory experience of sound that lacks musical quality",
-                "dissonant": "lacking in harmony",
-                "dissuade": "turn away from by persuasion",
-                "distant": "located far away spatially",
-                "distend": "swell from or as if from internal pressure",
-                "distill": "remove impurities from and increase the concentration of",
-                "distillation": "purifying a liquid by boiling it and condensing its vapors",
-                "distort": "twist and press out of shape",
-                "distract": "draw someone's attention away from something",
-                "distraught": "deeply agitated especially from emotion",
-                "distress": "cause mental pain to",
-                "diverse": "many and different",
-                "divest": "cease to hold, as an investment",
-                "docile": "willing to be taught or led or supervised or directed",
-                "dogmatic": "relating to or involving a religious doctrine",
-                "doleful": "filled with or evoking sadness",
-                "domestic": "produced in a particular country",
-                "dominant": "exercising influence or control",
-                "dormant": "inactive but capable of becoming active",
-                "dreary": "causing dejection",
-                "drudgery": "hard, monotonous, routine work",
-                "dubious": "fraught with uncertainty or doubt",
-                "duplicity": "the act of deceiving or acting in bad faith",
-                "durable": "capable of withstanding wear and tear and decay",
-                "dwell": "inhabit or live in",
-                "dwindle": "become smaller or lose substance",
-                "dystopian": "of an imaginary place where life is extremely bad"
+            const shuffleArray = (array) => {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
             };
 
-            const idioms = {
-                "A Whole New Ball Game": "A completely different situation.",
-                "About to": "On the verge of doing something.",
-                "A Whole Raft of": "A large number of something.",
-                "A Whale of": "An excellent or impressive example of something.",
-                "A Wet Blanket": "Someone who spoils other people's fun.",
-                "A Watched Pot Never Boils": "Time seems to pass more slowly when you are waiting for something to happen.",
-                "A Voice Crying in the Wilderness": "Someone expressing an unpopular opinion.",
-                "A Trip to Sun": "A journey that is long and difficult (figurative).", // Generated interpretation
-                "A Tall Order": "A difficult task.",
-                "A Stitch in Time Saves Nine": "Fixing a small problem now prevents it from becoming a bigger one later.",
-                "A Smooth Sea Never Made a Skilled Sailor": "Challenges help people develop skills.",
-                "A Sight for Sore Eyes": "A welcome or pleasant sight.",
-                "A Shot in the Dark": "A wild guess.",
-                "A Rolling Stone Gathers no Moss": "A person who is always moving may not accumulate wealth or responsibilities.",
-                "A Raw Deal": "Unfair treatment.",
-                "A Quick Buck": "Money earned quickly and easily, often unethically.",
-                "A Place for Everything and Everything in its Place": "Orderliness is important.",
-                "A Picture is Worth a Thousand Words": "A picture conveys information more effectively than words.",
-                "A Penny Saved is a Penny Earned": "Money not spent is money gained.",
-                "A Nod is as Good as a Wink": "A subtle hint is enough.",
-                "A Needle in a Haystack": "Something impossible or very difficult to find.",
-                "A Miss is as Good as a Mile": "A near miss is still a miss.",
-                "A Man of Action": "Someone who gets things done.",
-                "A Lot on my Plate": "Having many responsibilities.",
-                "A Little of What You Fancy Does You Good": "Indulging in something you enjoy in moderation is beneficial.",
-                "A Little Knowledge is a Dangerous Thing": "A small amount of knowledge can be dangerous if it makes someone overconfident.",
-                "A Little Bird Told Me": "Someone secretly told me.",
-                "A Leopard Can’t Change His Spots": "People cannot change their basic nature.",
-                "A House of Cards": "A fragile or unstable plan/system.",
-                "A House Divided Against Itself Cannot Stand": "A group with internal disagreements will fail.",
-                "A Hard Nut to Crack": "A difficult problem or person to deal with.",
-                "A Good Man is Hard to Find": "It's difficult to find someone who is truly good.",
-                "A Golden Key Can Open Any Door": "Money can solve many problems.",
-                "A Friend in Need is a Friend Indeed": "A true friend helps when you are in trouble.",
-                "A Fool and His Money are Easily Parted": "Foolish people spend money carelessly.",
-                "A Fish Out of Water": "Someone in an unfamiliar or uncomfortable environment.",
-                "A Drowning Man Will Clutch at a Straw": "Someone in a desperate situation will try anything to save themselves.",
-                "A Drop in the Ocean": "A very small amount compared to what is needed.",
-                "A Dime A Dozen": "Something common and of little value.",
-                "A Cut Above": "Superior to others.",
-                "A Cinch": "Something very easy.",
-                "A Chain is Only as Strong as its Weakest Link": "A group or system is only as strong as its weakest member.",
-                "A Cat May Look at a King": "Even a person of low status has rights.",
-                "A Burnt Child Dreads the Fire": "Someone who has had a bad experience will be careful to avoid a similar one.",
-                "A Bunch of Fives": "A fist.",
-                "A Bolt From the Blue": "A complete surprise.",
-                "A Blessing in Disguise": "A misfortune that turns out to have a good result.",
-                "A Bit Much": "Excessive or unreasonable.",
-                "A Bird in the Hand is Worth Two in the Bush": "It's better to hold onto something you have than to risk it for something better.",
-                "Actions Speak Louder than Words": "What you do is more important than what you say.",
-                "All Ears": "Fully listening.",
-                "At the Drop of a Hat": "Immediately; without hesitation.",
-                "A Piece of Cake": "Something very easy to do.",
-                "Apple of My Eye": "Someone or something that is cherished above all others."
-            };
-
-            const vocabWords = Object.keys(vocabulary);
-            const idiomPhrases = Object.keys(idioms);
-            const idiomMeanings = Object.values(idioms);
-
-            // Helper to generate options with balanced lengths
-            function generateBalancedOptions(correctAnswer, allPossibleOptions) {
-                let options = [correctAnswer];
-                const otherOptions = allPossibleOptions.filter(opt => opt !== correctAnswer);
-
-                // Try to pick options with similar length
-                const targetLength = correctAnswer.length;
-                const lengthTolerance = 0.3; // Allow 30% deviation in length
-
-                const suitableOptions = otherOptions.filter(opt =>
-                    Math.abs(opt.length - targetLength) / targetLength < lengthTolerance
-                );
-
-                // If not enough suitable options, pick randomly
-                let pool = suitableOptions.length >= 3 ? suitableOptions : otherOptions;
-                shuffleArray(pool);
-
-                while (options.length < 4 && pool.length > 0) {
-                    const randomOption = pool.pop();
-                    if (!options.includes(randomOption)) {
-                        options.push(randomOption);
+            const startTimer = () => {
+                timer = setInterval(() => {
+                    timeLeft--;
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    if (timeLeft <= 30) {
+                        timerDisplay.classList.add('timer-glow');
                     }
-                }
-
-                // Fallback if we still don't have 4 options (shouldn't happen with large pools)
-                while (options.length < 4) {
-                    const randomFallback = getRandomElement(allPossibleOptions);
-                    if (!options.includes(randomFallback)) {
-                        options.push(randomFallback);
+                    if (timeLeft <= 0) {
+                        clearInterval(timer);
+                        showResult();
                     }
-                }
-
-                return shuffleArray(options);
-            }
-
-
-            // 15 Vocabulary MCQs
-            for (let i = 0; i < 15; i++) {
-                const word = getRandomElement(vocabWords);
-                const correctAnswer = vocabulary[word];
-                const options = generateBalancedOptions(correctAnswer, Object.values(vocabulary));
-                generatedQuestions.push({
-                    category: "English (Vocabulary)",
-                    question: `What is the meaning of "${word}"?`,
-                    options: options,
-                    answer: correctAnswer
-                });
-            }
-
-            // 15 Idiom MCQs
-            for (let i = 0; i < 15; i++) {
-                const idiom = getRandomElement(idiomPhrases);
-                const correctAnswer = idioms[idiom];
-                const options = generateBalancedOptions(correctAnswer, idiomMeanings);
-                generatedQuestions.push({
-                    category: "English (Idioms)",
-                    question: `What is the meaning of the idiom "${idiom}"?`,
-                    options: options,
-                    answer: correctAnswer
-                });
-            }
-
-            // Pakistan Affairs MCQs (10)
-            const pakistanAffairs = [
-                {
-                    question: "Who was the first Muslim Commander who entered India?",
-                    correctAnswer: "Muhammad Bin Qasim",
-                    options: ["Muhammad Bin Qasim", "Mahmud of Ghazni", "Muhammad Ghori", "Qutb al-Din Aibak"]
-                },
-                {
-                    question: "When did Muhammad Bin Qasim, the first Muslim Commander, enter India?",
-                    correctAnswer: "712 AD",
-                    options: ["712 AD", "1000 AD", "1192 AD", "1206 AD"]
-                },
-                {
-                    question: "When was the first invasion of Sultan Muhammad of Ghazni in subcontinent?",
-                    correctAnswer: "1000 AD",
-                    options: ["1000 AD", "712 AD", "1192 AD", "1206 AD"]
-                },
-                {
-                    question: "When did Sultan Muhammad of Ghazni destroy Somnat temple?",
-                    correctAnswer: "1026 AD",
-                    options: ["1026 AD", "1000 AD", "1192 AD", "1206 AD"]
-                },
-                {
-                    question: "When was the Death of Sultan Muhammad Ghazni?",
-                    correctAnswer: "1030 AD",
-                    options: ["1030 AD", "1026 AD", "1192 AD", "1206 AD"]
-                },
-                {
-                    question: "When did Muhammad Ghori defeat Prithvi Raj at the Second Battle of Tarain?",
-                    correctAnswer: "1192 AD",
-                    options: ["1192 AD", "1191 AD", "1000 AD", "712 AD"]
-                },
-                {
-                    question: "When was the Death of Sultan Muhammad Ghori?",
-                    correctAnswer: "1206 AD",
-                    options: ["1206 AD", "1192 AD", "1030 AD", "712 AD"]
-                },
-                {
-                    question: "When was the Slave Dynasty founded in India?",
-                    correctAnswer: "1206 AD",
-                    options: ["1206 AD", "1210 AD", "1290 AD", "1320 AD"]
-                },
-                {
-                    question: "When was the Death of Qutb-ud-Din Aibak?",
-                    correctAnswer: "1210 AD",
-                    options: ["1210 AD", "1206 AD", "1290 AD", "1320 AD"]
-                },
-                {
-                    question: "When was the Khilji Dynasty founded in India?",
-                    correctAnswer: "1290 AD",
-                    options: ["1290 AD", "1210 AD", "1320 AD", "1414 AD"]
-                }
-            ];
-            pakistanAffairs.forEach(q => {
-                generatedQuestions.push({
-                    category: "Pakistan Affairs",
-                    question: q.question,
-                    options: shuffleArray([...q.options]), // Shuffle options for each question
-                    answer: q.correctAnswer
-                });
-            });
-
-
-            // Current Affairs MCQs (10)
-            const currentAffairs = [
-                {
-                    question: "On which day, World Cancer Day is celebrated every year?",
-                    correctAnswer: "4 February",
-                    options: ["4 February", "14 February", "21 February", "27 February"]
-                },
-                {
-                    question: "What is the theme for the 2024 International Day of Human Fraternity?",
-                    correctAnswer: "Love and compassion can win over hate",
-                    options: ["Love and compassion can win over hate", "Close the Care Gap", "Her Voice, Her Future", "Building a Sustainable Future"]
-                },
-                {
-                    question: "When is the 'World Pulses Day' observed every year?",
-                    correctAnswer: "10 February",
-                    options: ["10 February", "4 February", "11 February", "13 February"]
-                },
-                {
-                    question: "What is the theme for the 2024 International Day of Women and Girls in Science?",
-                    correctAnswer: "Women & Girls in Science Leadership: A New Era for Sustainability",
-                    options: ["Women & Girls in Science Leadership: A New Era for Sustainability", "Close the Care Gap", "Her Voice, Her Future", "Building a Sustainable Future"]
-                },
-                {
-                    question: "On which day, World Radio Day is celebrated every year?",
-                    correctAnswer: "13 February",
-                    options: ["13 February", "4 February", "10 February", "11 February"]
-                },
-                {
-                    question: "What was World Anthropology Day 2024 celebrated?",
-                    correctAnswer: "15 February",
-                    options: ["15 February", "17 February", "20 February", "21 February"]
-                },
-                {
-                    question: "Which day is celebrated as Global Tourism Resilience Day?",
-                    correctAnswer: "17 February",
-                    options: ["17 February", "15 February", "20 February", "21 February"]
-                },
-                {
-                    question: "What is the theme for the 2024 World Day of Social Justice?",
-                    correctAnswer: "Bridging Gaps, Building Alliances",
-                    options: ["Bridging Gaps, Building Alliances", "Close the Care Gap", "Her Voice, Her Future", "Building a Sustainable Future"]
-                },
-                {
-                    question: "On which day, International Mother Language Day is a worldwide annual observance held?",
-                    correctAnswer: "21 February",
-                    options: ["21 February", "17 February", "20 February", "27 February"]
-                },
-                {
-                    question: "What is the theme for International Mother Language Day in 2024?",
-                    correctAnswer: "Multilingual education is a pillar of learning and intergenerational learning",
-                    options: ["Multilingual education is a pillar of learning and intergenerational learning", "Close the Care Gap", "Her Voice, Her Future", "Building a Sustainable Future"]
-                }
-            ];
-            currentAffairs.forEach(q => {
-                generatedQuestions.push({
-                    category: "Current Affairs",
-                    question: q.question,
-                    options: shuffleArray([...q.options]),
-                    answer: q.correctAnswer
-                });
-            });
-
-            // Islamiyat MCQs (10)
-            const islamiyat = [
-                {
-                    question: "Which Surah in the Holy Quran is named after Prophet Younas?",
-                    correctAnswer: "Surah Younas",
-                    options: ["Surah Younas", "Surah Hood", "Surah Yousaf", "Surah Ibrahim"]
-                },
-                {
-                    question: "Which Surah in the Holy Quran is named after Prophet Hood?",
-                    correctAnswer: "Surah Hood",
-                    options: ["Surah Hood", "Surah Younas", "Surah Yousaf", "Surah Ibrahim"]
-                },
-                {
-                    question: "Which Surah in the Holy Quran is named after Prophet Yousaf?",
-                    correctAnswer: "Surah Yousaf",
-                    options: ["Surah Yousaf", "Surah Younas", "Surah Hood", "Surah Ibrahim"]
-                },
-                {
-                    question: "Which Surah in the Holy Quran is named after Prophet Ibrahim?",
-                    correctAnswer: "Surah Ibrahim",
-                    options: ["Surah Ibrahim", "Surah Younas", "Surah Hood", "Surah Yousaf"]
-                },
-                {
-                    question: "Which Surah in the Holy Quran is named after Prophet Noha?",
-                    correctAnswer: "Surah Noha",
-                    options: ["Surah Noha", "Surah Younas", "Surah Hood", "Surah Yousaf"]
-                },
-                {
-                    question: "Which Surah in the Holy Quran is named after Prophet Muhammad?",
-                    correctAnswer: "Surah Muhammad",
-                    options: ["Surah Muhammad", "Surah Younas", "Surah Hood", "Surah Yousaf"]
-                },
-                {
-                    question: "How many times has Bismillah come in the Holy Quran?",
-                    correctAnswer: "114 times",
-                    options: ["114 times", "113 times", "115 times", "116 times"]
-                },
-                {
-                    question: "Which Surah starts without Bismillah in the Holy Quran?",
-                    correctAnswer: "Surah Tauba",
-                    options: ["Surah Tauba", "Surah Fatiha", "Surah Baqarah", "Surah Ikhlas"]
-                },
-                {
-                    question: "How many times has Bismillah come in Surah Al-Nimal in the Holy Quran?",
-                    correctAnswer: "two times",
-                    options: ["two times", "one time", "three times", "four times"]
-                },
-                {
-                    question: "The name of Hazrat Musa has come the most in the Holy Quran. What is his name?",
-                    correctAnswer: "Musa",
-                    options: ["Musa", "Isa", "Ibrahim", "Muhammad"]
-                }
-            ];
-            islamiyat.forEach(q => {
-                generatedQuestions.push({
-                    category: "Islamiyat",
-                    question: q.question,
-                    options: shuffleArray([...q.options]),
-                    answer: q.correctAnswer
-                });
-            });
-
-            // General Knowledge MCQs (10)
-            const generalKnowledge = [
-                {
-                    question: "Which organization was created in 1955 to provide a defense shield against Soviet penetration?",
-                    correctAnswer: "CENTO",
-                    options: ["CENTO", "SEATO", "NATO", "UN"]
-                },
-                {
-                    question: "Where are the Headquarters of CENTO located?",
-                    correctAnswer: "Ankara, Turkey",
-                    options: ["Ankara, Turkey", "Bangkok, Thailand", "Brussels, Belgium", "Geneva, Switzerland"]
-                },
-                {
-                    question: "When was SEATO established?",
-                    correctAnswer: "September 8, 1954",
-                    options: ["September 8, 1954", "1955", "1973", "1863"]
-                },
-                {
-                    question: "Where are the Headquarters of SEATO located?",
-                    correctAnswer: "Bangkok, Thailand",
-                    options: ["Bangkok, Thailand", "Ankara, Turkey", "Brussels, Belgium", "Geneva, Switzerland"]
-                },
-                {
-                    question: "When was the International Committee of the Red Cross (ICRC) established?",
-                    correctAnswer: "1863",
-                    options: ["1863", "1954", "1955", "1913"]
-                },
-                {
-                    question: "Where are the Headquarters of ICRC located?",
-                    correctAnswer: "Geneva, Switzerland",
-                    options: ["Geneva, Switzerland", "Bangkok, Thailand", "Ankara, Turkey", "Brussels, Belgium"]
-                },
-                {
-                    question: "When was International Criminal Police Organisation (Interpol) formed?",
-                    correctAnswer: "1956",
-                    options: ["1956", "1863", "1913", "1945"]
-                },
-                {
-                    question: "Where are the Headquarters of Interpol located?",
-                    correctAnswer: "Paris, France",
-                    options: ["Paris, France", "Geneva, Switzerland", "Brussels, Belgium", "Ankara, Turkey"]
-                },
-                {
-                    question: "When was G-15 formed?",
-                    correctAnswer: "1990",
-                    options: ["1990", "1956", "1863", "1913"]
-                },
-                {
-                    question: "When was the Organisation of African Unity (OAU) formally disbanded?",
-                    correctAnswer: "July 8, 2002",
-                    options: ["July 8, 2002", "1990", "1956", "1863"]
-                }
-            ];
-            generalKnowledge.forEach(q => {
-                generatedQuestions.push({
-                    category: "General Knowledge",
-                    question: q.question,
-                    options: shuffleArray([...q.options]),
-                    answer: q.correctAnswer
-                });
-            });
-
-            // Astronomy MCQs (20) - from various planet sections
-            const astronomy = [
-                {
-                    question: "How many astronomical units away is Neptune from the Sun?",
-                    correctAnswer: "30",
-                    options: ["30", "1", "5", "10"]
-                },
-                {
-                    question: "How long does Neptune take to rotate once (a Neptunian day)?",
-                    correctAnswer: "16 hours",
-                    options: ["16 hours", "24 hours", "10 hours", "6 hours"]
-                },
-                {
-                    question: "What type of planet is Neptune?",
-                    correctAnswer: "Ice giant",
-                    options: ["Ice giant", "Gas giant", "Rocky planet", "Dwarf planet"]
-                },
-                {
-                    question: "What is Neptune's atmosphere made up mostly of?",
-                    correctAnswer: "Molecular hydrogen, atomic helium and methane",
-                    options: ["Molecular hydrogen, atomic helium and methane", "Oxygen and Nitrogen", "Carbon Dioxide", "Water Vapor"]
-                },
-                {
-                    question: "How many known moons does Neptune have?",
-                    correctAnswer: "14",
-                    options: ["14", "1", "5", "8"]
-                },
-                {
-                    question: "Which is the only spacecraft to have visited Neptune?",
-                    correctAnswer: "Voyager 2",
-                    options: ["Voyager 2", "Voyager 1", "Cassini", "Hubble"]
-                },
-                {
-                    question: "What is the fourth largest planet in terms of diameter?",
-                    correctAnswer: "Neptune",
-                    options: ["Neptune", "Jupiter", "Saturn", "Uranus"]
-                },
-                {
-                    question: "Which planet is considered the coldest planet?",
-                    correctAnswer: "Neptune",
-                    options: ["Neptune", "Uranus", "Mars", "Earth"]
-                },
-                {
-                    question: "What is the only planet of the solar system which has water vapours?",
-                    correctAnswer: "Neptune",
-                    options: ["Neptune", "Earth", "Mars", "Venus"]
-                },
-                {
-                    question: "Who discovered Neptune?",
-                    correctAnswer: "Urbain Le Verrier and Johann Galle",
-                    options: ["Urbain Le Verrier and Johann Galle", "William Herschel", "Galileo Galilei", "Nicolaus Copernicus"]
-                },
-                {
-                    question: "When was Uranus discovered?",
-                    correctAnswer: "1781",
-                    options: ["1781", "1846", "1610", "1962"]
-                },
-                {
-                    question: "What is Uranus known as because it rotates on its side?",
-                    correctAnswer: "Sideways planet",
-                    options: ["Sideways planet", "Ringed planet", "Ice Giant", "Gas Giant"]
-                },
-                {
-                    question: "How many known moons does Uranus have?",
-                    correctAnswer: "27",
-                    options: ["27", "14", "53", "79"]
-                },
-                {
-                    question: "Which is the largest moon of Uranus?",
-                    correctAnswer: "Titania",
-                    options: ["Titania", "Miranda", "Ariel", "Umbriel"]
-                },
-                {
-                    question: "What is the shortest day of any other planet?",
-                    correctAnswer: "Jupiter",
-                    options: ["Jupiter", "Saturn", "Neptune", "Earth"]
-                },
-                {
-                    question: "What is Jupiter's atmosphere made up mostly of?",
-                    correctAnswer: "Hydrogen and Helium",
-                    options: ["Hydrogen and Helium", "Carbon Dioxide", "Nitrogen", "Methane"]
-                },
-                {
-                    question: "How many confirmed moons does Jupiter have?",
-                    correctAnswer: "53",
-                    options: ["53", "14", "27", "79"]
-                },
-                {
-                    question: "Which is the second largest planet in our solar system?",
-                    correctAnswer: "Saturn",
-                    options: ["Saturn", "Jupiter", "Uranus", "Neptune"]
-                },
-                {
-                    question: "How many known moons does Saturn have?",
-                    correctAnswer: "53",
-                    options: ["53", "14", "27", "79"]
-                },
-                {
-                    question: "Which is the largest moon of Saturn?",
-                    correctAnswer: "Titan",
-                    options: ["Titan", "Rhea", "Iapetus", "Dione"]
-                }
-            ];
-            astronomy.forEach(q => {
-                generatedQuestions.push({
-                    category: "Astronomy",
-                    question: q.question,
-                    options: shuffleArray([...q.options]),
-                    answer: q.correctAnswer
-                });
-            });
-
-            // General Science (Earth, Sun, Mercury, Venus, Mars) - 10 MCQs
-            const generalScience = [
-                {
-                    question: "What is the radius of Earth?",
-                    correctAnswer: "3,959 miles (6,371 km)",
-                    options: ["3,959 miles (6,371 km)", "7,918 miles (12,742 km)", "2,439.7 miles (3,926 km)", "6,052 kilometers (3,760 miles)"]
-                },
-                {
-                    question: "What is the diameter of Earth?",
-                    correctAnswer: "7,918 miles (12,742 km)",
-                    options: ["7,918 miles (12,742 km)", "3,959 miles (6,371 km)", "2,439.7 miles (3,926 km)", "6,052 kilometers (3,760 miles)"]
-                },
-                {
-                    question: "What is the density of Earth?",
-                    correctAnswer: "5.51 g/cm³",
-                    options: ["5.51 g/cm³", "1.638 g/cm³", "1.27 g/cm³", "1.326 g/cm³"]
-                },
-                {
-                    question: "Earth is known as the ______ planet.",
-                    correctAnswer: "watery",
-                    options: ["watery", "red", "blue", "green"]
-                },
-                {
-                    question: "Earth is the only planet with an ______.",
-                    correctAnswer: "atmosphere",
-                    options: ["atmosphere", "rings", "moons", "volcanoes"]
-                },
-                {
-                    question: "How old is Earth approximately?",
-                    correctAnswer: "4.54 ± 0.05 billion years old",
-                    options: ["4.54 ± 0.05 billion years old", "4.5 billion years old", "3.8 billion years old", "5.1 billion years old"]
-                },
-                {
-                    question: "Earth has one large natural satellite known as the ______.",
-                    correctAnswer: "Moon",
-                    options: ["Moon", "Phobos", "Deimos", "Titan"]
-                },
-                {
-                    question: "The Earth's movement around the sun causes the ______.",
-                    correctAnswer: "seasons",
-                    options: ["seasons", "day and night", "tides", "eclipses"]
-                },
-                {
-                    question: "The rotation of the Earth on its axis causes ______.",
-                    correctAnswer: "day and night",
-                    options: ["day and night", "seasons", "tides", "eclipses"]
-                },
-                {
-                    question: "How many layers does Earth have?",
-                    correctAnswer: "three",
-                    options: ["three", "four", "two", "five"]
-                }
-            ];
-            generalScience.forEach(q => {
-                generatedQuestions.push({
-                    category: "General Science",
-                    question: q.question,
-                    options: shuffleArray([...q.options]),
-                    answer: q.correctAnswer
-                });
-            });
-
-            // Additional MCQs to reach 100, ensuring topic diversity and balanced options
-            const additionalMCQs = [
-                // More Pakistan Affairs
-                {
-                    question: "How many seats for women are there in the National Assembly?",
-                    correctAnswer: "60",
-                    options: ["60", "141", "61", "45"]
-                },
-                {
-                    question: "How many General Seats are there in the NA for Punjab?",
-                    correctAnswer: "141",
-                    options: ["141", "60", "61", "45"]
-                },
-                {
-                    question: "How many General Seats are there in the NA for Sindh?",
-                    correctAnswer: "61",
-                    options: ["61", "141", "60", "45"]
-                },
-                {
-                    question: "How many General Seats are there in the NA for KPK?",
-                    correctAnswer: "45",
-                    options: ["45", "141", "61", "60"]
-                },
-                {
-                    question: "How many General Seats are there in the NA for Balochistan?",
-                    correctAnswer: "16",
-                    options: ["16", "45", "61", "60"]
-                },
-                {
-                    question: "How many General Seats are there in the NA for Islamabad?",
-                    correctAnswer: "3",
-                    options: ["3", "16", "45", "61"]
-                },
-                {
-                    question: "How many General Seats in National Assembly for minorities?",
-                    correctAnswer: "10",
-                    options: ["10", "3", "16", "45"]
-                },
-                {
-                    question: "Pakistan has recently been downgraded to an 'authoritarian regime' according to which organization?",
-                    correctAnswer: "Economist Intelligence Unit (EIU)",
-                    options: ["Economist Intelligence Unit (EIU)", "Transparency International", "World Bank", "IMF"]
-                },
-                {
-                    question: "When did newly elected lawmakers in Punjab Assembly took their oath?",
-                    correctAnswer: "24 February 2024",
-                    options: ["24 February 2024", "28 February 2024", "29 February 2024", "26 February 2024"]
-                },
-                {
-                    question: "Who has been elected as the Punjab Assembly's new speaker?",
-                    correctAnswer: "Malik Ahmed Khan",
-                    options: ["Malik Ahmed Khan", "Awais Qadi", "Anthony Naveed", "Babar Saleem Swati"]
-                },
-                {
-                    question: "Who has been elected as deputy speaker of Punjab Assembly?",
-                    correctAnswer: "Zaheer Iqbal",
-                    options: ["Zaheer Iqbal", "Malik Ahmed Khan", "Awais Qadi", "Anthony Naveed"]
-                },
-                {
-                    question: "Who has been administered the oath to PML-N's Malik Ahmed Khan as the next speaker of the assembly?",
-                    correctAnswer: "Sibtian Khan",
-                    options: ["Sibtian Khan", "Malik Ahmed Khan", "Awais Qadi", "Anthony Naveed"]
-                },
-                {
-                    question: "Who has been elected as Pakistan's first female CM of Punjab Assembly?",
-                    correctAnswer: "Maryam Nawaz",
-                    options: ["Maryam Nawaz", "Ghazala Gola", "Suraya Bibi", "Hoorain Batool"]
-                },
-                {
-                    question: "Maryam Nawaz was elected as the Chief Minister of Punjab after securing how many votes?",
-                    correctAnswer: "19th", // The document says 220 votes, but the question asks for '19th'
-                    options: ["19th", "20th", "21st", "22nd"]
-                },
-                {
-                    question: "When did Maryam Nawaz take oath as the Chief Minister of Punjab?",
-                    correctAnswer: "26 February 2024",
-                    options: ["26 February 2024", "24 February 2024", "28 February 2024", "29 February 2024"]
-                },
-                {
-                    question: "When did newly-elected lawmakers take oath during inaugural Sindh Assembly session?",
-                    correctAnswer: "24 February 2024",
-                    options: ["24 February 2024", "26 February 2024", "28 February 2024", "29 February 2024"]
-                },
-                {
-                    question: "Who has been elected as CM Sindh for third time?",
-                    correctAnswer: "Murad Ali Shah",
-                    options: ["Murad Ali Shah", "Syed Murad Ali Shah", "Awais Qadi", "Anthony Naveed"]
-                },
-                {
-                    question: "When did the newly elected Chief Minister Sindh Syed Murad Ali Shah take oath?",
-                    correctAnswer: "27 February 2024",
-                    options: ["27 February 2024", "24 February 2024", "28 February 2024", "29 February 2024"]
-                },
-                {
-                    question: "Murad Ali Shah is the ______ CM of Sindh?",
-                    correctAnswer: "25th",
-                    options: ["25th", "24th", "26th", "27th"]
-                },
-                {
-                    question: "General Elections 2024 in Pakistan was held on:",
-                    correctAnswer: "February 8",
-                    options: ["February 8", "February 24", "February 28", "February 29"]
-                }
-            ];
-            additionalMCQs.forEach(q => {
-                generatedQuestions.push({
-                    category: "Mixed Topics",
-                    question: q.question,
-                    options: shuffleArray([...q.options]),
-                    answer: q.correctAnswer
-                });
-            });
-
-            // Fill remaining MCQs to reach 100
-            while (generatedQuestions.length < 100) {
-                generatedQuestions.push({
-                    category: "General Knowledge (Filler)",
-                    question: `Which of these is a general knowledge fact number ${generatedQuestions.length + 1}?`,
-                    options: shuffleArray(["Option A: This is a longer sentence for balance.", "Option B: Shorter.", "Option C: Medium length option.", "Option D: Another short one."]),
-                    answer: "Option A: This is a longer sentence for balance." // Randomly pick one or generate
-                });
-            }
-
-            // Shuffle the entire quiz data once to randomize question order
-            shuffleArray(generatedQuestions);
-
-            // Reorder based on user's specific request for chronology:
-            // 10 English, 10 Pakistan Affairs, 10 GK, 10 English, 10 Cell Functions, 10 Vitamins, 10 English, and so on.
-            // This requires categorizing the generated questions and then arranging them.
-
-            const categorizedQuiz = {
-                "English (Vocabulary)": [],
-                "English (Idioms)": [],
-                "Pakistan Affairs": [],
-                "Current Affairs": [],
-                "Islamiyat": [],
-                "General Knowledge": [],
-                "Astronomy": [],
-                "General Science": [],
-                "Mixed Topics": [],
-                "General Knowledge (Filler)": [] // For any generic questions
+                }, 1000);
             };
 
-            generatedQuestions.forEach(q => {
-                if (categorizedQuiz[q.category]) {
-                    categorizedQuiz[q.category].push(q);
-                } else {
-                    categorizedQuiz["Mixed Topics"].push(q); // Fallback for any unmapped categories
-                }
-            });
-
-            const finalQuizOrder = [];
-
-            // Define the desired order and quantities
-            const orderTemplate = [
-                { category: "English (Vocabulary)", count: 10 },
-                { category: "Pakistan Affairs", count: 10 },
-                { category: "General Knowledge", count: 10 },
-                { category: "English (Idioms)", count: 10 },
-                { category: "Astronomy", count: 10 },
-                { category: "Islamiyat", count: 10 },
-                { category: "Current Affairs", count: 10 },
-                { category: "General Science", count: 10 },
-                { category: "Mixed Topics", count: 10 },
-                { category: "English (Vocabulary)", count: 5 }, // More English
-                { category: "English (Idioms)", count: 5 } // More English
-            ];
-
-            orderTemplate.forEach(item => {
-                let questionsToAdd = [];
-                if (categorizedQuiz[item.category]) {
-                    questionsToAdd = categorizedQuiz[item.category].splice(0, item.count);
-                }
-                while (questionsToAdd.length < item.count) {
-                    // If a specific category runs out, pull from other available categories randomly
-                    const availableCategories = Object.keys(categorizedQuiz).filter(cat => categorizedQuiz[cat].length > 0);
-                    if (availableCategories.length > 0) {
-                        const randomCategory = getRandomElement(availableCategories);
-                        questionsToAdd.push(categorizedQuiz[randomCategory].pop());
-                    } else {
-                        // Fallback if all specific and general questions are exhausted
-                        questionsToAdd.push({
-                            category: "Filler",
-                            question: `Generic question ${finalQuizOrder.length + questionsToAdd.length + 1}? This is a balanced option.`,
-                            options: shuffleArray(["Balanced option A.", "Balanced option B longer.", "Balanced option C.", "Balanced option D is quite long now."]),
-                            answer: "Balanced option A."
-                        });
-                    }
-                }
-                finalQuizOrder.push(...questionsToAdd);
-            });
-
-            // Add any remaining questions from categories that weren't fully consumed by the template
-            Object.values(categorizedQuiz).forEach(qList => {
-                finalQuizOrder.push(...qList);
-            });
-
-            // Ensure exactly 100 MCQs
-            while (finalQuizOrder.length < 100) {
-                finalQuizOrder.push({
-                    category: "Filler",
-                    question: `Additional question ${finalQuizOrder.length + 1}? This question has a balanced length.`,
-                    options: shuffleArray(["Choice A: This is a longer option for balance.", "Choice B is shorter.", "Choice C is also short.", "Choice D is a medium length option."]),
-                    answer: "Choice A: This is a longer option for balance."
-                });
-            }
-            finalQuizOrder.splice(100); // Trim to exactly 100 questions
-
-            // One final shuffle of options for each question to ensure randomness and balance
-            finalQuizOrder.forEach(q => {
-                q.options = generateBalancedOptions(q.answer, q.options); // Re-balance options
-            });
-
-
-            return finalQuizOrder;
-        }
-
-        const questions = generateMCQs();
-        totalQuestionsSpan.textContent = questions.length;
-
-        function startTimer(duration, display) {
-            let timer = duration, minutes, seconds;
-            timerInterval = setInterval(function () {
-                minutes = parseInt(timer / 60, 10);
-                seconds = parseInt(timer % 60, 10);
-
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-
-                display.textContent = minutes + ":" + seconds;
-
-                if (--timer < 0) {
-                    clearInterval(timerInterval);
-                    endQuiz();
-                    showAlert("Time's Up!", "You have run out of time. The quiz has ended.");
-                }
-            }, 1000);
-        }
-
-        function loadQuestion() {
-            if (currentQuestionIndex < questions.length) {
-                const q = questions[currentQuestionIndex];
-                questionText.textContent = q.question;
+            const displayQuestion = () => {
+                const question = questions[currentQuestionIndex];
+                questionText.textContent = question.question;
                 optionsContainer.innerHTML = '';
-                q.options.forEach(option => {
-                    const button = document.createElement('button');
-                    button.textContent = option;
-                    button.onclick = () => selectAnswer(button, option, q.answer);
-                    optionsContainer.appendChild(button);
+                currentQuestionSpan.textContent = currentQuestionIndex + 1;
+
+                const shuffledOptions = shuffleArray([...question.options]);
+
+                shuffledOptions.forEach(option => {
+                    const optionBtn = document.createElement('button');
+                    optionBtn.classList.add('option-btn', 'w-full', 'p-4', 'rounded-xl', 'text-gray-800', 'font-medium');
+                    optionBtn.textContent = option;
+                    optionBtn.addEventListener('click', () => handleAnswer(option, question.answer, optionBtn));
+                    optionsContainer.appendChild(optionBtn);
                 });
-                currentQuestionNumberSpan.textContent = currentQuestionIndex + 1;
-                nextButton.style.display = 'none'; // Hide next button until answer is selected
-            } else {
-                endQuiz();
-            }
-        }
 
-        function selectAnswer(selectedButton, selectedOption, correctAnswer) {
-            if (!quizActive) return; // Prevent interaction after quiz ends
+                nextBtn.classList.add('hidden');
+            };
 
-            // Disable all options after selection
-            Array.from(optionsContainer.children).forEach(button => {
-                button.disabled = true;
-            });
-
-            if (selectedOption === correctAnswer) {
-                selectedButton.classList.add('correct');
-                score++;
-                correctAnswersCount++;
-            } else {
-                selectedButton.classList.add('wrong');
-                wrongAnswersCount++;
-                // Find and highlight the correct answer
-                Array.from(optionsContainer.children).forEach(button => {
-                    if (button.textContent === correctAnswer) {
-                        button.classList.add('correct');
+            const handleAnswer = (selectedOption, correctAnswer, optionBtn) => {
+                const allOptions = optionsContainer.querySelectorAll('.option-btn');
+                allOptions.forEach(btn => {
+                    btn.classList.add('disabled-option');
+                    if (btn.textContent === correctAnswer) {
+                        btn.classList.add('correct-option');
+                    } else if (btn === optionBtn && selectedOption !== correctAnswer) {
+                        btn.classList.add('wrong-option');
                     }
                 });
-            }
-            nextButton.style.display = 'block'; // Show next button
-        }
 
-        function endQuiz() {
-            quizActive = false; // Mark quiz as inactive
-            clearInterval(timerInterval);
-            quizSection.style.display = 'none';
-            resultSection.style.display = 'block';
+                if (selectedOption === correctAnswer) {
+                    score++;
+                }
+                nextBtn.classList.remove('hidden');
+            };
 
-            const timeTaken = new Date() - quizStartedTime;
-            const minutesTaken = Math.floor(timeTaken / 60000);
-            const secondsTaken = Math.floor((timeTaken % 60000) / 1000);
+            const nextQuestion = () => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    displayQuestion();
+                } else {
+                    showResult();
+                }
+            };
 
-            resultNameSpan.textContent = candidateNameInput.value;
-            scoreSpan.textContent = score;
-            totalScoreSpan.textContent = questions.length;
-            correctCountSpan.textContent = correctAnswersCount;
-            wrongCountSpan.textContent = wrongAnswersCount;
-            timeTakenSpan.textContent = `${minutesTaken} minutes ${secondsTaken} seconds`;
-        }
+            const showResult = () => {
+                clearInterval(timer);
+                showScreen('result-screen');
+                candidateNameSpan.textContent = nameInput.value;
+                finalScoreSpan.textContent = score;
+            };
 
-        loginButton.addEventListener('click', () => {
-            const id = userIdInput.value;
-            const pass = passwordInput.value;
+            loginBtn.addEventListener('click', () => {
+                const id = idInput.value;
+                const password = passwordInput.value;
+                if (id === '1111' && password === '3333') {
+                    showScreen('name-entry-screen');
+                    loginError.classList.add('hidden');
+                } else {
+                    loginError.classList.remove('hidden');
+                }
+            });
 
-            if (id === 'aabb' && pass === 'bbaa') {
-                loginSection.style.display = 'none';
-                nameEntrySection.style.display = 'block';
-                loginError.style.display = 'none';
-            } else {
-                loginError.style.display = 'block';
-            }
+            startBtn.addEventListener('click', () => {
+                const name = nameInput.value.trim();
+                if (name) {
+                    showScreen('quiz-screen');
+                    startTimer();
+                    questions = shuffleArray(quizData);
+                    displayQuestion();
+                } else {
+                    nameInput.placeholder = "Please enter your name!";
+                    nameInput.classList.add('border-red-500');
+                }
+            });
+
+            nextBtn.addEventListener('click', nextQuestion);
         });
-
-        startQuizButton.addEventListener('click', () => {
-            const candidateName = candidateNameInput.value.trim();
-            if (candidateName) {
-                nameEntrySection.style.display = 'none';
-                quizSection.style.display = 'block';
-                quizActive = true;
-                quizStartedTime = new Date();
-                startTimer(60 * 60, timeLeftSpan); // 60 minutes
-                loadQuestion();
-            } else {
-                showAlert("Name Required", "Please enter your name to start the quiz.");
-            }
-        });
-
-        nextButton.addEventListener('click', () => {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                loadQuestion();
-            } else {
-                endQuiz();
-            }
-        });
-
-        // Initial setup
-        totalQuestionsSpan.textContent = questions.length;
     </script>
+
 </body>
 </html>
