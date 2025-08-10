@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Sunday Quiz For Aspirants</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fc; /* Very light subtle grey-blue */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* Softer shadow */
+            width: 100%;
+            max-width: 38rem;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInScaleUp 0.8s ease-out forwards;
+        }
+        @keyframes fadeInScaleUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .header-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4a90e2; /* Softer blue */
+            margin-bottom: 0.5rem;
+            text-shadow: none; /* Removing harsh glow for lighter theme */
+        }
+        .contact-info {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #fdd835; /* Softer yellow */
+            margin-bottom: 2rem;
+            text-shadow: none; /* Removing harsh glow for lighter theme */
+        }
+        .input-field {
+            padding: 0.75rem 1rem;
+            margin-bottom: 1.25rem;
+            border: 1px solid #c5daee; /* Very light blue border */
+            border-radius: 0.75rem;
+            width: calc(100% - 2rem);
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #4a90e2; /* Matches softer blue */
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+        }
+        .btn-blue {
+            background-color: #4a90e2; /* Softer blue button */
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(74, 144, 226, 0.2); /* Softer shadow */
+            border: none;
+        }
+        .btn-blue:hover {
+            background-color: #3a7bc3; /* Slightly darker softer blue on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(74, 144, 226, 0.3);
+        }
+        .btn-blue:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(74, 144, 226, 0.15);
+        }
+        .option-button {
+            background-color: #e3f2fd; /* Very very light blue for options */
+            color: #333;
+            padding: 0.8rem 1.25rem;
+            border-radius: 0.75rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: left;
+            width: 100%;
+            border: 1px solid #bbdefb; /* Slightly darker very light blue border */
+            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Very light shadow */
+        }
+        .option-button:hover:not(.correct):not(.incorrect) {
+            background-color: #d0effd; /* Slightly lighter blue on hover */
+            transform: translateY(-2px);
+        }
+        .option-button.correct {
+            background-color: #66bb6a; /* Softer green */
+            color: white;
+            border-color: #66bb6a;
+            pointer-events: none;
+            transform: scale(1.01); /* Less dramatic scale */
+            box-shadow: 0 2px 6px rgba(102, 187, 106, 0.3);
+        }
+        .option-button.incorrect {
+            background-color: #ef5350; /* Softer red */
+            color: white;
+            border-color: #ef5350;
+            pointer-events: none;
+            transform: scale(1.01);
+            box-shadow: 0 2px 6px rgba(239, 83, 80, 0.3);
+        }
+        .quiz-navigation button {
+            margin: 0.5rem;
+        }
+        .question-text {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            min-height: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 1rem;
+        }
+        .timer-display, .score-display {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-top: 1.5rem;
+            color: #4a90e2; /* Softer blue */
+        }
+        .progress-text {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        #result-screen {
+            display: none;
+            text-align: center;
+        }
+        #result-screen h2 {
+            font-size: 2rem;
+            color: #4a90e2; /* Softer blue */
+            margin-bottom: 1rem;
+        }
+        #final-score {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #66bb6a; /* Softer green */
+            margin-bottom: 2rem;
+        }
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); /* Softer shadow */
+            z-index: 1000;
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .message-box button {
+            background-color: #4a90e2; /* Softer blue */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-top: 15px;
+            border: none;
+        }
+        .message-box button:hover {
+            background-color: #3a7bc3; /* Darker softer blue on hover */
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .container {
+                padding: 1.5rem;
+                border-radius: 1rem;
+            }
+            .header-title {
+                font-size: 1.8rem;
+            }
+            .contact-info {
+                font-size: 1rem;
+            }
+            .input-field {
+                padding: 0.6rem 0.8rem;
+                margin-bottom: 1rem;
+                font-size: 0.9rem;
+            }
+            .btn-blue {
+                padding: 0.7rem 1.5rem;
+                font-size: 1rem;
+            }
+            .option-button {
+                padding: 0.7rem 1rem;
+                margin-bottom: 0.6rem;
+                font-size: 0.9rem;
+            }
+            .question-text {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+                min-height: 3.5rem;
+            }
+            .timer-display, .score-display {
+                font-size: 1rem;
+                margin-top: 1rem;
+            }
+            .progress-text {
+                font-size: 0.9rem;
+            }
+            #result-screen h2 {
+                font-size: 1.5rem;
+            }
+            #final-score {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="main-container">
+        <h1 class="header-title">Special Sunday Quiz For Aspirants.</h1>
+        <p class="contact-info">CONTACT: 03188185185</p>
+
+        <!-- Login Screen -->
+        <div id="login-screen">
+            <h2 class="text-xl font-bold mb-4 text-blue-700">Login</h2>
+            <input type="text" id="quizId" class="input-field" placeholder="Enter ID">
+            <input type="password" id="quizPassword" class="input-field" placeholder="Enter Password">
+            <button class="btn-blue" onclick="attemptLogin()">Login</button>
+            <div id="login-error" class="text-red-500 mt-2 hidden">Invalid ID or Password.</div>
+        </div>
+
+        <!-- Name Entry Screen -->
+        <div id="name-screen" style="display:none;">
+            <h2 class="text-xl font-bold mb-4 text-blue-700">Enter Your Name</h2>
+            <input type="text" id="candidateName" class="input-field" placeholder="Your Name">
+            <button class="btn-blue" onclick="startQuiz()">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" style="display:none;">
+            <div class="flex justify-between items-center mb-4">
+                <div id="timer-display" class="timer-display">Time Left: 15:00</div>
+                <div id="score-display" class="score-display">Score: 0/50</div>
+            </div>
+            <div id="question-number" class="progress-text">Question 1 of 50</div>
+            <div id="question-text" class="question-text"></div>
+            <div id="options-container" class="grid grid-cols-1 gap-3 mb-6">
+                <!-- Options will be dynamically loaded here -->
+            </div>
+            <div class="quiz-navigation flex justify-center">
+                <button id="next-button" class="btn-blue" onclick="nextQuestion()" style="display:none;">Next</button>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen">
+            <h2>Quiz Completed!</h2>
+            <p id="final-score">Your Score: 0/50</p>
+            <p class="text-lg text-gray-700">Thank you for attempting the quiz, <span id="display-name" class="font-bold text-blue-700"></span>!</p>
+        </div>
+    </div>
+
+    <div id="message-box" class="message-box">
+        <p id="message-content"></p>
+        <button onclick="hideMessageBox()">OK</button>
+    </div>
+
+    <script>
+        const quizId = "888";
+        const quizPassword = "333";
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userName = "";
+        let timer;
+        let timeLeft = 15 * 60; // 15 minutes in seconds
+        let quizStarted = false; // Flag to prevent restarting
+        let questionAnswered = false; // Flag to track if current question has been answered
+
+        // Function to show custom message box
+        function showMessageBox(message) {
+            document.getElementById('message-content').innerText = message;
+            document.getElementById('message-box').style.display = 'block';
+        }
+
+        // Function to hide custom message box
+        function hideMessageBox() {
+            document.getElementById('message-box').style.display = 'none';
+        }
+
+        const quizData = [
+            // 1. Vocabulary (Synonyms and Antonyms) of alphabet 'F' - 10 MCQs
+            // Synonyms (5 questions)
+            {
+                type: 'vocabulary_synonym',
+                question: "What is a synonym for 'Fabricate'?",
+                options: ["To dismantle or take apart", "To construct or invent something", "To deny or reject a claim", "To observe carefully without action"],
+                answer: "To construct or invent something",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'vocabulary_synonym',
+                question: "Which word is a synonym for 'Facile'?",
+                options: ["Demanding and requiring great effort", "Difficult to understand or perform", "Effortless and easily achieved", "Complex and multifaceted in nature"],
+                answer: "Effortless and easily achieved",
+                difficulty_balance: [0, 0, 1, 0]
+            },
+            {
+                type: 'vocabulary_synonym',
+                question: "What word means the same as 'Fiasco'?",
+                options: ["A resounding triumph or victory", "A complete and utter failure", "A moderate success with minor issues", "An unexpected but positive outcome"],
+                answer: "A complete and utter failure",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'vocabulary_synonym',
+                question: "Choose the synonym for 'Fervent'.",
+                options: ["Indifferent or apathetic in feeling", "Lackluster and unenthusiastic", "Passionate and intensely emotional", "Calm and composed in demeanor"],
+                answer: "Passionate and intensely emotional",
+                difficulty_balance: [0, 0, 1, 0]
+            },
+            {
+                type: 'vocabulary_synonym',
+                question: "Which word is a synonym for 'Furtive'?",
+                options: ["Open and easily visible to all", "Done secretly or sneakily", "Direct and straightforward in approach", "Loud and attention-seeking actions"],
+                answer: "Done secretly or sneakily",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            // Antonyms (5 questions)
+            {
+                type: 'vocabulary_antonym',
+                question: "What is the antonym for 'Fickle'?",
+                options: ["Changeable and unpredictable", "Reliable and constant", "Wavering and indecisive", "Capricious and unstable in nature"],
+                answer: "Reliable and constant",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'vocabulary_antonym',
+                question: "Which word is an antonym for 'Fragile'?",
+                options: ["Delicate and easily broken", "Sturdy and robust", "Vulnerable to damage", "Brittle and susceptible to cracks"],
+                answer: "Sturdy and robust",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'vocabulary_antonym',
+                question: "What is the opposite of 'Foul'?",
+                options: ["Disgusting and unpleasant to the senses", "Clean and pleasant", "Repulsive and offensive in smell", "Gross and highly objectionable"],
+                answer: "Clean and pleasant",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'vocabulary_antonym',
+                question: "Choose the antonym for 'Frugal'.",
+                options: ["Wasteful and extravagant", "Economical and thrifty", "Prudent in spending habits", "Careful with resources and money"],
+                answer: "Wasteful and extravagant",
+                difficulty_balance: [1, 0, 0, 0]
+            },
+            {
+                type: 'vocabulary_antonym',
+                question: "Which word is an antonym for 'Futile'?",
+                options: ["Useless and ineffective results", "Productive and successful", "Pointless and without purpose", "Ineffectual and bringing no change"],
+                answer: "Productive and successful",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+
+            // 2. Idioms of alphabet 'C' - 10 MCQs
+            {
+                type: 'idiom',
+                question: "What does 'Cast in Stone' mean?",
+                options: ["To engrave something permanently on a rock surface", "Something that is fixed and cannot be changed", "To create a sculpture using a stone mold", "To establish a historical monument using strong materials"],
+                answer: "Something that is fixed and cannot be changed",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'idiom',
+                question: "If someone 'Gets Cold Feet', what does it mean?",
+                options: ["Their feet are literally cold and need warmth", "They suddenly become too afraid to do something", "They are preparing for a long journey in the snow", "They have a medical condition affecting their circulation"],
+                answer: "They suddenly become too afraid to do something",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'idiom',
+                question: "What does 'Cost an Arm and a Leg' imply?",
+                options: ["It requires a significant physical effort to obtain something", "It is extremely expensive", "It means you have to trade limbs for an item", "It signifies a small, manageable cost for an ordinary item"],
+                answer: "It is extremely expensive",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'idiom',
+                question: "What does 'Cry Over Spilt Milk' mean?",
+                options: ["To accidentally spill milk and feel remorse about it", "To express regret about something that cannot be changed", "To clean up a mess made by a spilled drink", "To avoid spilling any liquids in the future"],
+                answer: "To express regret about something that cannot be changed",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'idiom',
+                question: "What is the meaning of 'Curiosity Killed the Cat'?",
+                options: ["Cats are naturally curious animals that explore new things", "Asking too many questions can lead to trouble or danger", "It refers to a feline's ability to survive difficult situations", "Being cautious and avoiding all forms of exploration"],
+                answer: "Asking too many questions can lead to trouble or danger",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'idiom',
+                question: "If you 'Cut to the Chase', what are you doing?",
+                options: ["Physically chasing someone across a field or park", "Getting directly to the main point without delay", "Cutting a scene out of a movie during editing", "Avoiding the subject and talking about irrelevant things"],
+                answer: "Getting directly to the main point without delay",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'idiom',
+                question: "What does 'Cut Corners' signify?",
+                options: ["To literally cut the corners off a piece of paper", "To do something in the easiest or cheapest way, often poorly", "To take a shortcut through a neighborhood street", "To meticulously complete a task with great attention to detail"],
+                answer: "To do something in the easiest or cheapest way, often poorly",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'idiom',
+                question: "What does 'Can’t Hold a Candle To' mean?",
+                options: ["Unable to carry a lit candle without dropping it", "To be significantly inferior or incomparable to something else", "To be so bright that no candle can match it", "To be skilled at performing tasks in the dark"],
+                answer: "To be significantly inferior or incomparable to something else",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'idiom',
+                question: "If someone is 'Cool as a Cucumber', how are they?",
+                options: ["Feeling cold and needing a warm blanket", "Extremely calm and composed, especially in stressful situations", "Possessing a chilled and refreshing personality", "Someone who enjoys eating cold vegetables"],
+                answer: "Extremely calm and composed, especially in stressful situations",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'idiom',
+                question: "What does 'Cross That Bridge When You Come to It' mean?",
+                options: ["To deal with a problem only when it actually arises", "To build a bridge over a river before crossing it", "To avoid thinking about future problems until the last moment", "To carefully plan every single step of a journey"],
+                answer: "To deal with a problem only when it actually arises",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+
+            // 3. Punctuations - 10 MCQs
+            {
+                type: 'punctuation',
+                question: "Which punctuation mark is used to indicate a pause or a break in a sentence, often separating clauses or items in a list?",
+                options: [". (Period)", "? (Question Mark)", ", (Comma)", "! (Exclamation Mark)"],
+                answer: ", (Comma)",
+                difficulty_balance: [0, 0, 1, 0]
+            },
+            {
+                type: 'punctuation',
+                question: "Which punctuation mark is used at the end of a declarative sentence or a command?",
+                options: ["! (Exclamation Mark)", "? (Question Mark)", ". (Period)", ": (Colon)"],
+                answer: ". (Period)",
+                difficulty_balance: [0, 0, 1, 0]
+            },
+            {
+                type: 'punctuation',
+                question: "Which punctuation mark is used to introduce a list, an explanation, or a quotation?",
+                options: ["; (Semicolon)", ", (Comma)", "- (Dash)", ": (Colon)"],
+                answer: ": (Colon)",
+                difficulty_balance: [0, 0, 0, 1]
+            },
+            {
+                type: 'punctuation',
+                question: "Which punctuation mark indicates strong feelings or high emphasis at the end of a sentence?",
+                options: [". (Period)", "! (Exclamation Mark)", ", (Comma)", "; (Semicolon)"],
+                answer: "! (Exclamation Mark)",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'punctuation',
+                question: "Which punctuation mark is used to join two independent clauses that are closely related in meaning, without using a coordinating conjunction?",
+                options: [". (Period)", ", (Comma)", "; (Semicolon)", ": (Colon)"],
+                answer: "; (Semicolon)",
+                difficulty_balance: [0, 0, 1, 0]
+            },
+            {
+                type: 'punctuation',
+                question: "Which punctuation mark is used to show possession or to indicate omitted letters in a contraction?",
+                options: ["- (Hyphen)", "~ (Tilde)", "* (Asterisk)", "' (Apostrophe)"],
+                answer: "' (Apostrophe)",
+                difficulty_balance: [0, 0, 0, 1]
+            },
+            {
+                type: 'punctuation',
+                question: "Which punctuation mark is used to enclose direct quotations or to indicate titles of short works?",
+                options: ["( ) (Parentheses)", "[ ] (Brackets)", "\" \" (Quotation Marks)", "< > (Angle Brackets)"],
+                answer: "\" \" (Quotation Marks)",
+                difficulty_balance: [0, 0, 1, 0]
+            },
+            {
+                type: 'punctuation',
+                question: "Which punctuation mark is used to set off extra information or an explanation that is not essential to the main meaning of the sentence?",
+                options: ["- (Dash)", "/ (Slash)", "( ) (Parentheses)", "= (Equals Sign)"],
+                answer: "( ) (Parentheses)",
+                difficulty_balance: [0, 0, 1, 0]
+            },
+            {
+                type: 'punctuation',
+                question: "Which punctuation mark is used to separate items in a list, especially if the items themselves contain commas?",
+                options: [", (Comma)", "; (Semicolon)", ". (Period)", "! (Exclamation Mark)"],
+                answer: "; (Semicolon)",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'punctuation',
+                question: "Which punctuation mark is used at the end of a direct question?",
+                options: ["! (Exclamation Mark)", ", (Comma)", ". (Period)", "? (Question Mark)"],
+                answer: "? (Question Mark)",
+                difficulty_balance: [0, 0, 0, 1]
+            },
+
+            // 4. Active and Passive Voice - 10 Mcqs
+            {
+                type: 'active_passive',
+                question: "Change the sentence to passive voice: 'The cat chased the mouse.'",
+                options: ["The mouse chased the cat.", "The mouse was chased by the cat.", "The cat was chased by the mouse.", "The mouse is chasing the cat."],
+                answer: "The mouse was chased by the cat.",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'active_passive',
+                question: "Change the sentence to active voice: 'The book was written by a famous author.'",
+                options: ["A famous author wrote the book.", "The book wrote a famous author.", "The book has been written by a famous author.", "A famous author will write the book."],
+                answer: "A famous author wrote the book.",
+                difficulty_balance: [1, 0, 0, 0]
+            },
+            {
+                type: 'active_passive',
+                question: "Change the sentence to passive voice: 'She will clean the entire house.'",
+                options: ["The entire house will be cleaned by her.", "She cleaned the entire house.", "The entire house is cleaned by her.", "The entire house was cleaned by her."],
+                answer: "The entire house will be cleaned by her.",
+                difficulty_balance: [1, 0, 0, 0]
+            },
+            {
+                type: 'active_passive',
+                question: "Change the sentence to active voice: 'The ball was hit by the boy.'",
+                options: ["The ball hit the boy.", "The boy hit the ball.", "The boy was hitting the ball.", "The ball is being hit by the boy."],
+                answer: "The boy hit the ball.",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'active_passive',
+                question: "Change the sentence to passive voice: 'They are building a new bridge.'",
+                options: ["A new bridge is being built by them.", "They built a new bridge.", "A new bridge was built by them.", "They have built a new bridge."],
+                answer: "A new bridge is being built by them.",
+                difficulty_balance: [1, 0, 0, 0]
+            },
+            {
+                type: 'active_passive',
+                question: "Change the sentence to active voice: 'The report has been completed by the team.'",
+                options: ["The team completed the report.", "The team has completed the report.", "The report completed the team.", "The team is completing the report."],
+                answer: "The team has completed the report.",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'active_passive',
+                question: "Change the sentence to passive voice: 'He reads books every day.'",
+                options: ["Books are read by him every day.", "Books were read by him every day.", "He is reading books every day.", "Books have been read by him every day."],
+                answer: "Books are read by him every day.",
+                difficulty_balance: [1, 0, 0, 0]
+            },
+            {
+                type: 'active_passive',
+                question: "Change the sentence to active voice: 'The song was sung beautifully by her.'",
+                options: ["She sung the song beautifully.", "She sings the song beautifully.", "She sang the song beautifully.", "The song sang her beautifully."],
+                answer: "She sang the song beautifully.",
+                difficulty_balance: [0, 0, 1, 0]
+            },
+            {
+                type: 'active_passive',
+                question: "Change the sentence to passive voice: 'The chef cooked a delicious meal.'",
+                options: ["A delicious meal was cooked by the chef.", "The chef was cooking a delicious meal.", "A delicious meal is cooked by the chef.", "The chef has cooked a delicious meal."],
+                answer: "A delicious meal was cooked by the chef.",
+                difficulty_balance: [1, 0, 0, 0]
+            },
+            {
+                type: 'active_passive',
+                question: "Change the sentence to active voice: 'The letter will be mailed by him tomorrow.'",
+                options: ["He will mail the letter tomorrow.", "The letter mails him tomorrow.", "He mailed the letter tomorrow.", "He is mailing the letter tomorrow."],
+                answer: "He will mail the letter tomorrow.",
+                difficulty_balance: [1, 0, 0, 0]
+            },
+
+            // 5. Direct and Indirect Speech - 10 Mcqs
+            {
+                type: 'direct_indirect',
+                question: "Change to indirect speech: She said, 'I am learning English.'",
+                options: ["She said that she learns English.", "She said that she was learning English.", "She said she is learning English.", "She says that she was learning English."],
+                answer: "She said that she was learning English.",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'direct_indirect',
+                question: "Change to direct speech: He said that he had finished his work.",
+                options: ["He said, 'I have finished my work.'", "He said, 'I finished my work.'", "He said, 'I will finish my work.'", "He said, 'I had finished my work.'"],
+                answer: "He said, 'I have finished my work.'",
+                difficulty_balance: [1, 0, 0, 0]
+            },
+            {
+                type: 'direct_indirect',
+                question: "Change to indirect speech: John said, 'I went to the cinema yesterday.'",
+                options: ["John said that he went to the cinema yesterday.", "John said that he had gone to the cinema the day before.", "John said he would go to the cinema.", "John says that he went to the cinema yesterday."],
+                answer: "John said that he had gone to the cinema the day before.",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'direct_indirect',
+                question: "Change to direct speech: She asked me if I could help her.",
+                options: ["She asked me, 'Can you help me?'", "She asked me, 'Did you help her?'", "She asked me, 'Will you help me?'", "She asked me, 'You can help her?'"],
+                answer: "She asked me, 'Can you help me?'",
+                difficulty_balance: [1, 0, 0, 0]
+            },
+            {
+                type: 'direct_indirect',
+                question: "Change to indirect speech: He said, 'I will be there tomorrow.'",
+                options: ["He said that he would be there tomorrow.", "He said that he would be there the next day.", "He said he will be there the next day.", "He said that I would be there tomorrow."],
+                answer: "He said that he would be there the next day.",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'direct_indirect',
+                question: "Change to direct speech: The teacher told the students to open their books.",
+                options: ["The teacher said, 'Open your books.'", "The teacher said, 'You should open your books.'", "The teacher asked, 'Open their books.'", "The teacher said, 'They opened their books.'"],
+                answer: "The teacher said, 'Open your books.'",
+                difficulty_balance: [1, 0, 0, 0]
+            },
+            {
+                type: 'direct_indirect',
+                question: "Change to indirect speech: Mary said, 'I have never seen such a beautiful sight.'",
+                options: ["Mary said that she had never seen such a beautiful sight.", "Mary said that she never saw such a beautiful sight.", "Mary says that she has never seen such a beautiful sight.", "Mary said she will never see such a beautiful sight."],
+                answer: "Mary said that she had never seen such a beautiful sight.",
+                difficulty_balance: [1, 0, 0, 0]
+            },
+            {
+                type: 'direct_indirect',
+                question: "Change to direct speech: He inquired if I liked the movie.",
+                options: ["He asked me, 'Did you like the movie?'", "He asked me, 'Do you like the movie?'", "He asked me, 'Will you like the movie?'", "He asked me, 'You liked the movie?'"],
+                answer: "He asked me, 'Do you like the movie?'",
+                difficulty_balance: [0, 1, 0, 0]
+            },
+            {
+                type: 'direct_indirect',
+                question: "Change to indirect speech: The doctor advised the patient, 'Stop smoking.'",
+                options: ["The doctor advised the patient to stop smoking.", "The doctor advised the patient that he should stop smoking.", "The doctor told the patient to stop smoking.", "The doctor asked the patient to stop smoking."],
+                answer: "The doctor advised the patient to stop smoking.",
+                difficulty_balance: [1, 0, 0, 0]
+            },
+            {
+                type: 'direct_indirect',
+                question: "Change to direct speech: She complained that she was feeling ill.",
+                options: ["She complained, 'I am feeling ill.'", "She complained, 'I feel ill.'", "She complained, 'I was feeling ill.'", "She complained, 'She is feeling ill.'"],
+                answer: "She complained, 'I am feeling ill.'",
+                difficulty_balance: [1, 0, 0, 0]
+            }
+        ];
+
+        // Shuffle the quizData to randomize question order
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        shuffleArray(quizData); // Shuffle all questions
+
+        // Function to shuffle options (within a question)
+        function shuffleOptions(options, correctAnswer) {
+            let shuffledOptions = [...options];
+            for (let i = shuffledOptions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
+            }
+            return shuffledOptions;
+        }
+
+        function attemptLogin() {
+            const id = document.getElementById('quizId').value;
+            const password = document.getElementById('quizPassword').value;
+            const loginError = document.getElementById('login-error');
+
+            if (id === quizId && password === quizPassword) {
+                loginError.classList.add('hidden');
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('name-screen').style.display = 'block';
+            } else {
+                loginError.classList.remove('hidden');
+                showMessageBox("Invalid ID or Password. Please try again.");
+            }
+        }
+
+        function startQuiz() {
+            userName = document.getElementById('candidateName').value.trim();
+            if (userName === "") {
+                showMessageBox("Please enter your name to start the quiz.");
+                return;
+            }
+
+            if (quizStarted) {
+                showMessageBox("The quiz has already started and cannot be restarted.");
+                return;
+            }
+
+            quizStarted = true;
+            document.getElementById('name-screen').style.display = 'none';
+            document.getElementById('quiz-screen').style.display = 'block';
+            document.getElementById('display-name').innerText = userName; // Set candidate name on result screen
+
+            loadQuestion();
+            startTimer();
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex < quizData.length) {
+                questionAnswered = false; // Reset for new question
+                const question = quizData[currentQuestionIndex];
+                document.getElementById('question-number').innerText = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
+                document.getElementById('question-text').innerText = question.question;
+                document.getElementById('next-button').style.display = 'none'; // Hide next button until answered
+
+                const optionsContainer = document.getElementById('options-container');
+                optionsContainer.innerHTML = ''; // Clear previous options
+
+                const shuffledOptions = shuffleOptions(question.options, question.answer);
+
+                shuffledOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.classList.add('option-button');
+                    button.innerText = option;
+                    button.onclick = () => selectOption(button, option, question.answer);
+                    optionsContainer.appendChild(button);
+                });
+            } else {
+                endQuiz();
+            }
+        }
+
+        function selectOption(selectedButton, selectedAnswer, correctAnswer) {
+            if (questionAnswered) return; // Prevent multiple clicks on options
+
+            questionAnswered = true;
+            const options = document.querySelectorAll('.option-button');
+            options.forEach(button => {
+                if (button.innerText === correctAnswer) {
+                    button.classList.add('correct');
+                } else {
+                    button.classList.add('incorrect');
+                }
+                button.style.pointerEvents = 'none'; // Disable all options after selection
+            });
+
+            if (selectedAnswer === correctAnswer) {
+                score++;
+                document.getElementById('score-display').innerText = `Score: ${score}/${quizData.length}`;
+            } else {
+                selectedButton.classList.remove('incorrect'); // Ensure correct color for wrong
+                selectedButton.classList.add('incorrect');
+            }
+            document.getElementById('next-button').style.display = 'block'; // Show next button
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                endQuiz();
+            }
+        }
+
+        function startTimer() {
+            timer = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer-display').innerText = `Time Left: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    endQuiz();
+                }
+            }, 1000);
+        }
+
+        function endQuiz() {
+            clearInterval(timer);
+            document.getElementById('quiz-screen').style.display = 'none';
+            document.getElementById('result-screen').style.display = 'block';
+            document.getElementById('final-score').innerText = `Your Score: ${score}/${quizData.length}`;
+            document.getElementById('display-name').innerText = userName;
+            showMessageBox(`Quiz finished! Your score is ${score} out of ${quizData.length}.`);
+        }
+    </script>
+</body>
+</html>
