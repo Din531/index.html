@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sunday Quiz Special for Precis Paper</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #e0f2fe; /* Light blue theme */
+            background-color: #e0f2f7; /* Light blue theme */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -18,1356 +18,167 @@
             padding: 20px;
             box-sizing: border-box;
         }
-        .quiz-container {
+        #quiz-container {
             background-color: #ffffff;
             border-radius: 15px;
-            padding: 30px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 30px;
             width: 100%;
             max-width: 600px;
             text-align: center;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            box-sizing: border-box;
+            gap: 20px;
         }
-        .header {
-            width: 100%;
-            margin-bottom: 20px;
+        .header-title {
+            font-weight: 700;
+            font-size: 1.875rem; /* text-3xl */
+            line-height: 2.25rem; /* leading-9 */
         }
-        .title {
-            font-size: 2.25rem; /* text-4xl */
-            font-weight: bold;
-            color: #1e3a8a; /* Deep blue */
-            margin-bottom: 10px;
-        }
-        .contact {
-            font-size: 1.25rem; /* text-xl */
-            font-weight: bold;
-            color: #fbbf24; /* Yellow */
-        }
-        .button {
-            background-color: #2563eb; /* Blue */
-            color: white;
-            padding: 12px 25px;
-            border-radius: 10px;
-            cursor: pointer;
+        .header-contact {
+            font-weight: 700;
             font-size: 1.125rem; /* text-lg */
-            font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            border: none;
-            margin-top: 20px;
-            outline: none;
+            line-height: 1.75rem; /* leading-7 */
         }
-        .button:hover {
-            background-color: #1d4ed8;
-            transform: translateY(-2px);
-        }
-        .button:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        .input-field {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 2px solid #a7d9f7; /* Light blue border */
+        .blue-button {
+            background-color: #3b82f6; /* Blue */
+            color: white;
+            padding: 12px 24px;
             border-radius: 8px;
-            font-size: 1rem;
-            box-sizing: border-box;
-            outline: none;
-            transition: border-color 0.3s ease;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            border: none;
         }
-        .input-field:focus {
-            border-color: #2563eb; /* Blue on focus */
+        .blue-button:hover {
+            background-color: #2563eb; /* Darker blue */
         }
-        .quiz-section {
-            display: none;
-            width: 100%;
+        .option-button {
+            background-color: #e0f7fa; /* Light cyan */
+            color: #212121;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1px solid #b2ebf2;
             text-align: left;
-        }
-        .question-text {
-            font-size: 1.25rem; /* text-xl */
-            margin-bottom: 20px;
-            font-weight: 500;
-            color: #333;
-        }
-        .options-container button {
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
             display: block;
             width: 100%;
-            padding: 15px;
-            margin-bottom: 12px;
-            background-color: #e3f2fd; /* Very light blue for options */
-            border: 2px solid #a7d9f7;
-            border-radius: 10px;
-            text-align: left;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
-            color: #333;
-            outline: none;
-            white-space: normal; /* Allow text to wrap */
-            word-wrap: break-word; /* Break long words */
         }
-        .options-container button:hover:not(.correct):not(.wrong) {
-            background-color: #d1ecff;
-            border-color: #60a5fa;
-            transform: translateY(-1px);
+        .option-button:hover:not(.correct):not(.wrong) {
+            background-color: #b2ebf2;
+            border-color: #80deea;
         }
-        .options-container button.correct {
-            background-color: #dcfce7; /* Light green */
-            border-color: #22c55e; /* Green */
-            color: #16a34a; /* Darker green text */
-            font-weight: bold;
+        .option-button.correct {
+            background-color: #a7f3d0; /* Green 300 */
+            border-color: #34d399; /* Green 400 */
+            color: #065f46;
         }
-        .options-container button.wrong {
-            background-color: #fee2e2; /* Light red */
-            border-color: #ef4444; /* Red */
-            color: #dc2626; /* Darker red text */
-            font-weight: bold;
+        .option-button.wrong {
+            background-color: #fecaca; /* Red 300 */
+            border-color: #ef4444; /* Red 400 */
+            color: #991b1b;
         }
-        .quiz-navigation {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        input[type="text"], input[type="password"] {
             width: 100%;
-            margin-top: 25px;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border: 1px solid #e0f2f7;
+            border-radius: 8px;
+            box-sizing: border-box;
+            background-color: #f8fafc;
         }
-        .quiz-navigation #nextButton {
-            background-color: #2563eb;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            border: none;
-            outline: none;
-            display: none; /* Hidden until an answer is selected */
+        .timer {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600;
+            color: #0284c7; /* Sky 600 */
         }
-        .quiz-navigation #nextButton:hover {
-            background-color: #1d4ed8;
-            transform: translateY(-2px);
-        }
-        .quiz-navigation #nextButton:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        .score-section {
+        .hidden {
             display: none;
-            width: 100%;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #1e3a8a;
-            margin-top: 20px;
         }
-        .timer-display {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #ef4444; /* Red for timer */
-            margin-bottom: 15px;
-        }
-        .progress-display {
-            font-size: 1rem;
-            color: #60a5fa; /* Blue for progress */
-            margin-bottom: 15px;
-        }
-        @media (max-width: 768px) {
-            .quiz-container {
-                padding: 20px;
-                margin: 10px;
-            }
-            .title {
-                font-size: 1.75rem; /* text-3xl for smaller screens */
-            }
-            .contact {
-                font-size: 1rem; /* text-lg for smaller screens */
-            }
-            .question-text {
-                font-size: 1rem;
-            }
-            .options-container button {
-                padding: 12px;
-                font-size: 0.95rem;
-            }
+        .progress-text {
+            font-size: 0.875rem; /* text-sm */
+            color: #64748b; /* Slate 500 */
         }
     </style>
 </head>
-<body>
-    <div class="quiz-container">
-        <div class="header">
-            <div class="title">
-                Sunday Quiz Special for Precis Paper
-            </div>
-            <div class="contact">
-                CONTACT: 03188185185
-            </div>
-        </div>
+<body class="bg-blue-50">
+    <div id="quiz-container" class="max-w-md mx-auto p-6 bg-white rounded-xl shadow-lg">
+        <h1 class="header-title text-blue-600">Sunday Quiz Special for Precis Paper</h1>
+        <p class="header-contact text-yellow-600">CONTACT: 03188185185</p>
 
         <!-- Login Section -->
-        <div id="loginSection" class="quiz-section" style="display: block;">
-            <input type="text" id="loginId" class="input-field" placeholder="Enter ID">
-            <input type="password" id="loginPassword" class="input-field" placeholder="Enter Password">
-            <button id="loginButton" class="button">Login</button>
-            <p id="loginMessage" class="text-red-500 mt-2"></p>
+        <div id="login-section">
+            <h2 class="text-xl font-semibold mb-4 text-blue-700">Login</h2>
+            <input type="text" id="id-input" placeholder="Enter ID" class="mb-3 p-2 border rounded-md">
+            <input type="password" id="password-input" placeholder="Enter Password" class="mb-4 p-2 border rounded-md">
+            <button id="login-button" class="blue-button w-full">Login</button>
+            <p id="login-error" class="text-red-500 mt-2 hidden">Invalid ID or Password.</p>
         </div>
 
         <!-- Name Entry Section -->
-        <div id="nameEntrySection" class="quiz-section">
-            <input type="text" id="candidateName" class="input-field" placeholder="Enter Your Name">
-            <button id="startButton" class="button">Start Quiz</button>
+        <div id="name-entry-section" class="hidden">
+            <h2 class="text-xl font-semibold mb-4 text-blue-700">Enter Your Name</h2>
+            <input type="text" id="name-input" placeholder="Your Name" class="mb-4 p-2 border rounded-md">
+            <button id="start-quiz-button" class="blue-button w-full">Start Quiz</button>
+            <p id="name-error" class="text-red-500 mt-2 hidden">Please enter your name.</p>
         </div>
 
         <!-- Quiz Section -->
-        <div id="quizSection" class="quiz-section">
-            <div class="timer-display" id="timer">Time Left: 15:00</div>
-            <div class="progress-display" id="progress">Question 1 of 50 (Remaining: 49)</div>
-            <div class="question-text" id="question"></div>
-            <div class="options-container" id="options"></div>
-            <div class="quiz-navigation">
-                <button id="nextButton" class="button">Next</button>
+        <div id="quiz-section" class="hidden">
+            <div class="flex justify-between items-center mb-4">
+                <span id="question-number" class="progress-text"></span>
+                <span id="timer" class="timer">15:00</span>
             </div>
+            <p id="question-text" class="text-lg font-medium mb-6 text-gray-800"></p>
+            <div id="options-container" class="flex flex-col gap-3 mb-6">
+                <!-- Options will be dynamically loaded here -->
+            </div>
+            <button id="next-button" class="blue-button w-full hidden">Next</button>
         </div>
 
         <!-- Result Section -->
-        <div id="resultSection" class="score-section">
-            <p>Quiz Finished!</p>
-            <p>Candidate: <span id="finalCandidateName"></span></p>
-            <p>Your Score: <span id="scoreDisplay">0</span> / 50</p>
-            <p>Time Taken: <span id="timeTakenDisplay"></span></p>
+        <div id="result-section" class="hidden">
+            <h2 class="text-2xl font-bold mb-4 text-blue-700">Quiz Complete!</h2>
+            <p class="text-lg mb-2 text-gray-700">Candidate: <span id="final-candidate-name" class="font-semibold text-blue-600"></span></p>
+            <p class="text-2xl font-bold text-gray-800">Your Score: <span id="final-score" class="text-green-600"></span> / 50</p>
+            <p class="text-md text-gray-600 mt-4">You cannot restart the quiz once completed.</p>
         </div>
     </div>
 
     <script>
-        // Global Quiz Variables
+        const loginSection = document.getElementById('login-section');
+        const nameEntrySection = document.getElementById('name-entry-section');
+        const quizSection = document.getElementById('quiz-section');
+        const resultSection = document.getElementById('result-section');
+
+        const idInput = document.getElementById('id-input');
+        const passwordInput = document.getElementById('password-input');
+        const loginButton = document.getElementById('login-button');
+        const loginError = document.getElementById('login-error');
+
+        const nameInput = document.getElementById('name-input');
+        const startQuizButton = document.getElementById('start-quiz-button');
+        const nameError = document.getElementById('name-error');
+
+        const questionNumberSpan = document.getElementById('question-number');
+        const timerSpan = document.getElementById('timer');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const nextButton = document.getElementById('next-button');
+
+        const finalCandidateName = document.getElementById('final-candidate-name');
+        const finalScoreSpan = document.getElementById('final-score');
+
+        let quizData = [];
         let currentQuestionIndex = 0;
         let score = 0;
-        let timer;
+        let userName = '';
         let timeLeft = 15 * 60; // 15 minutes in seconds
-        let quizStartedTime;
-        let quizEndedTime;
-        let quizAttempts = {}; // To prevent restarting after completion
+        let timerInterval;
+        let quizStarted = false;
 
-        const quizQuestions = [
-            // 1. Vocabulary (Synonyms and Antonyms) of alphabet 'F' - 10 MCQs
-            // Synonyms of F words (5 MCQs)
-            {
-                type: "vocabulary",
-                category: "Synonym of F",
-                question: "What is a synonym for 'fastidious'?",
-                options: [
-                    "Careless",
-                    "Easygoing",
-                    "Meticulous",
-                    "Sloppy"
-                ],
-                correctAnswer: "Meticulous",
-                explanation: "Fastidious means very attentive to and concerned about accuracy and detail, similar to meticulous."
-            },
-            {
-                type: "vocabulary",
-                category: "Synonym of F",
-                question: "Choose the synonym for 'fathom'.",
-                options: [
-                    "Misunderstand",
-                    "Comprehend",
-                    "Guess",
-                    "Overlook"
-                ],
-                correctAnswer: "Comprehend",
-                explanation: "To fathom means to understand a difficult problem or an enigmatic person after much thought, or to comprehend."
-            },
-            {
-                type: "vocabulary",
-                category: "Synonym of F",
-                question: "Which word is a synonym for 'frugal'?",
-                options: [
-                    "Extravagant",
-                    "Wasteful",
-                    "Thrifty",
-                    "Lavish"
-                ],
-                correctAnswer: "Thrifty",
-                explanation: "Frugal means sparing or economical with regard to money or food, or thrifty."
-            },
-            {
-                type: "vocabulary",
-                category: "Synonym of F",
-                question: "Identify the synonym for 'furtive'.",
-                options: [
-                    "Open",
-                    "Obvious",
-                    "Secretive",
-                    "Blatant"
-                ],
-                correctAnswer: "Secretive",
-                explanation: "Furtive means attempting to avoid notice or attention, typically because of guilt or a belief that discovery would lead to trouble; secretive."
-            },
-            {
-                type: "vocabulary",
-                category: "Synonym of F",
-                question: "What is a synonym for 'flamboyant'?",
-                options: [
-                    "Subdued",
-                    "Modest",
-                    "Ostentatious",
-                    "Reserved"
-                ],
-                correctAnswer: "Ostentatious",
-                explanation: "Flamboyant means tending to attract attention because of their exuberance, confidence, and stylishness, similar to ostentatious."
-            },
-            // Antonyms of F words (5 MCQs)
-            {
-                type: "vocabulary",
-                category: "Antonym of F",
-                question: "What is an antonym for 'fallacious'?",
-                options: [
-                    "Deceptive",
-                    "Misleading",
-                    "Valid",
-                    "Erroneous"
-                ],
-                correctAnswer: "Valid",
-                explanation: "Fallacious means based on a mistaken belief, so its antonym is valid."
-            },
-            {
-                type: "vocabulary",
-                category: "Antonym of F",
-                question: "Choose the antonym for 'fickle'.",
-                options: [
-                    "Constant",
-                    "Capricious",
-                    "Changeable",
-                    "Unpredictable"
-                ],
-                correctAnswer: "Constant",
-                explanation: "Fickle means changing frequently, especially as regards one's loyalties, interests, or affection, so its antonym is constant."
-            },
-            {
-                type: "vocabulary",
-                category: "Antonym of F",
-                question: "Which word is an antonym for 'flourish'?",
-                options: [
-                    "Thrive",
-                    "Prosper",
-                    "Wither",
-                    "Blossom"
-                ],
-                correctAnswer: "Wither",
-                explanation: "To flourish means to grow or develop in a healthy or vigorous way, especially as the result of a particularly favorable environment, so its antonym is wither."
-            },
-            {
-                type: "vocabulary",
-                category: "Antonym of F",
-                question: "Identify the antonym for 'frank'.",
-                options: [
-                    "Candid",
-                    "Open",
-                    "Reserved",
-                    "Direct"
-                ],
-                correctAnswer: "Reserved",
-                explanation: "Frank means open, honest, and direct in speech or writing, so its antonym is reserved."
-            },
-            {
-                type: "vocabulary",
-                category: "Antonym of F",
-                question: "What is an antonym for 'futile'?",
-                options: [
-                    "Useless",
-                    "Pointless",
-                    "Effective",
-                    "Ineffective"
-                ],
-                correctAnswer: "Effective",
-                explanation: "Futile means incapable of producing any useful result, so its antonym is effective."
-            },
-
-            // 2. Idioms of alphabet 'C' - 10 MCQs (Generating new ones as 'F' was provided)
-            {
-                type: "idiom",
-                category: "Idioms of C",
-                question: "What does 'Call it a day' mean?",
-                options: [
-                    "To start a new task",
-                    "To postpone work",
-                    "To stop working on something",
-                    "To work continuously"
-                ],
-                correctAnswer: "To stop working on something",
-                explanation: "To 'call it a day' means to decide or announce that one has finished work for the day."
-            },
-            {
-                type: "idiom",
-                category: "Idioms of C",
-                question: "If something is 'Cheap as chips', what does it mean?",
-                options: [
-                    "It is expensive",
-                    "It is very cheap",
-                    "It is of low quality",
-                    "It is a good investment"
-                ],
-                correctAnswer: "It is very cheap",
-                explanation: "If something is 'cheap as chips', it is very inexpensive."
-            },
-            {
-                type: "idiom",
-                category: "Idioms of C",
-                question: "What is the meaning of 'Cry over spilled milk'?",
-                options: [
-                    "To be happy about a small success",
-                    "To regret something that cannot be changed",
-                    "To complain loudly",
-                    "To be proud of one's achievements"
-                ],
-                correctAnswer: "To regret something that cannot be changed",
-                explanation: "To 'cry over spilled milk' means to dwell on past misfortunes that cannot be undone."
-            },
-            {
-                type: "idiom",
-                category: "Idioms of C",
-                question: "What does 'Cut corners' imply?",
-                options: [
-                    "To do something very thoroughly",
-                    "To do something in the easiest or cheapest way",
-                    "To take a shortcut in a maze",
-                    "To be innovative"
-                ],
-                correctAnswer: "To do something in the easiest or cheapest way",
-                explanation: "To 'cut corners' means to do something in the fastest, easiest, or cheapest way, especially by ignoring safety or quality."
-            },
-            {
-                type: "idiom",
-                category: "Idioms of C",
-                question: "If you 'Catch 22', what kind of situation are you in?",
-                options: [
-                    "A win-win situation",
-                    "A difficult situation with no easy escape",
-                    "A fortunate turn of events",
-                    "A confusing game"
-                ],
-                correctAnswer: "A difficult situation with no easy escape",
-                explanation: "A 'Catch 22' is a paradoxical situation where one needs something that can only be had by not needing it."
-            },
-            {
-                type: "idiom",
-                category: "Idioms of C",
-                question: "What does it mean to 'Change one's tune'?",
-                options: [
-                    "To sing a different song",
-                    "To alter one's opinion or attitude",
-                    "To play a new instrument",
-                    "To listen carefully"
-                ],
-                correctAnswer: "To alter one's opinion or attitude",
-                explanation: "To 'change one's tune' means to alter one's opinion or attitude, especially to one that is more favorable to someone else."
-            },
-            {
-                type: "idiom",
-                category: "Idioms of C",
-                question: "If you 'Come hell or high water', what does it mean?",
-                options: [
-                    "You are afraid of challenges",
-                    "You will overcome any obstacle",
-                    "You are waiting for good weather",
-                    "You are easily discouraged"
-                ],
-                correctAnswer: "You will overcome any obstacle",
-                explanation: "'Come hell or high water' means despite any difficulty or obstacle."
-            },
-            {
-                type: "idiom",
-                category: "Idioms of C",
-                question: "What is the meaning of 'Cool as a cucumber'?",
-                options: [
-                    "To be easily excited",
-                    "To be calm and composed, especially in a stressful situation",
-                    "To feel cold",
-                    "To be very friendly"
-                ],
-                correctAnswer: "To be calm and composed, especially in a stressful situation",
-                explanation: "'Cool as a cucumber' means to be very calm and composed, especially in a difficult or stressful situation."
-            },
-            {
-                type: "idiom",
-                category: "Idioms of C",
-                question: "If you 'Cross that bridge when you come to it', what are you doing?",
-                options: [
-                    "Planning every detail in advance",
-                    "Dealing with a problem only when it becomes necessary",
-                    "Avoiding problems entirely",
-                    "Building a new bridge"
-                ],
-                correctAnswer: "Dealing with a problem only when it becomes necessary",
-                explanation: "To 'cross that bridge when you come to it' means to deal with a problem only when it becomes necessary, not before."
-            },
-            {
-                type: "idiom",
-                category: "Idioms of C",
-                question: "What does 'Curiosity killed the cat' imply?",
-                options: [
-                    "Being curious is always good",
-                    "Being too curious can lead to danger or trouble",
-                    "Cats are naturally curious animals",
-                    "Curiosity helps solve mysteries"
-                ],
-                correctAnswer: "Being too curious can lead to danger or trouble",
-                explanation: "'Curiosity killed the cat' is a proverb used to warn about the dangers of unnecessary investigation or experimentation."
-            },
-
-            // 3. Punctuations - 10 MCQs
-            {
-                type: "punctuation",
-                category: "Punctuation",
-                question: "Choose the sentence with correct comma usage:",
-                options: [
-                    "She likes apples, oranges and bananas.",
-                    "She likes apples oranges, and bananas.",
-                    "She likes apples, oranges, and bananas.",
-                    "She likes apples oranges and bananas,"
-                ],
-                correctAnswer: "She likes apples, oranges, and bananas.",
-                explanation: "A comma is used to separate items in a list. The Oxford comma (the comma before 'and' in a list) is generally preferred for clarity."
-            },
-            {
-                type: "punctuation",
-                category: "Punctuation",
-                question: "Which sentence uses the apostrophe correctly for possession?",
-                options: [
-                    "The dog's tail wagged furiously.",
-                    "The dogs' tail wagged furiously.",
-                    "The dog tail's wagged furiously.",
-                    "The dogs tails wagged furiously."
-                ],
-                correctAnswer: "The dog's tail wagged furiously.",
-                explanation: "The apostrophe before 's' ('dog's') indicates singular possession."
-            },
-            {
-                type: "punctuation",
-                category: "Punctuation",
-                question: "Select the sentence with the correct use of a semicolon:",
-                options: [
-                    "I am tired; I will go to bed.",
-                    "I am tired, I will go to bed.",
-                    "I am tired: I will go to bed.",
-                    "I am tired I will go to bed."
-                ],
-                correctAnswer: "I am tired; I will go to bed.",
-                explanation: "A semicolon connects two independent clauses that are closely related in meaning."
-            },
-            {
-                type: "punctuation",
-                category: "Punctuation",
-                question: "Where should a question mark be placed?",
-                options: [
-                    "He asked, 'Are you coming'.",
-                    "He asked, 'Are you coming?'",
-                    "He asked, 'Are you coming!'.",
-                    "He asked, 'Are you coming'."
-                ],
-                correctAnswer: "He asked, 'Are you coming?'",
-                explanation: "A question mark is used at the end of a direct question, even if it's part of a larger sentence."
-            },
-            {
-                type: "punctuation",
-                category: "Punctuation",
-                question: "Identify the correct use of quotation marks for direct speech:",
-                options: [
-                    "She said, 'I am happy'.",
-                    "She said, I am happy.",
-                    "She said 'I am happy.'",
-                    "She said: 'I am happy'."
-                ],
-                correctAnswer: "She said, 'I am happy'.",
-                explanation: "Direct speech is enclosed in quotation marks, and punctuation marks like periods or commas usually go inside the closing quotation mark."
-            },
-            {
-                type: "punctuation",
-                category: "Punctuation",
-                question: "Which sentence correctly uses a colon?",
-                options: [
-                    "I need to buy: milk, bread, and eggs.",
-                    "I need to buy milk, bread, and eggs.",
-                    "I need to buy: milk; bread; and eggs.",
-                    "I need to buy; milk, bread, and eggs."
-                ],
-                correctAnswer: "I need to buy: milk, bread, and eggs.",
-                explanation: "A colon is used to introduce a list after a complete independent clause."
-            },
-            {
-                type: "punctuation",
-                category: "Punctuation",
-                question: "Choose the sentence with the correct hyphen usage:",
-                options: [
-                    "He is a well known author.",
-                    "He is a well-known author.",
-                    "He is a well known-author.",
-                    "He is a well-known-author."
-                ],
-                correctAnswer: "He is a well-known author.",
-                explanation: "A hyphen is used to connect words that function as a single adjective before a noun."
-            },
-            {
-                type: "punctuation",
-                category: "Punctuation",
-                question: "Which option correctly uses an exclamation mark?",
-                options: [
-                    "What a beautiful day.",
-                    "What a beautiful day?",
-                    "What a beautiful day!",
-                    "What a beautiful day;"
-                ],
-                correctAnswer: "What a beautiful day!",
-                explanation: "An exclamation mark is used to express strong emotion or emphasis."
-            },
-            {
-                type: "punctuation",
-                category: "Punctuation",
-                question: "Select the sentence where parentheses are used correctly:",
-                options: [
-                    "The dog (a golden retriever) barked loudly.",
-                    "The dog a golden retriever (barked loudly).",
-                    "The dog a golden retriever barked loudly.",
-                    "(The dog) a golden retriever barked loudly."
-                ],
-                correctAnswer: "The dog (a golden retriever) barked loudly.",
-                explanation: "Parentheses are used to enclose supplementary material or explanations."
-            },
-            {
-                type: "punctuation",
-                category: "Punctuation",
-                question: "In which sentence is an ellipsis (...) used correctly?",
-                options: [
-                    "She started to say... but stopped.",
-                    "She started to say ... but stopped.",
-                    "She started... to say, but stopped.",
-                    "She started to say, '...' but stopped."
-                ],
-                correctAnswer: "She started to say... but stopped.",
-                explanation: "An ellipsis indicates an omission of words from a quoted text or a pause in speech."
-            },
-
-            // 4. Active and Passive Voice - 10 MCQs
-            {
-                type: "voice",
-                category: "Active and Passive Voice",
-                question: "Change to Passive Voice: 'The boy kicked the ball.'",
-                options: [
-                    "The ball was kicked by the boy.",
-                    "The ball kicked the boy.",
-                    "The boy was kicked by the ball.",
-                    "Kicking the ball was done by the boy."
-                ],
-                correctAnswer: "The ball was kicked by the boy.",
-                explanation: "In passive voice, the object of the active sentence becomes the subject, and the verb is in a 'to be' form + past participle."
-            },
-            {
-                type: "voice",
-                category: "Active and Passive Voice",
-                question: "Change to Active Voice: 'The letter was written by her.'",
-                options: [
-                    "The letter wrote her.",
-                    "She wrote the letter.",
-                    "She was writing the letter.",
-                    "Writing the letter was her act."
-                ],
-                correctAnswer: "She wrote the letter.",
-                explanation: "In active voice, the subject performs the action. Here, 'she' performs the action of 'writing'."
-            },
-            {
-                type: "voice",
-                category: "Active and Passive Voice",
-                question: "Change to Passive Voice: 'They are building a new house.'",
-                options: [
-                    "A new house is being built by them.",
-                    "A new house is building them.",
-                    "They are being built by a new house.",
-                    "Building a new house is what they do."
-                ],
-                correctAnswer: "A new house is being built by them.",
-                explanation: "For present continuous active voice, passive voice uses 'is/are being + past participle'."
-            },
-            {
-                type: "voice",
-                category: "Active and Passive Voice",
-                question: "Change to Active Voice: 'The book has been read by many students.'",
-                options: [
-                    "Many students have read the book.",
-                    "The book read many students.",
-                    "Many students had read the book.",
-                    "Reading the book was done by many students."
-                ],
-                correctAnswer: "Many students have read the book.",
-                explanation: "The active voice focuses on the doer of the action. Here, 'many students' are the doers."
-            },
-            {
-                type: "voice",
-                category: "Active and Passive Voice",
-                question: "Change to Passive Voice: 'The police arrested the thief.'",
-                options: [
-                    "The thief arrested the police.",
-                    "The thief was arrested by the police.",
-                    "The police were arrested by the thief.",
-                    "Arresting the thief was done by the police."
-                ],
-                correctAnswer: "The thief was arrested by the police.",
-                explanation: "In simple past active voice, passive voice uses 'was/were + past participle'."
-            },
-            {
-                type: "voice",
-                category: "Active and Passive Voice",
-                question: "Change to Active Voice: 'The report will be submitted by tomorrow.'",
-                options: [
-                    "Someone will submit the report by tomorrow.",
-                    "The report will submit by tomorrow.",
-                    "Submitting the report will happen by tomorrow.",
-                    "Tomorrow will submit the report."
-                ],
-                correctAnswer: "Someone will submit the report by tomorrow.",
-                explanation: "When the doer is unknown or unimportant in passive voice, use 'someone' or an implied subject in active voice."
-            },
-            {
-                type: "voice",
-                category: "Active and Passive Voice",
-                question: "Change to Passive Voice: 'She sings a beautiful song.'",
-                options: [
-                    "A beautiful song is sung by her.",
-                    "A beautiful song sings her.",
-                    "She is sung by a beautiful song.",
-                    "Singing a beautiful song is her hobby."
-                ],
-                correctAnswer: "A beautiful song is sung by her.",
-                explanation: "For simple present active voice, passive voice uses 'is/are + past participle'."
-            },
-            {
-                type: "voice",
-                category: "Active and Passive Voice",
-                question: "Change to Active Voice: 'Mistakes were made.'",
-                options: [
-                    "Someone made mistakes.",
-                    "Mistakes made someone.",
-                    "Making mistakes was done.",
-                    "Mistakes were committing."
-                ],
-                correctAnswer: "Someone made mistakes.",
-                explanation: "This is a classic example where the doer is omitted in passive voice; in active voice, we infer 'someone'."
-            },
-            {
-                type: "voice",
-                category: "Active and Passive Voice",
-                question: "Change to Passive Voice: 'They have finished the project.'",
-                options: [
-                    "The project has been finished by them.",
-                    "The project has finished them.",
-                    "They have been finished by the project.",
-                    "Finishing the project was their task."
-                ],
-                correctAnswer: "The project has been finished by them.",
-                explanation: "For present perfect active voice, passive voice uses 'has/have been + past participle'."
-            },
-            {
-                type: "voice",
-                category: "Active and Passive Voice",
-                question: "Change to Active Voice: 'The injured man was taken to the hospital.'",
-                options: [
-                    "The hospital took the injured man.",
-                    "Someone took the injured man to the hospital.",
-                    "Taking the injured man to the hospital occurred.",
-                    "The injured man took himself to the hospital."
-                ],
-                correctAnswer: "Someone took the injured man to the hospital.",
-                explanation: "When the agent is not specified in passive voice, 'someone' or a similar general subject is used in active voice."
-            },
-
-            // 5. Direct and Indirect Speech - 10 MCQs
-            {
-                type: "speech",
-                category: "Direct and Indirect Speech",
-                question: "Change to Indirect Speech: He said, 'I am reading a book.'",
-                options: [
-                    "He said that he is reading a book.",
-                    "He said that I am reading a book.",
-                    "He said that he was reading a book.",
-                    "He said he has been reading a book."
-                ],
-                correctAnswer: "He said that he was reading a book.",
-                explanation: "When converting direct to indirect speech, the present continuous ('am reading') changes to past continuous ('was reading') if the reporting verb is in the past tense."
-            },
-            {
-                type: "speech",
-                category: "Direct and Indirect Speech",
-                question: "Change to Direct Speech: She said that she would go to the party.",
-                options: [
-                    "She said, 'I will go to the party.'",
-                    "She said, 'She will go to the party.'",
-                    "She said, 'I would go to the party.'",
-                    "She said, 'She would go to the party.'"
-                ],
-                correctAnswer: "She said, 'I will go to the party.'",
-                explanation: "The auxiliary verb 'would' in indirect speech usually reverts to 'will' in direct speech, and the pronoun 'she' changes to 'I'."
-            },
-            {
-                type: "speech",
-                category: "Direct and Indirect Speech",
-                question: "Change to Indirect Speech: John said, 'I went to London yesterday.'",
-                options: [
-                    "John said that he had gone to London yesterday.",
-                    "John said that he went to London the previous day.",
-                    "John said that he had gone to London the previous day.",
-                    "John said that he was going to London yesterday."
-                ],
-                correctAnswer: "John said that he had gone to London the previous day.",
-                explanation: "Past simple ('went') changes to past perfect ('had gone'), and 'yesterday' changes to 'the previous day' or 'the day before'."
-            },
-            {
-                type: "speech",
-                category: "Direct and Indirect Speech",
-                question: "Change to Direct Speech: He asked me if I could help him.",
-                options: [
-                    "He asked me, 'Can you help him?'",
-                    "He asked me, 'Can you help me?'",
-                    "He said to me, 'Can you help me?'",
-                    "He said, 'Could you help him?'"
-                ],
-                correctAnswer: "He said to me, 'Can you help me?'",
-                explanation: "An interrogative sentence in indirect speech ('if I could help him') reverts to a direct question ('Can you help me?'). 'Asked me' becomes 'said to me'."
-            },
-            {
-                type: "speech",
-                category: "Direct and Indirect Speech",
-                question: "Change to Indirect Speech: Mary said, 'I have finished my homework.'",
-                options: [
-                    "Mary said that she has finished her homework.",
-                    "Mary said that she had finished her homework.",
-                    "Mary said that I have finished my homework.",
-                    "Mary said that she finished her homework."
-                ],
-                correctAnswer: "Mary said that she had finished her homework.",
-                explanation: "Present perfect ('have finished') changes to past perfect ('had finished') when the reporting verb is in the past tense."
-            },
-            {
-                type: "speech",
-                category: "Direct and Indirect Speech",
-                question: "Change to Direct Speech: He ordered them to leave immediately.",
-                options: [
-                    "He said, 'Leave immediately.'",
-                    "He said, 'You should leave immediately.'",
-                    "He told them, 'Leave immediately.'",
-                    "He ordered, 'They must leave immediately.'"
-                ],
-                correctAnswer: "He told them, 'Leave immediately.'",
-                explanation: "An imperative in indirect speech ('ordered them to leave') becomes a direct command in direct speech ('Leave immediately.'), often introduced with 'told them' or 'said'."
-            },
-            {
-                type: "speech",
-                category: "Direct and Indirect Speech",
-                question: "Change to Indirect Speech: She said, 'I will go tomorrow.'",
-                options: [
-                    "She said that she would go tomorrow.",
-                    "She said that she will go the next day.",
-                    "She said that she would go the next day.",
-                    "She said she went the next day."
-                ],
-                correctAnswer: "She said that she would go the next day.",
-                explanation: "'Will' changes to 'would', and 'tomorrow' changes to 'the next day' or 'the following day'."
-            },
-            {
-                type: "speech",
-                category: "Direct and Indirect Speech",
-                question: "Change to Direct Speech: The teacher advised us not to make noise.",
-                options: [
-                    "The teacher said, 'Don't make noise.'",
-                    "The teacher said, 'You should not make noise.'",
-                    "The teacher advised, 'Do not make noise.'",
-                    "The teacher told us, 'Do not make noise.'"
-                ],
-                correctAnswer: "The teacher told us, 'Do not make noise.'",
-                explanation: "An advisory statement in indirect speech ('advised us not to make noise') becomes a direct negative imperative ('Do not make noise')."
-            },
-            {
-                type: "speech",
-                category: "Direct and Indirect Speech",
-                question: "Change to Indirect Speech: He exclaimed, 'What a beautiful sight!'",
-                options: [
-                    "He exclaimed what a beautiful sight it was.",
-                    "He exclaimed that it was a beautiful sight.",
-                    "He exclaimed how beautiful the sight was.",
-                    "He exclaimed that what a beautiful sight."
-                ],
-                correctAnswer: "He exclaimed that it was a beautiful sight.",
-                explanation: "Exclamatory sentences in direct speech often convert to declarative sentences in indirect speech, expressing the exclamation with verbs like 'exclaimed' or 'remarked'."
-            },
-            {
-                type: "speech",
-                category: "Direct and Indirect Speech",
-                question: "Change to Direct Speech: My mother asked me where I was going.",
-                options: [
-                    "My mother asked, 'Where are you going?'",
-                    "My mother asked, 'Where was I going?'",
-                    "My mother said, 'Where are you going?'",
-                    "My mother asked, 'Where you are going?'"
-                ],
-                correctAnswer: "My mother asked, 'Where are you going?'",
-                explanation: "An indirect question ('where I was going') reverts to a direct question ('Where are you going?')."
-            }
-        ];
-
-        // Ensure 50 MCQs. Pad with more random grammar questions if needed.
-        // For this example, I'll generate more vocabulary (synonyms/antonyms) to reach 50,
-        // and add some general grammar questions, as 'F' idioms were limited in the provided text.
-        // I will focus on 'G' vocabulary from your provided text and generate more grammar/punctuation.
-
-        // Extend Vocabulary (G) to ensure enough questions from the document
-        const vocabularyGWords = [
-            "gaffe", "gallant", "galvanize", "gamut", "garb", "garish", "garment", "garnish", "garrulous",
-            "gastronomy", "gaudy", "gaunt", "gender", "genealogy", "generalization", "generation", "generic",
-            "genetic", "genial", "genre", "genteel", "gentility", "gentry", "genuflect", "genuine", "germane",
-            "germinal", "germinate", "gerrymander", "gestate", "gesticulation", "gesture", "ghastly",
-            "gibberish", "gibe", "giddy", "gingerly", "gird", "girder", "girth", "gist", "glacial", "glean",
-            "glib", "glimmer", "gloat", "localization", "glower", "glum", "glut", "glutinous", "glutton",
-            "gluttony", "gnarled", "goad", "gorge", "gorgeous", "gory", "gossamer", "gouge", "gourmand",
-            "gourmet", "govern", "governance", "grading", "graduated", "graduation", "graft", "granary",
-            "grandeur", "grandiloquent", "grandiose", "graphic", "grapple", "gratify", "gratitude",
-            "gratuitous", "gratuity", "graze", "gregarious", "grievance", "grievous", "grim", "grimace",
-            "gripe", "grisly", "groan", "groggy", "groom", "grovel", "grudging", "grueling", "gruff", "guild",
-            "guile", "guileless", "guise", "gullible", "gumption", "gustatory"
-        ];
-
-        // A simplified way to add more questions to reach 50, focusing on the specified categories.
-        // For a full 50, I'll generate more general grammar questions as per your instruction "Don't leave a topic untouched".
-        // Also ensuring varied option lengths and random correct answers.
-
-        // Placeholder for additional questions to reach 50
-        const additionalQuestions = [];
-
-        // Add 5 more vocabulary MCQs (Synonyms/Antonyms) from G list
-        const vocabCategories = ["Synonym", "Antonym"];
-        const vocabGDefinitions = {
-            "gaffe": "a socially awkward or tactless act",
-            "gallant": "unflinching in battle or action",
-            "galvanize": "stimulate to action",
-            "gamut": "a complete extent or range",
-            "garb": "provide with clothes or put clothes on",
-            "garish": "tastelessly showy",
-            "garment": "an article of clothing",
-            "garnish": "something added to a dish for flavor or decoration",
-            "garrulous": "full of trivial conversation",
-            "gastronomy": "the art and practice of preparing and eating good food",
-            "gaudy": "tastelessly showy",
-            "gaunt": "very thin especially from disease or hunger or cold",
-            "genial": "diffusing warmth and friendliness",
-            "genuine": "not fake or counterfeit",
-            "germane": "relevant and appropriate",
-            "giddy": "lacking seriousness; given to frivolity",
-            "gingerly": "in a manner marked by extreme care or delicacy",
-            "gist": "the choicest or most vital part of some idea or experience",
-            "glib": "marked by lack of intellectual depth",
-            "glimmer": "shine brightly, like a star or a light",
-            "gloat": "dwell on with satisfaction",
-            "glower": "look angry or sullen as if to signal disapproval",
-            "glum": "moody and sorrowful",
-            "glut": "an overabundant or excessive supply",
-            "gorge": "overeat or eat immodestly",
-            "gorgeous": "dazzlingly beautiful",
-            "gory": "covered with blood",
-            "gossamer": "characterized by unusual lightness and delicacy",
-            "gourmand": "a person who is devoted to eating and drinking to excess",
-            "gourmet": "a person devoted to and knowledgeable about fine food",
-            "gratify": "make happy or satisfied",
-            "gratitude": "a feeling of thankfulness and appreciation",
-            "gratuitous": "unnecessary and unwarranted",
-            "gregarious": "temperamentally seeking and enjoying the company of others",
-            "grievance": "a complaint about a wrong that causes resentment",
-            "grievous": "shockingly brutal or cruel",
-            "grim": "harshly uninviting or formidable in manner or appearance",
-            "grimace": "contort the face to indicate a certain mental state",
-            "gripe": "complain",
-            "grisly": "shockingly repellent; inspiring horror",
-            "groan": "indicate pain, discomfort, or displeasure",
-            "groggy": "stunned or confused and slow to react",
-            "groom": "give a neat appearance to",
-            "grovel": "show submission or fear",
-            "grudging": "petty or reluctant in giving or spending",
-            "grueling": "characterized by effort to the point of exhaustion",
-            "gruff": "blunt and unfriendly or stern",
-            "guile": "the use of tricks to deceive someone",
-            "guileless": "innocent and free of deceit",
-            "gullible": "naive and easily deceived or tricked",
-            "gumption": "fortitude and determination",
-            "gustatory": "of or relating to the sense of taste"
-        };
-
-        const generateRandomVocabularyQuestion = () => {
-            const wordKeys = Object.keys(vocabGDefinitions);
-            const randomWord = wordKeys[Math.floor(Math.random() * wordKeys.length)];
-            const definition = vocabGDefinitions[randomWord];
-            const type = vocabCategories[Math.floor(Math.random() * vocabCategories.length)]; // Synonym or Antonym
-
-            let questionText = "";
-            let correctAnswer = "";
-            let options = [];
-
-            if (type === "Synonym") {
-                questionText = `What is a synonym for '${randomWord}'?`;
-                correctAnswer = getRelatedWord(randomWord, true); // True for synonym
-                options.push(correctAnswer);
-                for (let i = 0; i < 3; i++) {
-                    let falseOption = getRelatedWord(wordKeys[Math.floor(Math.random() * wordKeys.length)], true);
-                    while (options.includes(falseOption) || falseOption === correctAnswer) {
-                        falseOption = getRelatedWord(wordKeys[Math.floor(Math.random() * wordKeys.length)], true);
-                    }
-                    options.push(falseOption);
-                }
-            } else { // Antonym
-                questionText = `What is an antonym for '${randomWord}'?`;
-                correctAnswer = getRelatedWord(randomWord, false); // False for antonym
-                options.push(correctAnswer);
-                for (let i = 0; i < 3; i++) {
-                    let falseOption = getRelatedWord(wordKeys[Math.floor(Math.random() * wordKeys.length)], false);
-                    while (options.includes(falseOption) || falseOption === correctAnswer) {
-                        falseOption = getRelatedWord(wordKeys[Math.floor(Math.random() * wordKeys.length)], false);
-                    }
-                    options.push(falseOption);
-                }
-            }
-            shuffleArray(options); // Shuffle options to randomize correct answer position
-
-            return {
-                type: "vocabulary",
-                category: `Vocabulary (G) - ${type}`,
-                question: questionText,
-                options: options,
-                correctAnswer: correctAnswer,
-                explanation: `The word '${randomWord}' means '${definition}'. Its ${type.toLowerCase()} is '${correctAnswer}'.`
-            };
-        };
-
-        // Helper function to get a plausible synonym/antonym (simplified for this context)
-        // In a real scenario, this would involve a lexicon or external API.
-        function getRelatedWord(word, isSynonym) {
-            // This is a very simplified placeholder. In a real app, you'd use a dictionary API or a more robust word list.
-            const genericSynonyms = {
-                "gaffe": "blunder", "gallant": "brave", "galvanize": "excite", "gamut": "range", "garb": "dress",
-                "garish": "flashy", "garment": "clothing", "garnish": "decorate", "garrulous": "talkative",
-                "gastronomy": "cuisine", "gaudy": "loud", "gaunt": "emaciated", "genial": "friendly",
-                "genuine": "authentic", "germane": "relevant", "giddy": "dizzy", "gingerly": "cautiously",
-                "gist": "essence", "glib": "superficial", "glimmer": "flicker", "gloat": "triumph",
-                "glower": "scowl", "glum": "gloomy", "glut": "surplus", "gorge": "overeat",
-                "gorgeous": "beautiful", "gory": "bloody", "gossamer": "delicate", "gourmand": "foodie",
-                "gourmet": "connoisseur", "gratify": "please", "gratitude": "thankfulness",
-                "gratuitous": "unjustified", "gregarious": "sociable", "grievance": "complaint",
-                "grievous": "severe", "grim": "stern", "grimace": "frown", "gripe": "complain",
-                "grisly": "gruesome", "groan": "moan", "groggy": "drowsy", "groom": "tidy",
-                "grovel": "crawl", "grudging": "reluctant", "grueling": "exhausting", "gruff": "blunt",
-                "guile": "cunning", "guileless": "innocent", "gullible": "naive", "gumption": "initiative",
-                "gustatory": "tasteful"
-            };
-            const genericAntonyms = {
-                "gaffe": "success", "gallant": "cowardly", "galvanize": "discourage", "gamut": "segment", "garb": "undress",
-                "garish": "subtle", "garment": "bareness", "garnish": "strip", "garrulous": "quiet",
-                "gastronomy": "fasting", "gaudy": "plain", "gaunt": "plump", "genial": "unfriendly",
-                "genuine": "fake", "germane": "irrelevant", "giddy": "serious", "gingerly": "recklessly",
-                "gist": "detail", "glib": "profound", "glimmer": "darkness", "gloat": "commiserate",
-                "glower": "smile", "glum": "cheerful", "glut": "shortage", "gorge": "starve",
-                "gorgeous": "ugly", "gory": "peaceful", "gossamer": "heavy", "gourmand": "ascetic",
-                "gourmet": "unfussy", "gratify": "displease", "gratitude": "ingratitude",
-                "gratuitous": "necessary", "gregarious": "solitary", "grievance": "satisfaction",
-                "grievous": "minor", "grim": "pleasant", "grimace": "grin", "gripe": "applaud",
-                "grisly": "pleasant", "groan": "cheer", "groggy": "alert", "groom": "mess",
-                "grovel": "dominate", "grudging": "eager", "grueling": "easy", "gruff": "gentle",
-                "guile": "honesty", "guileless": "deceitful", "gullible": "skeptical", "gumption": "apathy",
-                "gustatory": "odorless"
-            };
-
-            if (isSynonym) {
-                return genericSynonyms[word] || "related word";
-            } else {
-                return genericAntonyms[word] || "opposite word";
-            }
-        }
-
-
-        // Generate a few more idioms for 'C' to ensure depth and variety
-        const cIdioms = [
-            "Call it a day", "Cheap as chips", "Cry over spilled milk", "Cut corners", "Catch 22",
-            "Change one's tune", "Come hell or high water", "Cool as a cucumber", "Cross that bridge when you come to it",
-            "Curiosity killed the cat", "Clean as a whistle", "Close but no cigar", "Come to terms with",
-            "Couch potato", "Cream of the crop"
-        ];
-        const cIdiomMeanings = {
-            "Call it a day": "To stop working on something",
-            "Cheap as chips": "Very cheap",
-            "Cry over spilled milk": "To regret something that cannot be changed",
-            "Cut corners": "To do something in the easiest or cheapest way",
-            "Catch 22": "A difficult situation with no easy escape",
-            "Change one's tune": "To alter one's opinion or attitude",
-            "Come hell or high water": "You will overcome any obstacle",
-            "Cool as a cucumber": "To be calm and composed, especially in a stressful situation",
-            "Cross that bridge when you come to it": "Dealing with a problem only when it becomes necessary",
-            "Curiosity killed the cat": "Being too curious can lead to danger or trouble",
-            "Clean as a whistle": "Extremely clean or clear",
-            "Close but no cigar": "Almost succeeded but failed at the very end",
-            "Come to terms with": "To accept a difficult situation",
-            "Couch potato": "A very lazy person who spends a lot of time watching television",
-            "Cream of the crop": "The best of a group"
-        };
-
-        const generateRandomIdiomQuestion = () => {
-            const idiomKeys = Object.keys(cIdiomMeanings);
-            const randomIdiom = idiomKeys[Math.floor(Math.random() * idiomKeys.length)];
-            const correctAnswer = cIdiomMeanings[randomIdiom];
-            let options = [correctAnswer];
-
-            for (let i = 0; i < 3; i++) {
-                let falseOption = cIdiomMeanings[idiomKeys[Math.floor(Math.random() * idiomKeys.length)]];
-                // Ensure options are unique and not the correct answer
-                while (options.includes(falseOption)) {
-                    falseOption = cIdiomMeanings[idiomKeys[Math.floor(Math.random() * idiomKeys.length)]];
-                }
-                options.push(falseOption);
-            }
-            shuffleArray(options);
-
-            return {
-                type: "idiom",
-                category: "Idioms of C",
-                question: `What does '${randomIdiom}' mean?`,
-                options: options,
-                correctAnswer: correctAnswer,
-                explanation: `'${randomIdiom}' means '${correctAnswer}'.`
-            };
-        };
-
-        // Grammar questions (mix of various grammar points to reach 50, balancing option lengths)
-        const generalGrammarQuestions = [
-            {
-                type: "grammar",
-                category: "General Grammar",
-                question: "Choose the sentence with the correct subject-verb agreement:",
-                options: [
-                    "The dog and cat is playing in the yard right now.",
-                    "The dog and cat are playing in the yard right now.",
-                    "The dog, as well as the cat, are playing in the yard.",
-                    "Neither the dog nor the cat were playing in the yard."
-                ],
-                correctAnswer: "The dog and cat are playing in the yard right now.",
-                explanation: "When two subjects are joined by 'and', the verb should be plural."
-            },
-            {
-                type: "grammar",
-                category: "General Grammar",
-                question: "Which of the following sentences correctly uses an adverb?",
-                options: [
-                    "He is a quick runner in every race.",
-                    "He runs quickly in every race he participates in.",
-                    "He runs quick in all his competitive events.",
-                    "He is quick running always and efficiently."
-                ],
-                correctAnswer: "He runs quickly in every race he participates in.",
-                explanation: "'Quickly' is an adverb modifying the verb 'runs'."
-            },
-            {
-                type: "grammar",
-                category: "General Grammar",
-                question: "Identify the sentence that uses the correct past participle form:",
-                options: [
-                    "I have saw that movie many times before.",
-                    "I have seen that movie many times before.",
-                    "I have seeing that movie on previous occasions.",
-                    "I have been seeing that movie a lot of times."
-                ],
-                correctAnswer: "I have seen that movie many times before.",
-                explanation: "The past participle of 'see' is 'seen', used with 'have' in the present perfect tense."
-            },
-            {
-                type: "grammar",
-                category: "General Grammar",
-                question: "Which sentence correctly uses 'affect' or 'effect'?",
-                options: [
-                    "The bad weather had a negative affect on the crop.",
-                    "The bad weather had a negative effect on the crop.",
-                    "The bad weather will effect the crop's growth significantly.",
-                    "The bad weather affected the effect of the crop."
-                ],
-                correctAnswer: "The bad weather had a negative effect on the crop.",
-                explanation: "'Effect' is generally a noun (the result), and 'affect' is generally a verb (to influence)."
-            },
-            {
-                type: "grammar",
-                category: "General Grammar",
-                question: "Select the sentence with proper use of 'than' or 'then':",
-                options: [
-                    "She is taller then her brother.",
-                    "She is taller than her brother, and then they went home.",
-                    "She is taller than her brother.",
-                    "First, we eat, than we watch TV."
-                ],
-                correctAnswer: "She is taller than her brother.",
-                explanation: "'Than' is used for comparison; 'then' refers to time or sequence."
-            }
-        ];
-
-
-        // Populate additional questions to reach 50.
-        // We have 10 Vocab(F), 10 Idioms(C), 10 Punctuations, 10 Active/Passive, 10 Direct/Indirect. This is already 50.
-        // I will still ensure random generation and balanced options length.
-        // Re-balancing the 50 MCQs as requested to include specific categories and total counts.
-        // The original document only explicitly provided "Vocabulary of alphabet G" and "Idioms of Alphabet F".
-        // The request explicitly asks for "Vocabulary (Synonyms and Antonyms) of alphabet 'F' 10mcqs" and "Idioms of alphabet 'C' 10mcqs".
-        // I will generate 'F' vocab and 'C' idioms to match the request, and generate generic questions for the others.
-
-        const newQuizQuestions = [];
-
-        // 1. Vocabulary (Synonyms and Antonyms) of alphabet 'F' - 10 MCQs
-        // I will use a placeholder set of F-words for this, similar to G-words.
-        const vocabFWords = [
-            "fabulous", "facetious", "facilitate", "fallacy", "falter", "familiar", "fanatic", "fascinate",
-            "fatigue", "fathom", "faulty", "feasible", "fickle", "fidelity", "fiery", "filial", "finesse",
-            "finite", "flamboyant", "flimsy", "florid", "flourish", "fluid", "folly", "forbid", "foremost",
-            "forfeit", "forlorn", "formidable", "fortify", "fragile", "frank", "fraudulent", "frenzy",
-            "frequent", "frivolous", "frugal", "frustrate", "fulfill", "fundamental", "furious", "furtive",
-            "futile"
-        ];
-        const vocabFDefinitions = {
-            "fabulous": "extraordinarily good or impressive", "facetious": "treating serious issues with deliberately inappropriate humor",
-            "facilitate": "make an action or process easy or easier", "fallacy": "a mistaken belief, especially one based on unsound argument",
-            "falter": "lose strength or momentum", "familiar": "well known from long or close association",
-            "fanatic": "a person filled with excessive and single-minded zeal, especially for an extreme religious or political cause",
-            "fascinate": "attract the strong attention and interest of (someone)", "fatigue": "extreme tiredness, typically resulting from mental or physical exertion or illness",
-            "fathom": "understand (a difficult problem or an enigmatic person) after much thought", "faulty": "working or judging imperfectly or incorrectly",
-            "feasible": "possible to do easily or conveniently", "fickle": "changing frequently, especially as regards one's loyalties, interests, or affection",
-            "fidelity": "faithfulness to a person, cause, or belief, demonstrated by continuing loyalty and support",
-            "fiery": "consisting of fire or burning strongly and brightly", "filial": "of or due from a son or daughter",
-            "finesse": "extreme delicacy or subtlety in action, performance, skill, discrimination, or taste",
-            "finite": "having limits or bounds", "flamboyant": "tending to attract attention because of their exuberance, confidence, and stylishness",
-            "flimsy": "light, thin, and easily damaged", "florid": "having a red or flushed complexion",
-            "flourish": "grow or develop in a healthy or vigorous way, especially as the result of a particularly favorable environment",
-            "fluid": "a substance that has no fixed shape and yields easily to external pressure; a gas or (especially) a liquid.",
-            "folly": "lack of good sense; foolishness", "forbid": "refuse to allow (something)",
-            "foremost": "most important; best; leading", "forfeit": "lose or be deprived of (property or a right or privilege) as a penalty for wrongdoing",
-            "forlorn": "pitifully sad and abandoned or lonely", "formidable": "inspiring fear or respect through being impressively large, powerful, intense, or capable",
-            "fortify": "strengthen (a place) with defensive works so as to protect it against attack",
-            "fragile": "easily broken or damaged", "frank": "open, honest, and direct in speech or writing",
-            "fraudulent": "obtained, done by, or involving deception, especially criminal deception",
-            "frenzy": "a state or period of uncontrolled excitement or wild behavior",
-            "frequent": "occurring or done on many occasions, in many cases, or at short intervals",
-            "frivolous": "not having any serious purpose or value", "frugal": "sparing or economical with regard to money or food",
-            "frustrate": "prevent (a plan or attempted action) from progressing, succeeding, or being fulfilled",
-            "fulfill": "bring to completion or reality; achieve or realize (something desired, promised, or predicted)",
-            "fundamental": "forming a necessary base or core; of central importance", "furious": "extremely angry",
-            "furtive": "attempting to avoid notice or attention, typically because of guilt or a belief that discovery would lead to trouble; secretive",
-            "futile": "incapable of producing any useful result; pointless"
-        };
-
-        const getRelatedFWord = (word, isSynonym) => {
-            const F_SYNONYMS = {
-                "fabulous": "amazing", "facetious": "joking", "facilitate": "ease", "fallacy": "delusion", "falter": "hesitate",
-                "familiar": "known", "fanatic": "extremist", "fascinate": "charm", "fatigue": "exhaustion", "fathom": "understand",
-                "faulty": "defective", "feasible": "possible", "fickle": "unpredictable", "fidelity": "loyalty", "fiery": "passionate",
-                "filial": "dutiful", "finesse": "skill", "finite": "limited", "flamboyant": "showy", "flimsy": "fragile",
-                "florid": "ornate", "flourish": "thrive", "fluid": "liquid", "folly": "foolishness", "forbid": "prohibit",
-                "foremost": "leading", "forfeit": "surrender", "forlorn": "unhappy", "formidable": "daunting", "fortify": "strengthen",
-                "fragile": "brittle", "frank": "candid", "fraudulent": "deceptive", "frenzy": "mania",
-                "frequent": "common", "frivolous": "trivial", "frugal": "thrifty", "frustrate": "baffle", "fulfill": "achieve",
-                "fundamental": "basic", "furious": "enraged", "furtive": "stealthy", "futile": "useless"
-            };
-            const F_ANTONYMS = {
-                "fabulous": "ordinary", "facetious": "serious", "facilitate": "hinder", "fallacy": "truth", "falter": "stabilize",
-                "familiar": "unfamiliar", "fanatic": "moderate", "fascinate": "bore", "fatigue": "energy", "fathom": "misunderstand",
-                "faulty": "perfect", "feasible": "impossible", "fickle": "constant", "fidelity": "treachery", "fiery": "calm",
-                "filial": "disobedient", "finesse": "clumsiness", "finite": "infinite", "flamboyant": "modest", "flimsy": "sturdy",
-                "florid": "plain", "flourish": "wither", "fluid": "solid", "folly": "wisdom", "forbid": "allow",
-                "foremost": "least", "forfeit": "gain", "forlorn": "hopeful", "formidable": "easy", "fortify": "weaken",
-                "fragile": "tough", "frank": "secretive", "fraudulent": "honest", "frenzy": "calm",
-                "frequent": "rare", "frivolous": "serious", "frugal": "wasteful", "frustrate": "assist", "fulfill": "fail",
-                "fundamental": "superficial", "furious": "calm", "furtive": "open", "futile": "effective"
-            };
-            if (isSynonym) return F_SYNONYMS[word] || "related";
-            return F_ANTONYMS[word] || "opposite";
-        };
-
-        const generateFVocabQuestion = () => {
-            const wordKeys = Object.keys(vocabFDefinitions);
-            const randomWord = wordKeys[Math.floor(Math.random() * wordKeys.length)];
-            const type = vocabCategories[Math.floor(Math.random() * vocabCategories.length)];
-
-            let questionText = "";
-            let correctAnswer = "";
-            let options = [];
-
-            if (type === "Synonym") {
-                questionText = `What is a synonym for '${randomWord}'?`;
-                correctAnswer = getRelatedFWord(randomWord, true);
-                options.push(correctAnswer);
-                while (options.length < 4) {
-                    let falseOption = getRelatedFWord(wordKeys[Math.floor(Math.random() * wordKeys.length)], true);
-                    if (!options.includes(falseOption) && falseOption !== correctAnswer) {
-                        options.push(falseOption);
-                    }
-                }
-            } else { // Antonym
-                questionText = `What is an antonym for '${randomWord}'?`;
-                correctAnswer = getRelatedFWord(randomWord, false);
-                options.push(correctAnswer);
-                while (options.length < 4) {
-                    let falseOption = getRelatedFWord(wordKeys[Math.floor(Math.random() * wordKeys.length)], false);
-                    if (!options.includes(falseOption) && falseOption !== correctAnswer) {
-                        options.push(falseOption);
-                    }
-                }
-            }
-            shuffleArray(options);
-
-            // Ensure option lengths are balanced
-            const allOptions = options.map(opt => ({ text: opt, length: opt.length }));
-            allOptions.sort((a, b) => a.length - b.length);
-            options = allOptions.map(opt => opt.text); // Use sorted options
-
-            return {
-                type: "vocabulary",
-                category: `Vocabulary (F) - ${type}`,
-                question: questionText,
-                options: options,
-                correctAnswer: correctAnswer,
-                explanation: `The word '${randomWord}' means '${vocabFDefinitions[randomWord]}'. Its ${type.toLowerCase()} is '${correctAnswer}'.`
-            };
-        };
-
-
-        // Fill 10 Vocabulary (F) MCQs
-        for (let i = 0; i < 10; i++) {
-            newQuizQuestions.push(generateFVocabQuestion());
-        }
-
-        // Fill 10 Idioms of alphabet 'C' MCQs
-        for (let i = 0; i < 10; i++) {
-            newQuizQuestions.push(generateRandomIdiomQuestion());
-        }
-
-        // Add 10 Punctuations MCQs (from the existing ones)
-        const punctuationQuestions = quizQuestions.filter(q => q.type === "punctuation");
-        for (let i = 0; i < 10; i++) {
-            newQuizQuestions.push(punctuationQuestions[i % punctuationQuestions.length]); // Cycle through if less than 10 unique
-        }
-
-        // Add 10 Active and Passive Voice MCQs (from the existing ones)
-        const voiceQuestions = quizQuestions.filter(q => q.type === "voice");
-        for (let i = 0; i < 10; i++) {
-            newQuizQuestions.push(voiceQuestions[i % voiceQuestions.length]);
-        }
-
-        // Add 10 Direct and Indirect Speech MCQs (from the existing ones)
-        const speechQuestions = quizQuestions.filter(q => q.type === "speech");
-        for (let i = 0; i < 10; i++) {
-            newQuizQuestions.push(speechQuestions[i % speechQuestions.length]);
-        }
-
-        // Shuffle the entire quiz array to randomize question order
-        shuffleArray(newQuizQuestions);
-
-        // Helper to shuffle an array
+        // Function to shuffle an array (Fisher-Yates algorithm)
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -1375,156 +186,224 @@
             }
         }
 
-        // DOM Elements
-        const loginSection = document.getElementById('loginSection');
-        const loginIdInput = document.getElementById('loginId');
-        const loginPasswordInput = document.getElementById('loginPassword');
-        const loginButton = document.getElementById('loginButton');
-        const loginMessage = document.getElementById('loginMessage');
+        // Placeholder for API key, will be automatically provided by Canvas
+        const apiKey = "";
 
-        const nameEntrySection = document.getElementById('nameEntrySection');
-        const candidateNameInput = document.getElementById('candidateName');
-        const startButton = document.getElementById('startButton');
-
-        const quizSection = document.getElementById('quizSection');
-        const questionElement = document.getElementById('question');
-        const optionsContainer = document.getElementById('options');
-        const nextButton = document.getElementById('nextButton');
-        const timerDisplay = document.getElementById('timer');
-        const progressDisplay = document.getElementById('progress');
-
-        const resultSection = document.getElementById('resultSection');
-        const finalCandidateNameDisplay = document.getElementById('finalCandidateName');
-        const scoreDisplay = document.getElementById('scoreDisplay');
-        const timeTakenDisplay = document.getElementById('timeTakenDisplay');
-
-        // Event Listeners
-        loginButton.addEventListener('click', () => {
-            const id = loginIdInput.value;
-            const password = loginPasswordInput.value;
-
-            if (id === 'aaa' && password === 'bbb') {
-                loginMessage.textContent = '';
-                loginSection.style.display = 'none';
-                nameEntrySection.style.display = 'block';
-            } else {
-                loginMessage.textContent = 'Invalid ID or Password. Please try again.';
-                loginMessage.style.color = 'red';
-            }
-        });
-
-        startButton.addEventListener('click', () => {
-            const candidateName = candidateNameInput.value.trim();
-            if (candidateName) {
-                if (quizAttempts[candidateName]) {
-                    alert("You have already attempted the quiz. You cannot restart."); // Using alert as per instructions to show message.
-                    return;
+        // Function to make API calls with exponential backoff
+        async function fetchWithBackoff(url, options, retries = 5, delay = 1000) {
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                nameEntrySection.style.display = 'none';
-                quizSection.style.display = 'block';
-                finalCandidateNameDisplay.textContent = candidateName;
-                quizStartedTime = Date.now();
-                startTimer();
-                loadQuestion();
-            } else {
-                alert('Please enter your name to start the quiz.');
+                return await response.json();
+            } catch (error) {
+                if (retries > 0) {
+                    await new Promise(res => setTimeout(res, delay));
+                    return fetchWithBackoff(url, options, retries - 1, delay * 2);
+                } else {
+                    console.error("API call failed after multiple retries:", error);
+                    throw error;
+                }
             }
-        });
+        }
 
-        nextButton.addEventListener('click', () => {
+        // Function to generate MCQs using LLM
+        async function generateMCQs(prompt, schema) {
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+            const payload = {
+                contents: chatHistory,
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: schema
+                }
+            };
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            try {
+                const result = await fetchWithBackoff(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const json = result.candidates[0].content.parts[0].text;
+                    return JSON.parse(json);
+                } else {
+                    console.error("Unexpected API response structure for MCQs:", result);
+                    return [];
+                }
+            } catch (error) {
+                console.error("Error generating MCQs:", error);
+                return [];
+            }
+        }
+
+        // Schemas for MCQ generation
+        const mcqSchema = {
+            type: "ARRAY",
+            items: {
+                type: "OBJECT",
+                properties: {
+                    question: { "type": "STRING" },
+                    options: {
+                        type: "ARRAY",
+                        items: { "type": "STRING" }
+                    },
+                    correctAnswer: { "type": "STRING" }
+                },
+                propertyOrdering: ["question", "options", "correctAnswer"]
+            }
+        };
+
+        async function loadQuizData() {
+            // Updated prompts with stronger randomization and length balance directives
+            const vocabFPrompt = `Generate 10 multiple-choice questions for vocabulary (5 synonyms and 5 antonyms) of words starting with 'F'. For each question, provide a word, a question (e.g., 'Which word is a synonym of Fickle?' or 'Which word is an antonym of Fickle?'), four distinct options, and the correct answer. Crucially, ensure that the correct answer is truly randomized among the four options for *each* question and its position is never predictable (e.g., not always option 2 or 4). Also, ensure all four options have similar lengths (number of words/characters) to prevent the correct answer from being obvious due to length.`;
+            const idiomsCPrompt = `Generate 10 multiple-choice questions for English idioms starting with 'C'. For each question, provide an idiom, a question asking for its meaning, four options (one being the correct meaning, three plausible distractors), and the correct answer. Crucially, ensure that the correct answer is truly randomized among the four options for *each* question and its position is never predictable (e.g., not always option 2 or 4). Also, ensure all four options have similar lengths (number of words/characters) to prevent the correct answer from being obvious due to length.`;
+            const punctuationPrompt = `Generate 10 multiple-choice questions about punctuation usage. Each question should present a sentence or scenario, a question asking for correct punctuation, four options (one with correct punctuation, three with plausible errors), and the correct answer. Crucially, ensure that the correct answer is truly randomized among the four options for *each* question and its position is never predictable (e.g., not always option 2 or 4). Also, ensure all four options have similar lengths (number of words/characters) to prevent the correct answer from being obvious due to length.`;
+            const activePassivePrompt = `Generate 10 multiple-choice questions on active and passive voice. For each question, provide a sentence, a transformation task (e.g., 'Change to passive voice'), four options (one correct transformation, three plausible incorrect ones), and the correct answer. Crucially, ensure that the correct answer is truly randomized among the four options for *each* question and its position is never predictable (e.g., not always option 2 or 4). Also, ensure all four options have similar lengths (number of words/characters) to prevent the correct answer from being obvious due to length.`;
+            const directIndirectPrompt = `Generate 10 multiple-choice questions on direct and indirect speech. For each question, provide a sentence, a transformation task (e.g., 'Change to indirect speech'), four options (one correct transformation, three plausible incorrect ones), and the correct answer. Crucially, ensure that the correct answer is truly randomized among the four options for *each* question and its position is never predictable (e.g., not always option 2 or 4). Also, ensure all four options have similar lengths (number of words/characters) to prevent the correct answer from being obvious due to length.`;
+
+            document.getElementById('question-text').innerText = "Loading quiz questions...";
+
+            const vocabF = await generateMCQs(vocabFPrompt, mcqSchema);
+            const idiomsC = await generateMCQs(idiomsCPrompt, mcqSchema);
+            const punctuation = await generateMCQs(punctuationPrompt, mcqSchema);
+            const activePassive = await generateMCQs(activePassivePrompt, mcqSchema);
+            const directIndirect = await generateMCQs(directIndirectPrompt, mcqSchema);
+
+            quizData = [...vocabF, ...idiomsC, ...punctuation, ...activePassive, ...directIndirect];
+            shuffleArray(quizData); // Shuffle all questions
+
+            if (quizData.length === 50) {
+                console.log("50 MCQs loaded successfully!");
+            } else {
+                console.warn(`Expected 50 MCQs, but got ${quizData.length}. Regenerating missing ones or using what's available.`);
+                // If not 50, a more robust solution would involve iteratively generating until 50,
+                // but for this example, we'll proceed with what we have or show a warning.
+                // For a production app, you might re-prompt the LLM for missing categories.
+            }
+        }
+
+        function renderQuestion() {
+            if (currentQuestionIndex >= quizData.length) {
+                showResult();
+                return;
+            }
+
+            const question = quizData[currentQuestionIndex];
+            questionText.innerHTML = question.question;
+            optionsContainer.innerHTML = '';
+            nextButton.classList.add('hidden'); // Hide next button until an option is selected
+
+            const shuffledOptions = [...question.options];
+            shuffleArray(shuffledOptions); // Shuffle options for each question
+
+            shuffledOptions.forEach(option => {
+                const button = document.createElement('button');
+                button.classList.add('option-button');
+                button.textContent = option;
+                button.onclick = () => selectOption(button, option, question.correctAnswer);
+                optionsContainer.appendChild(button);
+            });
+
+            const remainingQuestions = quizData.length - currentQuestionIndex -1;
+            questionNumberSpan.textContent = `Question ${currentQuestionIndex + 1} of ${quizData.length} | Remaining: ${remainingQuestions}`;
+        }
+
+        function selectOption(selectedButton, selectedAnswer, correctAnswer) {
+            if (quizStarted) { // Only allow selection if quiz has started and not ended
+                // Disable all options after selection
+                Array.from(optionsContainer.children).forEach(button => {
+                    button.disabled = true;
+                });
+
+                if (selectedAnswer === correctAnswer) {
+                    selectedButton.classList.add('correct');
+                    score++;
+                } else {
+                    selectedButton.classList.add('wrong');
+                    // Find and mark the correct answer
+                    Array.from(optionsContainer.children).forEach(button => {
+                        if (button.textContent === correctAnswer) {
+                            button.classList.add('correct');
+                        }
+                    });
+                }
+                nextButton.classList.remove('hidden'); // Show next button
+            }
+        }
+
+        function nextQuestion() {
             currentQuestionIndex++;
-            if (currentQuestionIndex < newQuizQuestions.length) {
-                loadQuestion();
-                nextButton.style.display = 'none'; // Hide next button until next answer
-            } else {
-                endQuiz();
-            }
-        });
+            renderQuestion();
+        }
 
-        // Quiz Functions
+        function showResult() {
+            clearInterval(timerInterval);
+            quizSection.classList.add('hidden');
+            resultSection.classList.remove('hidden');
+            finalCandidateName.textContent = userName;
+            finalScoreSpan.textContent = score;
+            quizStarted = false; // Prevent further interactions
+        }
+
         function startTimer() {
-            timer = setInterval(() => {
+            timerInterval = setInterval(() => {
                 timeLeft--;
                 const minutes = Math.floor(timeLeft / 60);
                 const seconds = timeLeft % 60;
-                timerDisplay.textContent = `Time Left: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                timerSpan.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
                 if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    endQuiz();
+                    clearInterval(timerInterval);
+                    showResult();
                 }
             }, 1000);
         }
 
-        function loadQuestion() {
-            const questionData = newQuizQuestions[currentQuestionIndex];
-            questionElement.textContent = questionData.question;
-            optionsContainer.innerHTML = ''; // Clear previous options
+        loginButton.addEventListener('click', () => {
+            const id = idInput.value;
+            const password = passwordInput.value;
 
-            // Update progress display
-            progressDisplay.textContent = `Question ${currentQuestionIndex + 1} of ${newQuizQuestions.length} (Remaining: ${newQuizQuestions.length - (currentQuestionIndex + 1)})`;
-
-
-            const shuffledOptions = [...questionData.options];
-            shuffleArray(shuffledOptions); // Randomize options order for each question
-
-            shuffledOptions.forEach(option => {
-                const button = document.createElement('button');
-                button.textContent = option;
-                button.addEventListener('click', () => selectAnswer(button, option, questionData.correctAnswer));
-                optionsContainer.appendChild(button);
-            });
-        }
-
-        function selectAnswer(selectedButton, selectedOption, correctAnswer) {
-            // Disable all options after one is selected
-            Array.from(optionsContainer.children).forEach(button => {
-                button.disabled = true;
-                // Add a visual indicator for clicked (wrong) answer
-                if (button === selectedButton && selectedOption !== correctAnswer) {
-                    button.classList.add('wrong');
-                }
-                // Highlight the correct answer in green
-                if (button.textContent === correctAnswer) {
-                    button.classList.add('correct');
-                }
-            });
-
-            if (selectedOption === correctAnswer) {
-                score++;
+            if (id === 'QQQ' && password === 'AAA') {
+                loginError.classList.add('hidden');
+                loginSection.classList.add('hidden');
+                nameEntrySection.classList.remove('hidden');
+            } else {
+                loginError.classList.remove('hidden');
             }
-
-            nextButton.style.display = 'block'; // Show next button
-        }
-
-        function endQuiz() {
-            clearInterval(timer);
-            quizEndedTime = Date.now();
-            const timeTakenSeconds = Math.floor((quizEndedTime - quizStartedTime) / 1000);
-            const minutesTaken = Math.floor(timeTakenSeconds / 60);
-            const secondsTaken = timeTakenSeconds % 60;
-
-            quizSection.style.display = 'none';
-            resultSection.style.display = 'block';
-            scoreDisplay.textContent = score;
-            timeTakenDisplay.textContent = `${minutesTaken} minutes and ${secondsTaken} seconds`;
-
-            // Mark this candidate as having completed the quiz
-            const candidateName = candidateNameInput.value.trim();
-            if (candidateName) {
-                quizAttempts[candidateName] = true;
-            }
-        }
-
-        // Initial setup
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initially, only the login section is visible.
-            loginSection.style.display = 'block';
-            nameEntrySection.style.display = 'none';
-            quizSection.style.display = 'none';
-            resultSection.style.display = 'none';
         });
 
+        startQuizButton.addEventListener('click', async () => {
+            const name = nameInput.value.trim();
+            if (name) {
+                userName = name;
+                nameError.classList.add('hidden');
+                nameEntrySection.classList.add('hidden');
+                quizSection.classList.remove('hidden');
+                quizStarted = true;
+                await loadQuizData(); // Load quiz data before rendering first question
+                if (quizData.length > 0) {
+                    renderQuestion();
+                    startTimer();
+                } else {
+                    questionText.innerText = "Failed to load quiz questions. Please try again.";
+                    nextButton.classList.add('hidden');
+                }
+            } else {
+                nameError.classList.remove('hidden');
+            }
+        });
+
+        nextButton.addEventListener('click', nextQuestion);
+
+        // Initial render: show login section
+        loginSection.classList.remove('hidden');
     </script>
 </body>
 </html>
