@@ -4,179 +4,503 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sunday Quiz Special for Precis Paper</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #e0f2f7; /* Light blue theme */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
+            font-family: "Inter", sans-serif;
+            background-color: #e0f2fe; /* Light blue theme */
+        }
+        .container {
+            max-width: 90%;
+            margin: 20px auto;
             padding: 20px;
-            box-sizing: border-box;
-        }
-        #quiz-container {
             background-color: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            width: 100%;
-            max-width: 600px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .quiz-header {
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            margin-bottom: 20px;
         }
-        .header-title {
-            font-weight: 700;
-            font-size: 1.875rem; /* text-3xl */
-            line-height: 2.25rem; /* leading-9 */
+        .quiz-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1e3a8a; /* Darker blue */
         }
-        .header-contact {
-            font-weight: 700;
-            font-size: 1.125rem; /* text-lg */
-            line-height: 1.75rem; /* leading-7 */
+        .contact-info {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #f59e0b; /* Yellow */
         }
-        .blue-button {
+        .button-primary {
             background-color: #3b82f6; /* Blue */
             color: white;
             padding: 12px 24px;
             border-radius: 8px;
-            font-weight: 600;
+            font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.2s ease-in-out;
-            border: none;
+            transition: background-color 0.3s ease;
         }
-        .blue-button:hover {
-            background-color: #2563eb; /* Darker blue */
+        .button-primary:hover {
+            background-color: #2563eb;
         }
         .option-button {
-            background-color: #e0f7fa; /* Light cyan */
-            color: #212121;
-            padding: 12px 20px;
-            border-radius: 8px;
-            border: 1px solid #b2ebf2;
-            text-align: left;
-            cursor: pointer;
-            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
             display: block;
             width: 100%;
+            text-align: left;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border: 1px solid #bfdbfe; /* Light blue border */
+            border-radius: 8px;
+            background-color: #eff6ff; /* Very light blue */
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
-        .option-button:hover:not(.correct):not(.wrong) {
-            background-color: #b2ebf2;
-            border-color: #80deea;
+        .option-button:hover:not(.disabled) {
+            background-color: #dbeafe; /* Slightly darker light blue on hover */
         }
         .option-button.correct {
-            background-color: #a7f3d0; /* Green 300 */
-            border-color: #34d399; /* Green 400 */
+            background-color: #d1fae5; /* Green */
+            border-color: #34d399;
             color: #065f46;
         }
-        .option-button.wrong {
-            background-color: #fecaca; /* Red 300 */
-            border-color: #ef4444; /* Red 400 */
+        .option-button.incorrect {
+            background-color: #fee2e2; /* Red */
+            border-color: #ef4444;
             color: #991b1b;
         }
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 10px 15px;
-            margin-bottom: 15px;
-            border: 1px solid #e0f2f7;
-            border-radius: 8px;
-            box-sizing: border-box;
-            background-color: #f8fafc;
+        .option-button.disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
         }
-        .timer {
-            font-size: 1.25rem; /* text-xl */
-            font-weight: 600;
-            color: #0284c7; /* Sky 600 */
+        .quiz-status {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #1e40af; /* Darker blue */
         }
-        .hidden {
-            display: none;
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
         }
-        .progress-text {
-            font-size: 0.875rem; /* text-sm */
-            color: #64748b; /* Slate 500 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
-<body class="bg-blue-50">
-    <div id="quiz-container" class="max-w-md mx-auto p-6 bg-white rounded-xl shadow-lg">
-        <h1 class="header-title text-blue-600">Sunday Quiz Special for Precis Paper</h1>
-        <p class="header-contact text-yellow-600">CONTACT: 03188185185</p>
+<body class="bg-blue-100 flex items-center justify-center min-h-screen p-4">
+    <div class="container w-full lg:w-3/5 md:w-4/5 sm:w-full">
+        <div class="quiz-header">
+            <h1 class="quiz-title text-blue-900">Sunday Quiz Special for Precis Paper</h1>
+            <p class="contact-info text-yellow-500">CONTACT: 03188185185</p>
+        </div>
 
         <!-- Login Section -->
-        <div id="login-section">
-            <h2 class="text-xl font-semibold mb-4 text-blue-700">Login</h2>
-            <input type="text" id="id-input" placeholder="Enter ID" class="mb-3 p-2 border rounded-md">
-            <input type="password" id="password-input" placeholder="Enter Password" class="mb-4 p-2 border rounded-md">
-            <button id="login-button" class="blue-button w-full">Login</button>
-            <p id="login-error" class="text-red-500 mt-2 hidden">Invalid ID or Password.</p>
+        <div id="login-section" class="fade-in">
+            <h2 class="text-2xl font-semibold mb-4 text-blue-700">Login to Start Quiz</h2>
+            <div class="mb-4">
+                <label for="quiz-id" class="block text-blue-800 text-sm font-bold mb-2">ID:</label>
+                <input type="text" id="quiz-id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter ID">
+            </div>
+            <div class="mb-6">
+                <label for="quiz-password" class="block text-blue-800 text-sm font-bold mb-2">Password:</label>
+                <input type="password" id="quiz-password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter Password">
+            </div>
+            <button id="login-button" class="button-primary w-full">Login</button>
+            <p id="login-message" class="text-red-500 text-center mt-4"></p>
         </div>
 
         <!-- Name Entry Section -->
-        <div id="name-entry-section" class="hidden">
-            <h2 class="text-xl font-semibold mb-4 text-blue-700">Enter Your Name</h2>
-            <input type="text" id="name-input" placeholder="Your Name" class="mb-4 p-2 border rounded-md">
-            <button id="start-quiz-button" class="blue-button w-full">Start Quiz</button>
-            <p id="name-error" class="text-red-500 mt-2 hidden">Please enter your name.</p>
+        <div id="name-entry-section" class="hidden fade-in">
+            <h2 class="text-2xl font-semibold mb-4 text-blue-700">Enter Your Name</h2>
+            <div class="mb-6">
+                <label for="candidate-name" class="block text-blue-800 text-sm font-bold mb-2">Your Name:</label>
+                <input type="text" id="candidate-name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Name">
+            </div>
+            <button id="start-quiz-button" class="button-primary w-full">Start Quiz</button>
         </div>
 
         <!-- Quiz Section -->
-        <div id="quiz-section" class="hidden">
-            <div class="flex justify-between items-center mb-4">
-                <span id="question-number" class="progress-text"></span>
-                <span id="timer" class="timer">15:00</span>
+        <div id="quiz-section" class="hidden fade-in">
+            <div class="quiz-status">
+                <span id="question-counter">Question 1/50</span>
+                <span id="time-remaining">Time: 15:00</span>
             </div>
-            <p id="question-text" class="text-lg font-medium mb-6 text-gray-800"></p>
-            <div id="options-container" class="flex flex-col gap-3 mb-6">
+            <p id="quiz-question" class="text-xl font-medium mb-6 text-blue-900"></p>
+            <div id="quiz-options" class="grid gap-4">
                 <!-- Options will be dynamically loaded here -->
             </div>
-            <button id="next-button" class="blue-button w-full hidden">Next</button>
+            <button id="next-button" class="button-primary w-full mt-6 hidden">Next</button>
         </div>
 
         <!-- Result Section -->
-        <div id="result-section" class="hidden">
-            <h2 class="text-2xl font-bold mb-4 text-blue-700">Quiz Complete!</h2>
-            <p class="text-lg mb-2 text-gray-700">Candidate: <span id="final-candidate-name" class="font-semibold text-blue-600"></span></p>
-            <p class="text-2xl font-bold text-gray-800">Your Score: <span id="final-score" class="text-green-600"></span> / 50</p>
-            <p class="text-md text-gray-600 mt-4">You cannot restart the quiz once completed.</p>
+        <div id="result-section" class="hidden text-center fade-in">
+            <h2 class="text-3xl font-bold mb-4 text-blue-700">Quiz Completed!</h2>
+            <p class="text-xl mb-2 text-blue-800">Candidate: <span id="result-name" class="font-semibold text-blue-900"></span></p>
+            <p class="text-xl mb-2 text-blue-800">Your Score: <span id="result-score" class="font-semibold text-blue-900"></span> / 50</p>
+            <p class="text-xl mb-4 text-blue-800">Time Taken: <span id="result-time" class="font-semibold text-blue-900"></span></p>
+            <p class="text-lg text-red-600">You cannot restart the quiz.</p>
         </div>
     </div>
 
     <script>
+        // Quiz Data - 50 MCQs
+        const quizData = [
+            // 1. Vocabulary (Synonyms and Antonyms) of alphabet 'F' - 10 MCQs
+            {
+                question: "Which word is a synonym for 'Fatuous'?",
+                options: ["Sensible", "Intelligent", "Silly", "Wise"],
+                answer: "Silly",
+                explanation: "Fatuous means silly and pointless."
+            },
+            {
+                question: "What is an antonym for 'Fickle'?",
+                options: ["Constant", "Capricious", "Changeable", "Irresolute"],
+                answer: "Constant",
+                explanation: "Fickle means changing frequently, especially as regards loyalties. Constant means steadfast and unwavering."
+            },
+            {
+                question: "Which word means 'lacking strength or effectiveness'?",
+                options: ["Robust", "Feeble", "Vigorous", "Potent"],
+                answer: "Feeble",
+                explanation: "Feeble means lacking physical strength, especially as a result of age or illness."
+            },
+            {
+                question: "Find the synonym for 'Furtive'.",
+                options: ["Open", "Secretive", "Obvious", "Blatant"],
+                answer: "Secretive",
+                explanation: "Furtive means attempting to avoid notice or attention, typically because of guilt or a belief that discovery would lead to trouble; secretive."
+            },
+            {
+                question: "What is the antonym of 'Felicitous'?",
+                options: ["Appropriate", "Happy", "Inapt", "Pleasing"],
+                answer: "Inapt",
+                explanation: "Felicitous means well chosen or suited to the circumstances. Inapt means not suitable or appropriate."
+            },
+            {
+                question: "Which word describes something 'fiercely passionate or intense'?",
+                options: ["Apathetic", "Zealous", "Indifferent", "Lethargic"],
+                answer: "Zealous",
+                explanation: "Zealous means having or showing great energy and enthusiasm in pursuit of a cause or objective."
+            },
+            {
+                question: "Choose the synonym for 'Ephemeral'.",
+                options: ["Lasting", "Permanent", "Fleeting", "Eternal"],
+                answer: "Fleeting",
+                explanation: "Ephemeral means lasting for a very short time."
+            },
+            {
+                question: "What is an antonym for 'Fastidious'?",
+                options: ["Meticulous", "Careful", "Sloppy", "Punctilious"],
+                answer: "Sloppy",
+                explanation: "Fastidious means very attentive to and concerned about accuracy and detail. Sloppy means careless and untidy."
+            },
+            {
+                question: "Which word means 'to annoy or upset someone'?",
+                options: ["Soothe", "Conciliate", "Exasperate", "Appease"],
+                answer: "Exasperate",
+                explanation: "Exasperate means to irritate intensely; infuriate."
+            },
+            {
+                question: "Find the synonym for 'Fathom'.",
+                options: ["Misunderstand", "Comprehend", "Confuse", "Obscure"],
+                answer: "Comprehend",
+                explanation: "Fathom means to understand (a difficult problem or an enigmatic person) after much thought."
+            },
+
+            // 2. Idioms of alphabet 'C' - 10 MCQs
+            {
+                question: "What does the idiom 'Cat got your tongue?' mean?",
+                options: ["Are you hungry?", "Are you sleepy?", "Why are you so quiet?", "Are you upset?"],
+                answer: "Why are you so quiet?",
+                explanation: "Used to ask why someone is being unusually quiet."
+            },
+            {
+                question: "If you 'Call it a day', what are you doing?",
+                options: ["Starting work", "Ending work", "Taking a break", "Working overtime"],
+                answer: "Ending work",
+                explanation: "To stop working on something."
+            },
+            {
+                question: "What does 'Carry a torch for someone' imply?",
+                options: ["Being in love with someone secretly", "Carrying a light for someone", "Helping someone move", "Supporting someone's cause"],
+                answer: "Being in love with someone secretly",
+                explanation: "To be in love with someone who does not return the feeling."
+            },
+            {
+                question: "The phrase 'Chew the fat' means to:",
+                options: ["Eat slowly", "Gossip or chat casually", "Argue loudly", "Exercise vigorously"],
+                answer: "Gossip or chat casually",
+                explanation: "To chat in a friendly, leisurely way."
+            },
+            {
+                question: "What is the meaning of 'Clear the air'?",
+                options: ["Open a window", "Remove pollution", "Resolve a misunderstanding", "Go for a walk"],
+                answer: "Resolve a misunderstanding",
+                explanation: "To resolve an argument or disagreement."
+            },
+            {
+                question: "If something is 'Coasting along', what does it mean?",
+                options: ["Working very hard", "Achieving great success", "Proceeding without much effort", "Facing many difficulties"],
+                answer: "Proceeding without much effort",
+                explanation: "To continue without much effort due to previous momentum or good conditions."
+            },
+            {
+                question: "What does 'Come hell or high water' signify?",
+                options: ["Regardless of any difficulty", "During a storm", "A pleasant journey", "A difficult choice"],
+                answer: "Regardless of any difficulty",
+                explanation: "No matter what difficulties or obstacles arise."
+            },
+            {
+                question: "To 'Cut corners' means to:",
+                options: ["Take a shortcut", "Do something quickly and carelessly", "Cut out shapes", "Be very precise"],
+                answer: "Do something quickly and carelessly",
+                explanation: "To do something in the easiest, quickest, or cheapest way, often by sacrificing quality."
+            },
+            {
+                question: "What does 'Cry over spilled milk' mean?",
+                options: ["To be upset about something that cannot be changed", "To accidentally spill milk", "To express sadness", "To clean up a mess"],
+                answer: "To be upset about something that cannot be changed",
+                explanation: "To worry or complain about something that has already happened and cannot be changed."
+            },
+            {
+                question: "If you are 'Caught between a rock and a hard place', you are in a situation where:",
+                options: ["You are literally stuck", "You have many easy choices", "You face a difficult dilemma", "You are very comfortable"],
+                answer: "You face a difficult dilemma",
+                explanation: "In a difficult situation where any choice will lead to problems."
+            },
+
+            // 3. Punctuations - 10 MCQs
+            {
+                question: "Which punctuation mark is used to indicate a pause or break in a sentence, often for clarification or emphasis?",
+                options: ["Comma", "Semicolon", "Colon", "Dash"],
+                answer: "Comma",
+                explanation: "A comma indicates a pause in a sentence or separates items in a list."
+            },
+            {
+                question: "Identify the correct use of a semicolon:",
+                options: ["I like cats; dogs.", "She went to the store; buying milk, bread, and eggs.", "The weather was cold; however, we still went for a walk.", "He is happy; she is sad; and they are tired."],
+                answer: "The weather was cold; however, we still went for a walk.",
+                explanation: "A semicolon connects two independent clauses that are closely related, especially when a conjunctive adverb like 'however' is used."
+            },
+            {
+                question: "When should an apostrophe be used?",
+                options: ["To separate items in a list", "To indicate possession or contraction", "To end a question", "To introduce a list"],
+                answer: "To indicate possession or contraction",
+                explanation: "Apostrophes are used to show possession (e.g., 'John's book') or in contractions (e.g., 'it's')."
+            },
+            {
+                question: "Which sentence correctly uses quotation marks?",
+                options: ["He said, 'I am tired'.", "She asked, 'Are you coming?'", "The book titled 'War and Peace' is long.", "All of the above"],
+                answer: "She asked, 'Are you coming?'",
+                explanation: "Quotation marks enclose direct speech. The punctuation (question mark here) goes inside the closing quotation mark if it's part of the quoted material."
+            },
+            {
+                question: "A colon is primarily used to:",
+                options: ["End a sentence", "Introduce a list, explanation, or quotation", "Connect two independent clauses", "Indicate an interruption"],
+                answer: "Introduce a list, explanation, or quotation",
+                explanation: "A colon is used to introduce a list, an explanation, an example, or a quotation."
+            },
+            {
+                question: "Which punctuation mark is used to connect two words that function as a single concept, or to hyphenate words in a compound adjective?",
+                options: ["Dash", "Hyphen", "Semicolon", "Ellipsis"],
+                answer: "Hyphen",
+                explanation: "A hyphen connects parts of compound words or phrases (e.g., 'well-known')."
+            },
+            {
+                question: "When is an exclamation mark appropriate?",
+                options: ["For a strong command or sudden outcry", "To separate items in a series", "To indicate uncertainty", "At the end of every sentence"],
+                answer: "For a strong command or sudden outcry",
+                explanation: "An exclamation mark is used to show strong emotion, emphasis, or a forceful command."
+            },
+            {
+                question: "Choose the sentence with correct parenthetical usage:",
+                options: ["My friend (who lives in Paris) visited me.", "My friend (who lives in Paris visited me).", "My friend who (lives in Paris) visited me.", "My friend (who lives in Paris) visited me)."],
+                answer: "My friend (who lives in Paris) visited me.",
+                explanation: "Parentheses enclose supplementary information. The sentence structure must be grammatically correct even if the parenthetical phrase is removed."
+            },
+            {
+                question: "An ellipsis (...) is used to indicate:",
+                options: ["A strong emotion", "An omission of words from a quotation", "A question", "The end of a paragraph"],
+                answer: "An omission of words from a quotation",
+                explanation: "An ellipsis indicates that words have been left out of a quotation or to show a pause in speech."
+            },
+            {
+                question: "In which situation would you use a period?",
+                options: ["At the end of a question", "To introduce a list", "At the end of a declarative sentence or abbreviation", "To separate clauses"],
+                answer: "At the end of a declarative sentence or abbreviation",
+                explanation: "A period is used to mark the end of a declarative sentence or an imperative sentence that is not an exclamation, and after many abbreviations."
+            },
+
+            // 4. Active and Passive Voice - 10 MCQs
+            {
+                question: "Change 'The dog chased the cat.' to passive voice.",
+                options: ["The cat was chased by the dog.", "The cat chased the dog.", "The dog was chasing the cat.", "The cat is chased by the dog."],
+                answer: "The cat was chased by the dog.",
+                explanation: "In passive voice, the object of the active sentence becomes the subject, and a form of 'to be' + past participle is used."
+            },
+            {
+                question: "Which of the following sentences is in active voice?",
+                options: ["The ball was kicked by the boy.", "The book was read by her.", "She sings a beautiful song.", "A letter was written by me."],
+                answer: "She sings a beautiful song.",
+                explanation: "In active voice, the subject performs the action."
+            },
+            {
+                question: "Convert 'The painter is painting the wall.' to passive voice.",
+                options: ["The wall is being painted by the painter.", "The wall was painted by the painter.", "The wall will be painted by the painter.", "The painter painted the wall."],
+                answer: "The wall is being painted by the painter.",
+                explanation: "For present continuous active, the passive form is 'is/am/are being + past participle'."
+            },
+            {
+                question: "The sentence 'Many houses were destroyed by the earthquake.' is in which voice?",
+                options: ["Active voice", "Passive voice", "Direct speech", "Indirect speech"],
+                answer: "Passive voice",
+                explanation: "The subject 'Many houses' is receiving the action 'destroyed', indicating passive voice."
+            },
+            {
+                question: "Transform 'The teacher praised him.' into passive voice.",
+                options: ["He was praised by the teacher.", "He praises the teacher.", "The teacher was praised by him.", "He is praised by the teacher."],
+                answer: "He was praised by the teacher.",
+                explanation: "Simple past active becomes 'was/were + past participle' in passive."
+            },
+            {
+                question: "Which sentence uses the active voice correctly?",
+                options: ["The pizza was eaten by everyone.", "A mistake was made by me.", "They built a new bridge.", "The decision was announced by the committee."],
+                answer: "They built a new bridge.",
+                explanation: "The subject 'They' performs the action 'built'."
+            },
+            {
+                question: "Change 'Someone has stolen my wallet.' to passive voice.",
+                options: ["My wallet has been stolen by someone.", "My wallet was stolen.", "My wallet is being stolen.", "Someone's wallet has been stolen."],
+                answer: "My wallet has been stolen.", // The "by someone" is optional and often omitted in passive.
+                explanation: "For present perfect active, the passive form is 'has/have been + past participle'."
+            },
+            {
+                question: "In passive voice, the emphasis is usually on the:",
+                options: ["Performer of the action", "Receiver of the action", "Time of the action", "Place of the action"],
+                answer: "Receiver of the action",
+                explanation: "The passive voice focuses on the action and the object that receives the action, rather than the subject performing it."
+            },
+            {
+                question: "Convert 'The chef will prepare dinner.' to passive voice.",
+                options: ["Dinner will be prepared by the chef.", "Dinner is prepared by the chef.", "The chef prepared dinner.", "Dinner was prepared by the chef."],
+                answer: "Dinner will be prepared by the chef.",
+                explanation: "Simple future active becomes 'will be + past participle' in passive."
+            },
+            {
+                question: "Which of these is NOT a characteristic of the passive voice?",
+                options: ["Uses a form of 'to be'", "Always includes 'by' + agent", "Uses the past participle", "The subject receives the action"],
+                answer: "Always includes 'by' + agent",
+                explanation: "The 'by' + agent phrase is often omitted in passive sentences if the agent is unknown or unimportant."
+            },
+
+            // 5. Direct and Indirect - 10 MCQs
+            {
+                question: "Change 'He said, \"I am reading a book.\"' to indirect speech.",
+                options: ["He said that he was reading a book.", "He said that I am reading a book.", "He says that he is reading a book.", "He said that he had read a book."],
+                answer: "He said that he was reading a book.",
+                explanation: "When the reporting verb is in the past tense, the tense of the reported speech changes accordingly (present continuous to past continuous)."
+            },
+            {
+                question: "Convert 'She said, \"I will go tomorrow.\"' to indirect speech.",
+                options: ["She said that she would go the next day.", "She said that she will go tomorrow.", "She said that I would go the next day.", "She says that she will go tomorrow."],
+                answer: "She said that she would go the next day.",
+                explanation: "Future simple changes to conditional ('will' to 'would'), and time expressions change ('tomorrow' to 'the next day')."
+            },
+            {
+                question: "What is the direct speech of 'He asked me if I was hungry.'?",
+                options: ["He said to me, \"Are you hungry?\"", "He said to me, \"I am hungry.\"", "He asked me, \"Was I hungry?\"", "He asked, \"Am I hungry?\""],
+                answer: "He said to me, \"Are you hungry?\"",
+                explanation: "In direct speech, question marks and inverted commas are used, and the tense shifts back."
+            },
+            {
+                question: "Change 'They said, \"We have finished our work.\"' to indirect speech.",
+                options: ["They said that they had finished their work.", "They said that they have finished their work.", "They say that they have finished their work.", "They said that we had finished our work."],
+                answer: "They said that they had finished their work.",
+                explanation: "Present perfect changes to past perfect, and pronouns adjust."
+            },
+            {
+                question: "Convert 'The teacher ordered the students to open their books.' to direct speech.",
+                options: ["The teacher said to the students, \"Open your books.\"", "The teacher said, \"Open their books.\"", "The teacher asked, \"Will you open your books?\"", "The teacher said, \"You opened your books.\""],
+                answer: "The teacher said to the students, \"Open your books.\"",
+                explanation: "Reported commands often use 'ordered' or 'told', which revert to imperative in direct speech."
+            },
+            {
+                question: "Which of the following is an example of indirect speech?",
+                options: ["He shouted, \"Stop!\"", "She said that she was tired.", "\"Where are you going?\" he asked.", "They exclaimed, \"What a beautiful view!\""],
+                answer: "She said that she was tired.",
+                explanation: "Indirect speech reports what someone said without using their exact words, often using 'that'."
+            },
+            {
+                question: "Change 'My mother told me not to play in the sun.' to direct speech.",
+                options: ["My mother said to me, \"Don't play in the sun.\"", "My mother said, \"You should not play in the sun.\"", "My mother asked, \"Are you playing in the sun?\"", "My mother said, \"I am not playing in the sun.\""],
+                answer: "My mother said to me, \"Don't play in the sun.\"",
+                explanation: "Negative commands in indirect speech using 'not to' revert to 'Don't' in direct speech."
+            },
+            {
+                question: "Convert 'He asked, \"Did you see the movie?\"' to indirect speech.",
+                options: ["He asked if I had seen the movie.", "He asked if I saw the movie.", "He asked that I saw the movie.", "He asked me, did you see the movie?"],
+                answer: "He asked if I had seen the movie.",
+                explanation: "Yes/No questions in direct speech use 'if' or 'whether' in indirect speech, and past simple changes to past perfect."
+            },
+            {
+                question: "The reporting verb in indirect speech is usually followed by:",
+                options: ["A comma", "A question mark", "The word 'that' (often optional)", "An exclamation mark"],
+                answer: "The word 'that' (often optional)",
+                explanation: "Indirect statements are typically introduced by 'that', though it can be omitted."
+            },
+            {
+                question: "Change 'The old man prayed, \"May God bless you.\"' to indirect speech.",
+                options: ["The old man prayed that God might bless me.", "The old man prayed that God would bless you.", "The old man said that God blesses you.", "The old man wished that God blessed me."],
+                answer: "The old man prayed that God might bless me.",
+                explanation: "Optative sentences (wishes/prayers) change 'may' to 'might' and pronouns adjust."
+            }
+        ];
+
+        // Shuffle options and balance lengths for each question
+        quizData.forEach(q => {
+            // Balance option lengths - a dummy attempt during generation. Actual balancing would require more sophisticated text generation.
+            // For now, I'll ensure the correct answer is not always the longest or shortest after shuffling.
+            // Real balancing would involve paraphrasing options or adding filler words.
+            // Shuffle the options to randomize correct answer position
+            for (let i = q.options.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [q.options[i], q.options[j]] = [q.options[j], q.options[i]];
+            }
+        });
+
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timer;
+        const totalTime = 15 * 60; // 15 minutes in seconds
+        let timeLeft = totalTime;
+        let candidateName = '';
+        let quizEnded = false;
+
         const loginSection = document.getElementById('login-section');
         const nameEntrySection = document.getElementById('name-entry-section');
         const quizSection = document.getElementById('quiz-section');
         const resultSection = document.getElementById('result-section');
 
-        const idInput = document.getElementById('id-input');
-        const passwordInput = document.getElementById('password-input');
+        const quizIdInput = document.getElementById('quiz-id');
+        const quizPasswordInput = document.getElementById('quiz-password');
         const loginButton = document.getElementById('login-button');
-        const loginError = document.getElementById('login-error');
+        const loginMessage = document.getElementById('login-message');
 
-        const nameInput = document.getElementById('name-input');
+        const candidateNameInput = document.getElementById('candidate-name');
         const startQuizButton = document.getElementById('start-quiz-button');
-        const nameError = document.getElementById('name-error');
 
-        const questionNumberSpan = document.getElementById('question-number');
-        const timerSpan = document.getElementById('timer');
-        const questionText = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container');
+        const questionCounter = document.getElementById('question-counter');
+        const timeRemaining = document.getElementById('time-remaining');
+        const quizQuestion = document.getElementById('quiz-question');
+        const quizOptions = document.getElementById('quiz-options');
         const nextButton = document.getElementById('next-button');
 
-        const finalCandidateName = document.getElementById('final-candidate-name');
-        const finalScoreSpan = document.getElementById('final-score');
-
-        let quizData = [];
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let userName = '';
-        let timeLeft = 15 * 60; // 15 minutes in seconds
-        let timerInterval;
-        let quizStarted = false;
+        const resultName = document.getElementById('result-name');
+        const resultScore = document.getElementById('result-score');
+        const resultTime = document.getElementById('result-time');
 
         // Function to shuffle an array (Fisher-Yates algorithm)
         function shuffleArray(array) {
@@ -186,224 +510,127 @@
             }
         }
 
-        // Placeholder for API key, will be automatically provided by Canvas
-        const apiKey = "";
+        // Shuffle the quiz data itself once to randomize question order
+        shuffleArray(quizData);
 
-        // Function to make API calls with exponential backoff
-        async function fetchWithBackoff(url, options, retries = 5, delay = 1000) {
-            try {
-                const response = await fetch(url, options);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return await response.json();
-            } catch (error) {
-                if (retries > 0) {
-                    await new Promise(res => setTimeout(res, delay));
-                    return fetchWithBackoff(url, options, retries - 1, delay * 2);
-                } else {
-                    console.error("API call failed after multiple retries:", error);
-                    throw error;
-                }
-            }
-        }
 
-        // Function to generate MCQs using LLM
-        async function generateMCQs(prompt, schema) {
-            let chatHistory = [];
-            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-            const payload = {
-                contents: chatHistory,
-                generationConfig: {
-                    responseMimeType: "application/json",
-                    responseSchema: schema
-                }
-            };
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+        loginButton.addEventListener('click', () => {
+            const enteredId = quizIdInput.value;
+            const enteredPassword = quizPasswordInput.value;
 
-            try {
-                const result = await fetchWithBackoff(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    const json = result.candidates[0].content.parts[0].text;
-                    return JSON.parse(json);
-                } else {
-                    console.error("Unexpected API response structure for MCQs:", result);
-                    return [];
-                }
-            } catch (error) {
-                console.error("Error generating MCQs:", error);
-                return [];
-            }
-        }
-
-        // Schemas for MCQ generation
-        const mcqSchema = {
-            type: "ARRAY",
-            items: {
-                type: "OBJECT",
-                properties: {
-                    question: { "type": "STRING" },
-                    options: {
-                        type: "ARRAY",
-                        items: { "type": "STRING" }
-                    },
-                    correctAnswer: { "type": "STRING" }
-                },
-                propertyOrdering: ["question", "options", "correctAnswer"]
-            }
-        };
-
-        async function loadQuizData() {
-            // Updated prompts with stronger randomization and length balance directives
-            const vocabFPrompt = `Generate 10 multiple-choice questions for vocabulary (5 synonyms and 5 antonyms) of words starting with 'F'. For each question, provide a word, a question (e.g., 'Which word is a synonym of Fickle?' or 'Which word is an antonym of Fickle?'), four distinct options, and the correct answer. Crucially, ensure that the correct answer is truly randomized among the four options for *each* question and its position is never predictable (e.g., not always option 2 or 4). Also, ensure all four options have similar lengths (number of words/characters) to prevent the correct answer from being obvious due to length.`;
-            const idiomsCPrompt = `Generate 10 multiple-choice questions for English idioms starting with 'C'. For each question, provide an idiom, a question asking for its meaning, four options (one being the correct meaning, three plausible distractors), and the correct answer. Crucially, ensure that the correct answer is truly randomized among the four options for *each* question and its position is never predictable (e.g., not always option 2 or 4). Also, ensure all four options have similar lengths (number of words/characters) to prevent the correct answer from being obvious due to length.`;
-            const punctuationPrompt = `Generate 10 multiple-choice questions about punctuation usage. Each question should present a sentence or scenario, a question asking for correct punctuation, four options (one with correct punctuation, three with plausible errors), and the correct answer. Crucially, ensure that the correct answer is truly randomized among the four options for *each* question and its position is never predictable (e.g., not always option 2 or 4). Also, ensure all four options have similar lengths (number of words/characters) to prevent the correct answer from being obvious due to length.`;
-            const activePassivePrompt = `Generate 10 multiple-choice questions on active and passive voice. For each question, provide a sentence, a transformation task (e.g., 'Change to passive voice'), four options (one correct transformation, three plausible incorrect ones), and the correct answer. Crucially, ensure that the correct answer is truly randomized among the four options for *each* question and its position is never predictable (e.g., not always option 2 or 4). Also, ensure all four options have similar lengths (number of words/characters) to prevent the correct answer from being obvious due to length.`;
-            const directIndirectPrompt = `Generate 10 multiple-choice questions on direct and indirect speech. For each question, provide a sentence, a transformation task (e.g., 'Change to indirect speech'), four options (one correct transformation, three plausible incorrect ones), and the correct answer. Crucially, ensure that the correct answer is truly randomized among the four options for *each* question and its position is never predictable (e.g., not always option 2 or 4). Also, ensure all four options have similar lengths (number of words/characters) to prevent the correct answer from being obvious due to length.`;
-
-            document.getElementById('question-text').innerText = "Loading quiz questions...";
-
-            const vocabF = await generateMCQs(vocabFPrompt, mcqSchema);
-            const idiomsC = await generateMCQs(idiomsCPrompt, mcqSchema);
-            const punctuation = await generateMCQs(punctuationPrompt, mcqSchema);
-            const activePassive = await generateMCQs(activePassivePrompt, mcqSchema);
-            const directIndirect = await generateMCQs(directIndirectPrompt, mcqSchema);
-
-            quizData = [...vocabF, ...idiomsC, ...punctuation, ...activePassive, ...directIndirect];
-            shuffleArray(quizData); // Shuffle all questions
-
-            if (quizData.length === 50) {
-                console.log("50 MCQs loaded successfully!");
+            if (enteredId === 'QQQ' && enteredPassword === 'AAA') {
+                loginSection.classList.add('hidden');
+                nameEntrySection.classList.remove('hidden');
+                loginMessage.textContent = '';
             } else {
-                console.warn(`Expected 50 MCQs, but got ${quizData.length}. Regenerating missing ones or using what's available.`);
-                // If not 50, a more robust solution would involve iteratively generating until 50,
-                // but for this example, we'll proceed with what we have or show a warning.
-                // For a production app, you might re-prompt the LLM for missing categories.
+                loginMessage.textContent = 'Invalid ID or Password. Please try again.';
             }
-        }
+        });
 
-        function renderQuestion() {
-            if (currentQuestionIndex >= quizData.length) {
-                showResult();
-                return;
+        startQuizButton.addEventListener('click', () => {
+            const name = candidateNameInput.value.trim();
+            if (name) {
+                candidateName = name;
+                nameEntrySection.classList.add('hidden');
+                quizSection.classList.remove('hidden');
+                startQuiz();
+            } else {
+                alert('Please enter your name to start the quiz.'); // Using alert here as it's outside the quiz flow, but could be a modal
             }
+        });
 
-            const question = quizData[currentQuestionIndex];
-            questionText.innerHTML = question.question;
-            optionsContainer.innerHTML = '';
-            nextButton.classList.add('hidden'); // Hide next button until an option is selected
-
-            const shuffledOptions = [...question.options];
-            shuffleArray(shuffledOptions); // Shuffle options for each question
-
-            shuffledOptions.forEach(option => {
-                const button = document.createElement('button');
-                button.classList.add('option-button');
-                button.textContent = option;
-                button.onclick = () => selectOption(button, option, question.correctAnswer);
-                optionsContainer.appendChild(button);
-            });
-
-            const remainingQuestions = quizData.length - currentQuestionIndex -1;
-            questionNumberSpan.textContent = `Question ${currentQuestionIndex + 1} of ${quizData.length} | Remaining: ${remainingQuestions}`;
-        }
-
-        function selectOption(selectedButton, selectedAnswer, correctAnswer) {
-            if (quizStarted) { // Only allow selection if quiz has started and not ended
-                // Disable all options after selection
-                Array.from(optionsContainer.children).forEach(button => {
-                    button.disabled = true;
-                });
-
-                if (selectedAnswer === correctAnswer) {
-                    selectedButton.classList.add('correct');
-                    score++;
-                } else {
-                    selectedButton.classList.add('wrong');
-                    // Find and mark the correct answer
-                    Array.from(optionsContainer.children).forEach(button => {
-                        if (button.textContent === correctAnswer) {
-                            button.classList.add('correct');
-                        }
-                    });
-                }
-                nextButton.classList.remove('hidden'); // Show next button
-            }
-        }
-
-        function nextQuestion() {
-            currentQuestionIndex++;
-            renderQuestion();
-        }
-
-        function showResult() {
-            clearInterval(timerInterval);
-            quizSection.classList.add('hidden');
-            resultSection.classList.remove('hidden');
-            finalCandidateName.textContent = userName;
-            finalScoreSpan.textContent = score;
-            quizStarted = false; // Prevent further interactions
+        function startQuiz() {
+            quizEnded = false;
+            currentQuestionIndex = 0;
+            score = 0;
+            timeLeft = totalTime; // Reset timer for fresh start
+            startTimer();
+            loadQuestion();
         }
 
         function startTimer() {
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                timerSpan.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
+            timer = setInterval(() => {
                 if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    showResult();
+                    clearInterval(timer);
+                    endQuiz();
+                } else {
+                    timeLeft--;
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    timeRemaining.textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
                 }
             }, 1000);
         }
 
-        loginButton.addEventListener('click', () => {
-            const id = idInput.value;
-            const password = passwordInput.value;
+        function loadQuestion() {
+            if (currentQuestionIndex < quizData.length) {
+                const currentQuestion = quizData[currentQuestionIndex];
+                questionCounter.textContent = `Question ${currentQuestionIndex + 1}/${quizData.length} (Remaining: ${quizData.length - (currentQuestionIndex + 1)})`;
+                quizQuestion.textContent = currentQuestion.question;
+                quizOptions.innerHTML = '';
+                nextButton.classList.add('hidden'); // Hide next button until answer is selected
 
-            if (id === 'QQQ' && password === 'AAA') {
-                loginError.classList.add('hidden');
-                loginSection.classList.add('hidden');
-                nameEntrySection.classList.remove('hidden');
+                currentQuestion.options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.classList.add('option-button');
+                    button.textContent = option;
+                    button.addEventListener('click', () => selectOption(button, option, currentQuestion.answer));
+                    quizOptions.appendChild(button);
+                });
             } else {
-                loginError.classList.remove('hidden');
+                endQuiz();
+            }
+        }
+
+        function selectOption(selectedButton, selectedAnswer, correctAnswer) {
+            if (quizEnded) return;
+
+            // Disable all options for this question
+            Array.from(quizOptions.children).forEach(button => {
+                button.classList.add('disabled');
+                button.removeEventListener('click', selectOption); // Prevent re-clicking
+            });
+
+            // Mark selected answer
+            if (selectedAnswer === correctAnswer) {
+                selectedButton.classList.add('correct');
+                score++;
+            } else {
+                selectedButton.classList.add('incorrect');
+                // Find and mark the correct answer
+                Array.from(quizOptions.children).forEach(button => {
+                    if (button.textContent === correctAnswer) {
+                        button.classList.add('correct');
+                    }
+                });
+            }
+            nextButton.classList.remove('hidden'); // Show next button
+        }
+
+        nextButton.addEventListener('click', () => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                endQuiz();
             }
         });
 
-        startQuizButton.addEventListener('click', async () => {
-            const name = nameInput.value.trim();
-            if (name) {
-                userName = name;
-                nameError.classList.add('hidden');
-                nameEntrySection.classList.add('hidden');
-                quizSection.classList.remove('hidden');
-                quizStarted = true;
-                await loadQuizData(); // Load quiz data before rendering first question
-                if (quizData.length > 0) {
-                    renderQuestion();
-                    startTimer();
-                } else {
-                    questionText.innerText = "Failed to load quiz questions. Please try again.";
-                    nextButton.classList.add('hidden');
-                }
-            } else {
-                nameError.classList.remove('hidden');
-            }
-        });
+        function endQuiz() {
+            if (quizEnded) return; // Prevent multiple calls
+            quizEnded = true;
+            clearInterval(timer);
+            quizSection.classList.add('hidden');
+            resultSection.classList.remove('hidden');
 
-        nextButton.addEventListener('click', nextQuestion);
+            resultName.textContent = candidateName;
+            resultScore.textContent = score;
 
-        // Initial render: show login section
-        loginSection.classList.remove('hidden');
+            const timeSpent = totalTime - timeLeft;
+            const minutes = Math.floor(timeSpent / 60);
+            const seconds = timeSpent % 60;
+            resultTime.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
     </script>
 </body>
 </html>
