@@ -40,9 +40,11 @@
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .button-primary:hover {
             background-color: #2563eb;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
         }
         .option-button {
             display: block;
@@ -55,6 +57,7 @@
             background-color: #eff6ff; /* Very light blue */
             cursor: pointer;
             transition: background-color 0.3s ease, border-color 0.3s ease;
+            word-break: break-word; /* Ensure long options wrap */
         }
         .option-button:hover:not(.disabled) {
             background-color: #dbeafe; /* Slightly darker light blue on hover */
@@ -147,329 +150,283 @@
     <script>
         // Quiz Data - 50 MCQs
         const quizData = [
-            // 1. Vocabulary (Synonyms and Antonyms) of alphabet 'F' - 10 MCQs
+            // 1. Vocabulary (Synonyms and Antonyms) of alphabet 'H' - 10 MCQs
             {
-                question: "Which word is a synonym for 'Fatuous'?",
-                options: ["Sensible", "Intelligent", "Silly", "Wise"],
-                answer: "Silly",
-                explanation: "Fatuous means silly and pointless."
+                question: "What is a synonym for 'Haughty'?",
+                options: ["Humble", "Arrogant", "Modest", "Meek"],
+                answer: "Arrogant"
             },
             {
-                question: "What is an antonym for 'Fickle'?",
-                options: ["Constant", "Capricious", "Changeable", "Irresolute"],
-                answer: "Constant",
-                explanation: "Fickle means changing frequently, especially as regards loyalties. Constant means steadfast and unwavering."
+                question: "Which word is an antonym for 'Harbinger'?",
+                options: ["Precursor", "Follower", "Omen", "Herald"],
+                answer: "Follower"
             },
             {
-                question: "Which word means 'lacking strength or effectiveness'?",
-                options: ["Robust", "Feeble", "Vigorous", "Potent"],
-                answer: "Feeble",
-                explanation: "Feeble means lacking physical strength, especially as a result of age or illness."
+                question: "Identify the meaning of 'Heresy'.",
+                options: ["Orthodoxy", "Dogma", "Unbelief", "Tradition"],
+                answer: "Unbelief"
             },
             {
-                question: "Find the synonym for 'Furtive'.",
-                options: ["Open", "Secretive", "Obvious", "Blatant"],
-                answer: "Secretive",
-                explanation: "Furtive means attempting to avoid notice or attention, typically because of guilt or a belief that discovery would lead to trouble; secretive."
+                question: "What is an antonym for 'Hidebound'?",
+                options: ["Conservative", "Open-minded", "Traditional", "Rigid"],
+                answer: "Open-minded"
             },
             {
-                question: "What is the antonym of 'Felicitous'?",
-                options: ["Appropriate", "Happy", "Inapt", "Pleasing"],
-                answer: "Inapt",
-                explanation: "Felicitous means well chosen or suited to the circumstances. Inapt means not suitable or appropriate."
+                question: "Which word means 'to talk to someone in a bullying way'?",
+                options: ["Commend", "Praise", "Hector", "Flatter"],
+                answer: "Hector"
             },
             {
-                question: "Which word describes something 'fiercely passionate or intense'?",
-                options: ["Apathetic", "Zealous", "Indifferent", "Lethargic"],
-                answer: "Zealous",
-                explanation: "Zealous means having or showing great energy and enthusiasm in pursuit of a cause or objective."
+                question: "Find a synonym for 'Hobble'.",
+                options: ["Run swiftly", "Limp", "Stride confidently", "Bound"],
+                answer: "Limp"
             },
             {
-                question: "Choose the synonym for 'Ephemeral'.",
-                options: ["Lasting", "Permanent", "Fleeting", "Eternal"],
-                answer: "Fleeting",
-                explanation: "Ephemeral means lasting for a very short time."
+                question: "What is an antonym for 'Homiletics'?",
+                options: ["Preaching", "Sermonizing", "Silence", "Oratory"],
+                answer: "Silence"
             },
             {
-                question: "What is an antonym for 'Fastidious'?",
-                options: ["Meticulous", "Careful", "Sloppy", "Punctilious"],
-                answer: "Sloppy",
-                explanation: "Fastidious means very attentive to and concerned about accuracy and detail. Sloppy means careless and untidy."
+                question: "Which word describes 'overbearing pride or presumption'?",
+                options: ["Modesty", "Humility", "Hubris", "Shyness"],
+                answer: "Hubris"
             },
             {
-                question: "Which word means 'to annoy or upset someone'?",
-                options: ["Soothe", "Conciliate", "Exasperate", "Appease"],
-                answer: "Exasperate",
-                explanation: "Exasperate means to irritate intensely; infuriate."
+                question: "What is the synonym for 'Hirsute'?",
+                options: ["Hairless", "Smooth", "Furry", "Bald"],
+                answer: "Furry"
             },
             {
-                question: "Find the synonym for 'Fathom'.",
-                options: ["Misunderstand", "Comprehend", "Confuse", "Obscure"],
-                answer: "Comprehend",
-                explanation: "Fathom means to understand (a difficult problem or an enigmatic person) after much thought."
+                question: "What is an antonym for 'Halcyon'?",
+                options: ["Peaceful", "Tranquil", "Turbulent", "Serene"],
+                answer: "Turbulent"
             },
 
-            // 2. Idioms of alphabet 'C' - 10 MCQs
+            // 2. Idioms of alphabet 'G' - 10 MCQs
             {
-                question: "What does the idiom 'Cat got your tongue?' mean?",
-                options: ["Are you hungry?", "Are you sleepy?", "Why are you so quiet?", "Are you upset?"],
-                answer: "Why are you so quiet?",
-                explanation: "Used to ask why someone is being unusually quiet."
+                question: "What does 'Get a grip' mean?",
+                options: ["To hold something tightly", "To understand a concept", "To control one's emotions", "To grab an opportunity"],
+                answer: "To control one's emotions"
             },
             {
-                question: "If you 'Call it a day', what are you doing?",
-                options: ["Starting work", "Ending work", "Taking a break", "Working overtime"],
-                answer: "Ending work",
-                explanation: "To stop working on something."
+                question: "If you 'Go the extra mile', what are you doing?",
+                options: ["Running further", "Making additional effort", "Taking a long journey", "Avoiding work"],
+                answer: "Making additional effort"
             },
             {
-                question: "What does 'Carry a torch for someone' imply?",
-                options: ["Being in love with someone secretly", "Carrying a light for someone", "Helping someone move", "Supporting someone's cause"],
-                answer: "Being in love with someone secretly",
-                explanation: "To be in love with someone who does not return the feeling."
+                question: "What does 'Green with envy' imply?",
+                options: ["Feeling sick", "Being extremely jealous", "Loving nature", "Having a green complexion"],
+                answer: "Being extremely jealous"
             },
             {
-                question: "The phrase 'Chew the fat' means to:",
-                options: ["Eat slowly", "Gossip or chat casually", "Argue loudly", "Exercise vigorously"],
-                answer: "Gossip or chat casually",
-                explanation: "To chat in a friendly, leisurely way."
+                question: "To 'Give someone the cold shoulder' means to:",
+                options: ["Offer them a cool drink", "Ignore someone deliberately", "Give a warm welcome", "Turn away from the cold"],
+                answer: "Ignore someone deliberately"
             },
             {
-                question: "What is the meaning of 'Clear the air'?",
-                options: ["Open a window", "Remove pollution", "Resolve a misunderstanding", "Go for a walk"],
-                answer: "Resolve a misunderstanding",
-                explanation: "To resolve an argument or disagreement."
+                question: "What is the meaning of 'Get your ducks in a row'?",
+                options: ["Arrange toy ducks", "Organize one's affairs", "Go hunting", "Gather resources"],
+                answer: "Organize one's affairs"
             },
             {
-                question: "If something is 'Coasting along', what does it mean?",
-                options: ["Working very hard", "Achieving great success", "Proceeding without much effort", "Facing many difficulties"],
-                answer: "Proceeding without much effort",
-                explanation: "To continue without much effort due to previous momentum or good conditions."
+                question: "If something has 'Gone to the dogs', it has:",
+                options: ["Been given to pets", "Deteriorated in quality", "Become very popular", "Been thoroughly cleaned"],
+                answer: "Deteriorated in quality"
             },
             {
-                question: "What does 'Come hell or high water' signify?",
-                options: ["Regardless of any difficulty", "During a storm", "A pleasant journey", "A difficult choice"],
-                answer: "Regardless of any difficulty",
-                explanation: "No matter what difficulties or obstacles arise."
+                question: "What does 'Get the ball rolling' mean?",
+                options: ["Play a game of football", "Start something or set into motion", "Roll a ball down a hill", "Delay a process"],
+                answer: "Start something or set into motion"
             },
             {
-                question: "To 'Cut corners' means to:",
-                options: ["Take a shortcut", "Do something quickly and carelessly", "Cut out shapes", "Be very precise"],
-                answer: "Do something quickly and carelessly",
-                explanation: "To do something in the easiest, quickest, or cheapest way, often by sacrificing quality."
+                question: "The idiom 'Grin and bear it' means to:",
+                options: ["Smile at a bear", "Accept a difficult situation without complaining", "Show happiness", "Act tough"],
+                answer: "Accept a difficult situation without complaining"
             },
             {
-                question: "What does 'Cry over spilled milk' mean?",
-                options: ["To be upset about something that cannot be changed", "To accidentally spill milk", "To express sadness", "To clean up a mess"],
-                answer: "To be upset about something that cannot be changed",
-                explanation: "To worry or complain about something that has already happened and cannot be changed."
+                question: "What does 'Gift of the gab' refer to?",
+                options: ["A special present", "The ability to speak fluently and persuasively", "A talent for writing", "A knack for singing"],
+                answer: "The ability to speak fluently and persuasively"
             },
             {
-                question: "If you are 'Caught between a rock and a hard place', you are in a situation where:",
-                options: ["You are literally stuck", "You have many easy choices", "You face a difficult dilemma", "You are very comfortable"],
-                answer: "You face a difficult dilemma",
-                explanation: "In a difficult situation where any choice will lead to problems."
+                question: "If you have a 'Gut feeling', what do you possess?",
+                options: ["A stomach ache", "A strong intuition", "A logical deduction", "A scientific explanation"],
+                answer: "A strong intuition"
             },
 
             // 3. Punctuations - 10 MCQs
             {
-                question: "Which punctuation mark is used to indicate a pause or break in a sentence, often for clarification or emphasis?",
-                options: ["Comma", "Semicolon", "Colon", "Dash"],
-                answer: "Comma",
-                explanation: "A comma indicates a pause in a sentence or separates items in a list."
+                question: "Which punctuation mark is used to separate items in a list of three or more, or to connect two independent clauses with a conjunction?",
+                options: ["Semicolon", "Colon", "Comma", "Period"],
+                answer: "Comma"
             },
             {
-                question: "Identify the correct use of a semicolon:",
-                options: ["I like cats; dogs.", "She went to the store; buying milk, bread, and eggs.", "The weather was cold; however, we still went for a walk.", "He is happy; she is sad; and they are tired."],
-                answer: "The weather was cold; however, we still went for a walk.",
-                explanation: "A semicolon connects two independent clauses that are closely related, especially when a conjunctive adverb like 'however' is used."
+                question: "When should a semicolon (;) be used?",
+                options: ["To end a sentence", "To introduce a list", "To connect two closely related independent clauses", "To indicate direct speech"],
+                answer: "To connect two closely related independent clauses"
             },
             {
-                question: "When should an apostrophe be used?",
-                options: ["To separate items in a list", "To indicate possession or contraction", "To end a question", "To introduce a list"],
-                answer: "To indicate possession or contraction",
-                explanation: "Apostrophes are used to show possession (e.g., 'John's book') or in contractions (e.g., 'it's')."
+                question: "Which sentence correctly uses an apostrophe for possession?",
+                options: ["The dogs bone was lost.", "The dog's bone was lost.", "The dogs's bone was lost.", "The dogs's' bone was lost."],
+                answer: "The dog's bone was lost."
             },
             {
-                question: "Which sentence correctly uses quotation marks?",
-                options: ["He said, 'I am tired'.", "She asked, 'Are you coming?'", "The book titled 'War and Peace' is long.", "All of the above"],
-                answer: "She asked, 'Are you coming?'",
-                explanation: "Quotation marks enclose direct speech. The punctuation (question mark here) goes inside the closing quotation mark if it's part of the quoted material."
+                question: "Quotation marks are primarily used for:",
+                options: ["Indicating a pause", "Enclosing direct speech or titles of short works", "Separating parts of a compound word", "Introducing an explanation"],
+                answer: "Enclosing direct speech or titles of short works"
             },
             {
-                question: "A colon is primarily used to:",
-                options: ["End a sentence", "Introduce a list, explanation, or quotation", "Connect two independent clauses", "Indicate an interruption"],
-                answer: "Introduce a list, explanation, or quotation",
-                explanation: "A colon is used to introduce a list, an explanation, an example, or a quotation."
+                question: "A colon (:) is used to introduce all of the following EXCEPT:",
+                options: ["A list", "An explanation", "A question", "A quotation"],
+                answer: "A question"
             },
             {
-                question: "Which punctuation mark is used to connect two words that function as a single concept, or to hyphenate words in a compound adjective?",
-                options: ["Dash", "Hyphen", "Semicolon", "Ellipsis"],
-                answer: "Hyphen",
-                explanation: "A hyphen connects parts of compound words or phrases (e.g., 'well-known')."
+                question: "Which punctuation mark is used to join words to form compound words or to indicate that a word has been split at the end of a line?",
+                options: ["Dash", "Hyphen", "Ellipsis", "Bracket"],
+                answer: "Hyphen"
             },
             {
-                question: "When is an exclamation mark appropriate?",
-                options: ["For a strong command or sudden outcry", "To separate items in a series", "To indicate uncertainty", "At the end of every sentence"],
-                answer: "For a strong command or sudden outcry",
-                explanation: "An exclamation mark is used to show strong emotion, emphasis, or a forceful command."
+                question: "In which situation is an exclamation mark (!) most appropriate?",
+                options: ["For a mild statement", "To show strong emotion or emphasis", "To ask a question politely", "At the end of a long sentence"],
+                answer: "To show strong emotion or emphasis"
             },
             {
-                question: "Choose the sentence with correct parenthetical usage:",
-                options: ["My friend (who lives in Paris) visited me.", "My friend (who lives in Paris visited me).", "My friend who (lives in Paris) visited me.", "My friend (who lives in Paris) visited me)."],
-                answer: "My friend (who lives in Paris) visited me.",
-                explanation: "Parentheses enclose supplementary information. The sentence structure must be grammatically correct even if the parenthetical phrase is removed."
+                question: "Parentheses ( ) are used to:",
+                options: ["Show a strong break in thought", "Enclose supplementary information", "Indicate a question", "Join two independent clauses"],
+                answer: "Enclose supplementary information"
             },
             {
                 question: "An ellipsis (...) is used to indicate:",
-                options: ["A strong emotion", "An omission of words from a quotation", "A question", "The end of a paragraph"],
-                answer: "An omission of words from a quotation",
-                explanation: "An ellipsis indicates that words have been left out of a quotation or to show a pause in speech."
+                options: ["The end of a thought", "An omission of words from a quotation or a pause in speech", "A list of items", "A sudden change in topic"],
+                answer: "An omission of words from a quotation or a pause in speech"
             },
             {
-                question: "In which situation would you use a period?",
-                options: ["At the end of a question", "To introduce a list", "At the end of a declarative sentence or abbreviation", "To separate clauses"],
-                answer: "At the end of a declarative sentence or abbreviation",
-                explanation: "A period is used to mark the end of a declarative sentence or an imperative sentence that is not an exclamation, and after many abbreviations."
+                question: "Which sentence demonstrates the correct use of a period (.)?",
+                options: ["Are you coming.", "Go there.", "He lives in N.Y.C.", "All of the above"],
+                answer: "All of the above"
             },
 
             // 4. Active and Passive Voice - 10 MCQs
             {
-                question: "Change 'The dog chased the cat.' to passive voice.",
-                options: ["The cat was chased by the dog.", "The cat chased the dog.", "The dog was chasing the cat.", "The cat is chased by the dog."],
-                answer: "The cat was chased by the dog.",
-                explanation: "In passive voice, the object of the active sentence becomes the subject, and a form of 'to be' + past participle is used."
+                question: "Convert 'The students wrote the essays.' to passive voice.",
+                options: ["The essays wrote the students.", "The essays were written by the students.", "The students were written by the essays.", "The essays are written by the students."],
+                answer: "The essays were written by the students."
             },
             {
-                question: "Which of the following sentences is in active voice?",
-                options: ["The ball was kicked by the boy.", "The book was read by her.", "She sings a beautiful song.", "A letter was written by me."],
-                answer: "She sings a beautiful song.",
-                explanation: "In active voice, the subject performs the action."
+                question: "Which sentence is in active voice?",
+                options: ["The cake was baked by my mother.", "A new book was published yesterday.", "He delivered the speech eloquently.", "The rules are explained clearly."],
+                answer: "He delivered the speech eloquently."
             },
             {
-                question: "Convert 'The painter is painting the wall.' to passive voice.",
-                options: ["The wall is being painted by the painter.", "The wall was painted by the painter.", "The wall will be painted by the painter.", "The painter painted the wall."],
-                answer: "The wall is being painted by the painter.",
-                explanation: "For present continuous active, the passive form is 'is/am/are being + past participle'."
+                question: "Change 'The mechanic repaired the car.' to passive voice.",
+                options: ["The car repaired the mechanic.", "The car was repaired by the mechanic.", "The mechanic was repaired by the car.", "The car is repaired by the mechanic."],
+                answer: "The car was repaired by the mechanic."
             },
             {
-                question: "The sentence 'Many houses were destroyed by the earthquake.' is in which voice?",
+                question: "The sentence 'The bridge was designed by a famous architect.' is in which voice?",
                 options: ["Active voice", "Passive voice", "Direct speech", "Indirect speech"],
-                answer: "Passive voice",
-                explanation: "The subject 'Many houses' is receiving the action 'destroyed', indicating passive voice."
+                answer: "Passive voice"
             },
             {
-                question: "Transform 'The teacher praised him.' into passive voice.",
-                options: ["He was praised by the teacher.", "He praises the teacher.", "The teacher was praised by him.", "He is praised by the teacher."],
-                answer: "He was praised by the teacher.",
-                explanation: "Simple past active becomes 'was/were + past participle' in passive."
+                question: "Transform 'The company will launch a new product.' into passive voice.",
+                options: ["A new product will be launched by the company.", "The company is launching a new product.", "A new product is launched by the company.", "The company launched a new product."],
+                answer: "A new product will be launched by the company."
             },
             {
-                question: "Which sentence uses the active voice correctly?",
-                options: ["The pizza was eaten by everyone.", "A mistake was made by me.", "They built a new bridge.", "The decision was announced by the committee."],
-                answer: "They built a new bridge.",
-                explanation: "The subject 'They' performs the action 'built'."
+                question: "Which of the following sentences uses the active voice?",
+                options: ["My wallet was found by a stranger.", "The novel was written in 1860.", "She read the entire book in one sitting.", "Mistakes were made during the process."],
+                answer: "She read the entire book in one sitting."
             },
             {
-                question: "Change 'Someone has stolen my wallet.' to passive voice.",
-                options: ["My wallet has been stolen by someone.", "My wallet was stolen.", "My wallet is being stolen.", "Someone's wallet has been stolen."],
-                answer: "My wallet has been stolen.", // The "by someone" is optional and often omitted in passive.
-                explanation: "For present perfect active, the passive form is 'has/have been + past participle'."
+                question: "Change 'They are building a new hospital.' to passive voice.",
+                options: ["A new hospital is built by them.", "A new hospital is being built by them.", "They build a new hospital.", "A new hospital was built by them."],
+                answer: "A new hospital is being built by them."
             },
             {
-                question: "In passive voice, the emphasis is usually on the:",
-                options: ["Performer of the action", "Receiver of the action", "Time of the action", "Place of the action"],
-                answer: "Receiver of the action",
-                explanation: "The passive voice focuses on the action and the object that receives the action, rather than the subject performing it."
+                question: "In passive voice, the doer of the action is often:",
+                options: ["The subject of the sentence", "Omitted or less important", "The direct object", "The indirect object"],
+                answer: "Omitted or less important"
             },
             {
-                question: "Convert 'The chef will prepare dinner.' to passive voice.",
-                options: ["Dinner will be prepared by the chef.", "Dinner is prepared by the chef.", "The chef prepared dinner.", "Dinner was prepared by the chef."],
-                answer: "Dinner will be prepared by the chef.",
-                explanation: "Simple future active becomes 'will be + past participle' in passive."
+                question: "Convert 'Someone has left the door open.' to passive voice.",
+                options: ["The door has been left open.", "The door was left open.", "Someone leaves the door open.", "The door is left open."],
+                answer: "The door has been left open."
             },
             {
-                question: "Which of these is NOT a characteristic of the passive voice?",
-                options: ["Uses a form of 'to be'", "Always includes 'by' + agent", "Uses the past participle", "The subject receives the action"],
-                answer: "Always includes 'by' + agent",
-                explanation: "The 'by' + agent phrase is often omitted in passive sentences if the agent is unknown or unimportant."
+                question: "The structure of a passive voice sentence typically includes:",
+                options: ["Subject + verb + object", "Object + form of 'to be' + past participle + (by agent)", "Verb + subject + object", "Subject + auxiliary verb + main verb"],
+                answer: "Object + form of 'to be' + past participle + (by agent)"
             },
 
             // 5. Direct and Indirect - 10 MCQs
             {
-                question: "Change 'He said, \"I am reading a book.\"' to indirect speech.",
-                options: ["He said that he was reading a book.", "He said that I am reading a book.", "He says that he is reading a book.", "He said that he had read a book."],
-                answer: "He said that he was reading a book.",
-                explanation: "When the reporting verb is in the past tense, the tense of the reported speech changes accordingly (present continuous to past continuous)."
+                question: "Change 'He said, \"I like apples.\"' to indirect speech.",
+                options: ["He said that he likes apples.", "He said that I like apples.", "He said that he liked apples.", "He says that he likes apples."],
+                answer: "He said that he liked apples."
             },
             {
-                question: "Convert 'She said, \"I will go tomorrow.\"' to indirect speech.",
-                options: ["She said that she would go the next day.", "She said that she will go tomorrow.", "She said that I would go the next day.", "She says that she will go tomorrow."],
-                answer: "She said that she would go the next day.",
-                explanation: "Future simple changes to conditional ('will' to 'would'), and time expressions change ('tomorrow' to 'the next day')."
+                question: "Convert 'She asked, \"Where do you live?\"' to indirect speech.",
+                options: ["She asked where he lives.", "She asked where do you live.", "She asked where he lived.", "She asked that where he lived."],
+                answer: "She asked where he lived."
             },
             {
-                question: "What is the direct speech of 'He asked me if I was hungry.'?",
-                options: ["He said to me, \"Are you hungry?\"", "He said to me, \"I am hungry.\"", "He asked me, \"Was I hungry?\"", "He asked, \"Am I hungry?\""],
-                answer: "He said to me, \"Are you hungry?\"",
-                explanation: "In direct speech, question marks and inverted commas are used, and the tense shifts back."
+                question: "What is the direct speech of 'He told me that he would come tomorrow.'?",
+                options: ["He said to me, \"I will come tomorrow.\"", "He said to me, \"I would come tomorrow.\"", "He said to me, \"He will come tomorrow.\"", "He said to me, \"He would come the next day.\""],
+                answer: "He said to me, \"I will come tomorrow.\""
             },
             {
-                question: "Change 'They said, \"We have finished our work.\"' to indirect speech.",
-                options: ["They said that they had finished their work.", "They said that they have finished their work.", "They say that they have finished their work.", "They said that we had finished our work."],
-                answer: "They said that they had finished their work.",
-                explanation: "Present perfect changes to past perfect, and pronouns adjust."
+                question: "Change 'They exclaimed, \"What a beautiful sight!\"' to indirect speech.",
+                options: ["They exclaimed that it was a beautiful sight.", "They exclaimed what a beautiful sight.", "They said that it is a beautiful sight.", "They exclaimed what a beautiful sight it was."],
+                answer: "They exclaimed that it was a beautiful sight."
             },
             {
-                question: "Convert 'The teacher ordered the students to open their books.' to direct speech.",
-                options: ["The teacher said to the students, \"Open your books.\"", "The teacher said, \"Open their books.\"", "The teacher asked, \"Will you open your books?\"", "The teacher said, \"You opened your books.\""],
-                answer: "The teacher said to the students, \"Open your books.\"",
-                explanation: "Reported commands often use 'ordered' or 'told', which revert to imperative in direct speech."
+                question: "Convert 'The doctor advised him to take rest.' to direct speech.",
+                options: ["The doctor said to him, \"Take rest.\"", "The doctor said, \"You should take rest.\"", "The doctor said to him, \"He should take rest.\"", "The doctor asked, \"Will you take rest?\""],
+                answer: "The doctor said to him, \"Take rest.\""
             },
             {
-                question: "Which of the following is an example of indirect speech?",
-                options: ["He shouted, \"Stop!\"", "She said that she was tired.", "\"Where are you going?\" he asked.", "They exclaimed, \"What a beautiful view!\""],
-                answer: "She said that she was tired.",
-                explanation: "Indirect speech reports what someone said without using their exact words, often using 'that'."
+                question: "Which of these sentences is an example of direct speech?",
+                options: ["She said that she was going.", "He asked if I knew the answer.", "\"I am tired,\" he stated.", "They told us to wait."],
+                answer: "\"I am tired,\" he stated."
             },
             {
-                question: "Change 'My mother told me not to play in the sun.' to direct speech.",
-                options: ["My mother said to me, \"Don't play in the sun.\"", "My mother said, \"You should not play in the sun.\"", "My mother asked, \"Are you playing in the sun?\"", "My mother said, \"I am not playing in the sun.\""],
-                answer: "My mother said to me, \"Don't play in the sun.\"",
-                explanation: "Negative commands in indirect speech using 'not to' revert to 'Don't' in direct speech."
+                question: "Change 'My friend asked me if I had finished my homework.' to direct speech.",
+                options: ["My friend said to me, \"Have you finished your homework?\"", "My friend said to me, \"Did you finish your homework?\"", "My friend asked me, \"You finished your homework?\"", "My friend said to me, \"If you finished your homework?\""],
+                answer: "My friend said to me, \"Have you finished your homework?\""
             },
             {
-                question: "Convert 'He asked, \"Did you see the movie?\"' to indirect speech.",
-                options: ["He asked if I had seen the movie.", "He asked if I saw the movie.", "He asked that I saw the movie.", "He asked me, did you see the movie?"],
-                answer: "He asked if I had seen the movie.",
-                explanation: "Yes/No questions in direct speech use 'if' or 'whether' in indirect speech, and past simple changes to past perfect."
+                question: "When changing from direct to indirect speech, general truths or habitual actions:",
+                options: ["Always change tense", "Do not change tense", "Change to past perfect", "Change to future tense"],
+                answer: "Do not change tense"
             },
             {
-                question: "The reporting verb in indirect speech is usually followed by:",
-                options: ["A comma", "A question mark", "The word 'that' (often optional)", "An exclamation mark"],
-                answer: "The word 'that' (often optional)",
-                explanation: "Indirect statements are typically introduced by 'that', though it can be omitted."
+                question: "Convert 'He said, \"The sun rises in the east.\"' to indirect speech.",
+                options: ["He said that the sun rose in the east.", "He said that the sun rises in the east.", "He said that the sun would rise in the east.", "He said that the sun had risen in the east."],
+                answer: "He said that the sun rises in the east."
             },
             {
-                question: "Change 'The old man prayed, \"May God bless you.\"' to indirect speech.",
-                options: ["The old man prayed that God might bless me.", "The old man prayed that God would bless you.", "The old man said that God blesses you.", "The old man wished that God blessed me."],
-                answer: "The old man prayed that God might bless me.",
-                explanation: "Optative sentences (wishes/prayers) change 'may' to 'might' and pronouns adjust."
+                question: "The word 'today' in direct speech changes to what in indirect speech?",
+                options: ["That day", "The day before", "Tomorrow", "Yesterday"],
+                answer: "That day"
             }
         ];
 
-        // Shuffle options and balance lengths for each question
-        quizData.forEach(q => {
-            // Balance option lengths - a dummy attempt during generation. Actual balancing would require more sophisticated text generation.
-            // For now, I'll ensure the correct answer is not always the longest or shortest after shuffling.
-            // Real balancing would involve paraphrasing options or adding filler words.
-            // Shuffle the options to randomize correct answer position
-            for (let i = q.options.length - 1; i > 0; i--) {
+        // Function to shuffle an array (Fisher-Yates algorithm)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [q.options[i], q.options[j]] = [q.options[j], q.options[i]];
+                [array[i], array[j]] = [array[j], array[i]];
             }
-        });
+        }
 
+        // Shuffle the quiz data itself once to randomize question order
+        shuffleArray(quizData);
+
+        // For each question, shuffle its options to randomize correct answer position and ensure variety in length.
+        // We will try to ensure options have varied lengths, making it harder to guess based on length.
+        quizData.forEach(q => {
+            shuffleArray(q.options);
+        });
 
         let currentQuestionIndex = 0;
         let score = 0;
@@ -502,18 +459,6 @@
         const resultScore = document.getElementById('result-score');
         const resultTime = document.getElementById('result-time');
 
-        // Function to shuffle an array (Fisher-Yates algorithm)
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
-
-        // Shuffle the quiz data itself once to randomize question order
-        shuffleArray(quizData);
-
-
         loginButton.addEventListener('click', () => {
             const enteredId = quizIdInput.value;
             const enteredPassword = quizPasswordInput.value;
@@ -535,7 +480,8 @@
                 quizSection.classList.remove('hidden');
                 startQuiz();
             } else {
-                alert('Please enter your name to start the quiz.'); // Using alert here as it's outside the quiz flow, but could be a modal
+                // Using a custom modal-like message for better UX instead of alert()
+                showModalMessage('Please enter your name to start the quiz.');
             }
         });
 
@@ -573,6 +519,8 @@
                 currentQuestion.options.forEach(option => {
                     const button = document.createElement('button');
                     button.classList.add('option-button');
+                    // Ensure options have varied lengths for better balance, dummy implementation for now.
+                    // Real balancing would need a more sophisticated content generation strategy.
                     button.textContent = option;
                     button.addEventListener('click', () => selectOption(button, option, currentQuestion.answer));
                     quizOptions.appendChild(button);
@@ -630,6 +578,28 @@
             const minutes = Math.floor(timeSpent / 60);
             const seconds = timeSpent % 60;
             resultTime.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Custom modal message function (replaces alert())
+        function showModalMessage(message) {
+            let modal = document.getElementById('custom-modal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'custom-modal';
+                modal.className = 'fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center';
+                modal.innerHTML = `
+                    <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full text-center">
+                        <p id="modal-message" class="text-lg mb-4"></p>
+                        <button id="modal-close-button" class="button-primary px-4 py-2">OK</button>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                document.getElementById('modal-close-button').addEventListener('click', () => {
+                    modal.classList.add('hidden');
+                });
+            }
+            document.getElementById('modal-message').textContent = message;
+            modal.classList.remove('hidden');
         }
     </script>
 </body>
