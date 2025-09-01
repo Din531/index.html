@@ -3,886 +3,1296 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sunday Quiz Special</title>
+    <title>Election Commission Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #e6f0ff; /* Light Blue Theme */
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
+            background-color: #f0f8ff;
+            color: #1a202c;
         }
-        .quiz-container {
-            background-color: #ffffff;
-            padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            width: 100%;
+
+        .login-screen, .quiz-container, .result-screen {
             max-width: 600px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 2px solid #3b82f6;
         }
-        .header {
-            color: #1a237e;
-            background-color: #ffeeb2;
-            padding: 1rem;
-            border-radius: 0.75rem;
-            border: 2px solid #ffc107;
-        }
-        h1 {
-            font-size: 1.75rem;
-            font-weight: bold;
-            color: #0d47a1;
-        }
-        p {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #ffc107;
-            margin-top: 0.5rem;
-        }
-        .blue-button {
-            background-color: #1976d2; /* Blue button color */
-            color: #ffffff;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            border: none;
+
+        .button {
+            background-color: #3b82f6;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            transition: transform 0.2s ease, background-color 0.2s ease;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .blue-button:hover {
-            background-color: #1565c0;
+
+        .button:hover {
             transform: translateY(-2px);
+            background-color: #2563eb;
         }
-        .login-section input {
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            border: 2px solid #bbdefb;
-            width: 100%;
-            box-sizing: border-box;
-            font-size: 1rem;
-            margin-top: 0.5rem;
-        }
-        .quiz-section {
-            display: none;
-            text-align: left;
-        }
-        .question-text {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-        .options-container {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
+
         .option-button {
-            background-color: #f0f4f8;
-            border: 2px solid #bbdefb;
-            border-radius: 0.5rem;
-            padding: 0.75rem 1rem;
+            width: 100%;
             text-align: left;
-            cursor: pointer;
-            transition: background-color 0.2s;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            background-color: #bfdbfe;
+            color: #1d4ed8;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s ease;
         }
-        .option-button:hover {
-            background-color: #e3f2fd;
+
+        .option-button:hover:not(.disabled) {
+            background-color: #93c5fd;
         }
+        
         .option-button.correct {
-            background-color: #a5d6a7; /* Green */
-            border-color: #4caf50;
+            background-color: #22c55e;
+            color: white;
+            border-color: #15803d;
         }
+        
         .option-button.wrong {
-            background-color: #ef9a9a; /* Red */
-            border-color: #f44336;
+            background-color: #ef4444;
+            color: white;
+            border-color: #b91c1c;
         }
-        .timer-display {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #e53935;
+
+        .disabled {
+            pointer-events: none;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db;
             margin-bottom: 1rem;
         }
-        .result-section {
-            display: none;
+
+        #timer {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3b82f6;
             text-align: center;
         }
-        #next-button {
-            display: none;
-            margin-top: 1rem;
+        .correct-answer-text {
+          font-weight: bold;
+          color: #22c55e;
+        }
+        .wrong-answer-text {
+          font-weight: bold;
+          color: #ef4444;
         }
     </style>
 </head>
-<body>
-    <div class="quiz-container">
-        <header class="header">
-            <h1>Sunday Quiz Special for Precis Paper</h1>
-            <p>CONTACT: 03188185185</p>
-        </header>
+<body class="bg-blue-50">
 
-        <section id="login-section" class="login-section">
-            <h2 class="text-xl font-bold text-blue-800">Login</h2>
-            <input type="text" id="id-input" placeholder="Enter ID">
-            <input type="password" id="password-input" placeholder="Enter Password">
-            <button id="login-button" class="blue-button mt-4">Login</button>
-        </section>
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-screen text-center">
+        <h1 class="text-4xl font-bold mb-4" style="color:#2563eb;">Quiz for Election Commission Officer BS 17</h1>
+        <p class="mb-8 font-semibold" style="color:#2563eb;">Contact: <span class="font-bold" style="color:#fcd34d;">03051926301</span></p>
+        <div class="mb-4">
+            <input type="text" id="id-input" class="input-field" placeholder="Enter ID">
+            <input type="password" id="password-input" class="input-field" placeholder="Enter Password">
+            <button id="login-btn" class="button w-full">Login</button>
+        </div>
+        <p id="login-error" class="text-red-500 mt-2 hidden">Invalid ID or Password.</p>
+    </div>
 
-        <section id="name-section" class="login-section hidden">
-            <h2 class="text-xl font-bold text-blue-800">Welcome!</h2>
-            <input type="text" id="name-input" placeholder="Enter Your Name">
-            <button id="start-button" class="blue-button mt-4">Start Quiz</button>
-        </section>
+    <!-- Name Entry Screen -->
+    <div id="name-screen" class="login-screen text-center hidden">
+        <h1 class="text-4xl font-bold mb-4" style="color:#2563eb;">Quiz for Election Commission Officer BS 17</h1>
+        <p class="mb-8 font-semibold" style="color:#2563eb;">Contact: <span class="font-bold" style="color:#fcd34d;">03051926301</span></p>
+        <div class="mb-4">
+            <input type="text" id="name-input" class="input-field" placeholder="Enter Your Name">
+            <button id="start-btn" class="button w-full">Start Quiz</button>
+        </div>
+        <p id="name-error" class="text-red-500 mt-2 hidden">Please enter your name.</p>
+    </div>
 
-        <section id="quiz-section" class="quiz-section">
-            <div class="flex justify-between items-center mb-4">
-                <span class="text-lg font-bold text-blue-800" id="question-counter">Question 1/50</span>
-                <span class="timer-display" id="timer">15:00</span>
-            </div>
-            <div class="question-text" id="question-text"></div>
-            <div id="options-container" class="options-container"></div>
-            <button id="next-button" class="blue-button">Next</button>
-        </section>
+    <!-- Quiz Container -->
+    <div id="quiz-container" class="quiz-container hidden">
+        <div class="flex justify-between items-center mb-6">
+            <div id="timer" class="text-lg font-bold"></div>
+            <div id="question-counter" class="text-lg font-bold"></div>
+        </div>
+        <div id="question-text" class="text-xl font-semibold mb-6"></div>
+        <div id="options-container"></div>
+        <div class="mt-8 flex justify-between items-center">
+            <button id="next-btn" class="button hidden">Next</button>
+        </div>
+    </div>
 
-        <section id="result-section" class="result-section">
-            <h2 class="text-2xl font-bold text-blue-800">Quiz Complete!</h2>
-            <div class="mt-4 text-xl font-bold text-gray-700" id="final-score"></div>
-            <div class="mt-2 text-lg text-gray-600">You can't restart the quiz.</div>
-        </section>
+    <!-- Result Screen -->
+    <div id="result-screen" class="result-screen text-center hidden">
+        <h2 class="text-3xl font-bold mb-4 text-blue-800">Quiz Completed!</h2>
+        <p class="text-xl mb-2">Candidate: <span id="candidate-name" class="font-semibold"></span></p>
+        <p class="text-xl mb-2">Total Questions: <span id="total-questions" class="font-semibold"></span></p>
+        <p class="text-xl mb-2">Correct Answers: <span id="correct-answers" class="font-semibold text-green-600"></span></p>
+        <p class="text-xl mb-2">Your Score: <span id="final-score" class="font-semibold text-blue-600"></span> / 100</p>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const loginSection = document.getElementById('login-section');
-            const nameSection = document.getElementById('name-section');
-            const quizSection = document.getElementById('quiz-section');
-            const resultSection = document.getElementById('result-section');
-            const loginButton = document.getElementById('login-button');
-            const startButton = document.getElementById('start-button');
-            const nextButton = document.getElementById('next-button');
+            // Static data for the quiz. I have generated 100 MCQs based on the provided document and topics.
+            const quizData = [
+                // 20 MCQs from Electoral Rolls
+                {
+                    question: "According to the Election Act, 2017, the Election Commission may direct the preparation or revision of an electoral roll in cases of exceptional circumstances. What must the Commission do after recording these circumstances?",
+                    options: [
+                        "Publish the revised roll in the official Gazette.",
+                        "Direct that an electoral roll for such an area shall be prepared in such a manner as it deems fit.",
+                        "Disclose the method to the public and political parties.",
+                        "Hold a public hearing to get feedback."
+                    ],
+                    correctAnswer: "Direct that an electoral roll for such an area shall be prepared in such a manner as it deems fit."
+                },
+                {
+                    question: "In what manner shall the Election Commission publish any directions issued under sub-section (1) of section 49?",
+                    options: [
+                        "On its website.",
+                        "In the official Gazette.",
+                        "On its social media pages.",
+                        "Through a press conference."
+                    ],
+                    correctAnswer: "On its website."
+                },
+                {
+                    question: "Who is responsible for the maintenance and correction of electoral rolls in the prescribed manner?",
+                    options: [
+                        "The Election Commission of Pakistan.",
+                        "The National Database and Registration Authority (NADRA).",
+                        "The Registration Officer.",
+                        "The Provincial Election Commissioner."
+                    ],
+                    correctAnswer: "The Registration Officer."
+                },
+                {
+                    question: "Under the Election Act, 2017, an applicant for a soft copy of the final electoral roll must obtain a hard copy first. What else is required to get a soft copy?",
+                    options: [
+                        "A written request to the Election Commission.",
+                        "Photographs of the voters in accordance with section 79.",
+                        "A payment of a nominal fee.",
+                        "A valid National Identity Card."
+                    ],
+                    correctAnswer: "Photographs of the voters in accordance with section 79."
+                },
+                {
+                    question: "What is the primary function of the National Database and Registration Authority (NADRA) as described in the provided documents, concerning the issuance of National Identity Cards?",
+                    options: [
+                        "To manage and update the national population census.",
+                        "To coordinate action with the Registration Authority for the issuance of National Identity Cards for non-Muslims and other demographics.",
+                        "To provide logistical support to the Election Commission.",
+                        "To handle voter registration for citizens residing abroad."
+                    ],
+                    correctAnswer: "To coordinate action with the Registration Authority for the issuance of National Identity Cards for non-Muslims and other demographics."
+                },
+                {
+                    question: "How often shall the Election Commission publish a disaggregated data of registered men and women voters?",
+                    options: [
+                        "Quarterly.",
+                        "Half-yearly.",
+                        "Annually.",
+                        "Every five years."
+                    ],
+                    correctAnswer: "Annually."
+                },
+                {
+                    question: "The Election Commission, through press release and its website, shall inform the general public about what specific information related to the electoral rolls?",
+                    options: [
+                        "The total number of registered voters.",
+                        "The cut-off date for revision or correction of an electoral roll.",
+                        "The number of polling stations.",
+                        "The names of the polling officers."
+                    ],
+                    correctAnswer: "The cut-off date for revision or correction of an electoral roll."
+                },
+                {
+                    question: "Who is responsible for the appointment of Registration Officers for an electoral area?",
+                    options: [
+                        "The Chief Election Commissioner.",
+                        "The Election Commission.",
+                        "The President of Pakistan.",
+                        "The Provincial Government."
+                    ],
+                    correctAnswer: "The Election Commission."
+                },
+                {
+                    question: "A person can apply to the Registration Officer for correction of any entry in an electoral roll if:",
+                    options: [
+                        "The entry relates to the applicant and is erroneous or defective.",
+                        "The applicant has recently moved to a new constituency.",
+                        "The entry does not relate to the applicant.",
+                        "The applicant has changed their name."
+                    ],
+                    correctAnswer: "The entry relates to the applicant and is erroneous or defective."
+                },
+                {
+                    question: "The Election Commission shall publish a final electoral roll for each electoral area after which stage?",
+                    options: [
+                        "After the preparation of preliminary electoral rolls.",
+                        "After the period for lodging claims and objections.",
+                        "After the final publication of electoral rolls.",
+                        "After the period of review and appeal."
+                    ],
+                    correctAnswer: "After the period for lodging claims and objections."
+                },
+                {
+                    question: "How long is the period fixed for lodging claims, objections, and applications for preparation, revision, or correction of electoral rolls?",
+                    options: [
+                        "Within 15 days.",
+                        "Within 30 days.",
+                        "Within 60 days.",
+                        "Within 90 days."
+                    ],
+                    correctAnswer: "Within 30 days."
+                },
+                {
+                    question: "According to the Election Act, 2017, what is the role of a Revising Authority in the process of electoral roll revision?",
+                    options: [
+                        "To prepare the preliminary electoral rolls.",
+                        "To handle and decide on claims and objections.",
+                        "To publish the final list of voters.",
+                        "To appoint Registration Officers."
+                    ],
+                    correctAnswer: "To handle and decide on claims and objections."
+                },
+                {
+                    question: "What is the purpose of a 'brief reason' required to be recorded by a Registration Officer when they reject an application?",
+                    options: [
+                        "To inform the applicant about the rejection.",
+                        "To provide a basis for an appeal.",
+                        "To maintain a record of all rejected applications.",
+                        "To justify the decision to the Election Commission."
+                    ],
+                    correctAnswer: "To provide a basis for an appeal."
+                },
+                {
+                    question: "The Election Commission has the power to modify an electoral roll at any time, under which section of the Election Act?",
+                    options: [
+                        "Section 38.",
+                        "Section 39.",
+                        "Section 40.",
+                        "Section 41."
+                    ],
+                    correctAnswer: "Section 40."
+                },
+                {
+                    question: "Who has the authority to appoint Revising Authorities for the purpose of receiving and deciding claims and objections?",
+                    options: [
+                        "The President of Pakistan.",
+                        "The Supreme Court.",
+                        "The Election Commission.",
+                        "The Chief Justice of Pakistan."
+                    ],
+                    correctAnswer: "The Election Commission."
+                },
+                {
+                    question: "Which of the following is not a reason for a person's name to be deleted from an electoral roll?",
+                    options: [
+                        "Death of the person.",
+                        "Transfer of a voter to another electoral area.",
+                        "Person has become a dual national.",
+                        "Person has become disqualified to be a voter."
+                    ],
+                    correctAnswer: "Person has become a dual national."
+                },
+                {
+                    question: "A person applying for transfer of vote from one electoral area to another may apply to the Registration Officer of:",
+                    options: [
+                        "The electoral area of origin.",
+                        "The electoral area of destination.",
+                        "The Election Commission's main office.",
+                        "Either of the above."
+                    ],
+                    correctAnswer: "The electoral area of destination."
+                },
+                {
+                    question: "According to the provided document, what is the 'cut-off date' for a by-election?",
+                    options: [
+                        "The date when a constituency is declared vacant.",
+                        "The last date for lodging claims and objections.",
+                        "The date of the announcement of the results of the general election.",
+                        "The date of filing of nomination papers."
+                    ],
+                    correctAnswer: "The date of the announcement of the results of the general election."
+                },
+                {
+                    question: "Who can obtain a hard and searchable soft copy of the final electoral roll?",
+                    options: [
+                        "Any registered voter.",
+                        "A candidate or an election agent.",
+                        "An election observer.",
+                        "Only a government official."
+                    ],
+                    correctAnswer: "A candidate or an election agent."
+                },
+                {
+                    question: "Who is entitled to be enrolled as a voter in an electoral area?",
+                    options: [
+                        "A citizen of Pakistan who is at least 18 years of age.",
+                        "Any person holding a valid National Identity Card.",
+                        "Any person with a permanent address in Pakistan.",
+                        "A citizen of Pakistan who has a valid passport."
+                    ],
+                    correctAnswer: "A citizen of Pakistan who is at least 18 years of age."
+                },
+                // 15 MCQs from Election Commission of Pakistan (Article 213 to 226)
+                {
+                    question: "According to Article 213, who is the Chief Election Commissioner nominated by?",
+                    options: [
+                        "The Prime Minister in consultation with the President.",
+                        "The President after consultation with the Chief Justice of Pakistan.",
+                        "The Supreme Court.",
+                        "The Parliament through a joint resolution."
+                    ],
+                    correctAnswer: "The President after consultation with the Chief Justice of Pakistan."
+                },
+                {
+                    question: "What is the term of office for the Chief Election Commissioner?",
+                    options: [
+                        "Three years.",
+                        "Four years.",
+                        "Five years.",
+                        "Six years."
+                    ],
+                    correctAnswer: "Five years."
+                },
+                {
+                    question: "The Election Commission of Pakistan consists of the Chief Election Commissioner and how many Judges of the High Courts?",
+                    options: [
+                        "One Judge.",
+                        "Two Judges.",
+                        "Three Judges.",
+                        "Four Judges."
+                    ],
+                    correctAnswer: "Two Judges."
+                },
+                {
+                    question: "What is the primary function of the Election Commission as stated in the document?",
+                    options: [
+                        "To govern the country during caretaker government.",
+                        "To conduct elections honestly, justly, fairly and in accordance with law.",
+                        "To appoint ministers and government officials.",
+                        "To manage and update the national database of citizens."
+                    ],
+                    correctAnswer: "To conduct elections honestly, justly, fairly and in accordance with law."
+                },
+                {
+                    question: "What is the Chief Election Commissioner’s salary and allowances?",
+                    options: [
+                        "Determined by the Parliament.",
+                        "Same as a Judge of the High Court.",
+                        "Same as a Judge of the Supreme Court.",
+                        "Determined by the President."
+                    ],
+                    correctAnswer: "Same as a Judge of the Supreme Court."
+                },
+                {
+                    question: "Who can assist the Chief Election Commissioner in the discharge of his or her functions?",
+                    options: [
+                        "The Executive authorities of the State.",
+                        "The President and the Prime Minister.",
+                        "The Parliament members.",
+                        "The Chief Justice of Pakistan."
+                    ],
+                    correctAnswer: "The Executive authorities of the State."
+                },
+                {
+                    question: "According to Article 222, the Parliament may provide for the allocation of seats and the delimitation of constituencies through which means?",
+                    options: [
+                        "Through a resolution.",
+                        "Through a constitutional amendment.",
+                        "Through a law.",
+                        "Through a presidential ordinance."
+                    ],
+                    correctAnswer: "Through a law."
+                },
+                {
+                    question: "What is the time limit for holding a general election after the expiry of a five-year term of the National or Provincial Assembly?",
+                    options: [
+                        "Within 30 days.",
+                        "Within 60 days.",
+                        "Within 90 days.",
+                        "Within 120 days."
+                    ],
+                    correctAnswer: "Within 60 days."
+                },
+                {
+                    question: "If a seat becomes vacant in the National or Provincial Assembly due to illness or resignation, a by-election shall be held within how many days of the occurrence of the vacancy?",
+                    options: [
+                        "Within 60 days.",
+                        "Within 90 days.",
+                        "Within 120 days.",
+                        "Within 180 days."
+                    ],
+                    correctAnswer: "Within 120 days."
+                },
+                {
+                    question: "What is the process for the removal of a Judge of the Supreme Court from his or her office?",
+                    options: [
+                        "By the President in the manner prescribed by law.",
+                        "By the Prime Minister through a special committee.",
+                        "By the Chief Election Commissioner.",
+                        "By a two-thirds majority in the Parliament."
+                    ],
+                    correctAnswer: "By the President in the manner prescribed by law."
+                },
+                {
+                    question: "Who appoints officers and servants for the Election Commission with the approval of the President?",
+                    options: [
+                        "The Prime Minister.",
+                        "The Chief Justice of Pakistan.",
+                        "The Chief Election Commissioner.",
+                        "The Parliament."
+                    ],
+                    correctAnswer: "The Chief Election Commissioner."
+                },
+                {
+                    question: "In the case of a dissolution of the National or Provincial Assembly, a general election shall be held within how many days after its dissolution?",
+                    options: [
+                        "Within 30 days.",
+                        "Within 60 days.",
+                        "Within 90 days.",
+                        "Within 120 days."
+                    ],
+                    correctAnswer: "Within 90 days."
+                },
+                {
+                    question: "The Chief Election Commissioner lays down the terms and conditions of employment for the officers and servants of his or her office with whose approval?",
+                    options: [
+                        "The President.",
+                        "The Prime Minister.",
+                        "The Supreme Court.",
+                        "The Parliament."
+                    ],
+                    correctAnswer: "The President."
+                },
+                {
+                    question: "What is the term for a person who is elected to more than one seat in different houses or a house and a Provincial Assembly?",
+                    options: [
+                        "Dual Membership.",
+                        "Multiple Representation.",
+                        "Concurrent Holding.",
+                        "Double Mandate."
+                    ],
+                    correctAnswer: "Dual Membership."
+                },
+                {
+                    question: "According to the provided document, all elections in Pakistan shall be held by which method?",
+                    options: [
+                        "Open ballot.",
+                        "Secret ballot.",
+                        "Show of hands.",
+                        "Electronic voting."
+                    ],
+                    correctAnswer: "Secret ballot."
+                },
+                // 15 MCQs of Analytical Reasoning
+                {
+                    question: "If all Poodles are dogs and all dogs are animals, which of the following is true?",
+                    options: [
+                        "All animals are dogs.",
+                        "All Poodles are animals.",
+                        "Some animals are Poodles.",
+                        "All Poodles are not animals."
+                    ],
+                    correctAnswer: "All Poodles are animals."
+                },
+                {
+                    question: "A group of friends are standing in a line. Ali is after Babar, and Babar is after Danial. If Danial is before Feroz, who is first in line?",
+                    options: [
+                        "Ali.",
+                        "Babar.",
+                        "Danial.",
+                        "Feroz."
+                    ],
+                    correctAnswer: "Danial."
+                },
+                {
+                    question: "Five students are ranked based on their test scores. Ahmad scored higher than Bilal but lower than Fahad. Hina scored lower than Ahmad but higher than Sana. Who scored the highest?",
+                    options: [
+                        "Ahmad.",
+                        "Bilal.",
+                        "Fahad.",
+                        "Hina."
+                    ],
+                    correctAnswer: "Fahad."
+                },
+                {
+                    question: "If 'P' means 'add', 'Q' means 'multiply', 'R' means 'subtract', and 'S' means 'divide', what is the value of '4 Q 5 R 20 P 5'?",
+                    options: [
+                        "5",
+                        "15",
+                        "25",
+                        "45"
+                    ],
+                    correctAnswer: "5"
+                },
+                {
+                    question: "A train travels at 60 km/h. How long will it take to travel 120 km?",
+                    options: [
+                        "1 hour.",
+                        "1.5 hours.",
+                        "2 hours.",
+                        "2.5 hours."
+                    ],
+                    correctAnswer: "2 hours."
+                },
+                {
+                    question: "If 'water' is 'blue', 'sky' is 'green', and 'grass' is 'red', then what is 'red'?",
+                    options: [
+                        "Grass.",
+                        "Water.",
+                        "Sky.",
+                        "Blue."
+                    ],
+                    correctAnswer: "Grass."
+                },
+                {
+                    question: "If a person walks 5 meters north, then 3 meters east, and then 5 meters south, how far are they from their starting point?",
+                    options: [
+                        "2 meters.",
+                        "3 meters.",
+                        "5 meters.",
+                        "13 meters."
+                    ],
+                    correctAnswer: "3 meters."
+                },
+                {
+                    question: "Four friends are sitting around a table. A is opposite to B, and B is to the right of C. Who is opposite to C?",
+                    options: [
+                        "A.",
+                        "B.",
+                        "C.",
+                        "None of the above."
+                    ],
+                    correctAnswer: "A."
+                },
+                {
+                    question: "A family has three children: a boy, a girl, and another boy. If their ages are 10, 8, and 5, which of the following statements must be false?",
+                    options: [
+                        "The youngest is a boy.",
+                        "The oldest is a boy.",
+                        "The girl is the middle child.",
+                        "The girl is older than the oldest boy."
+                    ],
+                    correctAnswer: "The girl is older than the oldest boy."
+                },
+                {
+                    question: "A coded message reads 'GTHK'. If 'F' is coded as 'G', 'S' as 'T', 'H' as 'I', and 'J' as 'K', what is the original word?",
+                    options: [
+                        "FISH.",
+                        "GATE.",
+                        "FAST.",
+                        "FIST."
+                    ],
+                    correctAnswer: "FIST."
+                },
+                {
+                    question: "If the day before yesterday was Saturday, what is the day after tomorrow?",
+                    options: [
+                        "Tuesday.",
+                        "Wednesday.",
+                        "Thursday.",
+                        "Friday."
+                    ],
+                    correctAnswer: "Wednesday."
+                },
+                {
+                    question: "A clock is set at 12:00 PM. It loses 20 minutes every hour. What time will it show at 2:00 PM?",
+                    options: [
+                        "1:40 PM.",
+                        "1:50 PM.",
+                        "2:00 PM.",
+                        "2:10 PM."
+                    ],
+                    correctAnswer: "1:40 PM."
+                },
+                {
+                    question: "If a book costs $15 and a pen costs $5, and you buy 3 books and 4 pens, how much will you spend in total?",
+                    options: [
+                        "$55.",
+                        "$65.",
+                        "$75.",
+                        "$85."
+                    ],
+                    correctAnswer: "$65."
+                },
+                {
+                    question: "A gardener has 10 flowers. 3 are roses, 4 are lilies, and the rest are tulips. How many tulips are there?",
+                    options: [
+                        "2.",
+                        "3.",
+                        "4.",
+                        "5."
+                    ],
+                    correctAnswer: "3."
+                },
+                {
+                    question: "Which number comes next in the sequence: 2, 4, 8, 16, ___?",
+                    options: [
+                        "20.",
+                        "24.",
+                        "30.",
+                        "32."
+                    ],
+                    correctAnswer: "32."
+                },
+                // 10 Mcqs of English
+                {
+                    question: "Vocabulary: What is the meaning of 'ubiquitous'?",
+                    options: [
+                        "Unique or rare.",
+                        "Present everywhere.",
+                        "Extremely loud.",
+                        "Difficult to understand."
+                    ],
+                    correctAnswer: "Present everywhere."
+                },
+                {
+                    question: "Vocabulary: Choose the synonym for 'meticulous'.",
+                    options: [
+                        "Careless.",
+                        "Messy.",
+                        "Detailed and precise.",
+                        "Unorganized."
+                    ],
+                    correctAnswer: "Detailed and precise."
+                },
+                {
+                    question: "Idioms: 'To beat around the bush' means:",
+                    options: [
+                        "To be very direct.",
+                        "To avoid saying what you mean.",
+                        "To hit a tree with a stick.",
+                        "To talk about gardening."
+                    ],
+                    correctAnswer: "To avoid saying what you mean."
+                },
+                {
+                    question: "Idioms: 'A dime a dozen' means:",
+                    options: [
+                        "Very expensive.",
+                        "Very common and cheap.",
+                        "To pay for something.",
+                        "To sell something for a low price."
+                    ],
+                    correctAnswer: "Very common and cheap."
+                },
+                {
+                    question: "Sentence Correction: 'Neither of the boys were late for school.'",
+                    options: [
+                        "Neither of the boys was late for school.",
+                        "Neither of the boys are late for school.",
+                        "Neither of the boy were late for school.",
+                        "The boys were not late for school."
+                    ],
+                    correctAnswer: "Neither of the boys was late for school."
+                },
+                {
+                    question: "Sentence Correction: 'He goes to the office by foot.'",
+                    options: [
+                        "He goes to the office on foot.",
+                        "He goes to the office by his feet.",
+                        "He goes to the office on his feet.",
+                        "He goes on foot to the office."
+                    ],
+                    correctAnswer: "He goes to the office on foot."
+                },
+                {
+                    question: "Prepositions: 'I am not interested _____ reading that book.'",
+                    options: [
+                        "in.",
+                        "on.",
+                        "at.",
+                        "with."
+                    ],
+                    correctAnswer: "in."
+                },
+                {
+                    question: "Prepositions: 'He is afraid _____ heights.'",
+                    options: [
+                        "with.",
+                        "of.",
+                        "at.",
+                        "from."
+                    ],
+                    correctAnswer: "of."
+                },
+                {
+                    question: "Narration: 'He said, 'I am busy now.''. The correct indirect narration is:",
+                    options: [
+                        "He said that he was busy now.",
+                        "He said that I was busy now.",
+                        "He said that he was busy then.",
+                        "He said that I am busy then."
+                    ],
+                    correctAnswer: "He said that he was busy then."
+                },
+                {
+                    question: "Active and Passive Voice: 'He has written a letter.' The passive voice is:",
+                    options: [
+                        "A letter has been written by him.",
+                        "A letter was written by him.",
+                        "A letter is being written by him.",
+                        "A letter has been writing by him."
+                    ],
+                    correctAnswer: "A letter has been written by him."
+                },
+                // 10 Ismlayiat Mcqs
+                {
+                    question: "Which Surah of the Holy Quran does not start with Bismillah?",
+                    options: [
+                        "Surah Al-Fatiha.",
+                        "Surah Al-Baqarah.",
+                        "Surah An-Naml.",
+                        "Surah At-Tawbah."
+                    ],
+                    correctAnswer: "Surah At-Tawbah."
+                },
+                {
+                    question: "Who was the first Prophet to write with a pen?",
+                    options: [
+                        "Prophet Adam (A.S).",
+                        "Prophet Idris (A.S).",
+                        "Prophet Noah (A.S).",
+                        "Prophet Ibraheem (A.S)."
+                    ],
+                    correctAnswer: "Prophet Idris (A.S)."
+                },
+                {
+                    question: "What is the total number of Surahs in the Holy Quran?",
+                    options: [
+                        "112.",
+                        "114.",
+                        "116.",
+                        "118."
+                    ],
+                    correctAnswer: "114."
+                },
+                {
+                    question: "What is the name of the first battle of Islam?",
+                    options: [
+                        "Battle of Uhud.",
+                        "Battle of Khandaq.",
+                        "Battle of Badr.",
+                        "Battle of Khaiber."
+                    ],
+                    correctAnswer: "Battle of Badr."
+                },
+                {
+                    question: "Who is known as 'Sayyid-ul-Anbiya' (Master of the Prophets)?",
+                    options: [
+                        "Prophet Musa (A.S).",
+                        "Prophet Isa (A.S).",
+                        "Prophet Muhammad (P.B.U.H).",
+                        "Prophet Ibrahim (A.S)."
+                    ],
+                    correctAnswer: "Prophet Muhammad (P.B.U.H)."
+                },
+                {
+                    question: "How many pillars of Islam are there?",
+                    options: [
+                        "Three.",
+                        "Four.",
+                        "Five.",
+                        "Six."
+                    ],
+                    correctAnswer: "Five."
+                },
+                {
+                    question: "What is the meaning of the word 'Qur'an'?",
+                    options: [
+                        "To read.",
+                        "To recite.",
+                        "To write.",
+                        "To remember."
+                    ],
+                    correctAnswer: "To read."
+                },
+                {
+                    question: "What is the name of the cave where the Holy Prophet (P.B.U.H) received the first revelation?",
+                    options: [
+                        "Cave of Hira.",
+                        "Cave of Thawr.",
+                        "Cave of Uhud.",
+                        "Cave of Noor."
+                    ],
+                    correctAnswer: "Cave of Hira."
+                },
+                {
+                    question: "Who was the first male to accept Islam?",
+                    options: [
+                        "Hazrat Abu Bakr (R.A).",
+                        "Hazrat Ali (R.A).",
+                        "Hazrat Umer (R.A).",
+                        "Hazrat Usman (R.A)."
+                    ],
+                    correctAnswer: "Hazrat Abu Bakr (R.A)."
+                },
+                {
+                    question: "What is the second month of the Islamic calendar?",
+                    options: [
+                        "Muharram.",
+                        "Safar.",
+                        "Rabi-ul-Awwal.",
+                        "Rabi-ul-Thani."
+                    ],
+                    correctAnswer: "Safar."
+                },
+                // 10 MCQs of Pakistan Affairs
+                {
+                    question: "When did Pakistan establish diplomatic relations with Arminia?",
+                    options: [
+                        "Recently.",
+                        "In 2023.",
+                        "In 2024.",
+                        "They have not established relations yet."
+                    ],
+                    correctAnswer: "Recently."
+                },
+                {
+                    question: "Who was the Viceroy of India in April 1928?",
+                    options: [
+                        "Lord Curzon.",
+                        "Lord Irwin.",
+                        "Lord Minto.",
+                        "Lord Hastings."
+                    ],
+                    correctAnswer: "Lord Irwin."
+                },
+                {
+                    question: "Which report was published in March 1930 and invited a lot of criticism?",
+                    options: [
+                        "Cabinet Mission Report.",
+                        "Simon Commission Report.",
+                        "Election Commission Report.",
+                        "Indian Cultural Commission Report."
+                    ],
+                    correctAnswer: "Simon Commission Report."
+                },
+                {
+                    question: "Who announced the Partition of Bengal?",
+                    options: [
+                        "Lord Hastings.",
+                        "Lord Curzon.",
+                        "Lord William.",
+                        "Lord Minto."
+                    ],
+                    correctAnswer: "Lord Curzon."
+                },
+                {
+                    question: "What was the total population of East Bengal in 1905?",
+                    options: [
+                        "29 Million.",
+                        "30 Million.",
+                        "31 Million.",
+                        "32 Million."
+                    ],
+                    correctAnswer: "31 Million."
+                },
+                {
+                    question: "Which city hosted the first Round Table Conference?",
+                    options: [
+                        "Lahore.",
+                        "London.",
+                        "Delhi.",
+                        "Lucknow."
+                    ],
+                    correctAnswer: "London."
+                },
+                {
+                    question: "Who was the first president of the All India Muslim League?",
+                    options: [
+                        "Sir Syed Ahmad Khan.",
+                        "Nawab Waqar-ul-Mulk.",
+                        "Quaid-e-Azam.",
+                        "Nawab Mohsin-ul-Mulk."
+                    ],
+                    correctAnswer: "Nawab Waqar-ul-Mulk."
+                },
+                {
+                    question: "When did the All India Muslim League get founded?",
+                    options: [
+                        "20 December, 1906.",
+                        "30 December, 1906.",
+                        "31 December, 1906.",
+                        "1 January, 1907."
+                    ],
+                    correctAnswer: "30 December, 1906."
+                },
+                {
+                    question: "The Government of India Act, 1919 is also known as:",
+                    options: [
+                        "Montague Chelmsford Reforms.",
+                        "Minto-Morley Reforms.",
+                        "Montague-Warren Reforms.",
+                        "Minto Cornwallis Reforms."
+                    ],
+                    correctAnswer: "Montague Chelmsford Reforms."
+                },
+                {
+                    question: "After the tragedy of Jallianwala Bagh, martial law was imposed in which province?",
+                    options: [
+                        "Sindh.",
+                        "Bengal.",
+                        "Punjab.",
+                        "Assam."
+                    ],
+                    correctAnswer: "Punjab."
+                },
+                // 10 mcqs General knowledge
+                {
+                    question: "What is the largest organ in the human body?",
+                    options: [
+                        "Heart.",
+                        "Lungs.",
+                        "Liver.",
+                        "Skin."
+                    ],
+                    correctAnswer: "Skin."
+                },
+                {
+                    question: "Which country is known as the 'Land of the Rising Sun'?",
+                    options: [
+                        "China.",
+                        "Japan.",
+                        "Korea.",
+                        "Thailand."
+                    ],
+                    correctAnswer: "Japan."
+                },
+                {
+                    question: "What is the name of the tallest mountain in the world?",
+                    options: [
+                        "Mount Everest.",
+                        "K2.",
+                        "Kangchenjunga.",
+                        "Mount Kilimanjaro."
+                    ],
+                    correctAnswer: "Mount Everest."
+                },
+                {
+                    question: "What is the chemical symbol for gold?",
+                    options: [
+                        "Au.",
+                        "Ag.",
+                        "Fe.",
+                        "Hg."
+                    ],
+                    correctAnswer: "Au."
+                },
+                {
+                    question: "Who wrote 'Romeo and Juliet'?",
+                    options: [
+                        "Charles Dickens.",
+                        "William Shakespeare.",
+                        "Jane Austen.",
+                        "Mark Twain."
+                    ],
+                    correctAnswer: "William Shakespeare."
+                },
+                {
+                    question: "How many continents are there in the world?",
+                    options: [
+                        "Five.",
+                        "Six.",
+                        "Seven.",
+                        "Eight."
+                    ],
+                    correctAnswer: "Seven."
+                },
+                {
+                    question: "Which planet is known as the 'Red Planet'?",
+                    options: [
+                        "Venus.",
+                        "Mars.",
+                        "Jupiter.",
+                        "Saturn."
+                    ],
+                    correctAnswer: "Mars."
+                },
+                {
+                    question: "What is the capital city of Australia?",
+                    options: [
+                        "Sydney.",
+                        "Melbourne.",
+                        "Canberra.",
+                        "Perth."
+                    ],
+                    correctAnswer: "Canberra."
+                },
+                {
+                    question: "What is the largest ocean in the world?",
+                    options: [
+                        "Atlantic Ocean.",
+                        "Indian Ocean.",
+                        "Arctic Ocean.",
+                        "Pacific Ocean."
+                    ],
+                    correctAnswer: "Pacific Ocean."
+                },
+                {
+                    question: "Which famous scientist developed the theory of relativity?",
+                    options: [
+                        "Isaac Newton.",
+                        "Albert Einstein.",
+                        "Stephen Hawking.",
+                        "Galileo Galilei."
+                    ],
+                    correctAnswer: "Albert Einstein."
+                },
+                // 10 mcqs Current Affairs
+                {
+                    question: "According to the provided document, who is the current president of South Korea?",
+                    options: [
+                        "Yoon Suk Yeol.",
+                        "Moon Jae-in.",
+                        "Lee Jae Myung.",
+                        "Kim Jong Un."
+                    ],
+                    correctAnswer: "Lee Jae Myung."
+                },
+                {
+                    question: "Which country's PM was recently removed from office over a leaked phone call?",
+                    options: [
+                        "Malaysia.",
+                        "Thailand.",
+                        "Vietnam.",
+                        "Indonesia."
+                    ],
+                    correctAnswer: "Thailand."
+                },
+                {
+                    question: "Where did Faisalabad Anti-Terrorism Court sentence 59 PTI leaders and supporters to 10 years jail time?",
+                    options: [
+                        "In the 9 May case.",
+                        "In the election fraud case.",
+                        "In the anti-government protest case.",
+                        "In the corruption case."
+                    ],
+                    correctAnswer: "In the 9 May case."
+                },
+                {
+                    question: "When was the 26th Amendment assented by President Asif Zardari?",
+                    options: [
+                        "1st October, 2023.",
+                        "1st November, 2024.",
+                        "1st October, 2024.",
+                        "1st December, 2024."
+                    ],
+                    correctAnswer: "1st October, 2024."
+                },
+                {
+                    question: "What was the theme for Pakistan's Independence Day this year?",
+                    options: [
+                        "Naya Pakistan.",
+                        "Azadi.",
+                        "Marka e Haq.",
+                        "Unity and Faith."
+                    ],
+                    correctAnswer: "Marka e Haq."
+                },
+                {
+                    question: "What is the rank of Pakistan in the 2025 World Freedom Index?",
+                    options: [
+                        "158 out of 180.",
+                        "160 out of 180.",
+                        "150 out of 180.",
+                        "170 out of 180."
+                    ],
+                    correctAnswer: "158 out of 180."
+                },
+                {
+                    question: "Who is the new Secretary General of NATO?",
+                    options: [
+                        "Jens Stoltenberg.",
+                        "Mark Rutte.",
+                        "Ursula von der Leyen.",
+                        "Emmanuel Macron."
+                    ],
+                    correctAnswer: "Mark Rutte."
+                },
+                {
+                    question: "Who is the 47th US President?",
+                    options: [
+                        "Joe Biden.",
+                        "Donald Trump.",
+                        "Barack Obama.",
+                        "George W. Bush."
+                    ],
+                    correctAnswer: "Donald Trump."
+                },
+                {
+                    question: "Which country will host the Olympic games in 2028?",
+                    options: [
+                        "China.",
+                        "Japan.",
+                        "America.",
+                        "France."
+                    ],
+                    correctAnswer: "America."
+                },
+                {
+                    question: "What is the total number of elected members in the Parliament of Pakistan?",
+                    options: [
+                        "342.",
+                        "336.",
+                        "446.",
+                        "400."
+                    ],
+                    correctAnswer: "342." // This is a common GK/Current Affairs fact for Pakistan.
+                }
+            ];
+
+            const loginScreen = document.getElementById('login-screen');
+            const nameScreen = document.getElementById('name-screen');
+            const quizContainer = document.getElementById('quiz-container');
+            const resultScreen = document.getElementById('result-screen');
+            const loginBtn = document.getElementById('login-btn');
+            const startBtn = document.getElementById('start-btn');
+            const nextBtn = document.getElementById('next-btn');
             const idInput = document.getElementById('id-input');
             const passwordInput = document.getElementById('password-input');
             const nameInput = document.getElementById('name-input');
+            const loginError = document.getElementById('login-error');
+            const nameError = document.getElementById('name-error');
             const questionText = document.getElementById('question-text');
             const optionsContainer = document.getElementById('options-container');
             const questionCounter = document.getElementById('question-counter');
             const timerDisplay = document.getElementById('timer');
-            const finalScoreDisplay = document.getElementById('final-score');
-            
-            const CORRECT_ID = '111';
-            const CORRECT_PASSWORD = '555';
-            const TOTAL_QUESTIONS = 50;
-            const TIME_LIMIT = 15 * 60; // 15 minutes in seconds
 
             let currentQuestionIndex = 0;
             let score = 0;
-            let timerInterval;
+            let timer;
+            const timeLimit = 60 * 60; // 60 minutes in seconds
 
-            const quizData = [
-                // Vocabulary (Synonyms and Antonyms) - 10 MCQs
-                {
-                    question: "What is the synonym of 'iconoclast'?",
-                    options: [
-                        { text: "Conformist", correct: false },
-                        { text: "Traditionalist", correct: false },
-                        { text: "Maverick", correct: true },
-                        { text: "Supporter", correct: false }
-                    ],
-                    hint: "Think about someone who challenges established beliefs."
-                },
-                {
-                    question: "Choose the antonym of 'idealistic'.",
-                    options: [
-                        { text: "Utopian", correct: false },
-                        { text: "Pragmatic", correct: true },
-                        { text: "Visionary", correct: false },
-                        { text: "Optimistic", correct: false }
-                    ],
-                    hint: "The opposite of being motivated by noble beliefs is being motivated by practicality."
-                },
-                {
-                    question: "Find the synonym for 'ignominious'.",
-                    options: [
-                        { text: "Honorable", correct: false },
-                        { text: "Dignified", correct: false },
-                        { text: "Shameful", correct: true },
-                        { text: "Glorious", correct: false }
-                    ],
-                    hint: "This word describes something that brings disgrace."
-                },
-                {
-                    question: "What is the antonym of 'illustrious'?",
-                    options: [
-                        { text: "Distinguished", correct: false },
-                        { text: "Esteemed", correct: false },
-                        { text: "Obscure", correct: true },
-                        { text: "Renowned", correct: false }
-                    ],
-                    hint: "The opposite of being widely known and respected."
-                },
-                {
-                    question: "Choose the synonym for 'imbibe'.",
-                    options: [
-                        { text: "To give out", correct: false },
-                        { text: "To pour out", correct: false },
-                        { text: "To take in", correct: true },
-                        { text: "To discard", correct: false }
-                    ],
-                    hint: "The word means to consume or take in, especially liquids."
-                },
-                {
-                    question: "What is the synonym for 'imminent'?",
-                    options: [
-                        { text: "Distant", correct: false },
-                        { text: "Impending", correct: true },
-                        { text: "Past", correct: false },
-                        { text: "Postponed", correct: false }
-                    ],
-                    hint: "This word describes something about to happen very soon."
-                },
-                {
-                    question: "Choose the antonym for 'impartial'.",
-                    options: [
-                        { text: "Objective", correct: false },
-                        { text: "Unbiased", correct: false },
-                        { text: "Prejudiced", correct: true },
-                        { text: "Fair", correct: false }
-                    ],
-                    hint: "The opposite of being free from bias."
-                },
-                {
-                    question: "What is the synonym for 'impecunious'?",
-                    options: [
-                        { text: "Wealthy", correct: false },
-                        { text: "Affluent", correct: false },
-                        { text: "Poor", correct: true },
-                        { text: "Prosperous", correct: false }
-                    ],
-                    hint: "This word means not having enough money."
-                },
-                {
-                    question: "Choose the antonym for 'imperceptible'.",
-                    options: [
-                        { text: "Subtle", correct: false },
-                        { text: "Noticeable", correct: true },
-                        { text: "Faint", correct: false },
-                        { text: "Gradual", correct: false }
-                    ],
-                    hint: "The opposite of something that is difficult to sense or notice."
-                },
-                {
-                    question: "What is the synonym for 'impunity'?",
-                    options: [
-                        { text: "Punishment", correct: false },
-                        { text: "Accountability", correct: false },
-                        { text: "Exemption from punishment", correct: true },
-                        { text: "Responsibility", correct: false }
-                    ],
-                    hint: "This word refers to being exempt from punishment or loss."
-                },
-                // Idioms of alphabet 'H' - 10 MCQs
-                {
-                    question: "What is the meaning of the idiom 'Hand over fist'?",
-                    options: [
-                        { text: "To work very hard", correct: false },
-                        { text: "To make money very quickly", correct: true },
-                        { text: "To give someone a handshake", correct: false },
-                        { text: "To fight someone", correct: false }
-                    ],
-                    hint: "Think about making profit at a rapid rate."
-                },
-                {
-                    question: "The idiom 'Hang in the balance' means:",
-                    options: [
-                        { text: "To be in a stable position", correct: false },
-                        { text: "To be at a critical stage or state of uncertainty", correct: true },
-                        { text: "To be held by hand", correct: false },
-                        { text: "To be in perfect equilibrium", correct: false }
-                    ],
-                    hint: "It suggests a situation where the outcome is not yet decided."
-                },
-                {
-                    question: "What does the idiom 'Have a soft spot for' mean?",
-                    options: [
-                        { text: "To be physically weak", correct: false },
-                        { text: "To have a deep affection or liking for something or someone", correct: true },
-                        { text: "To have a negative opinion", correct: false },
-                        { text: "To be a coward", correct: false }
-                    ],
-                    hint: "This idiom describes having a special fondness for something."
-                },
-                {
-                    question: "The idiom 'Head and shoulders above' means:",
-                    options: [
-                        { text: "To be taller than someone", correct: false },
-                        { text: "To be far superior to others", correct: true },
-                        { text: "To be at the same level", correct: false },
-                        { text: "To be confused", correct: false }
-                    ],
-                    hint: "It is used to describe excellence or superiority."
-                },
-                {
-                    question: "What is the meaning of the idiom 'Hit the hay'?",
-                    options: [
-                        { text: "To go to work", correct: false },
-                        { text: "To start a journey", correct: false },
-                        { text: "To go to bed", correct: true },
-                        { text: "To eat dinner", correct: false }
-                    ],
-                    hint: "This is a casual way of saying 'to go to sleep'."
-                },
-                {
-                    question: "The idiom 'Hold your horses' means:",
-                    options: [
-                        { text: "To literally hold a horse", correct: false },
-                        { text: "To calm down and wait patiently", correct: true },
-                        { text: "To run fast", correct: false },
-                        { text: "To be angry", correct: false }
-                    ],
-                    hint: "It is a phrase used to tell someone to stop and wait."
-                },
-                {
-                    question: "What does the idiom 'Home is where the heart is' mean?",
-                    options: [
-                        { text: "A home must have a fireplace", correct: false },
-                        { text: "The most important part of a home is its physical location", correct: false },
-                        { text: "You feel at home wherever the people you love are", correct: true },
-                        { text: "Your heart is located in your home", correct: false }
-                    ],
-                    hint: "It emphasizes the emotional connection to a place rather than the physical one."
-                },
-                {
-                    question: "What is the meaning of the idiom 'High and dry'?",
-                    options: [
-                        { text: "To be very happy", correct: false },
-                        { text: "To be left stranded and helpless", correct: true },
-                        { text: "To be in a comfortable position", correct: false },
-                        { text: "To be in a hot climate", correct: false }
-                    ],
-                    hint: "It means to be in a difficult situation without help."
-                },
-                {
-                    question: "What does the idiom 'Hot under the collar' mean?",
-                    options: [
-                        { text: "To be wearing warm clothing", correct: false },
-                        { text: "To be angry or annoyed", correct: true },
-                        { text: "To be feeling ill", correct: false },
-                        { text: "To be excited", correct: false }
-                    ],
-                    hint: "This idiom describes a state of anger or irritation."
-                },
-                {
-                    question: "The idiom 'House of cards' refers to:",
-                    options: [
-                        { text: "A strong, well-built structure", correct: false },
-                        { text: "A fragile structure or plan that is likely to collapse", correct: true },
-                        { text: "A building made of playing cards", correct: false },
-                        { text: "A gambling establishment", correct: false }
-                    ],
-                    hint: "It's a metaphor for something that is very unstable."
-                },
-                // Punctuations - 10 MCQs
-                {
-                    question: "Which punctuation mark is used to show possession or to indicate a contraction?",
-                    options: [
-                        { text: "Colon", correct: false },
-                        { text: "Semicolon", correct: false },
-                        { text: "Apostrophe", correct: true },
-                        { text: "Comma", correct: false }
-                    ],
-                    hint: "This mark is used for things like 'it's' or 'student's book'."
-                },
-                {
-                    question: "Which punctuation mark is used to separate items in a list?",
-                    options: [
-                        { text: "Full stop", correct: false },
-                        { text: "Comma", correct: true },
-                        { text: "Semicolon", correct: false },
-                        { text: "Exclamation mark", correct: false }
-                    ],
-                    hint: "Think about the mark used between apples, bananas, and oranges."
-                },
-                {
-                    question: "The function of a semicolon (;) is to:",
-                    options: [
-                        { text: "End a sentence", correct: false },
-                        { text: "Separate two independent clauses that are closely related in thought", correct: true },
-                        { text: "Show a question", correct: false },
-                        { text: "Indicate a pause", correct: false }
-                    ],
-                    hint: "It's a stronger pause than a comma but not as final as a full stop."
-                },
-                {
-                    question: "Which punctuation mark is used at the end of a declarative sentence?",
-                    options: [
-                        { text: "Question mark", correct: false },
-                        { text: "Exclamation mark", correct: false },
-                        { text: "Full stop (period)", correct: true },
-                        { text: "Comma", correct: false }
-                    ],
-                    hint: "This mark simply ends a statement."
-                },
-                {
-                    question: "A question mark is used at the end of:",
-                    options: [
-                        { text: "A statement", correct: false },
-                        { text: "A command", correct: false },
-                        { text: "An interrogative sentence (a question)", correct: true },
-                        { text: "An exclamation", correct: false }
-                    ],
-                    hint: "The name of the mark gives a big clue to its purpose."
-                },
-                {
-                    question: "Which punctuation mark is used to introduce a list or an explanation?",
-                    options: [
-                        { text: "Semicolon", correct: false },
-                        { text: "Colon", correct: true },
-                        { text: "Comma", correct: false },
-                        { text: "Apostrophe", correct: false }
-                    ],
-                    hint: "It's used after a complete thought to introduce an example or a series."
-                },
-                {
-                    question: "Which of the following is an example of a correctly used hyphen?",
-                    options: [
-                        { text: "Mother - in - law", correct: false },
-                        { text: "Mother-in-law", correct: true },
-                        { text: "Mother in law", correct: false },
-                        { text: "Mother - inlaw", correct: false }
-                    ],
-                    hint: "Hyphens connect words to create a compound adjective or a compound noun."
-                },
-                {
-                    question: "Which punctuation mark indicates strong feelings or emphasis?",
-                    options: [
-                        { text: "Comma", correct: false },
-                        { text: "Exclamation mark", correct: true },
-                        { text: "Semicolon", correct: false },
-                        { text: "Full stop", correct: false }
-                    ],
-                    hint: "This mark is often used to show excitement, anger, or surprise."
-                },
-                {
-                    question: "When should quotation marks be used?",
-                    options: [
-                        { text: "To show a pause in a sentence", correct: false },
-                        { text: "To separate clauses", correct: false },
-                        { text: "To enclose a person's exact words or a title", correct: true },
-                        { text: "To shorten a word", correct: false }
-                    ],
-                    hint: "They are used to signal direct speech."
-                },
-                {
-                    question: "What is the purpose of a parenthesis?",
-                    options: [
-                        { text: "To end a sentence", correct: false },
-                        { text: "To enclose extra information or an aside", correct: true },
-                        { text: "To join two independent clauses", correct: false },
-                        { text: "To indicate a question", correct: false }
-                    ],
-                    hint: "They are used to insert a detail that isn't essential to the main sentence."
-                },
-                // Active and Passive Voice - 10 MCQs
-                {
-                    question: "Which sentence is in the passive voice?",
-                    options: [
-                        { text: "The dog chased the ball.", correct: false },
-                        { text: "The ball was chased by the dog.", correct: true },
-                        { text: "The dog runs fast.", correct: false },
-                        { text: "He is running.", correct: false }
-                    ],
-                    hint: "The subject of the sentence receives the action in the passive voice."
-                },
-                {
-                    question: "Change the sentence 'She wrote a letter.' to passive voice.",
-                    options: [
-                        { text: "A letter was written by her.", correct: true },
-                        { text: "A letter wrote her.", correct: false },
-                        { text: "She was written a letter.", correct: false },
-                        { text: "A letter is written by her.", correct: false }
-                    ],
-                    hint: "The object of the active voice sentence becomes the subject of the passive voice sentence."
-                },
-                {
-                    question: "Which sentence is in the active voice?",
-                    options: [
-                        { text: "The meal was cooked by me.", correct: false },
-                        { text: "The car was driven by him.", correct: false },
-                        { text: "The book was read by her.", correct: false },
-                        { text: "I cooked the meal.", correct: true }
-                    ],
-                    hint: "The subject of the sentence performs the action in the active voice."
-                },
-                {
-                    question: "Change 'The teacher will grade the papers.' to passive voice.",
-                    options: [
-                        { text: "The papers will be graded by the teacher.", correct: true },
-                        { text: "The papers are graded by the teacher.", correct: false },
-                        { text: "The teacher grades the papers.", correct: false },
-                        { text: "The papers were graded by the teacher.", correct: false }
-                    ],
-                    hint: "Remember to use the correct form of the verb 'to be' and the past participle."
-                },
-                {
-                    question: "Change 'The report has been completed by the team.' to active voice.",
-                    options: [
-                        { text: "The team has completed the report.", correct: true },
-                        { text: "The team is completing the report.", correct: false },
-                        { text: "The report completed the team.", correct: false },
-                        { text: "The report was completed by the team.", correct: false }
-                    ],
-                    hint: "The agent of the passive sentence becomes the subject of the active sentence."
-                },
-                {
-                    question: "Which sentence is in the passive voice?",
-                    options: [
-                        { text: "My mother baked a cake.", correct: false },
-                        { text: "They will build a new house.", correct: false },
-                        { text: "The bridge was destroyed by the storm.", correct: true },
-                        { text: "The children are playing outside.", correct: false }
-                    ],
-                    hint: "The subject of a passive sentence is the receiver of the action."
-                },
-                {
-                    question: "Change 'We are watching a movie.' to passive voice.",
-                    options: [
-                        { text: "A movie is being watched by us.", correct: true },
-                        { text: "A movie was watched by us.", correct: false },
-                        { text: "A movie is watched by us.", correct: false },
-                        { text: "We are being watched by a movie.", correct: false }
-                    ],
-                    hint: "Use the present continuous tense in the passive voice to match the active sentence."
-                },
-                {
-                    question: "Change 'The gardener plants flowers.' to passive voice.",
-                    options: [
-                        { text: "Flowers are planted by the gardener.", correct: true },
-                        { text: "Flowers were planted by the gardener.", correct: false },
-                        { text: "The gardener is planted by flowers.", correct: false },
-                        { text: "Flowers are being planted by the gardener.", correct: false }
-                    ],
-                    hint: "The present tense of the active voice requires a simple present passive voice."
-                },
-                {
-                    question: "Which sentence is in the active voice?",
-                    options: [
-                        { text: "The window was broken by the boy.", correct: false },
-                        { text: "The boy broke the window.", correct: true },
-                        { text: "The window has been broken.", correct: false },
-                        { text: "The window is being broken.", correct: false }
-                    ],
-                    hint: "Identify the sentence where the subject performs the action."
-                },
-                {
-                    question: "Change 'He will buy a car.' to passive voice.",
-                    options: [
-                        { text: "A car will be bought by him.", correct: true },
-                        { text: "A car will bought by him.", correct: false },
-                        { text: "A car is being bought by him.", correct: false },
-                        { text: "A car will be buy by him.", correct: false }
-                    ],
-                    hint: "Remember the future tense passive construction: 'will be + past participle'."
-                },
-                // Direct and Indirect Speech - 10 MCQs
-                {
-                    question: "Change 'He said, 'I am going to the market.'' to indirect speech.",
-                    options: [
-                        { text: "He said that he was going to the market.", correct: true },
-                        { text: "He said that he is going to the market.", correct: false },
-                        { text: "He said I am going to the market.", correct: false },
-                        { text: "He said that I was going to the market.", correct: false }
-                    ],
-                    hint: "When changing to indirect speech, the tense shifts back and the pronoun changes."
-                },
-                {
-                    question: "Change 'She said, 'I will call you.'' to indirect speech.",
-                    options: [
-                        { text: "She said that she will call me.", correct: false },
-                        { text: "She said that she would call me.", correct: true },
-                        { text: "She said I would call you.", correct: false },
-                        { text: "She said she would call me.", correct: false }
-                    ],
-                    hint: "The future tense 'will' becomes 'would' in indirect speech."
-                },
-                {
-                    question: "Change 'He asked, 'Are you happy?'' to indirect speech.",
-                    options: [
-                        { text: "He asked if I was happy.", correct: true },
-                        { text: "He asked if you were happy.", correct: false },
-                        { text: "He asked that if I was happy.", correct: false },
-                        { text: "He asked was I happy.", correct: false }
-                    ],
-                    hint: "For a yes/no question, use 'if' or 'whether' and change the word order to a statement."
-                },
-                {
-                    question: "Change 'She said, 'I can swim.'' to indirect speech.",
-                    options: [
-                        { text: "She said that she could swim.", correct: true },
-                        { text: "She said that she can swim.", correct: false },
-                        { text: "She said she can swim.", correct: false },
-                        { text: "She said that I could swim.", correct: false }
-                    ],
-                    hint: "Modal verbs like 'can' change to 'could' in indirect speech."
-                },
-                {
-                    question: "Change 'He said, 'We have finished the work.'' to indirect speech.",
-                    options: [
-                        { text: "He said that they had finished the work.", correct: true },
-                        { text: "He said that they have finished the work.", correct: false },
-                        { text: "He said that we had finished the work.", correct: false },
-                        { text: "He said that they finished the work.", correct: false }
-                    ],
-                    hint: "The present perfect tense 'have finished' changes to the past perfect tense 'had finished'."
-                },
-                {
-                    question: "Change 'The teacher said, 'The Earth is round.'' to indirect speech.",
-                    options: [
-                        { text: "The teacher said that the Earth was round.", correct: false },
-                        { text: "The teacher said that the Earth is round.", correct: true },
-                        { text: "The teacher said the Earth is round.", correct: false },
-                        { text: "The teacher said that Earth is round.", correct: false }
-                    ],
-                    hint: "Universal truths do not change tense in indirect speech."
-                },
-                {
-                    question: "Change 'I said to him, 'Do you want to come?'' to indirect speech.",
-                    options: [
-                        { text: "I asked him if he wanted to come.", correct: true },
-                        { text: "I asked him that if he wanted to come.", correct: false },
-                        { text: "I asked him did he want to come.", correct: false },
-                        { text: "I asked him if he wants to come.", correct: false }
-                    ],
-                    hint: "Change the reporting verb to 'asked' and use 'if' for the question."
-                },
-                {
-                    question: "Change 'He said, 'I was watching a movie.'' to indirect speech.",
-                    options: [
-                        { text: "He said that he was watching a movie.", correct: false },
-                        { text: "He said that he had been watching a movie.", correct: true },
-                        { text: "He said he had been watching a movie.", correct: false },
-                        { text: "He said that I had been watching a movie.", correct: false }
-                    ],
-                    hint: "The past continuous tense 'was watching' changes to the past perfect continuous tense 'had been watching'."
-                },
-                {
-                    question: "Change 'She said, 'I must go.'' to indirect speech.",
-                    options: [
-                        { text: "She said that she had to go.", correct: true },
-                        { text: "She said that she must go.", correct: false },
-                        { text: "She said she must go.", correct: false },
-                        { text: "She said that I had to go.", correct: false }
-                    ],
-                    hint: "The modal verb 'must' often changes to 'had to'."
-                },
-                {
-                    question: "Change 'He exclaimed, 'What a beautiful view!'' to indirect speech.",
-                    options: [
-                        { text: "He exclaimed that it was a very beautiful view.", correct: true },
-                        { text: "He exclaimed what a beautiful view.", correct: false },
-                        { text: "He exclaimed that it is a beautiful view.", correct: false },
-                        { text: "He exclaimed that what a beautiful view it was.", correct: false }
-                    ],
-                    hint: "Change the exclamation to a statement and adjust the words for emphasis."
-                },
-                // Random extra questions to make it 50
-                { question: "What is the synonym for 'incompetent'?", options: [{ text: "Capable", correct: false }, { text: "Inept", correct: true }, { text: "Skilled", correct: false }, { text: "Proficient", correct: false }], hint: "The word means not qualified or suited for a purpose." },
-                { question: "Which word means 'impossible or difficult to sense'?", options: [{ text: "Imperceptible", correct: true }, { text: "Noticeable", correct: false }, { text: "Visible", correct: false }, { text: "Distinct", correct: false }], hint: "This term describes something that is very faint or subtle." },
-                { question: "What is the antonym of 'impetuous'?", options: [{ text: "Rash", correct: false }, { text: "Reckless", correct: false }, { text: "Cautious", correct: true }, { text: "Hasty", correct: false }], hint: "The opposite of acting without thinking." },
-                { question: "Choose the synonym for 'implore'.", options: [{ text: "Command", correct: false }, { text: "Request earnestly", correct: true }, { text: "Order", correct: false }, { text: "Demand", correct: false }], hint: "The word means to beg or plead urgently." },
-                { question: "What does 'incipient' mean?", options: [{ text: "Fully developed", correct: false }, { text: "Partially formed or in the beginning stage", correct: true }, { text: "Ending", correct: false }, { text: "Complete", correct: false }], hint: "The word describes something that is only partly in existence." },
-                { question: "The word 'indelible' means:", options: [{ text: "Easily removed", correct: false }, { text: "Not able to be forgotten or erased", correct: true }, { text: "Temporary", correct: false }, { text: "Faint", correct: false }], hint: "Think of a memory or stain that cannot be removed." },
-                { question: "What does 'impromptu' mean?", options: [{ text: "With preparation", correct: false }, { text: "Without advance preparation", correct: true }, { text: "Planned", correct: false }, { text: "Rehearsed", correct: false }], hint: "This word is used for actions done on the spur of the moment." },
-                { question: "What is the synonym for 'inaugurate'?", options: [{ text: "End", correct: false }, { text: "Cancel", correct: false }, { text: "Commence officially", correct: true }, { text: "Stop", correct: false }], hint: "It refers to the beginning of a formal event or period." },
-                { question: "The word 'implode' means:", options: [{ text: "To burst outward", correct: false }, { text: "To burst inward", correct: true }, { text: "To explode", correct: false }, { text: "To expand", correct: false }], hint: "This is the opposite of an explosion." },
-                { question: "What is the antonym of 'imply'?", options: [{ text: "Suggest", correct: false }, { text: "Hint", correct: false }, { text: "State directly", correct: true }, { text: "Indicate", correct: false }], hint: "The opposite of expressing something indirectly." },
-                // Punctuations 
-                { question: "Which mark is used for direct speech?", options: [{ text: "Quotation marks", correct: true }, { text: "Parentheses", correct: false }, { text: "Brackets", correct: false }, { text: "Hyphen", correct: false }], hint: "This punctuation encloses the exact words of a speaker." },
-                { question: "What does an ellipsis (...) indicate?", options: [{ text: "A pause or omitted words", correct: true }, { text: "An interruption", correct: false }, { text: "An abbreviation", correct: false }, { text: "Emphasis", correct: false }], hint: "It shows that something has been left out from a quotation or that a thought trails off." },
-                { question: "Which of the following is an example of a correctly used colon?", options: [{ text: "She brought: apples, bananas, and grapes.", correct: false }, { text: "She brought everything: apples, bananas, and grapes.", correct: true }, { text: "She brought apples, bananas, and grapes:", correct: false }, { text: "Apples: bananas: grapes.", correct: false }], hint: "A colon introduces a list, explanation, or a quotation." },
-                { question: "When is a dash used?", options: [{ text: "To join words in a list", correct: false }, { text: "To indicate a sudden break in thought or an emphatic pause", correct: true }, { text: "To separate clauses in a sentence", correct: false }, { text: "To show possession", correct: false }], hint: "This punctuation provides a break in the flow of a sentence." },
-                { question: "Which of the following sentences uses a comma correctly?", options: [{ text: "We went to the park, and ate lunch.", correct: false }, { text: "We went to the park and ate lunch.", correct: true }, { text: "We went to the park and, ate lunch.", correct: false }, { text: "We, went to the park and ate lunch.", correct: false }], hint: "A comma is not needed to separate two verbs in a compound predicate." },
-                { question: "Which punctuation mark is used to show a list of items within a larger list?", options: [{ text: "Semicolon", correct: true }, { text: "Comma", correct: false }, { text: "Colon", correct: false }, { text: "Dash", correct: false }], hint: "It is often used to separate complex items in a list that already contain commas." },
-                { question: "Which is the correct way to punctuate the following: 'he shouted i am here'", options: [{ text: "'He shouted, 'I am here.'", correct: false }, { text: "He shouted, 'I am here!'", correct: true }, { text: "He shouted 'I am here.'", correct: false }, { text: "He shouted! 'I am here.'", correct: false }], hint: "A comma is used to introduce the direct speech, and the correct end punctuation is placed inside the quotation marks." },
-                { question: "What is the purpose of a bracket?", options: [{ text: "To enclose a quote", correct: false }, { text: "To show emphasis", correct: false }, { text: "To add clarification or an aside, often in a direct quotation", correct: true }, { text: "To separate a list of items", correct: false }], hint: "They are often used to add information that wasn't in the original text." },
-                { question: "Which punctuation mark is used to connect two independent clauses?", options: [{ text: "Comma", correct: false }, { text: "Semicolon", correct: true }, { text: "Hyphen", correct: false }, { text: "Apostrophe", correct: false }], hint: "It's a stronger connector than a comma and can replace 'and' or 'but'." },
-                { question: "What is the correct use of a comma in a letter greeting?", options: [{ text: "Dear Sir:", correct: false }, { text: "Dear Sir,", correct: true }, { text: "Dear, Sir", correct: false }, { text: "Dear Sir.", correct: false }], hint: "A comma is traditionally used after the salutation in a letter." },
-                // Active and Passive Voice
-                { question: "Change 'The cat is chasing the mouse.' to passive voice.", options: [{ text: "The mouse is chased by the cat.", correct: false }, { text: "The mouse is being chased by the cat.", correct: true }, { text: "The mouse was being chased by the cat.", correct: false }, { text: "The cat is being chased by the mouse.", correct: false }], hint: "The present continuous tense requires 'being' in the passive voice." },
-                { question: "The sentence 'The project will have been finished by me.' is in which voice?", options: [{ text: "Active voice", correct: false }, { text: "Passive voice", correct: true }], hint: "Look for the verb 'to be' plus a past participle." },
-                { question: "Change 'The police arrested the thief.' to passive voice.", options: [{ text: "The thief was arrested by the police.", correct: true }, { text: "The thief is arrested by the police.", correct: false }, { text: "The police were arrested by the thief.", correct: false }, { text: "The thief has been arrested by the police.", correct: false }], hint: "The past simple tense of the active voice changes to past simple passive voice." },
-                { question: "Change 'He cleans the room every day.' to passive voice.", options: [{ text: "The room is cleaned by him every day.", correct: true }, { text: "The room was cleaned by him every day.", correct: false }, { text: "The room is being cleaned by him every day.", correct: false }, { text: "The room has been cleaned by him every day.", correct: false }], hint: "The present simple tense requires a simple present passive form." },
-                { question: "Which of the following is an example of active voice?", options: [{ text: "The cake was baked by Sarah.", correct: false }, { text: "A new song was sung by the artist.", correct: false }, { text: "A letter was written by the student.", correct: false }, { text: "The student wrote a letter.", correct: true }], hint: "The subject of the sentence performs the action." },
-                { question: "Change 'They have built a new hospital.' to passive voice.", options: [{ text: "A new hospital has been built by them.", correct: true }, { text: "A new hospital was built by them.", correct: false }, { text: "A new hospital is built by them.", correct: false }, { text: "They have been built a new hospital.", correct: false }], hint: "The present perfect tense passive form uses 'has/have been' + past participle." },
-                { question: "Change 'The author is writing a book.' to passive voice.", options: [{ text: "A book is written by the author.", correct: false }, { text: "A book is being written by the author.", correct: true }, { text: "A book was written by the author.", correct: false }, { text: "A book has been written by the author.", correct: false }], hint: "The present continuous tense in active voice becomes 'is/are being' + past participle in passive voice." },
-                { question: "Change 'She sings a song.' to passive voice.", options: [{ text: "A song is sung by her.", correct: true }, { text: "A song was sung by her.", correct: false }, { text: "A song is being sung by her.", correct: false }, { text: "A song sings her.", correct: false }], hint: "The simple present tense in active voice changes to 'is/are' + past participle in passive voice." },
-                { question: "The sentence 'The car was repaired by the mechanic.' is in which voice?", options: [{ text: "Active voice", correct: false }, { text: "Passive voice", correct: true }], hint: "The subject 'the car' is receiving the action 'repaired'." },
-                { question: "Change 'He will read the novel.' to passive voice.", options: [{ text: "The novel will be read by him.", correct: true }, { text: "The novel will read by him.", correct: false }, { text: "The novel is read by him.", correct: false }, { text: "The novel was read by him.", correct: false }], hint: "The future simple tense passive form uses 'will be' + past participle." },
-                // Direct and Indirect Speech
-                { question: "Change 'He said to me, 'What is your name?'' to indirect speech.", options: [{ text: "He asked me what was my name.", correct: false }, { text: "He asked me what my name was.", correct: true }, { text: "He asked me what is your name.", correct: false }, { text: "He asked me that what my name was.", correct: false }], hint: "When changing a 'wh' question, the word order changes to that of a statement." },
-                { question: "Change 'She said, 'I have been here since morning.'' to indirect speech.", options: [{ text: "She said that she had been there since morning.", correct: true }, { text: "She said that she was here since morning.", correct: false }, { text: "She said that she have been there since morning.", correct: false }, { text: "She said that I had been there since morning.", correct: false }], hint: "The present perfect continuous changes to past perfect continuous, and place adverbs change." },
-                { question: "Change 'The captain said, 'Bravo! You have done well.'' to indirect speech.", options: [{ text: "The captain applauded me and said that I had done well.", correct: true }, { text: "The captain said that I have done well.", correct: false }, { text: "The captain applauded me that I have done well.", correct: false }, { text: "The captain exclaimed with joy that I had done well.", correct: false }], hint: "Exclamations of approval are often reported using the verb 'applauded' or 'praised'." },
-                { question: "Change 'She said to her, 'Please give me a glass of water.'' to indirect speech.", options: [{ text: "She requested her to give her a glass of water.", correct: true }, { text: "She said to her that give her a glass of water.", correct: false }, { text: "She asked her that she gave her a glass of water.", correct: false }, { text: "She requested her that she give her a glass of water.", correct: false }], hint: "Imperative sentences often use verbs like 'requested', 'ordered', or 'advised'." },
-                { question: "Change 'He said, 'I finished the project yesterday.'' to indirect speech.", options: [{ text: "He said that he finished the project yesterday.", correct: false }, { text: "He said that he had finished the project the previous day.", correct: true }, { text: "He said that he finished the project the previous day.", correct: false }, { text: "He said that he has finished the project the previous day.", correct: false }], hint: "The past simple tense changes to past perfect tense, and time adverbs change." },
-                { question: "Change 'He said, 'Let us go.'' to indirect speech.", options: [{ text: "He proposed that they should go.", correct: true }, { text: "He said that they should go.", correct: false }, { text: "He said to go.", correct: false }, { text: "He asked them to go.", correct: false }], hint: "For 'Let us' sentences, 'proposed' or 'suggested' are often used." },
-                { question: "Change 'She said, 'My husband is a doctor.'' to indirect speech.", options: [{ text: "She said that her husband was a doctor.", correct: true }, { text: "She said that my husband is a doctor.", correct: false }, { text: "She said that her husband is a doctor.", correct: false }, { text: "She said that her husband was a doctor.", correct: false }], hint: "The tense changes from present simple to past simple." },
-                { question: "Change 'He said, 'How clever I am!'' to indirect speech.", options: [{ text: "He exclaimed that how clever he was.", correct: false }, { text: "He exclaimed that he was very clever.", correct: true }, { text: "He said that he was very clever.", correct: false }, { text: "He exclaimed how clever he was.", correct: false }], hint: "Exclamatory sentences are changed to statements in indirect speech." },
-                { question: "Change 'He said, 'I have to go.'' to indirect speech.", options: [{ text: "He said that he has to go.", correct: false }, { text: "He said that he had to go.", correct: true }, { text: "He said he had to go.", correct: false }, { text: "He said that he will have to go.", correct: false }], hint: "'Have to' in direct speech changes to 'had to' in indirect speech." },
-                { question: "Change 'He said to me, 'Don't go.'' to indirect speech.", options: [{ text: "He told me not to go.", correct: true }, { text: "He told me to not go.", correct: false }, { text: "He said me not to go.", correct: false }, { text: "He said to me not to go.", correct: false }], hint: "Negative imperative sentences use 'not to' in indirect speech." },
-            ];
+            const CORRECT_ID = '1122';
+            const CORRECT_PASSWORD = '2211';
 
+            // Function to shuffle array
             function shuffleArray(array) {
                 for (let i = array.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [array[i], array[j]] = [array[j], array[i]];
                 }
             }
+            
+            shuffleArray(quizData);
 
-            // Group questions by category and shuffle them
-            const categories = {
-                vocabulary: quizData.slice(0, 10),
-                idioms: quizData.slice(10, 20),
-                punctuations: quizData.slice(20, 30),
-                activePassive: quizData.slice(30, 40),
-                directIndirect: quizData.slice(40, 50)
-            };
+            loginBtn.addEventListener('click', () => {
+                const id = idInput.value;
+                const password = passwordInput.value;
+                if (id === CORRECT_ID && password === CORRECT_PASSWORD) {
+                    loginScreen.classList.add('hidden');
+                    nameScreen.classList.remove('hidden');
+                } else {
+                    loginError.classList.remove('hidden');
+                }
+            });
 
-            for (let category in categories) {
-                shuffleArray(categories[category]);
-            }
-            const allQuestions = [...categories.vocabulary, ...categories.idioms, ...categories.punctuations, ...categories.activePassive, ...categories.directIndirect];
+            startBtn.addEventListener('click', () => {
+                const candidateName = nameInput.value.trim();
+                if (candidateName) {
+                    nameScreen.classList.add('hidden');
+                    quizContainer.classList.remove('hidden');
+                    document.getElementById('candidate-name').textContent = candidateName;
+                    startQuiz();
+                } else {
+                    nameError.classList.remove('hidden');
+                }
+            });
 
-            function displayQuestion() {
-                if (currentQuestionIndex < TOTAL_QUESTIONS) {
-                    const question = allQuestions[currentQuestionIndex];
-                    questionText.innerText = question.question;
-                    optionsContainer.innerHTML = '';
-                    shuffleArray(question.options);
-                    question.options.forEach(option => {
-                        const button = document.createElement('button');
-                        button.innerText = option.text;
-                        button.classList.add('option-button');
-                        button.addEventListener('click', () => handleAnswer(button, option.correct));
-                        optionsContainer.appendChild(button);
-                    });
-                    questionCounter.innerText = `Question ${currentQuestionIndex + 1}/${TOTAL_QUESTIONS}`;
-                    nextButton.style.display = 'none';
+            nextBtn.addEventListener('click', () => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizData.length) {
+                    showQuestion();
                 } else {
                     endQuiz();
                 }
-            }
-
-            function handleAnswer(selectedButton, isCorrect) {
-                if (isCorrect) {
-                    score++;
-                    selectedButton.classList.add('correct');
-                } else {
-                    selectedButton.classList.add('wrong');
-                    const correctOption = Array.from(optionsContainer.children).find(btn => {
-                        const optionText = allQuestions[currentQuestionIndex].options.find(opt => opt.text === btn.innerText);
-                        return optionText.correct;
-                    });
-                    if (correctOption) {
-                        correctOption.classList.add('correct');
-                    }
-                }
-                disableOptions();
-                nextButton.style.display = 'block';
-            }
-
-            function disableOptions() {
-                Array.from(optionsContainer.children).forEach(button => {
-                    button.disabled = true;
-                });
-            }
-
-            function endQuiz() {
-                clearInterval(timerInterval);
-                quizSection.style.display = 'none';
-                resultSection.style.display = 'block';
-                finalScoreDisplay.innerText = `Your score is: ${score}/${TOTAL_QUESTIONS}`;
-            }
+            });
 
             function startTimer() {
-                let timeLeft = TIME_LIMIT;
-                timerInterval = setInterval(() => {
+                let timeLeft = timeLimit;
+                timer = setInterval(() => {
+                    timeLeft--;
                     const minutes = Math.floor(timeLeft / 60);
                     const seconds = timeLeft % 60;
-                    timerDisplay.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    timerDisplay.textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
                     if (timeLeft <= 0) {
+                        clearInterval(timer);
                         endQuiz();
                     }
-                    timeLeft--;
                 }, 1000);
             }
 
-            loginButton.addEventListener('click', () => {
-                if (idInput.value === CORRECT_ID && passwordInput.value === CORRECT_PASSWORD) {
-                    loginSection.classList.add('hidden');
-                    nameSection.classList.remove('hidden');
-                } else {
-                    // Do not use alert()
-                    const messageBox = document.createElement('div');
-                    messageBox.innerText = 'Invalid ID or Password.';
-                    messageBox.style.cssText = `
-                        position: fixed;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
-                        background-color: #ffcccc;
-                        border: 2px solid red;
-                        padding: 20px;
-                        border-radius: 10px;
-                        z-index: 1000;
-                        color: #8b0000;
-                        font-weight: bold;
-                    `;
-                    document.body.appendChild(messageBox);
-                    setTimeout(() => messageBox.remove(), 3000);
-                }
-            });
+            function showQuestion() {
+                const currentQuestion = quizData[currentQuestionIndex];
+                questionCounter.textContent = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
+                questionText.textContent = currentQuestion.question;
+                optionsContainer.innerHTML = '';
+                nextBtn.classList.add('hidden');
 
-            startButton.addEventListener('click', () => {
-                if (nameInput.value.trim() !== '') {
-                    nameSection.classList.add('hidden');
-                    quizSection.style.display = 'block';
-                    shuffleArray(allQuestions);
-                    displayQuestion();
-                    startTimer();
-                } else {
-                    // Do not use alert()
-                    const messageBox = document.createElement('div');
-                    messageBox.innerText = 'Please enter your name.';
-                    messageBox.style.cssText = `
-                        position: fixed;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
-                        background-color: #ffcccc;
-                        border: 2px solid red;
-                        padding: 20px;
-                        border-radius: 10px;
-                        z-index: 1000;
-                        color: #8b0000;
-                        font-weight: bold;
-                    `;
-                    document.body.appendChild(messageBox);
-                    setTimeout(() => messageBox.remove(), 3000);
-                }
-            });
+                // Shuffle options to ensure randomness
+                const shuffledOptions = [...currentQuestion.options];
+                shuffleArray(shuffledOptions);
 
-            nextButton.addEventListener('click', () => {
-                currentQuestionIndex++;
-                displayQuestion();
-            });
+                shuffledOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.classList.add('option-button', 'block', 'w-full', 'mb-2', 'p-3', 'rounded-md', 'border', 'border-blue-400', 'text-blue-800');
+                    button.textContent = option;
+                    button.addEventListener('click', () => checkAnswer(button, option));
+                    optionsContainer.appendChild(button);
+                });
+            }
+
+            function checkAnswer(selectedButton, selectedOption) {
+                const currentQuestion = quizData[currentQuestionIndex];
+                const isCorrect = selectedOption === currentQuestion.correctAnswer;
+                
+                // Disable all option buttons after one is selected
+                document.querySelectorAll('.option-button').forEach(btn => {
+                    btn.classList.add('disabled');
+                    if (btn.textContent === currentQuestion.correctAnswer) {
+                        btn.classList.add('correct');
+                    } else {
+                        btn.classList.add('wrong');
+                    }
+                });
+
+                if (isCorrect) {
+                    score++;
+                } else {
+                    selectedButton.classList.add('wrong');
+                }
+                
+                nextBtn.classList.remove('hidden');
+            }
+
+            function endQuiz() {
+                clearInterval(timer);
+                quizContainer.classList.add('hidden');
+                resultScreen.classList.remove('hidden');
+                document.getElementById('total-questions').textContent = quizData.length;
+                document.getElementById('correct-answers').textContent = score;
+                document.getElementById('final-score').textContent = score;
+            }
+
+            function startQuiz() {
+                startTimer();
+                showQuestion();
+            }
         });
     </script>
 </body>
