@@ -1,1148 +1,223 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ur" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Precis Paper Quiz</title>
+    <title>MEDIA: The AI Storm Drowning Pakistan - Notes</title>
+    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font and configure colors -->
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400..700&display=swap');
         
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f8ff; /* Light blue background */
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 1rem;
+            background-color: #f0f9ff; /* light blue */
+            color: #1f2937; /* dark grey for text */
         }
-
-        .container {
-            background-color: #fff;
-            padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .urdu-text {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            direction: rtl;
+            text-align: right;
+            line-height: 2.2;
         }
-
-        .header {
-            text-align: center;
-            margin-bottom: 2rem;
+        .heading-style {
+            color: #0c4a6e; /* Darker Blue */
+            border-bottom: 3px solid #fcd34d; /* Yellow underline */
         }
-
-        .title {
-            font-size: 2.25rem;
-            font-weight: bold;
-            color: #00008b; /* Blue color */
-        }
-        
-        .contact {
-            font-size: 1rem;
-            font-weight: bold;
-            color: #ffd700; /* Yellow color */
-        }
-
-        .btn {
-            background-color: #00008b;
-            color: white;
-            padding: 0.75rem 2rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn:hover {
-            background-color: #0000a0;
-        }
-
-        .input-group {
-            width: 100%;
-            margin-bottom: 1rem;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            border: 1px solid #ccc;
-        }
-
-        .quiz-container {
-            width: 100%;
-            text-align: left;
-        }
-
-        .question-title {
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-
-        .options-container {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .option {
-            padding: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-            display: flex;
-            align-items: center;
-        }
-
-        .option:hover {
-            background-color: #e6f2ff;
-        }
-
-        .option.correct {
-            background-color: #c8e6c9; /* Light green */
-            border-color: #4caf50; /* Green */
-        }
-
-        .option.wrong {
-            background-color: #ffcdd2; /* Light red */
-            border-color: #f44336; /* Red */
-        }
-
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1.5rem;
-        }
-
-        .next-btn {
-            background-color: #00008b;
-        }
-
-        .timer-container, .question-info {
-            font-size: 1rem;
-            font-weight: bold;
-        }
-        .message-box {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            text-align: center;
-            min-width: 300px;
-        }
-        .message-box h3 {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-        .message-box p {
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        .message-box .ok-btn {
-            background-color: #00008b;
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
+        .table-header {
+            background-color: #fcd34d; /* Yellow */
+            color: #1f2937;
         }
     </style>
 </head>
-<body class="bg-blue-50">
+<body class="p-4 md:p-8">
 
-<div class="container">
-    <div class="header">
-        <h1 class="title text-blue-900"><strong class="text-blue-900">Precis Paper Quiz</strong></h1>
-        <p class="contact text-yellow-500"><strong class="text-yellow-500">CONTACT: 03051926301</strong></p>
-    </div>
-
-    <!-- Login screen -->
-    <div id="login-screen" class="w-full">
-        <div class="input-group">
-            <label for="id">ID:</label>
-            <input type="text" id="id" placeholder="Enter your ID">
-        </div>
-        <div class="input-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" placeholder="Enter your password">
-        </div>
-        <button id="login-btn" class="btn w-full mt-4">Login</button>
-    </div>
-
-    <!-- Name entry screen -->
-    <div id="name-screen" class="w-full hidden">
-        <div class="input-group">
-            <label for="name">Name:</label>
-            <input type="text" id="name" placeholder="Enter your name">
-        </div>
-        <button id="start-btn" class="btn w-full mt-4">Start Quiz</button>
-    </div>
-
-    <!-- Quiz container -->
-    <div id="quiz-container" class="quiz-container hidden">
-        <div class="flex justify-between items-center mb-4">
-            <div id="question-info" class="question-info"></div>
-            <div id="timer" class="timer-container text-red-600"></div>
-        </div>
-        <h2 id="question" class="question-title"></h2>
-        <div id="options" class="options-container"></div>
-        <div class="flex justify-center mt-6">
-            <button id="next-btn" class="btn next-btn hidden">Next</button>
-        </div>
-    </div>
-    
-    <!-- Result screen -->
-    <div id="result-screen" class="text-center hidden">
-        <h2 class="text-2xl font-bold mb-4">Quiz Complete!</h2>
-        <p id="result-text" class="text-xl"></p>
-    </div>
-
-    <div id="message-box" class="message-box hidden">
-        <h3 id="message-title"></h3>
-        <p id="message-text"></p>
-        <button class="ok-btn" onclick="document.getElementById('message-box').classList.add('hidden');">OK</button>
-    </div>
-</div>
-
-<script>
-    const questions = [
-        // Idioms of alphabet 'I' (10 MCQs)
-        {
-            topic: "Idioms of alphabet 'I'",
-            question: "What does the idiom 'In the same boat' mean?",
-            options: [
-                "Being on the same ship, without a paddle.",
-                "Being in the same unfortunate or challenging situation as others, often with a shared problem.",
-                "Having the same friends and social circle as others, so that you always have someone to talk to.",
-                "Sharing the same hobby or interest, so that you have a common ground to bond over and spend time together."
-            ],
-            answer: "Being in the same unfortunate or challenging situation as others, often with a shared problem."
-        },
-        {
-            topic: "Idioms of alphabet 'I'",
-            question: "If someone has 'itchy feet', what do they want to do?",
-            options: [
-                "They are experiencing a physical sensation in their feet, which makes them want to scratch them.",
-                "They want to go for a long, difficult run or a hike, which will make their feet tired and sore.",
-                "They are feeling restless or dissatisfied with their current location, and have a strong desire to travel and explore new places.",
-                "They are feeling nervous and anxious about a future event, which causes a tingling sensation in their feet."
-            ],
-            answer: "They are feeling restless or dissatisfied with their current location, and have a strong desire to travel and explore new places."
-        },
-        {
-            topic: "Idioms of alphabet 'I'",
-            question: "The idiom 'In over your head' means you are...",
-            options: [
-                "swimming in water that is deeper than you can stand, which makes it difficult to breathe and stay afloat.",
-                "involved in a situation that is far too difficult or complex to handle, often because you lack the necessary skills or resources to manage it.",
-                "a person who is physically very tall, to the extent that you stand out in a crowd and have to duck to go through doorways.",
-                "thinking too much about a simple problem, and making it more complicated than it needs to be, to the point of causing yourself unnecessary stress."
-            ],
-            answer: "involved in a situation that is far too difficult or complex to handle, often because you lack the necessary skills or resources to manage it."
-        },
-        {
-            topic: "Idioms of alphabet 'I'",
-            question: "What is the meaning of 'In a nutshell'?",
-            options: [
-                "Inside a very small container, such as a nutshell, which is often used as a metaphor for a very confined space.",
-                "A detailed and lengthy explanation of a complex topic, which goes into every minor detail and is difficult to follow.",
-                "In the shortest possible way, or concisely, by summarizing the main points of a topic without including unnecessary details.",
-                "A problem that is easy to solve, similar to cracking a nut, which is often used to describe a simple task that requires little effort."
-            ],
-            answer: "In the shortest possible way, or concisely, by summarizing the main points of a topic without including unnecessary details."
-        },
-        {
-            topic: "Idioms of alphabet 'I'",
-            question: "The idiom 'Icing on the cake' refers to...",
-            options: [
-                "the most difficult or challenging part of a task, which makes it feel like an uphill battle, but also the most rewarding part.",
-                "a positive aspect added to something that is already favorable or good, which makes it even better and more enjoyable.",
-                "a sweet and delicious dessert, which is often used as a metaphor for a pleasant and enjoyable experience.",
-                "something that ruins a good situation, and makes it feel like a bad omen, which is often used to describe a negative surprise."
-            ],
-            answer: "a positive aspect added to something that is already favorable or good, which makes it even better and more enjoyable."
-        },
-        {
-            topic: "Idioms of alphabet 'I'",
-            question: "What does it mean to be 'In seventh heaven'?",
-            options: [
-                "To be in a religious or spiritual place, which is often used as a metaphor for a state of enlightenment or divine peace.",
-                "To be extremely happy or pleased, often to the point of feeling ecstatic or overjoyed, which is a feeling of pure bliss.",
-                "To be extremely tired or exhausted after a long day of work, and feeling like you need a break.",
-                "To be confused and disoriented, and feeling like you are lost in a maze, which is a feeling of helplessness and uncertainty."
-            ],
-            answer: "To be extremely happy or pleased, often to the point of feeling ecstatic or overjoyed, which is a feeling of pure bliss."
-        },
-        {
-            topic: "Idioms of alphabet 'I'",
-            question: "If a company is 'in the red', it means it is...",
-            options: [
-                "performing exceptionally well, and has a very high profit margin, which is often used to describe a successful business.",
-                "losing more money than it is making, and is in a state of financial crisis, which is a very difficult situation to be in.",
-                "a new startup company, which is just starting out and has not yet established a solid foundation for itself.",
-                "working on a new project or a new product, which is often used to describe a company that is innovating and expanding."
-            ],
-            answer: "losing more money than it is making, and is in a state of financial crisis, which is a very difficult situation to be in."
-        },
-        {
-            topic: "Idioms of alphabet 'I'",
-            question: "Being 'in a pickle' means you are...",
-            options: [
-                "in a difficult or awkward position or situation, often one that you have created for yourself, and are trying to get out of it.",
-                "making pickles as a hobby, which is a popular pastime for many people, and often a way to relax and unwind.",
-                "doing something enjoyable and fun, which is a way to pass the time and feel good about yourself.",
-                "in a very comfortable and secure situation, which is a feeling of stability and peace of mind."
-            ],
-            answer: "in a difficult or awkward position or situation, often one that you have created for yourself, and are trying to get out of it."
-        },
-        {
-            topic: "Idioms of alphabet 'I'",
-            question: "The phrase 'It takes two to tango' implies that...",
-            options: [
-                "dancing requires two people to perform, which is a basic rule of dancing and a way to describe a synchronized movement.",
-                "one person alone isn't responsible for a negative outcome; both are involved and share the blame or credit for what happened.",
-                "a problem or a conflict can only be solved by a single person, which is a very limited perspective on problem-solving.",
-                "a relationship must be balanced and equal, and that both partners must put in the same amount of effort to make it work."
-            ],
-            answer: "one person alone isn't responsible for a negative outcome; both are involved and share the blame or credit for what happened."
-        },
-        {
-            topic: "Idioms of alphabet 'I'",
-            question: "If something happens 'in the blink of an eye', it happens...",
-            options: [
-                "very slowly and gradually, over a long period of time, which is often used to describe a slow and deliberate process.",
-                "after a long period of time, which is often used to describe an event that has been anticipated for a long time.",
-                "very quickly or suddenly, without any warning, which is often used to describe a sudden and unexpected event.",
-                "without any warning at all, but not necessarily quickly, which is often used to describe a surprise event."
-            ],
-            answer: "very quickly or suddenly, without any warning, which is often used to describe a sudden and unexpected event."
-        },
-
-        // Vocabulary (Synonyms and Antonyms) of alphabet 'J' (10 MCQs)
-        {
-            topic: "Vocabulary (Synonyms and Antonyms)",
-            question: "What is a synonym for 'Jocular'?",
-            options: [
-                "Serious, formal, and lacking a sense of humor.",
-                "Playful, humorous, and full of good cheer.",
-                "Quiet, reserved, and introverted.",
-                "Aggressive, confrontational, and hostile."
-            ],
-            answer: "Playful, humorous, and full of good cheer."
-        },
-        {
-            topic: "Vocabulary (Synonyms and Antonyms)",
-            question: "Which word is an antonym for 'Jovial'?",
-            options: [
-                "Cheerful, upbeat, and full of life.",
-                "Miserable, gloomy, and sad.",
-                "Friendly, outgoing, and sociable.",
-                "Humorous, witty, and clever."
-            ],
-            answer: "Miserable, gloomy, and sad."
-        },
-        {
-            topic: "Vocabulary (Synonyms and Antonyms)",
-            question: "What is a synonym for 'Jubilant'?",
-            options: [
-                "Depressed, dejected, and feeling low.",
-                "Angry, irritated, and upset.",
-                "Ecstatic, triumphant, and overjoyed.",
-                "Nervous, anxious, and worried."
-            ],
-            answer: "Ecstatic, triumphant, and overjoyed."
-        },
-        {
-            topic: "Vocabulary (Synonyms and Antonyms)",
-            question: "Which word is an antonym for 'Judicious'?",
-            options: [
-                "Sensible, wise, and showing good judgment.",
-                "Wise, thoughtful, and careful in decision-making.",
-                "Careful, cautious, and deliberate.",
-                "Rash, imprudent, and lacking in good judgment."
-            ],
-            answer: "Rash, imprudent, and lacking in good judgment."
-        },
-        {
-            topic: "Vocabulary (Synonyms and Antonyms)",
-            question: "What is a synonym for 'Jumbo'?",
-            options: [
-                "Tiny, minuscule, and very small in size.",
-                "Gigantic, enormous, and very large in size.",
-                "Thin, slender, and narrow in shape.",
-                "Small, petite, and delicate in form."
-            ],
-            answer: "Gigantic, enormous, and very large in size."
-        },
-        {
-            topic: "Vocabulary (Synonyms and Antonyms)",
-            question: "Which word is an antonym for 'Justified'?",
-            options: [
-                "Warranted, legitimate, and having a valid reason.",
-                "Unjustified, unwarranted, and lacking a valid reason or basis.",
-                "Fair, equitable, and treating everyone equally.",
-                "Reasonable, logical, and based on sound judgment."
-            ],
-            answer: "Unjustified, unwarranted, and lacking a valid reason or basis."
-        },
-        {
-            topic: "Vocabulary (Synonyms and Antonyms)",
-            question: "What is a synonym for 'Jaunt'?",
-            options: [
-                "A long, difficult, and exhausting journey.",
-                "A short, pleasant trip or excursion taken for pleasure.",
-                "A long period of inactivity or rest.",
-                "A serious and formal business meeting."
-            ],
-            answer: "A short, pleasant trip or excursion taken for pleasure."
-        },
-        {
-            topic: "Vocabulary (Synonyms and Antonyms)",
-            question: "Which word is an antonym for 'Jolly'?",
-            options: [
-                "Merry, cheerful, and full of joy.",
-                "Joyful, happy, and having a lighthearted spirit.",
-                "Sad, depressed, and lacking a sense of humor.",
-                "Playful, mischievous, and full of life."
-            ],
-            answer: "Sad, depressed, and lacking a sense of humor."
-        },
-        {
-            topic: "Vocabulary (Synonyms and Antonyms)",
-            question: "What is a synonym for 'Jig'?",
-            options: [
-                "A slow, methodical, and deliberate movement.",
-                "A type of lively folk dance or a quick, upbeat movement.",
-                "A quiet, calm, and soothing song.",
-                "A type of complex and challenging puzzle."
-            ],
-            answer: "A type of lively folk dance or a quick, upbeat movement."
-        },
-        {
-            topic: "Vocabulary (Synonyms and Antonyms)",
-            question: "Which word is an antonym for 'Joyful'?",
-            options: [
-                "Cheerful, happy, and full of enthusiasm.",
-                "Happy, delighted, and pleased.",
-                "Mournful, sorrowful, and full of grief.",
-                "Excited, thrilled, and full of anticipation."
-            ],
-            answer: "Mournful, sorrowful, and full of grief."
-        },
-
-        // Punctuations (5 MCQs)
-        {
-            topic: "Punctuations",
-            question: "Which sentence uses a comma correctly?",
-            options: [
-                "I like to eat apples, and bananas and oranges.",
-                "I like to eat apples and bananas, and oranges.",
-                "I like to eat apples, bananas, and oranges.",
-                "I like to eat apples, bananas and oranges."
-            ],
-            answer: "I like to eat apples, bananas, and oranges."
-        },
-        {
-            topic: "Punctuations",
-            question: "Choose the sentence with the correct use of an apostrophe to show possession.",
-            options: [
-                "The cats' toy was missing.",
-                "The cat's toy was missing.",
-                "The cats's toy was missing.",
-                "The cats toy was missing."
-            ],
-            answer: "The cat's toy was missing."
-        },
-        {
-            topic: "Punctuations",
-            question: "Which sentence correctly uses a semicolon?",
-            options: [
-                "The sun is shining; the birds are singing.",
-                "The sun is shining: the birds are singing.",
-                "The sun is shining, the birds are singing.",
-                "The sun is shining; and the birds are singing."
-            ],
-            answer: "The sun is shining; the birds are singing."
-        },
-        {
-            topic: "Punctuations",
-            question: "Where should a question mark be placed in the following sentence?",
-            options: [
-                "He asked if I wanted to come.",
-                "He asked, \"Do you want to come?\"",
-                "He asked, \"Do you want to come\"?",
-                "He asked, \"Do you want to come\"."
-            ],
-            answer: "He asked, \"Do you want to come?\""
-        },
-        {
-            topic: "Punctuations",
-            question: "Choose the sentence that correctly uses a colon.",
-            options: [
-                "We need to buy these things: milk, bread, and eggs.",
-                "We need to buy these things; milk, bread, and eggs.",
-                "We need to buy these things, milk, bread, and eggs.",
-                "We need to buy these things milk, bread, and eggs."
-            ],
-            answer: "We need to buy these things: milk, bread, and eggs."
-        },
-
-        // Advanced Parts of speech (5 MCQs)
-        {
-            topic: "Advanced Parts of speech",
-            question: "In the sentence, 'The team celebrated their victory with jubilant cries,' what is the part of speech of 'jubilant'?",
-            options: [
-                "Noun, because it refers to a person, place, or thing.",
-                "Adverb, because it modifies a verb, adjective, or another adverb.",
-                "Adjective, because it modifies the noun 'cries' and describes its quality.",
-                "Verb, because it shows an action or a state of being."
-            ],
-            answer: "Adjective, because it modifies the noun 'cries' and describes its quality."
-        },
-        {
-            topic: "Advanced Parts of speech",
-            question: "Identify the part of speech of the word 'throughout' in the sentence: 'The scent of the flowers was noticeable throughout the entire room.'",
-            options: [
-                "Verb, because it shows an action or a state of being.",
-                "Preposition, because it shows the relationship between the noun 'scent' and the noun phrase 'the entire room.'",
-                "Noun, because it refers to a person, place, or thing.",
-                "Adverb, because it modifies a verb, adjective, or another adverb."
-            ],
-            answer: "Preposition, because it shows the relationship between the noun 'scent' and the noun phrase 'the entire room.'"
-        },
-        {
-            topic: "Advanced Parts of speech",
-            question: "What is the part of speech of 'However' in the sentence, 'The weather was cold; however, we still went for a walk.'?",
-            options: [
-                "Adverb, as a conjunctive adverb, it connects the two independent clauses and shows a contrast.",
-                "Conjunction, because it connects words, phrases, or clauses.",
-                "Preposition, because it shows a relationship between a noun and another part of the sentence.",
-                "Noun, because it refers to a person, place, or thing."
-            ],
-            answer: "Adverb, as a conjunctive adverb, it connects the two independent clauses and shows a contrast."
-        },
-        {
-            topic: "Advanced Parts of speech",
-            question: "In the sentence, 'We will dine when the clock strikes seven,' what is the part of speech of 'when'?",
-            options: [
-                "Preposition, because it shows a relationship between a noun and another part of the sentence.",
-                "Conjunction, because it introduces a subordinate clause and connects it to the main clause.",
-                "Adverb, because it modifies a verb, adjective, or another adverb.",
-                "Noun, because it refers to a person, place, or thing."
-            ],
-            answer: "Conjunction, because it introduces a subordinate clause and connects it to the main clause."
-        },
-        {
-            topic: "Advanced Parts of speech",
-            question: "What is the part of speech of 'despite' in the sentence, 'Despite the rain, we enjoyed the picnic.'?",
-            options: [
-                "Adverb, because it modifies a verb, adjective, or another adverb.",
-                "Preposition, because it connects the noun 'rain' to the rest of the sentence and shows a relationship.",
-                "Conjunction, because it connects words, phrases, or clauses.",
-                "Noun, because it refers to a person, place, or thing."
-            ],
-            answer: "Preposition, because it connects the noun 'rain' to the rest of the sentence and shows a relationship."
-        },
-
-        // Active and Passive Voice (10 MCQs)
-        {
-            topic: "Active and Passive Voice",
-            question: "Which of the following sentences is in the active voice?",
-            options: [
-                "The ball was thrown by the boy, which made a loud sound as it flew through the air.",
-                "The letter was written by her, and it was a very long letter with many pages.",
-                "The cat chased the mouse all the way across the yard, trying to catch it and play with it.",
-                "The dinner was cooked by the chef, who put a lot of time and effort into making it."
-            ],
-            answer: "The cat chased the mouse all the way across the yard, trying to catch it and play with it."
-        },
-        {
-            topic: "Active and Passive Voice",
-            question: "Convert the following sentence to passive voice: 'She is writing a letter.'",
-            options: [
-                "A letter is being written by her, and it will be sent to her friend soon.",
-                "She wrote a letter, which was a very long and detailed one.",
-                "A letter was written by her, which was a very thoughtful gesture.",
-                "A letter has been written by her, which is now ready to be sent."
-            ],
-            answer: "A letter is being written by her, and it will be sent to her friend soon."
-        },
-        {
-            topic: "Active and Passive Voice",
-            question: "The passive voice is used when the focus is on...",
-            options: [
-                "the person or thing performing the action, which is the main subject of the sentence.",
-                "the object of the action, or the person or thing receiving the action, which is the main focus.",
-                "the verb of the sentence, which is the action that is being performed.",
-                "the time the action took place, which is the tense of the sentence."
-            ],
-            answer: "the object of the action, or the person or thing receiving the action, which is the main focus."
-        },
-        {
-            topic: "Active and Passive Voice",
-            question: "Convert the following sentence to active voice: 'The cake was baked by my mother.'",
-            options: [
-                "The cake will be baked by my mother, which is a great idea.",
-                "My mother baked the cake, which was a very delicious and moist one.",
-                "My mother will bake the cake, which is a great treat for everyone.",
-                "The cake is being baked by my mother, which is a very thoughtful gesture."
-            ],
-            answer: "My mother baked the cake, which was a very delicious and moist one."
-        },
-        {
-            topic: "Active and Passive Voice",
-            question: "The sentence 'The car has been repaired by the mechanic.' is in the...",
-            options: [
-                "active voice, because the subject is performing the action.",
-                "passive voice, because the subject is receiving the action.",
-                "present tense, because the action is happening now.",
-                "future tense, because the action will happen in the future."
-            ],
-            answer: "passive voice, because the subject is receiving the action."
-        },
-        {
-            topic: "Active and Passive Voice",
-            question: "Convert 'They have built a new bridge.' to passive voice.",
-            options: [
-                "A new bridge has been built by them, which is a great addition to the city.",
-                "A new bridge will be built by them, which will improve traffic flow in the area.",
-                "They built a new bridge, which was a very difficult task.",
-                "A new bridge is being built by them, which is a long and arduous process."
-            ],
-            answer: "A new bridge has been built by them, which is a great addition to the city."
-        },
-        {
-            topic: "Active and Passive Voice",
-            question: "The sentence 'The police arrested the thief.' is in the...",
-            options: [
-                "passive voice, because the subject is receiving the action.",
-                "active voice, because the subject is performing the action.",
-                "present tense, because the action is happening now.",
-                "past tense, because the action happened in the past."
-            ],
-            answer: "active voice, because the subject is performing the action."
-        },
-        {
-            topic: "Active and Passive Voice",
-            question: "Convert 'The novel was written by the author.' to active voice.",
-            options: [
-                "The author will write the novel, which will be a bestseller.",
-                "The author is writing the novel, which is a long and tedious process.",
-                "The author writes the novel, which is a very difficult task.",
-                "The author wrote the novel, which became a very popular book."
-            ],
-            answer: "The author wrote the novel, which became a very popular book."
-        },
-        {
-            topic: "Active and Passive Voice",
-            question: "Choose the sentence that is in the passive voice.",
-            options: [
-                "The dog barked loudly at the mailman.",
-                "The window was broken by a storm, and the rain came pouring in.",
-                "She sings beautifully, and her voice is like a bird's.",
-                "He studies his lessons diligently every night."
-            ],
-            answer: "The window was broken by a storm, and the rain came pouring in."
-        },
-        {
-            topic: "Active and Passive Voice",
-            question: "Convert 'We are studying a new language.' to passive voice.",
-            options: [
-                "A new language is being studied by us, and we are making great progress.",
-                "A new language was studied by us, and it was a very difficult one.",
-                "A new language will be studied by us, and we are looking forward to it.",
-                "We studied a new language, and it was a great experience."
-            ],
-            answer: "A new language is being studied by us, and we are making great progress."
-        },
-
-        // Direct and Indirect (10 MCQs)
-        {
-            topic: "Direct and Indirect",
-            question: "Change the following from direct to indirect speech: She said, 'I am going to the market.'",
-            options: [
-                "She said that she will go to the market, which is a very important errand.",
-                "She said that she was going to the market, which was a very long and tedious process.",
-                "She said that she is going to the market, which is a very important task to complete.",
-                "She says that she is going to the market, which is a very exciting outing."
-            ],
-            answer: "She said that she was going to the market, which was a very long and tedious process."
-        },
-        {
-            topic: "Direct and Indirect",
-            question: "The teacher asked the student, 'Did you complete your homework?' Change to indirect speech.",
-            options: [
-                "The teacher asked the student if she has completed her homework, which is a very important task.",
-                "The teacher asked the student whether she had completed her homework, which was a very difficult assignment.",
-                "The teacher asked the student that she completed her homework, which was a very long and tedious task.",
-                "The teacher asked the student if she completed her homework, which was a very difficult and time-consuming task."
-            ],
-            answer: "The teacher asked the student whether she had completed her homework, which was a very difficult assignment."
-        },
-        {
-            topic: "Direct and Indirect",
-            question: "Change 'He said, 'The sun rises in the east.'' to indirect speech.",
-            options: [
-                "He said that the sun rose in the east, which is a very beautiful sight to see.",
-                "He said that the sun is rising in the east, which is a very common observation.",
-                "He said that the sun rises in the east, which is a universal truth and never changes.",
-                "He said that the sun has risen in the east, which is a very beautiful and awe-inspiring sight."
-            ],
-            answer: "He said that the sun rises in the east, which is a universal truth and never changes."
-        },
-        {
-            topic: "Direct and Indirect",
-            question: "Convert to indirect speech: The doctor advised the patient, 'Take your medicine on time.'",
-            options: [
-                "The doctor advised the patient to take his medicine on time, which is a very important instruction.",
-                "The doctor advised the patient that he took his medicine on time, which was a very difficult task for him.",
-                "The doctor advised the patient that he should take his medicine on time, which is a very important rule to follow.",
-                "The doctor advised the patient to be taking his medicine on time, which is a very difficult habit to get into."
-            ],
-            answer: "The doctor advised the patient to take his medicine on time, which is a very important instruction."
-        },
-        {
-            topic: "Direct and Indirect",
-            question: "Change 'She said, 'What a beautiful painting!'' to indirect speech.",
-            options: [
-                "She exclaimed that it was a very beautiful painting, which was a very powerful and emotional statement.",
-                "She asked what a beautiful painting it was, which was a very thoughtful and curious question.",
-                "She said that the painting was beautiful, which was a very simple and direct observation.",
-                "She exclaimed that it is a beautiful painting, which was a very simple and direct observation."
-            ],
-            answer: "She exclaimed that it was a very beautiful painting, which was a very powerful and emotional statement."
-        },
-        {
-            topic: "Direct and Indirect",
-            question: "Convert the following to indirect speech: 'He said to me, 'You are a good boy.'",
-            options: [
-                "He told me that I was a good boy, which was a very kind and encouraging statement.",
-                "He said that I am a good boy, which was a very simple and direct observation.",
-                "He told me that I will be a good boy, which was a very hopeful and positive prediction.",
-                "He said that I were a good boy, which was a very strange and confusing statement."
-            ],
-            answer: "He told me that I was a good boy, which was a very kind and encouraging statement."
-        },
-        {
-            topic: "Direct and Indirect",
-            question: "Change to indirect speech: 'They said, 'We are happy here.''",
-            options: [
-                "They said that they were happy there, which was a very simple and direct observation.",
-                "They said that they are happy there, which was a very kind and encouraging statement.",
-                "They said that they are happy here, which was a very powerful and emotional statement.",
-                "They said that they were happy here, which was a very simple and direct observation."
-            ],
-            answer: "They said that they were happy there, which was a very simple and direct observation."
-        },
-        {
-            topic: "Direct and Indirect",
-            question: "The boy requested, 'Please lend me your pen.' Change to indirect speech.",
-            options: [
-                "The boy requested me to lend him his pen, which was a very kind and polite request.",
-                "The boy requested to lend him my pen, which was a very simple and direct request.",
-                "The boy requested that I lend him my pen, which was a very formal and direct request.",
-                "The boy requested me to lend him my pen, which was a very simple and direct request."
-            ],
-            answer: "The boy requested me to lend him my pen, which was a very simple and direct request."
-        },
-        {
-            topic: "Direct and Indirect",
-            question: "Convert the following to indirect speech: 'My father said, 'Honesty is the best policy.'",
-            options: [
-                "My father said that honesty was the best policy, which was a very wise and profound statement.",
-                "My father said that honesty is the best policy, which is a universal truth and never changes.",
-                "My father said that honesty will be the best policy, which was a very hopeful and positive prediction.",
-                "My father said that honesty is being the best policy, which was a very strange and confusing statement."
-            ],
-            answer: "My father said that honesty is the best policy, which is a universal truth and never changes."
-        },
-        {
-            topic: "Direct and Indirect",
-            question: "Change to indirect speech: 'He said to her, 'Where do you live?'",
-            options: [
-                "He asked her where she lived, which was a very simple and direct question.",
-                "He asked her that where she lived, which was a very strange and confusing statement.",
-                "He asked her where did she live, which was a very simple and direct question.",
-                "He asked her where do you live, which was a very simple and direct question."
-            ],
-            answer: "He asked her where she lived, which was a very simple and direct question."
-        },
-
-        // Active and Passive Voice (10 MCQs) - Additional
-        {
-            topic: "Active and Passive Voice",
-            question: "Convert 'The dinner was eaten by the dog.' to active voice.",
-            options: [
-                "The dog ate the dinner, which was a very quick and efficient process.",
-                "The dog is eating the dinner, which is a very common sight.",
-                "The dog will eat the dinner, which is a very predictable event.",
-                "The dog eats the dinner, which is a very common habit."
-            ],
-            answer: "The dog ate the dinner, which was a very quick and efficient process."
-        },
-        {
-            topic: "Active and Passive Voice",
-            question: "Which sentence is in the passive voice?",
-            options: [
-                "He reads a book, which is a very good habit.",
-                "The book is being read by him, which is a very thoughtful gesture.",
-                "He is reading a book, which is a very common sight.",
-                "He had read the book, which was a very interesting and informative one."
-            ],
-            answer: "The book is being read by him, which is a very thoughtful gesture."
-        },
-        {
-            topic: "Active and Passive Voice",
-            question: "Convert 'The painting was sold for a high price.' to active voice.",
-            options: [
-                "Someone sold the painting for a high price, which was a very good deal.",
-                "The painting is selling for a high price, which is a very good sign.",
-                "The artist sold the painting for a high price, which was a very good deal for him.",
-                "The high price sold the painting, which was a very good deal."
-            ],
-            answer: "Someone sold the painting for a high price, which was a very good deal."
-        },
-        {
-            topic: "Active and Passive Voice",
-            question: "Which of these is an example of active voice?",
-            options: [
-                "The song was sung by the singer, who had a very beautiful voice.",
-                "A mistake was made by me, which was a very embarrassing moment.",
-                "The teacher praised the students for their hard work and dedication, which made them feel very proud.",
-                "A story was told by my grandmother, which was a very interesting and engaging one."
-            ],
-            answer: "The teacher praised the students for their hard work and dedication, which made them feel very proud."
-        },
-        {
-            topic: "Active and Passive Voice",
-            question: "Convert 'The car is being driven by a professional driver.' to active voice.",
-            options: [
-                "A professional driver drives the car, which is a very common sight.",
-                "A professional driver is driving the car, which is a very smooth and efficient process.",
-                "The car will be driven by a professional driver, which is a very important task.",
-                "The car was driven by a professional driver, which was a very smooth and efficient process."
-            ],
-            answer: "A professional driver is driving the car, which is a very smooth and efficient process."
-        },
-        {
-            topic: "Active and Passive Voice",
-            question: "What is the passive form of 'Someone stole my wallet'?",
-            options: [
-                "My wallet was stolen, which was a very unfortunate event.",
-                "My wallet is being stolen, which is a very distressing situation.",
-                "My wallet will be stolen, which is a very unfortunate event.",
-                "My wallet had been stolen, which was a very unfortunate event."
-            ],
-            answer: "My wallet was stolen, which was a very unfortunate event."
-        },
-        {
-            topic: "Active and Passive Voice",
-            question: "The sentence 'The new bridge will be built next year.' is in the...",
-            options: [
-                "active voice, because the subject is performing the action.",
-                "passive voice, because the subject is receiving the action.",
-                "future tense, because the action will happen in the future.",
-                "present tense, because the action is happening now."
-            ],
-            answer: "passive voice, because the subject is receiving the action."
-        },
-        {
-            topic: "Active and Passive Voice",
-            question: "Change 'The chef has prepared the meal.' to passive voice.",
-            options: [
-                "The meal is being prepared by the chef, which is a very long and tedious process.",
-                "The meal was prepared by the chef, which was a very delicious and well-cooked one.",
-                "The meal has been prepared by the chef, which is now ready to be served.",
-                "The meal will be prepared by the chef, which is a very important task to complete."
-            ],
-            answer: "The meal has been prepared by the chef, which is now ready to be served."
-        },
-        {
-            topic: "Active and Passive Voice",
-            question: "The sentence 'The mail carrier delivers the mail.' is in the...",
-            options: [
-                "passive voice, because the subject is receiving the action.",
-                "active voice, because the subject is performing the action.",
-                "past tense, because the action happened in the past.",
-                "future tense, because the action will happen in the future."
-            ],
-            answer: "active voice, because the subject is performing the action."
-        },
-        {
-            topic: "Active and Passive Voice",
-            question: "Convert 'They were cleaning the house.' to passive voice.",
-            options: [
-                "The house was being cleaned by them, which was a very long and tedious process.",
-                "The house has been cleaned by them, which is a very important task to complete.",
-                "The house is cleaned by them, which is a very common sight.",
-                "The house was cleaned by them, which was a very difficult task."
-            ],
-            answer: "The house was being cleaned by them, which was a very long and tedious process."
-        },
-
-        // Direct and Indirect (10 MCQs) - Additional
-        {
-            topic: "Direct and Indirect",
-            question: "Change to indirect speech: He said to her, 'Where are you going?'",
-            options: [
-                "He asked her where I am going, which was a very simple and direct question.",
-                "He asked her where she was going, which was a very simple and direct question.",
-                "He asked her where you are going, which was a very simple and direct question.",
-                "He told her where I was going, which was a very simple and direct statement."
-            ],
-            answer: "He asked her where she was going, which was a very simple and direct question."
-        },
-        {
-            topic: "Direct and Indirect",
-            question: "She said, 'I have finished my work.' Change to indirect speech.",
-            options: [
-                "She said that she had finished her work, which was a very important task to complete.",
-                "She said that she has finished her work, which was a very important task to complete.",
-                "She said that she finished her work, which was a very important task to complete.",
-                "She told me that she had finished her work, which was a very important task to complete."
-            ],
-            answer: "She said that she had finished her work, which was a very important task to complete."
-        },
-        {
-            topic: "Direct and Indirect",
-            question: "The mother said to her son, 'Clean your room.' Change to indirect speech.",
-            options: [
-                "The mother told her son to clean his room, which was a very simple and direct instruction.",
-                "The mother told her son that he should clean his room, which was a very important rule to follow.",
-                "The mother said to her son that he cleaned his room, which was a very simple and direct observation.",
-                "The mother told her son to clean your room, which was a very strange and confusing statement."
-            ],
-            answer: "The mother told her son to clean his room, which was a very simple and direct instruction."
-        },
-        {
-            topic: "Direct and Indirect",
-            question: "Change to indirect speech: 'He said, 'We went to the zoo yesterday.'",
-            options: [
-                "He said that they went to the zoo the day before, which was a very simple and direct statement.",
-                "He said that they had gone to the zoo the previous day, which was a very important and memorable event.",
-                "He said that they will go to the zoo, which was a very hopeful and positive prediction.",
-                "He said that they had gone to the zoo yesterday, which was a very simple and direct statement."
-            ],
-            answer: "He said that they had gone to the zoo the previous day, which was a very important and memorable event."
-        },
-        {
-            topic: "Direct and Indirect",
-            question: "The principal announced, 'The school will be closed tomorrow.' Change to indirect speech.",
-            options: [
-                "The principal announced that the school would be closed the next day, which was a very important announcement.",
-                "The principal announced that the school will be closed tomorrow, which was a very important announcement.",
-                "The principal announced that the school was closed the next day, which was a very important announcement.",
-                "The principal announced that the school is closed the next day, which was a very important announcement."
-            ],
-            answer: "The principal announced that the school would be closed the next day, which was a very important announcement."
-        },
-        {
-            topic: "Direct and Indirect",
-            question: "Change to indirect speech: 'I said to him, 'Do you know me?''",
-            options: [
-                "I asked him if he knew me, which was a very simple and direct question.",
-                "I asked him that he knew me, which was a very simple and direct statement.",
-                "I told him that he knew me, which was a very simple and direct statement.",
-                "I asked him did he know me, which was a very simple and direct question."
-            ],
-            answer: "I asked him if he knew me, which was a very simple and direct question."
-        },
-        {
-            topic: "Direct and Indirect",
-            question: "The old man said, 'I can walk fast.' Change to indirect speech.",
-            options: [
-                "The old man said that he can walk fast, which was a very simple and direct statement.",
-                "The old man said that he could walk fast, which was a very simple and direct statement.",
-                "The old man said that he was able to walk fast, which was a very simple and direct statement.",
-                "The old man said that he will walk fast, which was a very simple and direct statement."
-            ],
-            answer: "The old man said that he could walk fast, which was a very simple and direct statement."
-        },
-        {
-            topic: "Direct and Indirect",
-            question: "Change to indirect speech: 'She said, 'Please wait for me.''",
-            options: [
-                "She requested that I wait for her, which was a very simple and direct request.",
-                "She asked me to wait for her, which was a very simple and direct request.",
-                "She told me to wait for her, which was a very simple and direct instruction.",
-                "She begged me to wait for her, which was a very simple and direct request."
-            ],
-            answer: "She asked me to wait for her, which was a very simple and direct request."
-        },
-        {
-            topic: "Direct and Indirect",
-            question: "He said, 'I have to go to work.' Change to indirect speech.",
-            options: [
-                "He said that he had to go to work, which was a very simple and direct statement.",
-                "He said that he has to go to work, which was a very simple and direct statement.",
-                "He said that he should go to work, which was a very simple and direct statement.",
-                "He said that he must go to work, which was a very simple and direct statement."
-            ],
-            answer: "He said that he had to go to work, which was a very simple and direct statement."
-        },
-        {
-            topic: "Direct and Indirect",
-            question: "Change to indirect speech: 'My brother said, 'I will buy a new phone tomorrow.''",
-            options: [
-                "My brother said that he would buy a new phone the next day, which was a very exciting and positive prediction.",
-                "My brother said that he will buy a new phone tomorrow, which was a very exciting and positive prediction.",
-                "My brother said that he would buy a new phone tomorrow, which was a very exciting and positive prediction.",
-                "My brother said that he bought a new phone the next day, which was a very exciting and positive event."
-            ],
-            answer: "My brother said that he would buy a new phone the next day, which was a very exciting and positive prediction."
-        }
-    ];
-
-    const quizData = shuffleArray(questions);
-    let currentQuestionIndex = 0;
-    let score = 0;
-    let timer = 900; // 15 minutes in seconds
-    let interval;
-    let quizStarted = false;
-
-    const loginScreen = document.getElementById('login-screen');
-    const nameScreen = document.getElementById('name-screen');
-    const quizContainer = document.getElementById('quiz-container');
-    const resultScreen = document.getElementById('result-screen');
-    const idInput = document.getElementById('id');
-    const passwordInput = document.getElementById('password');
-    const loginBtn = document.getElementById('login-btn');
-    const nameInput = document.getElementById('name');
-    const startBtn = document.getElementById('start-btn');
-    const questionEl = document.getElementById('question');
-    const optionsEl = document.getElementById('options');
-    const nextBtn = document.getElementById('next-btn');
-    const timerEl = document.getElementById('timer');
-    const questionInfoEl = document.getElementById('question-info');
-    const resultTextEl = document.getElementById('result-text');
-    const messageBox = document.getElementById('message-box');
-
-    function showMessage(title, text) {
-        document.getElementById('message-title').textContent = title;
-        document.getElementById('message-text').textContent = text;
-        messageBox.classList.remove('hidden');
-    }
-
-    loginBtn.addEventListener('click', () => {
-        const id = idInput.value;
-        const password = passwordInput.value;
-        if (id === 'aaa' && password === 'bbb') {
-            loginScreen.classList.add('hidden');
-            nameScreen.classList.remove('hidden');
-        } else {
-            showMessage("Login Failed", "Incorrect ID or Password. Please try again.");
-        }
-    });
-
-    startBtn.addEventListener('click', () => {
-        const name = nameInput.value.trim();
-        if (name) {
-            nameScreen.classList.add('hidden');
-            quizContainer.classList.remove('hidden');
-            quizStarted = true;
-            startTimer();
-            displayQuestion();
-        } else {
-            showMessage("Name Required", "Please enter your name to start the quiz.");
-        }
-    });
-
-    function startTimer() {
-        interval = setInterval(() => {
-            timer--;
-            const minutes = Math.floor(timer / 60);
-            const seconds = timer % 60;
-            timerEl.textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            if (timer <= 0) {
-                endQuiz();
-            }
-        }, 1000);
-    }
-
-    function displayQuestion() {
-        const q = quizData[currentQuestionIndex];
-        questionEl.textContent = q.question;
-        optionsEl.innerHTML = '';
+    <div class="max-w-4xl mx-auto bg-white shadow-xl rounded-xl p-6 md:p-10 border-4 border-blue-200">
         
-        const shuffledOptions = shuffleArray(q.options);
+        <header class="text-center mb-8">
+            <p class="text-lg text-blue-600 font-semibold mb-1">TAKEN FROM DAWN MAGAZINE 📰</p>
+            <p class="text-xl font-extrabold text-blue-900 mb-2">Contact No: 03188185185</p>
+            <p class="text-sm text-gray-500 mb-4">Published: October 19th, 2025</p>
+            
+            <h1 class="text-3xl md:text-4xl font-black text-blue-800 mb-1">MEDIA: THE AI STORM DROWNING PAKISTAN ⛈️</h1>
+            <p class="text-lg text-yellow-700 font-medium">By Seerat Khan</p>
+            <p class="text-sm text-gray-600 italic">Research and Grants Lead at the Digital Rights Foundation, Lahore.</p>
+        </header>
 
-        shuffledOptions.forEach(option => {
-            const optionDiv = document.createElement('div');
-            optionDiv.classList.add('option');
-            optionDiv.textContent = option;
-            optionDiv.addEventListener('click', () => handleOptionClick(optionDiv, option, q.answer));
-            optionsEl.appendChild(optionDiv);
-        });
+        <!-- I. Whole Content with Urdu Meanings -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold mb-4 p-2 heading-style">1. Whole Content with Urdu Meanings of Difficult Words 📝</h2>
+            <div class="text-base leading-relaxed text-gray-700 p-4 bg-blue-50 rounded-lg shadow-inner">
+                <p>The climate crisis in Pakistan has <strong class="text-red-600 underline">exacerbated (شدید ہو جانا)</strong> over the years to become the new norm, with floods impacting millions of people’s cities, livelihoods, and homes. In 2025, Pakistan experienced <strong class="text-red-600 underline">devastating (تباہ کن)</strong> floods, affecting an estimated 4.2 million people in Punjab. However, as the floodwaters rose, a <strong class="text-red-600 underline">parallel crisis (متوازی بحران)</strong> emerged online. Many Pakistanis turned to digital platforms for weather updates and relief efforts, leading to a rapid <strong class="text-red-600 underline">surge (اچھال/تیزی)</strong> in climate change <strong class="text-red-600 underline">disinformation (غلط معلومات)</strong>, designed to sensationalize the tragedy. More <strong class="text-red-600 underline">alarmingly (تشویشناک حد تک)</strong>, the rise of generative Artificial Intelligence (AI) has largely gone <strong class="text-red-600 underline">unchecked (بے قابو)</strong>, allowing manufactured lies, such as fake geopolitical attacks, sexualized "rescue" videos, and <strong class="text-red-600 underline">fabricated (من گھڑت)</strong> tragedies, to thrive.</p>
+                <p class="mt-4">A report by the Digital Rights Foundation (DRF) highlighted how AI is being <strong class="text-red-600 underline">weaponized (بطور ہتھیار استعمال کیا گیا)</strong>. For example, viral AI visuals portrayed India's release of dam water into Pakistani rivers as a deliberate act of hostility, depicting workers <strong class="text-red-600 underline">maliciously (بدنیتی سے)</strong> releasing water as a war tactic. This geopolitical framing distracts from domestic governance and flood management failures. With 40% of Pakistan’s population illiterate, the inherent realism of advanced AI content, combined with low digital literacy, creates a perfect storm for misinformation.</p>
+                <p class="mt-4">Beyond geopolitics, AI has enabled an <strong class="text-red-600 underline">insidious (مکارانہ)</strong> form of exploitation: technology-facilitated gender-based violence. This includes the rise of AI-generated "woman-in-crisis" content, using women's depictions to elicit sympathy or, worse, exploiting the disaster for sexualization. Videos on TikTok and Instagram, often showing rural women, attract thousands of views but rarely carry the "AI content" label. Bad actors have produced "AI village fetish" content, sometimes portraying unconscious women being groped under the <strong class="text-red-600 underline">pretext (بہانہ)</strong> of "rescue." This sexualization also appears in village-vlog-style videos, where the focus remains on the woman's physical appearance rather than the devastation. Alarmingly, many older Pakistani users interpret these videos as genuine. Similarly, AI was used to exploit real tragedies, like recreating the Swat tragedy with fabricated visuals and screaming voices, which trivializes suffering and risks retraumatizing affected communities.</p>
+                <p class="mt-4">In terms of **Platform Accountability**, while TikTok provides some cautionary warnings for Pakistani users, it has largely failed to address the scale of AI misinformation, especially since platforms do not cater adequately to regional languages. Social media platforms, in moments of crisis, carry a responsibility under the UN Guiding Principles on Business and Human Rights (UNGPs) to respect users' rights and mitigate harm, including curbing disaster-related misinformation, which is not a trivial issue and can compromise humanitarian aid.</p>
+            </div>
+        </section>
 
-        questionInfoEl.textContent = `${q.topic} - Question ${currentQuestionIndex + 1} of 50`;
-        nextBtn.classList.add('hidden');
-    }
-
-    function handleOptionClick(selectedOption, selectedAnswer, correctAnswer) {
-        if (!quizStarted) return;
+        <!-- II. Urdu Translation -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold mb-4 p-2 heading-style">2. Whole Document: Urdu Translation 🌍</h2>
+            <div class="urdu-text text-lg p-4 bg-yellow-50 rounded-lg shadow-inner border-l-4 border-yellow-500">
+                <p><strong>میڈیا: پاکستان کو ڈبونے والا مصنوعی ذہانت کا طوفان</strong></p>
+                <p class="mt-4">پاکستان میں گزشتہ برسوں کے دوران ماحولیاتی بحران اس حد تک شدت اختیار کر چکا ہے کہ یہ ایک نیا معمول بن گیا ہے، جس کے تحت ملک میں لاکھوں لوگوں کے شہر، روزگار اور گھر سیلاب کی زد میں ہیں۔ اقوام متحدہ کے دفتر برائے رابطہ انسانی امور (UNOCHA) کے مطابق، صرف 2025 میں پاکستان نے تباہ کن سیلاب کا سامنا کیا، جس سے پنجاب میں تقریباً 42 لاکھ افراد متاثر ہوئے۔ تاہم، سیلاب کی لہریں بڑھنے کے ساتھ ہی، ایک متوازی بحران آن لائن بھی ابھرا۔ سیلاب کے جواب میں، بہت سے پاکستانیوں نے موسمی اپ ڈیٹس، امدادی کوششوں اور متاثرہ کمیونٹیز سے رابطے کے لیے ڈیجیٹل ٹیکنالوجیز کا رخ کیا۔</p>
+                <p class="mt-4">اسی دوران، ڈیجیٹل پلیٹ فارمز پر اس انحصار کے جواب میں، ماحولیاتی تبدیلی کی غلط معلومات میں بھی تیزی سے اضافہ ہوا، جس کا مقصد پہلے ہی سے المناک ماحول کو سنسنی خیز بنانا اور الجھن پھیلانے کے لیے مزید ویوز حاصل کرنا تھا۔ سب سے زیادہ تشویشناک بات یہ ہے کہ پلیٹ فارمز پر تخلیقی مصنوعی ذہانت (AI) کا سیلاب بڑے پیمانے پر بے قابو رہا ہے۔ اس نے من گھڑت معلومات کو وسیع پیمانے پر مانا جانے دیا، جس سے آن لائن خطرناک بیانیے کو فروغ ملا۔ لاکھوں سیلاب متاثرین سوشل میڈیا کا رخ مدد کے لیے کر رہے ہیں، لیکن اس کے بجائے انہیں AI سے پیدا کردہ جھوٹ مل رہے ہیں: جعلی جیو پولیٹیکل حملے، جنسی نوعیت کی "امدادی" ویڈیوز اور من گھڑت سانحات جو زیادہ سے زیادہ انگیجمنٹ کے لیے تیار کیے گئے ہیں۔</p>
+                <p class="mt-4"><strong>غلط معلومات کا عروج</strong></p>
+                <p>ڈیجیٹل رائٹس فاؤنڈیشن (DRF) کی ایک حالیہ تحقیق، جس کا میں بھی شریک مصنف تھا، نے ان رجحانات اور پلیٹ فارمز پر پھیلائی جانے والی غلط معلومات کی نوعیت کی چھان بین کی، جو مزید پولرائزیشن اور خطرناک بیانیوں کو فروغ دے رہی ہے۔ رپورٹ اس بات کی نشاندہی کرتی ہے کہ کس طرح AI کو ماحولیاتی بحران میں ہتھیار کے طور پر استعمال کیا جا رہا ہے، جس میں وائرل ٹک ٹاک ویژولز میں بھارت کی طرف سے ڈیم کا پانی پاکستان کے زیریں علاقوں میں چھوڑنا ایک جان بوجھ کر دشمنی کا عمل دکھایا گیا ہے۔ AI سے تیار کردہ یہ فوٹیج مختلف سوشل میڈیا پلیٹ فارمز پر اس بیانیے کو ڈرامائی بنا رہی ہے، جس میں بھارتی کارکنوں کو بدنیتی سے پانی چھوڑتے ہوئے ایک سوچے سمجھے جنگی حربے کے طور پر دکھایا گیا ہے۔ اس قدرتی آفت کو ایک واحد جیو پولیٹیکل بیانیے میں محدود کرنا موجودہ پاک بھارت کشیدگی کو ہوا دیتا ہے۔ اس سے بھی زیادہ اہم بات یہ ہے کہ یہ حکومتی، سیلاب کے انتظام اور امدادی کوششوں میں مقامی کوتاہیوں سے توجہ ہٹاتا ہے۔</p>
+                <p class="mt-4"><strong>کلک بیٹ کے طور پر خواتین</strong></p>
+                <p>جیو پولیٹیکل بیانیوں سے ہٹ کر، AI سے تیار کردہ مواد نے استحصال کی ایک اور مکارانہ شکل کو بھی ممکن بنایا ہے: ٹیکنالوجی سے سہولت یافتہ صنفی بنیاد پر تشدد، بشمول AI سے تیار کردہ "بحران میں گھری خاتون" کے مواد کا عروج۔ یہ رجحان متعدد پلیٹ فارمز پر دیکھا گیا ہے، جہاں خواتین کی AI سے تیار کردہ تصویروں کو ہمدردی حاصل کرنے کے لیے اور ایک قدرتی آفت کو خواتین کے جسموں کو جنسی بنانے کے لیے ایک ذریعہ کے طور پر استعمال کیا جاتا ہے۔ ٹک ٹاک اور انسٹاگرام ایسی ویڈیوز سے بھرے پڑے ہیں، جن میں دیہی خواتین کو سیلاب زدہ علاقوں میں بچوں کو اٹھائے ہوئے دکھایا گیا ہے۔ یہ کلپس ہزاروں ویوز حاصل کرتے ہیں، پھر بھی ان میں سے صرف ایک چھوٹا سا حصہ ٹک ٹاک کا "AI مواد" کا لیبل رکھتا ہے۔ اس تھیم پر عمل کرتے ہوئے، صارفین کو سیلاب کے منظرناموں میں خواتین کی انتہائی جنسی نوعیت کی تصویریں پوسٹ کرتے ہوئے دیکھا گیا ہے، جس سے توجہ سیلاب سے ہٹ کر خواتین کے جسموں پر منتقل ہو جاتی ہے۔ یہ ایک خطرناک مثال قائم کرتا ہے، خاص طور پر ایسے حالات میں جہاں خواتین کو امدادی کیمپوں میں آفات کے دوران پہلے ہی صنفی بنیاد پر تشدد کے بڑھتے ہوئے خطرات کا سامنا ہوتا ہے۔</p>
+                <p class="mt-4"><strong>سانحات کا استحصال</strong></p>
+                <p>اسی طرح، AI کو حقیقی سانحات کے استحصال کے لیے بھی استعمال کیا گیا ہے، جیسا کہ سوات میں جون میں پیش آنے والے سانحے کو دوبارہ تخلیق کرنے والی ایک انسٹاگرام ریل۔ دریا میں اچانک پانی بڑھ جانے کے بعد کم از کم 17 افراد گھنٹوں تک دریا کے بیچ میں پھنسے رہے، قبل اس کے کہ وہ بہہ گئے اور ڈوب گئے۔ مکمل طور پر AI سے تیار کردہ اس کلپ میں من گھڑت ویژولز اور متاثرین کی چیخنے کی آوازیں شامل کی گئی ہیں۔ اس قسم کا مصنوعی مواد انتہائی غیر حساس اور خطرناک ہے۔ یہ ایک حقیقی آفت کی یاد کو مسخ کرنے، بچ جانے والوں کی تکلیف کو کم اہمیت دینے اور پہلے ہی خوف اور غم سے دوچار سامعین میں غلط معلومات پھیلانے کی صلاحیت رکھتا ہے۔</p>
+                <p class="mt-4"><strong>پلیٹ فارم کی جوابدہی</strong></p>
+                <p>اس وقت، جب سوشل میڈیا پلیٹ فارمز ماحولیات سے متعلق غلط معلومات سے بھرے ہوئے ہیں، ٹک ٹاک واحد پلیٹ فارم ہے جو پاکستانی صارفین کے لیے سیلاب سے متعلق معلومات کی انتباہی وارننگز اور لنکس فراہم کرتا ہے۔ اگرچہ اس کی سیلاب حفاظتی گائیڈ ایک مثبت قدم تھا، لیکن اس کا دائرہ محدود رہا ہے۔ ٹک ٹاک، دوسرے سوشل میڈیا پلیٹ فارمز کی طرح، غلط معلومات کی حد، خاص طور پر تخلیقی AI مواد سے پیدا ہونے والی، کو مناسب طریقے سے حل کرنے میں ناکام رہا ہے۔ یہ پلیٹ فارمز علاقائی زبانوں کو پورا نہیں کرتے اور نہ ہی پاکستان کے متنوع میڈیا منظرنامے کی عکاسی کرتے ہیں۔ بحران کے لمحات میں، سوشل میڈیا پلیٹ فارمز عالمی معیار پر قائم رہنے کی ذمہ داری رکھتے ہیں۔ غلط معلومات ایک معمولی مسئلہ نہیں ہے۔ یہ تاثرات کو بدل کر، ساکھ کو نقصان پہنچا کر، اور کوآرڈینیشن کو درہم برہم کر کے انسانی امداد اور آفات سے نمٹنے کے ردعمل کو متاثر کر سکتی ہے۔</p>
+            </div>
+        </section>
         
-        const allOptions = optionsEl.querySelectorAll('.option');
-        allOptions.forEach(option => option.style.pointerEvents = 'none'); // Disable further clicks
+        <!-- III. Key Points Table -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold mb-4 p-2 heading-style">3. Key Points of the Document 🔑</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 border border-blue-200 rounded-lg">
+                    <thead class="table-header">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider rounded-tl-lg">No.</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider rounded-tr-lg">Key Point</th>
+                            <th class="px-6 py-3 text-right text-xs font-bold uppercase tracking-wider urdu-text">اہم نکتہ</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200 text-sm">
+                        <tr class="hover:bg-blue-50">
+                            <td class="px-6 py-4 whitespace-nowrap">1.</td>
+                            <td class="px-6 py-4">AI-generated lies are exploiting the Pakistan flood crisis, spreading fake geopolitical, sexualized, and fabricated tragedy narratives.</td>
+                            <td class="px-6 py-4 urdu-text">اے آئی سے پیدا کردہ جھوٹ پاکستان کے سیلابی بحران کا استحصال کر رہے ہیں، جو جعلی جیو پولیٹیکل، جنسی نوعیت کے اور من گھڑت سانحات کے بیانیے پھیلا رہے ہیں۔</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50 bg-blue-50">
+                            <td class="px-6 py-4 whitespace-nowrap">2.</td>
+                            <td class="px-6 py-4">A DRF study found AI is being weaponized to accuse India of malicious dam water release, diverting attention from domestic governance failures.</td>
+                            <td class="px-6 py-4 urdu-text">ڈی آر ایف کی تحقیق سے معلوم ہوا کہ اے آئی کو بھارت پر ڈیم کا پانی جان بوجھ کر چھوڑنے کا الزام لگانے کے لیے بطور ہتھیار استعمال کیا جا رہا ہے، جو مقامی حکومتی ناکامیوں سے توجہ ہٹا رہا ہے۔</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50">
+                            <td class="px-6 py-4 whitespace-nowrap">3.</td>
+                            <td class="px-6 py-4">Low digital literacy (40% illiteracy) combined with realistic AI content creates a "perfect storm" for misinformation to thrive.</td>
+                            <td class="px-6 py-4 urdu-text">کم ڈیجیٹل خواندگی (40% ناخواندگی) اور حقیقت پسندانہ اے آئی مواد کا امتزاج غلط معلومات کے فروغ کے لیے ایک "کامل طوفان" پیدا کر رہا ہے۔</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50 bg-blue-50">
+                            <td class="px-6 py-4 whitespace-nowrap">4.</td>
+                            <td class="px-6 py-4">AI is enabling technology-facilitated gender-based violence, using "woman-in-crisis" content for sexual exploitation and objectification.</td>
+                            <td class="px-6 py-4 urdu-text">اے آئی ٹیکنالوجی سے سہولت یافتہ صنفی بنیاد پر تشدد کو ممکن بنا رہا ہے، جس میں جنسی استحصال اور شے سازی کے لیے "بحران میں گھری خاتون" کا مواد استعمال کیا جا رہا ہے۔</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50">
+                            <td class="px-6 py-4 whitespace-nowrap">5.</td>
+                            <td class="px-6 py-4">Platforms are failing to adequately label AI content; many users (especially older ones) perceive these videos as genuine.</td>
+                            <td class="px-6 py-4 urdu-text">پلیٹ فارمز اے آئی مواد کو مناسب طریقے سے لیبل کرنے میں ناکام ہو رہے ہیں؛ بہت سے صارفین (خاص طور پر بڑی عمر کے لوگ) ان ویڈیوز کو حقیقی سمجھتے ہیں۔</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50 bg-blue-50">
+                            <td class="px-6 py-4 whitespace-nowrap">6.</td>
+                            <td class="px-6 py-4">AI is exploiting real tragedies (e.g., Swat incident) by fabricating visuals and sounds, risking retraumatization.</td>
+                            <td class="px-6 py-4 urdu-text">اے آئی حقیقی سانحات (مثلاً سوات کا واقعہ) کا استحصال من گھڑت ویژولز اور آوازوں کے ذریعے کر رہا ہے، جس سے دوبارہ صدمے کا خطرہ ہے۔</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50">
+                            <td class="px-6 py-4 whitespace-nowrap">7.</td>
+                            <td class="px-6 py-4">Platforms like TikTok have limited scope and fail to cater to Pakistan's regional languages, hindering effective outreach and information dissemination.</td>
+                            <td class="px-6 py-4 urdu-text">ٹک ٹاک جیسے پلیٹ فارمز کا دائرہ محدود ہے اور وہ پاکستان کی علاقائی زبانوں کو پورا کرنے میں ناکام ہیں، جو موثر رسائی اور معلومات کی ترسیل میں رکاوٹ ہے۔</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50 bg-blue-50 rounded-b-lg">
+                            <td class="px-6 py-4 whitespace-nowrap rounded-bl-lg">8.</td>
+                            <td class="px-6 py-4">Platforms must uphold UN Guiding Principles on Business and Human Rights to curb disaster misinformation, which compromises humanitarian aid.</td>
+                            <td class="px-6 py-4 urdu-text rounded-br-lg">انسانی امداد کو متاثر کرنے والی آفات کی غلط معلومات کو روکنے کے لیے پلیٹ فارمز کو کاروبار اور انسانی حقوق پر اقوام متحدہ کے رہنما اصولوں پر قائم رہنا چاہیے۔</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
-        if (selectedAnswer === correctAnswer) {
-            score++;
-            selectedOption.classList.add('correct');
-        } else {
-            selectedOption.classList.add('wrong');
-            // Find and highlight the correct answer
-            allOptions.forEach(option => {
-                if (option.textContent === correctAnswer) {
-                    option.classList.add('correct');
-                }
-            });
-        }
-        nextBtn.classList.remove('hidden');
-    }
+        <!-- IV. Difficult Words Table -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold mb-4 p-2 heading-style">4. Difficult Words, Urdu Meanings, and Usage 📚</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 border border-blue-200 rounded-lg">
+                    <thead class="table-header">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Word</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider urdu-text">اردو معنی</th>
+                            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Sentence Usage</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200 text-sm">
+                        <tr class="hover:bg-blue-50">
+                            <td class="px-6 py-4 whitespace-nowrap">Exacerbated</td>
+                            <td class="px-6 py-4 urdu-text">شدید ہو جانا</td>
+                            <td class="px-6 py-4">The lack of infrastructure only **exacerbated** the damage caused by the storm.</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50 bg-blue-50">
+                            <td class="px-6 py-4 whitespace-nowrap">Devastating</td>
+                            <td class="px-6 py-4 urdu-text">تباہ کن</td>
+                            <td class="px-6 py-4">The earthquake had a **devastating** impact on the coastal town.</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50">
+                            <td class="px-6 py-4 whitespace-nowrap">Surge</td>
+                            <td class="px-6 py-4 urdu-text">اچھال/تیزی</td>
+                            <td class="px-6 py-4">We saw a sudden **surge** in online traffic after the announcement.</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50 bg-blue-50">
+                            <td class="px-6 py-4 whitespace-nowrap">Disinformation</td>
+                            <td class="px-6 py-4 urdu-text">غلط معلومات</td>
+                            <td class="px-6 py-4">The political campaign was marred by widespread **disinformation**.</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50">
+                            <td class="px-6 py-4 whitespace-nowrap">Unchecked</td>
+                            <td class="px-6 py-4 urdu-text">بے قابو</td>
+                            <td class="px-6 py-4">The virus spread **unchecked** due to slow government response.</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50 bg-blue-50">
+                            <td class="px-6 py-4 whitespace-nowrap">Fabricated</td>
+                            <td class="px-6 py-4 urdu-text">من گھڑت</td>
+                            <td class="px-6 py-4">The witness later admitted that the entire story was **fabricated**.</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50">
+                            <td class="px-6 py-4 whitespace-nowrap">Maliciously</td>
+                            <td class="px-6 py-4 urdu-text">بدنیتی سے</td>
+                            <td class="px-6 py-4">The hacker **maliciously** deleted all the company’s data.</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50 bg-blue-50">
+                            <td class="px-6 py-4 whitespace-nowrap">Insidious</td>
+                            <td class="px-6 py-4 urdu-text">مکارانہ</td>
+                            <td class="px-6 py-4">Propaganda is often an **insidious** way to change public opinion slowly.</td>
+                        </tr>
+                        <tr class="hover:bg-blue-50 rounded-b-lg">
+                            <td class="px-6 py-4 whitespace-nowrap rounded-bl-lg">Pretext</td>
+                            <td class="px-6 py-4 urdu-text">بہانہ</td>
+                            <td class="px-6 py-4 rounded-br-lg">He used the weather as a **pretext** for canceling the outdoor event.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
-    nextBtn.addEventListener('click', () => {
-        currentQuestionIndex++;
-        if (currentQuestionIndex < quizData.length) {
-            displayQuestion();
-        } else {
-            endQuiz();
-        }
-    });
+        <!-- V. Critical Analysis -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold mb-4 p-2 heading-style">5. Critical Analysis of the Document 🧐</h2>
+            <div class="text-base leading-relaxed text-gray-700 p-4 bg-blue-50 rounded-lg shadow-inner">
+                <p>Seerat Khan's article offers a timely and crucial critique of the intersection between humanitarian crisis, emerging technology (AI), and digital platforms in Pakistan. The document is highly effective in establishing the severity of the problem—AI-driven misinformation—as a **"parallel crisis"** to the natural disaster of floods. Its strength lies in its ability to categorize the dangerous narratives into three distinct and alarming domains: geopolitical distraction, gender-based exploitation, and the trivialization of real human tragedy.</p>
+                <p class="mt-4">The analysis is particularly sharp when it links the lack of accountability to Pakistan's specific socioeconomic context, noting that low digital literacy amplifies the realism of AI content, creating a "perfect storm." This contextualization moves beyond a generic tech critique and grounds the problem firmly in Pakistani reality. Furthermore, the focus on the **"AI village fetish"** and the sexualization of women in crisis is a powerful, necessary, and disturbing highlight of how technology facilitates violence and objectification in vulnerable settings.</p>
+                <p class="mt-4">However, the article could be critically analyzed for its suggested solutions. While it correctly calls for **Platform Accountability** based on UNGPs, it lacks concrete, localized policy recommendations beyond the need for better labeling and regional language catering. The immense challenge posed by AI's rapid evolution requires not just better moderation from platforms but also sustained domestic investment in digital literacy education and national regulatory frameworks—areas the article touches upon but doesn't elaborate on in terms of actionable steps. Nonetheless, as a piece of journalism and analysis, the document serves as a vital warning about the ethical and societal collapse possible when unchecked AI meets a state of emergency.</p>
+            </div>
+        </section>
 
-    function endQuiz() {
-        clearInterval(interval);
-        quizContainer.classList.add('hidden');
-        resultScreen.classList.remove('hidden');
-        resultTextEl.textContent = `${nameInput.value}, you scored ${score} out of 50.`;
-        quizStarted = false;
-    }
+        <!-- VI. Summary -->
+        <section>
+            <h2 class="text-2xl font-bold mb-4 p-2 heading-style">6. Summary of the Document 🌟</h2>
+            <div class="text-base font-semibold text-gray-800 p-4 bg-yellow-100 rounded-lg border-l-4 border-yellow-500">
+                <p>The document, "MEDIA: THE AI STORM DROWNING PAKISTAN," highlights a severe **AI-driven misinformation crisis** accompanying the 2025 Pakistan floods. While millions sought aid and updates online, they were met with unchecked, AI-generated lies, including fake geopolitical attacks blaming India, hyper-sexualized "rescue" content exploiting women (dubbed "AI village fetish"), and fabricated videos of real tragedies. The article, based on a DRF report, argues that low digital literacy in Pakistan, combined with the realism of AI, creates a "perfect storm" for dangerous narratives that distract from government failures and enable gender-based violence. The author concludes by stressing that social media platforms have a moral and legal **responsibility** under UN principles to curb this misinformation, particularly by improving AI content labeling and supporting regional languages, as failure to do so compromises vital humanitarian aid efforts.</p>
+            </div>
+        </section>
 
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    }
+        <footer class="mt-10 pt-4 border-t border-blue-200 text-center text-xs text-gray-400">
+            <p>Notes generated for educational purposes based on the provided Dawn Magazine article.</p>
+        </footer>
 
-</script>
-
+    </div>
 </body>
 </html>
